@@ -9,6 +9,9 @@ selfStudy/
 test/
 jeongseok_examples/
 web_workspace/Servers/
+.classpath
+.settings
+.svn/
 
 ### Eclipse ###
 .metadata
