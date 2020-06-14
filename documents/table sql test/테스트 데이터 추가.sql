@@ -34,3 +34,47 @@ INSERT INTO deliver_locations
 VALUES
 (location_no_seq.NEXTVAL, '서울시 종로구', '봉익동 율곡로', '어디어디 디아망빌당3층', 104)
 ;
+
+INSERT INTO pizzas
+(pizza_no, pizza_name, pizza_image_src, pizza_L_price, pizza_M_price)
+VALUES
+(pizza_no_seq.NEXTVAL, '이베리코더블크러스트', 'images/ed01.png', 35000, 25000)
+;
+
+INSERT INTO pizzas
+(pizza_no, pizza_name, pizza_image_src, pizza_L_price, pizza_M_price)
+VALUES
+(pizza_no_seq.NEXTVAL, '페퍼로니', 'images/ed01.png', 35000, 25000)
+;
+
+INSERT INTO pizzas
+(pizza_no, pizza_name, pizza_image_src, pizza_L_price, pizza_M_price)
+VALUES
+(pizza_no_seq.NEXTVAL, '치즈', 'images/ed01.png', 35000, 25000)
+;
+
+INSERT INTO doughs
+(dough_no, dough_name, dough_price)
+VALUES
+(dough_no_seq.NEXTVAL, '기본 도우', 0)
+;
+
+INSERT INTO branches
+(branch_no, branch_name, branch_addr_first, branch_addr_second, branch_addr_detail, branch_tel, branch_reg_date)
+VALUES
+(branch_no_seq.NEXTVAL, '종로4가점', '서울시 종로구', '봉익동 율곡로 어디쯤', '디아망빌딩4층', '010-1234-1234', sysdate);
+
+INSERT INTO orders
+(order_no, order_total_price, order_discount_price, order_status, order_receiver_name, order_receiver_tel, user_no, order_request_time, branch_no, order_request_detail, location_no, order_type, order_reg_date)
+VALUES
+(order_no_seq.NEXTVAL, 0, 0, 0, '김김이', '010-1234-1234', 100, sysdate, 100, '빨리배달해주세요', 100, 'O', sysdate );
+
+INSERT INTO pizza_orders
+(pizza_order_no, pizza_no, pizza_size, dough_no, pizza_order_amount, pizza_order_price, pizza_discount_price, order_no)
+VALUES
+(pizza_order_no_seq.NEXTVAL, 101, 'L', 100, 1, 35000, 33000, 100);
+
+INSERT INTO pizza_orders
+(pizza_order_no, pizza_no, pizza_size, dough_no, pizza_order_amount, pizza_order_price, pizza_discount_price, order_no)
+VALUES
+(pizza_order_no_seq.NEXTVAL, 102, 'M', 100, 3, 25000, 23000, 100);
