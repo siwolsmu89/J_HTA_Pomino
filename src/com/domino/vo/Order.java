@@ -11,7 +11,9 @@ public class Order {
 	private String receiverName;
 	private String receiverTel;
 	private int userNo;
-	private String requestTime;
+	private Date requestTime;
+	private int branchNo;
+	private String requestDetail;
 	private int locationNo;
 	private String orderType;
 	private Date regDate;
@@ -74,12 +76,28 @@ public class Order {
 		this.userNo = userNo;
 	}
 
-	public String getRequestTime() {
+	public Date getRequestTime() {
 		return requestTime;
 	}
 
-	public void setRequestTime(String requestTime) {
+	public void setRequestTime(Date requestTime) {
 		this.requestTime = requestTime;
+	}
+	
+	public int getBranchNo() {
+		return branchNo;
+	}
+
+	public void setBranchNo(int branchNo) {
+		this.branchNo = branchNo;
+	}
+
+	public String getRequestDetail() {
+		return requestDetail;
+	}
+
+	public void setRequestDetail(String requestDetail) {
+		this.requestDetail = requestDetail;
 	}
 
 	public int getLocationNo() {

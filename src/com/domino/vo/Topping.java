@@ -6,6 +6,7 @@ public class Topping {
 	private String name;
 	private int price;
 	private String category;
+	private String imageSrc;
 	
 	public Topping() {}
 
@@ -39,6 +40,14 @@ public class Topping {
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public String getImageSrc() {
+		return imageSrc;
+	}
+
+	public void setImageSrc(String imageSrc) {
+		this.imageSrc = imageSrc;
 	}
 	
 }

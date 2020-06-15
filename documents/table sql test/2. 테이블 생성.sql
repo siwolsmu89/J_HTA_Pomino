@@ -53,6 +53,7 @@ CREATE TABLE branches
 	branch_comment varchar2(300),
 	branch_discount_rate number(3,1) DEFAULT 0,
 	branch_quit_yn char DEFAULT 'n',
+	branch_image_src varchar2(300) NOT NULL,
 	PRIMARY KEY (branch_no)
 );
 
@@ -73,6 +74,7 @@ CREATE TABLE doughs
 	dough_no number(3,0) NOT NULL,
 	dough_name varchar2(30) NOT NULL UNIQUE,
 	dough_price number(5,0) NOT NULL,
+	dough_image_src varchar2(300) NOT NULL,
 	PRIMARY KEY (dough_no)
 );
 
@@ -82,6 +84,7 @@ CREATE TABLE etcs
 	etc_no number(3,0) NOT NULL,
 	etc_name varchar2(30) NOT NULL UNIQUE,
 	etc_price number(5,0) NOT NULL,
+	etc_image_src varchar2(300) NOT NULL,
 	PRIMARY KEY (etc_no)
 );
 
@@ -200,6 +203,7 @@ CREATE TABLE sides
 	side_no number(3,0) NOT NULL,
 	side_name varchar2(30) NOT NULL UNIQUE,
 	side_price number(5,0) NOT NULL,
+	side_image_src varchar2(300) NOT NULL,
 	PRIMARY KEY (side_no)
 );
 
@@ -224,6 +228,7 @@ CREATE TABLE toppings
 	topping_name varchar2(30) NOT NULL UNIQUE,
 	topping_price number(5,0) NOT NULL,
 	topping_category number(1) NOT NULL,
+	topping_image_src varchar2(300) NOT NULL,
 	PRIMARY KEY (topping_no)
 );
 

@@ -14,8 +14,66 @@
 <body>
 <%@ include file="../common/navbar.jsp"%>
 <div class="container">
-
-
+	<div class="header">
+		<div class="row">	
+			<div class="col-4"><!-- 페이지명 바꿔서 사용하기 -->
+				<h4>로그인</h4>
+			</div>
+			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
+				<ul class="nav justify-content-end">
+				  <li class="nav-item">
+				    <a class="nav-link active" href="#">홈</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">></a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">로그인</a>
+				  </li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div style="background-color: black; height: 2px;" class="mb-2"></div>
+	<div class="body">
+		<div class="row justify-content-md-center">
+			<div class="col-7">
+				<!-- 로그인 오류시 표시할 오류내용 예시 시작 -->
+				<div class="alert alert-danger">
+	  				<strong>오류!</strong> 아이디 혹은 비밀번호가 일치하지 않습니다.
+				</div>
+				<div class="alert alert-danger">
+	  				<strong>오류!</strong> 해당 페이지는 로그인 후 사용가능합니다.
+				</div>
+				<!-- 로그인 오류시 표시할 오류내용 예시 끝 -->
+				
+				<!-- 로그인 입력폼을 포함하고 있는 card 시작 -->
+				<div class="card ">
+					<div class="card-body">
+						<h3 class="card-title text-center">로그인</h3>
+						<!-- 로그인 입력폼 시작  -->
+						<form method="post" action="login.jsp">
+							<div class="form-group">
+								<label for="user-id">아이디</label>
+								<input type="text" class="form-control" name="userid" id="user-id"/>
+							</div>
+							<div class="form-group">
+								<label for="user-pwd">비밀번호</label>
+								<input type="password" class="form-control" name="userpwd" id="user-pwd"/>
+							</div>
+							<div class="text-right">
+								<button type="submit" class="btn btn-dark btn-lg btn-block">로그인</button>
+								<a class="btn btn-light btn-lg btn-block" href="signupform.jsp">회원가입</a>
+							</div>
+						</form>
+						<!-- 로그인 입력폼 끝  -->
+					</div>
+				</div>
+				<!-- 로그인 입력폼을 포함하고 있는 card 끝 -->
+			</div>
+		</div>
+	</div>
+	<div class="mb-3"></div>
 </div>
 <%@ include file="../common/footer.jsp" %>
 </body>

@@ -17,6 +17,7 @@ public class Branch {
 	private String comment;
 	private double discountRate;
 	private String quitYn;
+	private String imageSrc;
 	
 	public Branch() {}
 
@@ -122,6 +123,14 @@ public class Branch {
 
 	public void setQuitYn(String quitYn) {
 		this.quitYn = quitYn;
+	}
+
+	public String getImageSrc() {
+		return imageSrc;
+	}
+
+	public void setImageSrc(String imageSrc) {
+		this.imageSrc = imageSrc;
 	}
 	
 }

@@ -5,6 +5,7 @@ public class Etc {
 	private int no;
 	private String name;
 	private int price;
+	private String imageSrc;
 	
 	public Etc() {}
 
@@ -30,6 +31,14 @@ public class Etc {
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+
+	public String getImageSrc() {
+		return imageSrc;
+	}
+
+	public void setImageSrc(String imageSrc) {
+		this.imageSrc = imageSrc;
 	}
 	
 }

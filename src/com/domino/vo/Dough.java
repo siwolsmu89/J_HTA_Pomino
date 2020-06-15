@@ -4,6 +4,7 @@ public class Dough {
 	private int no;
 	private String name;
 	private int price;
+	private String imageSrc;
 	
 	public Dough() {}
 
@@ -29,6 +30,14 @@ public class Dough {
 
 	public void setPrice(int price) {
 		this.price = price;
+	}
+
+	public String getImageSrc() {
+		return imageSrc;
+	}
+
+	public void setImageSrc(String imageSrc) {
+		this.imageSrc = imageSrc;
 	}
 	
 }

@@ -35,13 +35,13 @@
 			</div>
 		</div>
 	</div>
-	<hr/>
+	<div style="background-color: black; height: 2px;" class="mb-2"></div>
 	<div class="body">
 			<div class="row">
 				<div class="col-12">
 					<ul class="nav nav-pills nav-fill">
 					  <li class="nav-item">
-					    <a class="nav-link active" href="#">01 개인정보입력</a>
+					    <a class="nav-link bg-secondary text-white" href="#">01 개인정보입력</a>
 					  </li>
 					 <li class="nav-item">
 					    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">02 가입완료</a>
@@ -50,7 +50,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-12">
+				<div class="col-12 mt-2">
 				<!-- 회원가입시 표시할 오류내용 시작  -->
 					<div class="alert alert-danger">
 						<strong>오류!</strong> 회원가입 정보가 올바르지 않습니다.
@@ -159,6 +159,7 @@
 		</div>
 		<!-- 오류알림과 입력폼을 포함하는 row 끝 -->
 	</div>
+	<div class="mb-3"></div>
 </div>
 <%@ include file="../common/footer.jsp" %>
 </body>

@@ -33,7 +33,7 @@
 						<li class="nav-item"><a class="nav-link active" href="#">관리자</a></li>
 						<li class="nav-item"><a class="nav-link disabled" href="#"
 							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link active" href="#">메인</a></li>
+						<li class="nav-item"><a class="nav-link disabled" href="#">메인</a></li>
 					</ul>
 				</div>
 			</div>
@@ -50,6 +50,7 @@
 				</ul>
 			</div>
 		</div>
+		
 		<div class="row">
 			<div class="col-4">
 				<div class="card">
@@ -113,6 +114,7 @@
 			<div class="col-12">
 				<div class="card">
 					<div class="card-body">
+					
 						<table class="table text-center">
 							<colgroup>
 								<col width="10%">
@@ -146,7 +148,7 @@
 									<td>강감찬</td>
 									<td>피자맛 관련해서 xx매장 문의드렸는데 ...</td>
 									<td>
-										<button class="btn btn-secondary">답변완료</button>
+										<button class="btn btn-primary">답변대기</button>
 									</td>
 								</tr>
 							</tbody>

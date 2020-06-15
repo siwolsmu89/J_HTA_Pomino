@@ -54,15 +54,15 @@ VALUES
 ;
 
 INSERT INTO doughs
-(dough_no, dough_name, dough_price)
+(dough_no, dough_name, dough_price, dough_image_src)
 VALUES
-(dough_no_seq.NEXTVAL, '기본 도우', 0)
+(dough_no_seq.NEXTVAL, '기본 도우', 0, 'images/dough.png')
 ;
 
 INSERT INTO branches
-(branch_no, branch_name, branch_addr_first, branch_addr_second, branch_addr_detail, branch_tel, branch_reg_date)
+(branch_no, branch_name, branch_addr_first, branch_addr_second, branch_addr_detail, branch_tel, branch_reg_date, branch_image_src)
 VALUES
-(branch_no_seq.NEXTVAL, '종로4가점', '서울시 종로구', '봉익동 율곡로 어디쯤', '디아망빌딩4층', '010-1234-1234', sysdate);
+(branch_no_seq.NEXTVAL, '종로4가점', '서울시 종로구', '봉익동 율곡로 어디쯤', '디아망빌딩4층', '010-1234-1234', sysdate, 'images/branch.png');
 
 INSERT INTO orders
 (order_no, order_total_price, order_discount_price, order_status, order_receiver_name, order_receiver_tel, user_no, order_request_time, branch_no, order_request_detail, location_no, order_type, order_reg_date)

@@ -34,7 +34,7 @@
 			</div>
 		</div>
 	</div>
-	<hr/>
+	<div style="background-color: black; height: 2px;" class="mb-2"></div>
 	<div class="body">
 		<div class="row">
 			<div class="col-12">
@@ -64,15 +64,17 @@
 		<div class="row">
 			<div class="col-12 text-center">
 				<h6>다양한 메뉴와 이벤트를 살펴보세요~</h6>
+				<div class="mb-3"></div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-12 text-center">
-				<a href="../home.jsp" class="btn btn-secondary btn-lg" role="button">Home</a>
-				<a href="#" class="btn btn-info btn-lg" role="button">로그인</a>
+				<a href="../common/home.jsp" class="btn btn-secondary btn-lg" role="button">Home</a>
+				<a href="" class="btn btn-info btn-lg" role="button">로그인</a>
 			</div>
 		</div>
 	</div>
+	<div class="mb-3"></div>
 </div>
 <%@ include file="../common/footer.jsp" %>
 </body>
