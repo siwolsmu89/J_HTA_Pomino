@@ -11,9 +11,14 @@
 	<jsp-property-group>
 		
 		<url-pattern>/home.jsp</url-pattern>
-		<url-pattern>/board/*</url-pattern>
-		<url-pattern>/reply/*</url-pattern>
 		<url-pattern>/user/*</url-pattern>
+		<url-pattern>/order/*</url-pattern>
+		<url-pattern>/branch/*</url-pattern>
+		<url-pattern>/event/*</url-pattern>
+		<url-pattern>/manager/*</url-pattern>
+		<url-pattern>/pizza/*</url-pattern>
+		<url-pattern>/etc/*</url-pattern>
+		<url-pattern>/side/*</url-pattern>
 		<include-prelude>/common/session.jsp</include-prelude>
 	</jsp-property-group>
 </jsp-config>

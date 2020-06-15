@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"> 
 <head>
   <title></title>
   <meta charset="utf-8">
@@ -17,17 +17,15 @@
   </style>
 </head>
 <body>
-<div class="container"><!-- 내비 컨테이너 -->
+<div class="container mt-3"><!-- 내비 컨테이너 -->
 	<div class="row">
 		<div class="col-12">
 			<div class="row">
-		
 				<div class="col-3"> <!-- 로고 -->
 					<a class="navbar-brand" href="home.jsp">
-						<img src="../resource/images/domino.PNG" alt="도미노 로고"/>
+						<img src="../resource/images/logo/domino.png" alt="도미노 로고"/>
 					</a> 
 				</div>
-				
 				<div class="col-6">	<!-- 검색창 -->
 					<div class="row row-vh align-items-center">
 						<div class="col-12">
@@ -37,9 +35,7 @@
 							</form>
 						</div>
 					</div>
-					
 				</div>
-				
 				<div class="col-3"><!-- 작은 버튼 -->
 					<div class="row">
 						<div class="col-6"><small><a class="btn">로그인</a></small></div>
@@ -47,7 +43,6 @@
 					</div>
 				</div>
 			</div>
-			
 			<div class="row"><!-- 메뉴바 -->
 				<div class="col-10"><!-- 상세메뉴 -->
 					<div class="navbar navbar-expand-sm ">
