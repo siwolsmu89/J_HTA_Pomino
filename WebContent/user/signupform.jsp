@@ -101,7 +101,9 @@
 							</div>
 							<div class="form-group">
 								<label>생년월일</label>
-								
+								<div>
+									<input type="date" id="birth"/>
+								</div>
 							</div>
 							<!-- 라디오버튼 예시 시작 -->
 							<div class="form-group">

@@ -40,22 +40,22 @@
 				</ul>
 			</div>
 		</div>
-	</div>
 	<div style="background-color: black; height: 2px;" class="mb-2"></div>
-	<div class="body">
-		<div class="row">
+			<div class="row">
 			<div class="col-12">
 				<div class="navbar navbar-expand-sm ">
 					<ul class="navbar-nav">
 						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-dark font-weight-bold" href="detailform.jsp">매니아등급</a></li>
 						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="orderlist.jsp">주문내역</a></li>
 						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="">1:1문의</a></li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="">정보수정</a></li>
+						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="modifyform.jsp">정보수정</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 		
+	</div>
+	<div class="body">
 		<div class="row">
 			<div class="col-12">
 				<div class="jumbotron bg-dark text-white">
@@ -66,13 +66,13 @@
 						  <p><a class="text-muted" href="#"><small>등급별 혜택 보기 ></small></a></p>
 						</div>
 						<div class="col-3" style="border-left: 1px solid white; border-right: 1px solid white;">
-							<p><a class="text-muted" href="#"><small>주문</small></a></p>
-							<p><a class="text-muted" href="#"><small>(2020-01~2021~01)</small></a></p>
+							<p class="text-muted"><small>주문</small></p>
+							<p class="text-muted"><small>(2020-01~2021~01)</small></p>
 							<p class="display-4 text-center font-weight-bold">1</p>
 						</div>
 						<div class="col-3">
-							<p><a class="text-muted" href="#"><small>총 주문금액</small></a></p>
-							<p><a class="text-muted" href="#"><small>(2020-01~2021~01)</small></a></p>
+							<p class="text-muted"><small>총 주문금액</small></p>
+							<p class="text-muted"><small>(2020-01~2021~01)</small></p>
 							<p class="display-4 text-center font-weight-bold">61,900</p>
 						</div>
 					</div>

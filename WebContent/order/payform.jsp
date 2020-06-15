@@ -110,13 +110,16 @@
 						</div>
 						<div id="input-comment">
 							<label>요청사항</label>
-							<select name="request">
+							<select name="request" onchange="inputCheck(event)">
 								<option value="" selected disabled>요청사항을 선택하세요.</option>
 								<option value="" >문 앞에 놓아주세요.</option>
 								<option value="" >피클은 빼주세요.</option>
 								<option value="" >벨은 누르지 말아주세요.</option>
-								<option value="" >직접 입력</option>
+								<option value="self" >직접 입력</option>
 							</select>
+						</div>
+						<div id="request-self" style="display: none;" >
+							<input type="text" name="self_input" />
 						</div>
 					</form>
 					<div id="payform-orderlog">
@@ -198,7 +201,17 @@
 			
 			xhr.send();
 		}
+	}
 	
+	function inputCheck(event) {
+		var selectBox = event.target;
+		var value = selectBox.options[selectBox.selectedIndex].value;
+		if ("self"==value) {
+			document.querySelector("#request-self").style = "display: block";
+		} else {
+			document.querySelector("#request-self").style = "display: none";
+		}
+		
 	}
 	
 	function toggleCheck() {

@@ -39,22 +39,21 @@
 				</ul>
 			</div>
 		</div>
-	</div>
 	<div style="background-color: black; height: 2px;" class="mb-2"></div>
-	<div class="body">
-		<div class="row">
+	<div class="row">
 			<div class="col-12">
 				<div class="navbar navbar-expand-sm ">
 					<ul class="navbar-nav">
 						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="detailform.jsp">매니아등급</a></li>
 						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-dark font-weight-bold" href="orderlist.jsp">주문내역</a></li>
 						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="">1:1문의</a></li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="">정보수정</a></li>
+						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="modifyform.jsp">정보수정</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
-		
+	</div>
+	<div class="body">
 		<div class="row">
 			<div class="col-12">
 				<div class="jumbotron bg-dark text-white">
@@ -64,14 +63,85 @@
 						  <div style="background-color: white; height: 2px; width: 65%;" class="my-3"></div>
 						  <p class="text-muted">주문을 취소하시려면 해당 매장으로 전화하셔야 합니다.</p>
 						</div>
-						<div class="col-3">
-						  <p><a class="text-muted text-center" href="#"><small>이용안내 ></small></a></p>
+						<div class="col-3 text-right">
+						  <p><a class="text-muted" href="#"><small>이용안내 ></small></a></p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		<div class="row">
+			<div class="col-12">
+				<p class="text-center font-weight-bold" style="border: 1px solid black; border-bottom: none;">피자 주문</p>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-12">
+				<div class="m-4 p-4 text-center font-weight-bold">
+					<p>주문내역이 없습니다.</p>
+				</div>
+				<hr/>	
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-12 text-center">
+				<a href="#" class="btn btn-info btn-lg" role="button">신제품보러가기</a>
+				<a href="#" class="btn btn-secondary btn-lg" role="button">다른제품 보러가기</a>
+			</div>
+		</div>
+		
+		<!-- 
+		<div class="row">
+			<div class="col-12">
+			
+				<div class="row small font-weight-bold">
+					<div class="col-6 text-left"> 
+						<div class="row">
+							<div class="col-2">
+								<p>배달</p>
+							</div>
+							<div class="col-5">
+								<p>주문번호 12121212121</p>
+							</div>
+							<div class="col-5">
+								<p>주문일자 20200506</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 text-right"> 
+						<div class="row">
+							<div class="col-6"></div>
+							<div class="col-3">
+								<div><a class="text-dark" href="#">+재주문하기</a></div>
+							</div>	
+							<div class="col-3">
+								<div><a class="text-muted" href="#">+퀵오더등록</a></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<hr/>
+				<div class="row">
+					<div class="col-3">
+						<h4 class="">수령완료</h4>
+						<p class="small text-muted">안양석수점 031-1111-1212</p>
+					</div>
+					<div class="col-6 text-center">
+						<p>시리얼 칠리크랩 슈퍼시드 함유도우 슈퍼시드 함유 도우 27,650원</p>
+					</div>
+					<div class="col-3 text-right text-white">
+						<a type="button" class="btn btn-dark small font-weight-bold">상세보기</a>
+					</div>
+				</div>
+			</div>
+		</div>
+			 -->
 	</div>
+	<div class="mb-3"></div>
 </div>
 <%@ include file="../common/footer.jsp" %>
 </body>

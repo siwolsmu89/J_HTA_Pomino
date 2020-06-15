@@ -37,68 +37,80 @@
 					</ul>
 				</div>
 			</div>
-		</div>
-		<div class="row ">
-			<div class="col-12">
-				<ul class="nav nav-tabs justify-content-around">
-					<li class="nav-item"><a class="nav-link" href="#">메인</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">주문</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">메뉴</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">이벤트</a></li>
-					<li class="nav-item"><a class="nav-link active" href="#">1:1문의</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">가맹점</a></li>
-				</ul>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-12">
-				<div class="card">
-					<div class="card-body">
-					
-						<table class="table text-center">
-							<colgroup>
-								<col width="10%">
-								<col width="20%">
-								<col width="20%">
-								<col width="*%">
-								<col width="15%">
-							</colgroup>
-							<thead class="thead thead-dark">
-								<tr>
-									<th>번호</th>
-									<th>작성자</th>
-									<th>제목</th>
-									<th>등록일</th>
-									<th>처리상태</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>108</td>
-									<td>서비스</td>
-									<td>홍길동</td>
-									<td>xxx매장 직원 불친절 신고</td>
-									<td>
-										<button class="btn btn-primary">답변대기</button>
-									</td>
-								</tr>
-								<tr>
-									<td>105</td>
-									<td>서비스</td>
-									<td>홍길동</td>
-									<td>xxx매장 직원 불친절 신고</td>
-									<td>
-										<button class="btn btn-secondary">답변완료</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+			<div style="background-color: black; height: 2px;" class="mb-2"></div>
+			<div class="row ">
+				<div class="col-12">
+					<div class="navbar navbar-expand-sm ">
+						<ul class="navbar-nav">
+							<li
+								class="nav-item  d-flex justify-content-between align-itens-center small"><a
+								class="nav-link text-muted " href="info.jsp">메인</a></li>
+							<li
+								class="nav-item  d-flex justify-content-between align-itens-center small"><a
+								class="nav-link text-muted " href="orderlist.jsp">주문</a></li>
+							<li
+								class="nav-item  d-flex justify-content-between align-itens-center small"><a
+								class="nav-link text-muted" href="menulist.jsp">메뉴</a></li>
+							<li
+								class="nav-item  d-flex justify-content-between align-itens-center small"><a
+								class="nav-link text-muted" href="eventlist.jsp">이벤트</a></li>
+							<li
+								class="nav-item  d-flex justify-content-between align-itens-center small"><a
+								class="nav-link text-dark font-weight-bold" href="qnaboard.jsp">1:1문의</a></li>
+							<li
+								class="nav-item  d-flex justify-content-between align-itens-center small"><a
+								class="nav-link text-muted" href="branchlist.jsp">가맹점</a></li>
+						</ul>
 					</div>
 				</div>
 			</div>
-
 		</div>
+
+		<div class="body">
+			<div class="row">
+				<div class="col-12">
+					<table class="table text-center">
+						<colgroup>
+							<col width="10%">
+							<col width="20%">
+							<col width="20%">
+							<col width="*%">
+							<col width="15%">
+						</colgroup>
+						<thead class="thead thead-dark">
+							<tr>
+								<th>번호</th>
+								<th>작성자</th>
+								<th>제목</th>
+								<th>등록일</th>
+								<th>처리상태</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>108</td>
+								<td>서비스</td>
+								<td>홍길동</td>
+								<td>xxx매장 직원 불친절 신고</td>
+								<td>
+									<button class="btn btn-primary">답변대기</button>
+								</td>
+							</tr>
+							<tr>
+								<td>105</td>
+								<td>서비스</td>
+								<td>홍길동</td>
+								<td>xxx매장 직원 불친절 신고</td>
+								<td>
+									<button class="btn btn-secondary">답변완료</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
 	</div>
 	<%@ include file="../common/footer.jsp"%>
 </body>
