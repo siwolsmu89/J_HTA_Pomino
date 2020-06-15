@@ -41,7 +41,7 @@
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
 			<export_ddl_setting>
-				<output_path>src\domino_table_diagram.sql</output_path>
+				<output_path>documents\table sql test\2. 테이블 생성.sql</output_path>
 				<encoding>UTF-8</encoding>
 				<line_feed>CR+LF</line_feed>
 				<is_open_after_saved>true</is_open_after_saved>
@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2020-06-12 13:33:05</creation_date>
-			<updated_date>2020-06-15 09:14:24</updated_date>
+			<updated_date>2020-06-15 09:17:34</updated_date>
 			<model_property>
 				<name>프로젝트명</name>
 				<value></value>
@@ -4606,7 +4606,7 @@
 			<connections>
 				<relation>
 					<id>7</id>
-					<source>7</source>
+					<source>0</source>
 					<target>8</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -4628,7 +4628,7 @@
 				</relation>
 				<relation>
 					<id>8</id>
-					<source>0</source>
+					<source>7</source>
 					<target>8</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -4692,7 +4692,7 @@
 				<normal_column>
 					<id>74</id>
 					<referenced_column>70</referenced_column>
-					<relation>7</relation>
+					<relation>8</relation>
 					<description>사이드 테이블 PK 참조</description>
 					<unique_key_name></unique_key_name>
 					<logical_name>사이드 번호</logical_name>
@@ -4792,7 +4792,7 @@
 				<normal_column>
 					<id>77</id>
 					<referenced_column>0</referenced_column>
-					<relation>8</relation>
+					<relation>7</relation>
 					<description>주문 테이블 PK 참조</description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -5253,7 +5253,7 @@
 			<connections>
 				<relation>
 					<id>11</id>
-					<source>9</source>
+					<source>1</source>
 					<target>11</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -5275,7 +5275,7 @@
 				</relation>
 				<relation>
 					<id>12</id>
-					<source>1</source>
+					<source>9</source>
 					<target>11</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -5339,7 +5339,7 @@
 				<normal_column>
 					<id>88</id>
 					<referenced_column>13</referenced_column>
-					<relation>12</relation>
+					<relation>11</relation>
 					<description>피자 주문 상세 테이블 PK 참조</description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -5373,7 +5373,7 @@
 				<normal_column>
 					<id>89</id>
 					<referenced_column>78</referenced_column>
-					<relation>11</relation>
+					<relation>12</relation>
 					<description>토핑 테이블 PK 참조</description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
