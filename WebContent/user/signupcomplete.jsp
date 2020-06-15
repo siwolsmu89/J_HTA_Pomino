@@ -43,7 +43,7 @@
 				    <a class="nav-link disabled" href="#">01 개인정보입력</a>
 				  </li>
 				 <li class="nav-item">
-				    <a class="nav-link active" href="#" tabindex="-1" aria-disabled="true">02 가입완료</a>
+				    <a class="nav-link bg-secondary text-white" href="#" tabindex="-1" aria-disabled="true">02 가입완료</a>
 				  </li>
 				</ul>
 			</div>

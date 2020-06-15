@@ -1,3 +1,7 @@
+<%@page import="com.domino.dto.PizzaOrderDto"%>
+<%@page import="com.domino.dao.OrderDetailDao"%>
+<%@page import="com.domino.vo.EtcOrder"%>
+<%@page import="com.domino.vo.SideOrder"%>
 <%@page import="com.domino.dao.BranchDao"%>
 <%@page import="com.domino.dao.LocationDao"%>
 <%@page import="com.domino.dao.OrderDao"%>
@@ -62,6 +66,9 @@
 		
 		BranchDao branchDao = new BranchDao();
 		Branch branch = branchDao.getBranchByNo(cart.getBranchNo());
+		
+		int allTotalPrice = 0;
+		int allTotalDiscountPrice = 0;
 	%>	
 	
 	<div class="body">
@@ -129,12 +136,35 @@
 						<div>
 							<!--for문을 돌려서 주문번호에 일치하는 모든 피자주문내역, 사이드주문내역, 기타주문내역 가져오기 -->
 							<%
+								int orderNo = cart.getNo();
+								
+								OrderDetailDao orderDetailDao = new OrderDetailDao();
+								List<PizzaOrderDto> pol = orderDetailDao.getPizzaOrdersByOrderNo(orderNo);
+								
+								if (!pol.isEmpty()) {
+									for (PizzaOrderDto po : pol) {
+										String pizzaName = po.getPizzaName() + " " + po.getDoughName();
+										String size = po.getPizzaSize();
+										int price = po.getTotalOrderPrice();
+										allTotalDiscountPrice += po.getTotalDiscountPrice();
+										allTotalPrice += price;
 							%>
-							<div>
-								<h6>주문내역에 있는 제품명 x 수량</h6>
+									<p><%=pizzaName %> <%=size %> x <%=po.getOrderAmount() %> / <%=price %></p>
+									<hr/>
+							<%		
+									}
+								//List<SideOrder> sol = orderDetailDao.getSideOrderByOrderNo(orderNo); 
+								//List<EtcOrder> eol = orderDetailDao.getEtcOrderByOrderNo(orderNo); 
+									
+								}
+								
+								
+							%>
+							<div id="orderlog-main">
+								
 							</div>
-							<div>
-								<p>주문내역에 있는 제품명 x 수량 / 총 가격(할인미적용)</p>
+							<div id="orderlog-detail">
+							
 							</div>
 						</div>	
 					</div>
@@ -143,21 +173,21 @@
 						<div class="row justify-content-center">
 							<div class="col-2">
 								<label>총 상품금액</label>
-								<p><%=cart.getTotalPrice() %>원</p>
+								<p><%=allTotalPrice %>원</p>
 							</div>
 							<div class="col-2">
 								<p>-</p>
 							</div>
 							<div class="col-2">
 								<label>총 할인금액</label>
-								<p>123원</p>
+								<p><%=allTotalPrice - allTotalDiscountPrice %></p>
 							</div>
 							<div class="col-2">
 								<p>=</p>
 							</div>
 							<div class="col-2">
 								<label>총 결제금액</label>
-								<p><%=cart.getDiscountPrice() %>원</p>
+								<p><%=allTotalDiscountPrice %>원</p>
 							</div>
 						</div>		
 						<div class="text-center">

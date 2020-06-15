@@ -69,6 +69,39 @@
 		<div class="body">
 			<div class="row">
 				<div class="col-12">
+					<form>
+						<div class="row">
+							<!-- 검색조건 입력폼 시작 -->
+							<div class="col-6">
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<select class="form-control" name="searchOption">
+											<option value="qnano">문의번호</option>
+											<option value="qnawriter">작성자</option>
+											<option value="qnadate">등록일</option>
+										</select>
+									</div>
+									<input type="text" class="form-control"
+										placeholder="검색어를 입력하세요">
+									<div class="input-group-append">
+										<button class="btn btn-outline-secondary" type="button">조회</button>
+									</div>
+								</div>
+							</div>
+							<!-- 검색조건 입력폼 끝 -->
+							<!-- 정렬기준 선택 시작  -->
+							<div class="col-2 offset-4">
+								<div class="input-group mb-3">
+									<select class="form-control" name="sort">
+										<option value="total">전체보기</option>
+										<option value="complete">완료된 글</option>
+										<option value="wait">답변대기 글</option>
+									</select>
+								</div>
+							</div>
+							<!-- 정렬기준 선택 끝  -->
+						</div>
+					</form>
 					<table class="table text-center">
 						<colgroup>
 							<col width="10%">
@@ -89,17 +122,18 @@
 						<tbody>
 							<tr>
 								<td>108</td>
-								<td>서비스</td>
 								<td>홍길동</td>
+								<td>서비스 불만</td>
 								<td>xxx매장 직원 불친절 신고</td>
 								<td>
-									<button class="btn btn-primary">답변대기</button>
+									<button type="button" class="btn btn-primary"
+										data-toggle="modal" data-target="#qnadetail">답변대기</button>
 								</td>
 							</tr>
 							<tr>
 								<td>105</td>
-								<td>서비스</td>
 								<td>홍길동</td>
+								<td>서비스 불만</td>
 								<td>xxx매장 직원 불친절 신고</td>
 								<td>
 									<button class="btn btn-secondary">답변완료</button>
@@ -107,6 +141,86 @@
 							</tr>
 						</tbody>
 					</table>
+
+					<!-- Modal - qnadetail -->
+					<div class="modal fade" id="qnadetail" tabindex="-1" role="dialog"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">1:1 문의</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+										<div class="col-12">
+											<form method="post" action="#">
+												<div class="form-group">
+													<label>작성자</label>
+													<input type="text" class="form-control"
+														name="userid" />
+												</div>
+												<div class="form-group">
+													<label>연락처</label> <input type="password"
+														class="form-control" name="userpwd" />
+												</div>
+												<div class="form-group">
+													<label>이메일</label> <input type="text" class="form-control"
+														name="id" />
+												</div>
+												<div class="form-group">
+													<label>문의유형</label> <input type="text" class="form-control"
+														name="id" />
+												</div>
+												<div class="form-group">
+													<label>이용매장</label> <input type="text" class="form-control"
+														name="id" />
+												</div>
+												<div class="form-group">
+													<label>제목</label> <input type="text" class="form-control"
+														name="id" />
+												</div>
+
+												<!-- 텍스트입력화면 예시 끝 -->
+												<div class="form-group">
+													<label for="desc-1">문의내용</label>
+													<textarea class="form-control" rows="5" name="description"
+														id="desc-1"></textarea>
+												</div>
+												<!-- 텍스트입력화면 예시 끝 -->
+												<div class="text-right">
+													<button type="submit" class="btn btn-primary">회원가입</button>
+												</div>
+											</form>
+										</div>
+									</div>
+									<div class="row"></div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">다시 작성</button>
+									<button type="button" class="btn btn-primary">답변 등록</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- 페이지 처리 시작 -->
+					<ul class="pagination justify-content-center"
+						style="margin: 20px 0">
+						<li class="page-item "><a class="page-link" href="#">이전</a></li>
+						<li class="page-item active"><a class="page-link" href="#">1</a></li>
+						<li class="page-item "><a class="page-link" href="#">2</a></li>
+						<li class="page-item"><a class="page-link" href="#">3</a></li>
+						<li class="page-item"><a class="page-link" href="#">4</a></li>
+						<li class="page-item"><a class="page-link" href="#">5</a></li>
+						<li class="page-item"><a class="page-link" href="#">다음</a></li>
+					</ul>
+					<!-- 페이지 처리 끝 -->
+
 				</div>
 			</div>
 		</div>
