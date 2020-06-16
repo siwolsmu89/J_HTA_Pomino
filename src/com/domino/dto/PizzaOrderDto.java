@@ -1,5 +1,11 @@
 package com.domino.dto;
 
+/**
+ * 피자 상세 주문 Dto
+ * 피자 상세 주문 vo + 피자명, 도우명, 피자가격+도우가격 등의 추가 정보를 담는 Dto 객체
+ * @author 민석
+ *
+ */
 public class PizzaOrderDto {
 
 	private int no;
@@ -7,14 +13,23 @@ public class PizzaOrderDto {
 	private String pizzaSize;
 	private int doughNo;
 	private int orderAmount;
+	/**
+	 *  orderPrice : 피자+도우 가격 * 수량
+	 */
 	private int orderPrice;
+	/**
+	 *  discountPrice : 피자+도우 할인 가격 * 수량
+	 */
 	private int discountPrice;
 	private int orderNo;
 	private String pizzaName;
 	private String doughName;
 	private int doughPrice;
-	private int totalOrderPrice;
-	private int totalDiscountPrice;
+	/**
+	 * pizzaPrice : 할인되지 않은 피자 가격(1판)
+	 * Dao에서 size를 확인한 후, L이면 L가격을, M이면 M가격을 담아야 함
+	 */
+	private int pizzaPrice;
 	
 	public PizzaOrderDto() {}
 
@@ -74,20 +89,12 @@ public class PizzaOrderDto {
 		this.discountPrice = discountPrice;
 	}
 
-	public int getTotalOrderPrice() {
-		return totalOrderPrice;
+	public int getPizzaPrice() {
+		return pizzaPrice;
 	}
 
-	public void setTotalOrderPrice(int totalOrderPrice) {
-		this.totalOrderPrice = totalOrderPrice;
-	}
-
-	public int getTotalDiscountPrice() {
-		return totalDiscountPrice;
-	}
-
-	public void setTotalDiscountPrice(int totalDiscountPrice) {
-		this.totalDiscountPrice = totalDiscountPrice;
+	public void setPizzaPrice(int pizzaPrice) {
+		this.pizzaPrice = pizzaPrice;
 	}
 
 	public int getOrderNo() {

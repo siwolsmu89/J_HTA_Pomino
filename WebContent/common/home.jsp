@@ -10,21 +10,63 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 
 <div>
 
 	<%@ include file="../common/navbar.jsp"%>
-	<div class="container"> <!-- 몸체 시작 -->
-		<div>
-		
-			<div class="row">			<!-- 슬라이드 배너 -->
+
+			
+			<!-- 배너 광고 시작 --> <!-- 배너는 컨테이너 포함x -->
+			<div class="row">
 				<div class="col-12">
-					<a href="#"><img src="../resource/images/home/20200612_6v9GzSm6.jpg" alt="이벤트 테스트" /></a>
+					<!-- 배너광고 슬라이드 시작  -->
+					<div id="demo" class="carousel slide" data-ride="carousel">
+		  				<!-- 배너의 하단에 표시되는 바로가기 표시 시작  -->
+		  				<ol class="carousel-indicators">
+		    				<li data-target="#demo" data-slide-to="0" class="active"></li>
+		    				<li data-target="#demo" data-slide-to="1"></li>
+		    				<li data-target="#demo" data-slide-to="2"></li>
+		  				</ol>
+		  				<!-- 배너의 하단에 표시되는 바로가기 표시 끝  -->
+		
+		  				<!-- 배너 이미지 시작 -->
+		  				<div class="carousel-inner">
+		    				<div class="carousel-item active">
+		    					<a href="">	<!-- 이벤트 링크 등록 -->
+			      					<img src="../resource/images/banners/20200401_sJg8GN4w.jpg" alt="설명1">
+		    					</a>
+		    				</div>
+		    				<div class="carousel-item">
+		      					<a href="">	<!-- 이벤트 링크 등록 -->
+			      					<img src="../resource/images/banners/20200428_MTAHCg8j.jpg" alt="설명2">
+		    					</a>
+		    				</div>
+		    				<div class="carousel-item">
+		      					<a href="">	<!-- 이벤트 링크 등록 -->
+			      					<img src="../resource/images/banners/20200311_N85WARBN.jpg" alt="설명3">
+		    					</a>
+		    				</div>
+		  			</div>
+  					<!-- 배너 이미지 끝 -->
+
+		  			<!-- 이전/다음 표시 시작 -->
+		  			<a class="carousel-control-prev" href="#demo" data-slide="prev">
+		    			<span class="carousel-control-prev-icon"></span>
+		  			</a>
+		  			<a class="carousel-control-next" href="#demo" data-slide="next">
+		    			<span class="carousel-control-next-icon"></span>
+		  			</a>
+		  			<!-- 이전/다음 표시 끝 -->
+					</div>
+					<!-- 배너광고 슬라이드 끝  -->
 				</div>
 			</div>
-			
+			<!-- 배너 광고 끝 -->
+	<div class="container"> <!-- 몸체 시작 -->
+		<div>		
 			<div>	<!-- 배달, 포장 주문 버튼 (버튼 2개임)-->
 				<div class="row">
 					<div class="col-12">

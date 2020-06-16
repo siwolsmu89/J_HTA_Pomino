@@ -1,25 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-  version="4.0"
-  metadata-complete="true">
+	version="4.0" metadata-complete="true">
 
-<jsp-config>
-	<jsp-property-group>
-		
-		<url-pattern>/home.jsp</url-pattern>
-		<url-pattern>/user/*</url-pattern>
-		<url-pattern>/order/*</url-pattern>
-		<url-pattern>/branch/*</url-pattern>
-		<url-pattern>/event/*</url-pattern>
-		<url-pattern>/manager/*</url-pattern>
-		<url-pattern>/pizza/*</url-pattern>
-		<url-pattern>/etc/*</url-pattern>
-		<url-pattern>/side/*</url-pattern>
-		<include-prelude>/common/session.jsp</include-prelude>
-	</jsp-property-group>
-</jsp-config>
+	<jsp-config>
+		<jsp-property-group>
+
+			<url-pattern>/common/home.jsp</url-pattern>
+			<url-pattern>/user/*</url-pattern>
+			<url-pattern>/order/*</url-pattern>
+			<url-pattern>/branch/*</url-pattern>
+			<url-pattern>/event/*</url-pattern>
+			<url-pattern>/manager/*</url-pattern>
+			<url-pattern>/pizza/*</url-pattern>
+			<url-pattern>/etc/*</url-pattern>
+			<url-pattern>/side/*</url-pattern>
+			<include-prelude>/common/session.jsp</include-prelude>
+		</jsp-property-group>
+	</jsp-config>
+	
+	<!-- 파일 업다운로드 관련 xml설정 -->
+	<context-param>
+		<param-name>maxUploadFileSize</param-name>
+		<param-value>104857600</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>maxUploadFileCount</param-name>
+		<param-value>10</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>pizzaImgSaveDirectory</param-name>
+		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\pizza</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>sidemenuImgSaveDirectory</param-name>
+		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\pizza</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>doughImgSaveDirectory</param-name>
+		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\pizza</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>toppingImgSaveDirectory</param-name>
+		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\pizza</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>etcmenuImgSaveDirectory</param-name>
+		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\pizza</param-value>
+	</context-param>
+	
 </web-app>

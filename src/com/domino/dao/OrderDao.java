@@ -11,6 +11,13 @@ import com.domino.vo.Order;
 
 public class OrderDao {
 	
+	/**
+	 * ResultSet에서 가져온 정보들을 Order 객체에 담는 메소드. 다른 메소드 안에서만 사용할 것이므로 private 제한자를 지정
+	 * @param ResultSet rs
+	 * @return 정보가 채워진 Order 객체
+	 * @throws SQLException
+	 * @author 민석
+	 */
 	private Order resultSetToOrder(ResultSet rs) throws SQLException {
 		Order order = new Order();
 		
@@ -31,6 +38,14 @@ public class OrderDao {
 		return order;
 	}
 
+	/**
+	 * 사용자 번호와 일치하는 장바구니 정보를 조회하는 메소드
+	 * 장바구니는 주문 정보 테이블에서 type이 'C'(cart)로 지정된 것을 의미
+	 * @param userNo 사용자 번호
+	 * @return 조회에 성공할 경우 장바구니 정보가 들어있는 Order 객체 반환, 실패 시 null을 반환
+	 * @throws SQLException
+	 * @author 민석
+	 */
 	public Order getCartByUserNo(int userNo) throws SQLException {
 		Order order = null;
 		

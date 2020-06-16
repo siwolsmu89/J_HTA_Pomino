@@ -1,3 +1,6 @@
+<%@page import="com.domino.vo.Pizza"%>
+<%@page import="java.util.List"%>
+<%@page import="com.domino.dao.PizzaDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -87,6 +90,10 @@
 						</div>
 					</form>
 					<!-- 피자 메뉴 -->
+					<%
+						PizzaDao pizzaDao = new PizzaDao();
+						List<Pizza> pizzas = pizzaDao.getAllPizza();
+					%>
 					<table id="pizza-menu" class="table text-center">
 						<colgroup>
 							<col width="10%">
@@ -112,50 +119,23 @@
 							</tr>
 						</thead>
 						<tbody>
+						<%
+							for(Pizza pizza : pizzas) {
+						%>						
 							<tr>
-								<td>1</td>
-								<td>불고기피자</td>
-								<td>23000원</td>
-								<td>18000원</td>
-								<td>N</td>
-								<td>여름방학시즌</td>
+								<td><%=pizza.getNo() %></td>
+								<td><%=pizza.getName() %></td>
+								<td><%=pizza.getLprice() %>원</td>
+								<td><%=pizza.getMprice() %>원</td>
+								<td><%=pizza.getDisableYn() %></td>
+								<td>여름방학시즌(피자테이블 + 이벤트테이블 조인)</td>
 								<td><a class="btn btn-primary text-light"
 									href="pizzamodifyform.jsp">수정</a></td>
 								<td><a class="btn btn-danger text-light">비활성</a></td>
 							</tr>
-							<tr>
-								<td>2</td>
-								<td>고구마</td>
-								<td>24000원</td>
-								<td>18500원</td>
-								<td>N</td>
-								<td>어버이날</td>
-								<td><a class="btn btn-primary text-light"
-									href="pizzamodifyform.jsp">수정</a></td>
-								<td><a class="btn btn-danger text-light">비활성</a></td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>포티이토피자</td>
-								<td>22000원</td>
-								<td>17500원</td>
-								<td>N</td>
-								<td>-</td>
-								<td><a class="btn btn-primary text-light"
-									href="pizzamodifyform.jsp">수정</a></td>
-								<td><a class="btn btn-danger text-light">비활성</a></td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>페퍼로니피자</td>
-								<td>20000원</td>
-								<td>1300원</td>
-								<td>Y</td>
-								<td>-</td>
-								<td><a class="btn btn-primary text-light"
-									href="pizzamodifyform.jsp">수정</a></td>
-								<td><a class="btn btn-danger text-light">비활성</a></td>
-							</tr>
+						<%
+							}
+						%>
 						</tbody>
 					</table>
 					<!-- 페이지 처리 시작 -->

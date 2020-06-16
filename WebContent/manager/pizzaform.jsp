@@ -81,7 +81,7 @@
 						</div>
 						<div class="card-body">
 							<!-- 피자등록 입력 폼 시작  -->
-							<form method="post" action="pizza.jsp">
+							<form method="post" action="pizza.jsp" enctype="multipart/form-data">
 								<div class="form-group">
 									<label>피자이름</label> <input type="text" class="form-control"
 										name="name" placeholder="예)불고기피자" />

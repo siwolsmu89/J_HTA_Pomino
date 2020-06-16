@@ -1,3 +1,7 @@
+<%@page import="com.domino.vo.Branch"%>
+<%@page import="com.domino.dao.BranchDao"%>
+<%@page import="com.domino.dao.OrderDao"%>
+<%@page import="com.domino.vo.Order"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -47,8 +51,18 @@
 		</div>
 	</div>
 	<div class="body mb-5">
-		<%
-			if (true) {
+		<%	
+			int userNo = 100;
+			OrderDao orderDao = new OrderDao();
+			Order order = orderDao.getCartByUserNo(userNo);
+			
+			if (order != null) {
+				BranchDao branchDao = new BranchDao();
+				Branch branch = branchDao.getBranchByNo(order.getBranchNo());
+				if (branch != null) {
+			
+			
+			
 		%>
 		<div class="row">
 			<div class="col-12">
@@ -56,20 +70,26 @@
 				<div>
 					<h6 class="mt-3">&emsp;배달주문</h6>
 				</div>
-				<div>
-					<p class="mt-4">&emsp;<small>서울특별시 종로구 율곡로10길 105 디아망 401호(봉익동 10-1 디아망 401호)</small></p>
+				<div class="row">
+					<div class="col-10">
+						<p class="mt-4">&emsp;<small><%=branch.getAddrFirst() + branch.getAddrSecond() + branch.getAddrDetail() %></small></p>
+					</div>
+					<div class="col-2 text-right mt-4">
+						<button class="btn btn-outline-secondary btn-sm">수정</button>
+					</div>
 				</div>
 				<div>
-					&emsp;<button class="btn btn-outline-secondary btn-sm">안양석수점</button>
-				<span>031-472-3044</span>
+					&emsp;<button class="btn btn-outline-secondary btn-sm"><%=branch.getName() %></button>
+				<span><%=branch.getTel() %></span>
+				<hr/>
 				<div>
 					<h6 class="mt-3">&emsp;주문내역</h6>
 				</div>
 				<div>
 					<table class="table w-auto small">
 						<colgroup>
-							<col width="35%">
-							<col width="35%">
+							<col width="40%">
+							<col width="30%">
 							<col width="10%">
 							<col width="10%">
 							<col width="10%">
@@ -85,11 +105,11 @@
 						</thead>
 						<tbody>
 							<tr class="text-center">
-								<td><!-- 피자결제정보 -->사진 시리얼 칠리크랩 슈퍼시드함유도 슈퍼시드 함유도우/L 36,900원</td>
-								<td><!-- 추가토핑 --></td>
+								<td><!-- 피자결제정보 --><img class="text-left" alt="시리얼 칠리크랩" width="50px;" src="../resource/images/pizza/20200602_0uirYrYy.jpg"> 시리얼 칠리크랩 슈퍼시드함유도 슈퍼시드 함유도우/L 36,900원</td>
+								<td></td>
 								<td><!-- 수량 -->
 									<div class="btn-group">
-										<input type="number" name="amount" value="1" min="1"">
+										<input type="number" name="amount" value="1" min="1">
 									</div>
 								</td>
 								<td><!-- 금액 -->0원</td>
@@ -110,7 +130,7 @@
 						</pre>
 					</div>
 					<div class="col-6 text-right">
-						<p>총 금액<strong>36,900원</strong></p>
+						<p>총 금액 <strong>&ensp;36,900원</strong></p>
 					</div>
 				</div>
 				<hr/>
@@ -121,6 +141,7 @@
 			</div>
 		</div>
 		<%
+				}
 			} else {
 		%>
 		<div class="row">

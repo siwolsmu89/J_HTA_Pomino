@@ -11,6 +11,13 @@ import com.domino.vo.User;
 
 public class UserDao {
 	
+	/**
+	 * ResultSet에서 가져온 정보들을 User에 담는 메소드. 다른 메소드 안에서만 사용할 것이므로 private 제한자를 지정
+	 * @param ResultSet rs
+	 * @return 정보가 채워진 User 객체
+	 * @throws SQLException
+	 * @author 민석
+	 */
 	private User resultSetToUser(ResultSet rs) throws SQLException {
 		User user = new User();
 		
@@ -33,6 +40,13 @@ public class UserDao {
 		return user;
 	}
 
+	/**
+	 * user번호로 User 정보를 조회하는 메소드
+	 * @param userNo 사용자 번호
+	 * @return 조회에 성공하면 정보가 들어 있는 User 객체가 반환되고, 조회에 실패하면 null이 반환
+	 * @throws SQLException
+	 * @author 민석
+	 */
 	public User getUserByNo(int userNo) throws SQLException {
 		User user = null;
 		

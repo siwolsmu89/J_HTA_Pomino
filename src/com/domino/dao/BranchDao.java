@@ -11,6 +11,13 @@ import com.domino.vo.Branch;
 
 public class BranchDao {
 	
+	/**
+	 * ResultSet에서 가져온 정보들을 Branch 객체에 담는 메소드. 다른 메소드 안에서만 사용할 것이므로 private 제한자를 지정
+	 * @param ResultSet rs
+	 * @return 정보가 채워진 Branch 객체
+	 * @throws SQLException
+	 * @author 민석
+	 */
 	private Branch resultSetToBranch(ResultSet rs) throws SQLException {
 		Branch branch = new Branch();
 		
@@ -31,6 +38,13 @@ public class BranchDao {
 		return branch;
 	}
 	
+	/**
+	 * 매장번호로 매장정보를 조회하는 메소드
+	 * @param branchNo 매장번호
+	 * @return 조회에 성공할 경우 매장 정보가 담긴 Branch 객체를 반환, 실패시 null 반환
+	 * @throws SQLException
+	 * @author 민석
+	 */
 	public Branch getBranchByNo(int branchNo) throws SQLException {
 		Branch branch = null;
 		

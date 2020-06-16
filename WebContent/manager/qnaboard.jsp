@@ -157,47 +157,53 @@
 								<div class="modal-body">
 									<div class="row">
 										<div class="col-12">
-											<form method="post" action="#">
-												<div class="form-group">
-													<label>작성자</label>
-													<input type="text" class="form-control"
-														name="userid" />
-												</div>
-												<div class="form-group">
-													<label>연락처</label> <input type="password"
-														class="form-control" name="userpwd" />
-												</div>
-												<div class="form-group">
-													<label>이메일</label> <input type="text" class="form-control"
-														name="id" />
-												</div>
-												<div class="form-group">
-													<label>문의유형</label> <input type="text" class="form-control"
-														name="id" />
-												</div>
-												<div class="form-group">
-													<label>이용매장</label> <input type="text" class="form-control"
-														name="id" />
-												</div>
-												<div class="form-group">
-													<label>제목</label> <input type="text" class="form-control"
-														name="id" />
-												</div>
+											<table class="table table-borderless">
+												<tr>
+													<th>이름</th>
+													<td>홍길동</td>
+												</tr>
+												<tr>
+													<th>아이디</th>
+													<td>honggil</td>
+												</tr>
+												<tr>
+													<th>연락처</th>
+													<td>010-1111-2222</td>
 
-												<!-- 텍스트입력화면 예시 끝 -->
+												</tr>
+												<tr>
+													<th>이메일</th>
+													<td>hong@gmail.com</td>
+												</tr>
+												<tr>
+													<th>매장</th>
+													<td>종로3가</td>
+												</tr>
+												<tr>
+													<th>제목</th>
+													<td>서비스가 개판이내</td>
+												</tr>
+												<tr>
+													<th>문의내용</th>
+													<td><textarea rows="7" cols="50">
+															피자를 발로 만드냐
+														</textarea></td>
+												</tr>
+											</table>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12">
+											<div class="form">
 												<div class="form-group">
-													<label for="desc-1">문의내용</label>
+													<label for="desc-1">답변작성</label>
 													<textarea class="form-control" rows="5" name="description"
 														id="desc-1"></textarea>
 												</div>
-												<!-- 텍스트입력화면 예시 끝 -->
-												<div class="text-right">
-													<button type="submit" class="btn btn-primary">회원가입</button>
-												</div>
-											</form>
+											</div>
 										</div>
+
 									</div>
-									<div class="row"></div>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary"
