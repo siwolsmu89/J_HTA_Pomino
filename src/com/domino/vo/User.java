@@ -14,6 +14,7 @@ public class User {
 	private String email;
 	private Date regDate;
 	private String gradeName;
+	private Date gradeDate;
 	private String quitYn;
 	private String quitReason;
 	private String quitDetail;
@@ -100,6 +101,14 @@ public class User {
 
 	public void setGradeName(String gradeName) {
 		this.gradeName = gradeName;
+	}
+	
+	public Date getGradeDate() {
+		return gradeDate;
+	}
+
+	public void setGradeDate(Date gradeDate) {
+		this.gradeDate = gradeDate;
 	}
 
 	public String getQuitYn() {

@@ -1,5 +1,8 @@
+<%@page import="com.domino.vo.User"%>
+<%@page import="com.domino.dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@include file="../common/logincheck.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,6 +16,10 @@
  
 </head>
 <body>
+<%
+	String position = "login";
+	String subPosition = "usergrade";
+%>
 <%@ include file="../common/navbar.jsp"%>
 <div class="container">
 	<div class="header">
@@ -45,10 +52,18 @@
 			<div class="col-12">
 				<div class="navbar navbar-expand-sm ">
 					<ul class="navbar-nav">
-						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-dark font-weight-bold" href="detailform.jsp">매니아등급</a></li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="orderlist.jsp">주문내역</a></li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="">1:1문의</a></li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="modifyform.jsp">정보수정</a></li>
+						<li class="nav-item  d-flex justify-content-between align-itens-center small">
+							<a class="nav-link <%="usergrade".equals(subPosition) ? "font-weight-bold text-dark" : "text-muted"%>" href="detailform.jsp">매니아등급</a>
+						</li>
+						<li class="nav-item  d-flex justify-content-between align-itens-center small">
+							<a class="nav-link <%="userorder".equals(subPosition) ? "font-weight-bold text-dark" : "text-muted"%>" href="orderlist.jsp">주문내역</a>
+						</li>
+						<li class="nav-item  d-flex justify-content-between align-itens-center small">
+							<a class="nav-link <%="userques".equals(subPosition) ? "font-weight-bold text-dark" : "text-muted"%>" href="questionform.jsp">1:1문의</a>
+						</li>
+						<li class="nav-item  d-flex justify-content-between align-itens-center small">
+							<a class="nav-link <%="usermodi".equals(subPosition) ? "font-weight-bold text-dark" : "text-muted"%>" href="modifyform.jsp">정보수정</a>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -56,24 +71,28 @@
 		
 	</div>
 	<div class="body">
+		<%
+			UserDao userDao = new UserDao();
+			User user = userDao.getUserByNo(loginUserNo);
+		%>
 		<div class="row">
 			<div class="col-12">
 				<div class="jumbotron bg-dark text-white">
 					<div class="row">
 						<div class="col-6">
-						  <h4 class="">@@님</h4>
-						  <p class="display-4 font-weight-bold">REGULAR</p><!-- 등급불러오기 -->
-						  <p><a class="text-muted" href="#"><small>등급별 혜택 보기 ></small></a></p>
+						  <h4 class=""><%=loginUserName %>님</h4>
+						  <p class="display-4 font-weight-bold"><%=user.getGradeName() %></p><!-- 등급불러오기 -->
+<!-- 등급별 혜택보기 만들기 -->	  <p><a class="text-muted" href="#"><small>등급별 혜택 보기 ></small></a></p>
 						</div>
 						<div class="col-3" style="border-left: 1px solid white; border-right: 1px solid white;">
 							<p class="text-muted"><small>주문</small></p>
 							<p class="text-muted"><small>(2020-01~2021~01)</small></p>
-							<p class="display-4 text-center font-weight-bold">1</p>
+							<p class="display-4 text-center font-weight-bold"><%=user.getOrderCount() %></p>
 						</div>
 						<div class="col-3">
 							<p class="text-muted"><small>총 주문금액</small></p>
 							<p class="text-muted"><small>(2020-01~2021~01)</small></p>
-							<p class="display-4 text-center font-weight-bold">61,900</p>
+<!-- 주문쪽 다 만들면 다시하기 -->		<p class="display-4 text-center font-weight-bold">61,900</p>
 						</div>
 					</div>
 				</div>
@@ -95,13 +114,13 @@
 		</div>
 		
 		<div class="row">
-			<div class="col-12 p-5"  style="border: 1px dotted gray;">	
-				<div class="row py-3">
+			<div class="col-12 p-5"  style="border: 1px solid gray;">	
+				<div class="row py-3 font-weight-bold">
 					<div class="col-6">
 						<div class="text-left px-5">주문건수</div>
 					</div>
 					<div class="col-6">
-						<div class="text-right px-5">주문건수</div>
+						<div class="text-right px-5">목표등급</div>
 					</div>
 				</div>
 				<div class="row">

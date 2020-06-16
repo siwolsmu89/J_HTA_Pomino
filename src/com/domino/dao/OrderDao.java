@@ -65,4 +65,22 @@ public class OrderDao {
 		return order;
 	}
 	
+	public void updateOrder(Order order) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.updateOrder"));
+		pstmt.setInt(1, order.getTotalPrice());
+		pstmt.setInt(2, order.getDiscountPrice());
+		pstmt.setInt(3, order.getOrderStatus());
+		pstmt.setString(4, order.getReceiverName());
+		pstmt.setString(5, order.getReceiverTel());
+		pstmt.setString(6, order.getRequestDetail());
+		pstmt.setInt(7, order.getLocationNo());
+		pstmt.setString(8, order.getOrderType());
+		pstmt.setInt(9, order.getNo());
+		
+		pstmt.executeUpdate();
+		pstmt.close();
+		connection.close();
+	}
+	
 }

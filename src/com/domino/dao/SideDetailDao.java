@@ -29,6 +29,7 @@ public class SideDetailDao {
 		so.setOrderAmount(rs.getInt("side_order_amount"));
 		so.setOrderPrice(rs.getInt("side_order_price"));
 		so.setSideName(rs.getString("side_name"));
+		so.setSidePrice(rs.getInt("side_price"));
 		
 		return so;
 	}

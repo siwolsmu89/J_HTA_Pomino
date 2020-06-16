@@ -20,7 +20,7 @@ public class SideOrderDto {
 	/**
 	 * 개별 메뉴 가격
 	 */
-	private int price;
+	private int sidePrice;
 	
 	public SideOrderDto() {
 		
@@ -74,12 +74,12 @@ public class SideOrderDto {
 		this.sideName = sideName;
 	}
 
-	public int getPrice() {
-		return price;
+	public int getSidePrice() {
+		return sidePrice;
 	}
 
-	public void setPrice(int price) {
-		this.price = price;
+	public void setSidePrice(int sidePrice) {
+		this.sidePrice = sidePrice;
 	}
 	
 }

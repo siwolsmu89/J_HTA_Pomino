@@ -1,3 +1,7 @@
+<%@page import="com.domino.util.StringUtil"%>
+<%@page import="com.domino.vo.Pizza"%>
+<%@page import="com.domino.util.NumberUtil"%>
+<%@page import="com.domino.dao.PizzaDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,6 +20,9 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+<%
+	String position = "manager";
+%>
 	<%@ include file="../common/navbar.jsp"%>
 	<div class="container">
 		<div class="header">
@@ -75,18 +82,28 @@
 						</div>
 						<div class="card-body">
 							<!-- 피자등록 입력 폼 시작  -->
-							<form method="post" action="pizzamodify.jsp">
+							<%
+								String yn = StringUtil.nullToValue(request.getParameter("yn"), "n");
+								int pizzaNo = NumberUtil.stringToInt(request.getParameter("pizzano"));
+								PizzaDao pizzaDao = new PizzaDao();
+								Pizza pizza = pizzaDao.getPizzaByNo(pizzaNo);
+							%>
+							<form method="post" action="pizzamodify.jsp" enctype="multipart/form-data">
+								<input type="hidden" name="pizzano" value="<%=pizzaNo%>">
+								<input type="hidden" name="yn" value="<%=yn%>">
+							
+								
 								<div class="form-group">
 									<label>피자이름</label> <input type="text" class="form-control"
-										name="name" placeholder="불고기피자" />
+										name="name" value="<%=pizza.getName() %>" />
 								</div>
 								<div class="form-group">
 									<label>L가격</label> <input type="text" class="form-control"
-										name="lprice" placeholder="23000" />
+										name="lprice" value="<%=pizza.getLprice() %>" />
 								</div>
 								<div class="form-group">
 									<label>M가격</label> <input type="text" class="form-control"
-										name="mprice" placeholder="17500" />
+										name="mprice" value="<%=pizza.getMprice() %>" />
 								</div>
 								<!-- 사진등록 -->
 								<div class="form-group">

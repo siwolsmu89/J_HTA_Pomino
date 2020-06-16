@@ -13,7 +13,7 @@
 </head>
 <body>
 <%
-		String position="";
+		String position="signup";
 %>
 <%@ include file="../common/navbar.jsp"%>
 <div class="container">
@@ -72,8 +72,8 @@
 		</div>
 		<div class="row">
 			<div class="col-12 text-center">
-				<a href="../common/home.jsp" class="btn btn-secondary btn-lg" role="button">Home</a>
-				<a href="" class="btn btn-info btn-lg" role="button">로그인</a>
+				<a href="/domino/common/home.jsp" class="btn btn-secondary btn-lg" role="button">Home</a>
+				<a href="/domino/user/loginform.jsp" class="btn btn-info btn-lg" role="button">로그인</a>
 			</div>
 		</div>
 	</div>

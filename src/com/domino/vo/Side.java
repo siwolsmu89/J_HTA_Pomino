@@ -4,7 +4,9 @@ public class Side {
 	
 	private int no;
 	private String name;
+	private String imageSrc;
 	private int price;
+	private String disableYn;
 	
 	public Side() {}
 
@@ -31,5 +33,22 @@ public class Side {
 	public void setPrice(int price) {
 		this.price = price;
 	}
+
+	public String getImageSrc() {
+		return imageSrc;
+	}
+
+	public void setImageSrc(String imageSrc) {
+		this.imageSrc = imageSrc;
+	}
+
+	public String getDisableYn() {
+		return disableYn;
+	}
+
+	public void setDisableYn(String disableYn) {
+		this.disableYn = disableYn;
+	}
+	
 	
 }

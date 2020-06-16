@@ -6,6 +6,7 @@ public class Etc {
 	private String name;
 	private int price;
 	private String imageSrc;
+	private String disableYn;
 	
 	public Etc() {}
 
@@ -40,5 +41,14 @@ public class Etc {
 	public void setImageSrc(String imageSrc) {
 		this.imageSrc = imageSrc;
 	}
+
+	public String getDisableYn() {
+		return disableYn;
+	}
+
+	public void setDisableYn(String disableYn) {
+		this.disableYn = disableYn;
+	}
+	
 	
 }

@@ -1,3 +1,11 @@
+<%@page import="com.domino.util.NumberUtil"%>
+<%@page import="com.domino.util.StringUtil"%>
+<%@page import="com.domino.dao.GradeDao"%>
+<%@page import="com.domino.vo.Grade"%>
+<%@page import="com.domino.vo.User"%>
+<%@page import="com.domino.dao.UserDao"%>
+<%@page import="com.domino.dto.ToppingOrderDto"%>
+<%@page import="com.domino.dao.ToppingDetailDao"%>
 <%@page import="com.domino.dto.EtcOrderDto"%>
 <%@page import="com.domino.dao.EtcDetailDao"%>
 <%@page import="com.domino.dao.SideDetailDao"%>
@@ -30,7 +38,6 @@
 	div > p > strong {
 		font-size: XX-large;
 	}
-	
 </style>
 <body>
 <% String position = "order"; %>
@@ -66,8 +73,10 @@
 	
 	<%
 			// 로그인된 userNo가 세션에 저장되어 있을 것
+			//	int userNo = loginUserNo;
 				int userNo = 100;
-				// location도 세션에 있을 것
+			// location도 세션에 있을 것
+			//  int locationNo = savedLocationNo;
 				int locationNo = 100;
 				
 				OrderDao orderDao = new OrderDao();
@@ -78,36 +87,51 @@
 				
 				BranchDao branchDao = new BranchDao();
 				Branch branch = branchDao.getBranchByNo(cart.getBranchNo());
+				double branchDC = branch.getDiscountRate();
 				
+				// 사용자의 등급할인율 가져오기
+				UserDao userDao = new UserDao();
+				User user = userDao.getUserByNo(userNo);
+				String gradeName = StringUtil.nullToValue(user.getGradeName(), "regular");
+				
+				GradeDao gradeDao = new GradeDao();
+				Grade grade = gradeDao.getGradeByName(gradeName);
+				double gradeDC = 0;
+				if (grade != null) {
+					gradeDC = grade.getDiscountRate();
+				}
+				
+				double totalDC = (gradeDC > branchDC) ? gradeDC : branchDC;
+
 				int allTotalPrice = 0;
 				int allTotalDiscountPrice = 0;
 		%>	
 	
 	<div class="row">
 		<div class="col-12">
-			<div>
-				<div class="card">
-					<div class="card-header" id="info-title" >
-						<h5 class="font-weight-bold">수령인 정보</h5>
-					</div>
-					<div class="card-body" id="info-detail">
-						<div id="receiver-addr" class="font-weight-bold">
-							<p>
-								<%=location.getAddrFirst() + " " + location.getAddrSecond() + " " + location.getAddrDetail()%>
-							</p>							
+			<form id="payform-form" method="post" action='pay.jsp'>
+				<div>
+					<div class="card">
+						<div class="card-header" id="info-title" >
+							<h5 class="font-weight-bold">수령인 정보</h5>
 						</div>
-						<div id="branch-info">
-							<div>
+						<div class="card-body" id="info-detail">
+							<div id="receiver-addr" class="font-weight-bold">
+								<p>
+									<%=location.getAddrFirst() + " " + location.getAddrSecond() + " " + location.getAddrDetail()%>
+								</p>							
+							</div>
+							<div id="branch-info">
 								<div>
-									<button class="btn btn-outline-secondary btn-sm disabled"><%=branch.getName()%></button>
-									<span class="text-muted"><%=branch.getTel()%></span>
+									<div>
+										<button type="button" disabled class="btn btn-outline-secondary btn-sm disabled"><%=branch.getName()%></button>
+										<span class="text-muted"><%=branch.getTel()%></span>
+									</div>
 								</div>
 							</div>
+						<hr/>
 						</div>
-					<hr/>
-					</div>
-					<div class="card-body" id="payform-form">
-						<form method="post" action='#'>
+						<div class="card-body">
 							<div class="form-group">
 								<div class="custom-control custom-checkbox custom-control-inline">
 									<input type="checkbox" class="custom-control-input" id="checkbox-same" name="same" value="<%=cart.getUserNo()%>" onclick="fillInputForm(event)" />
@@ -141,133 +165,145 @@
 							</div>
 							<div class="form-group" id="input-comment">
 								<label for="request-select">요청사항</label>
-								<select class="form-control" id="request-select" name="request" onchange="inputCheck(event)">
+								<select class="form-control" id="request-select" name="request_detail" onchange="inputCheck(event)">
 									<option value="" selected disabled>요청사항을 선택하세요.</option>
-									<option value="" >문 앞에 놓아주세요.</option>
-									<option value="" >피클은 빼주세요.</option>
-									<option value="" >벨은 누르지 말아주세요.</option>
+									<option value="문 앞에 놓아주세요." >문 앞에 놓아주세요.</option>
+									<option value="피클은 빼주세요." >피클은 빼주세요.</option>
+									<option value="벨은 누르지 말아주세요." >벨은 누르지 말아주세요.</option>
 									<option value="self" >직접 입력</option>
 								</select>
 							</div>
 							<div class="form-group" id="request-self" style="display: none;" >
-								<input class="form-control" type="text" name="self_input" placeholder="주문시 요청사항을 입력하세요 (최대 25자까지 입력가능)" />
+								<input class="form-control" type="text" name="self_input" placeholder="주문시 요청사항을 입력하세요 (한글 최대 100자까지 입력가능)" value=" " />
 							</div>
-						</form>
+						</div>
 					</div>
-				</div>
-				<div style="background-color: black; height: 2px;" class="mt-5"></div>
-				<div class="card" id="payform-orderlog">
-					<div class="card-header" id="orderlog-title">
-						<h5 class="font-weight-bold">주문내역</h5>
-					</div>
-					<div class="card-body">
-						<!--for문을 돌려서 주문번호에 일치하는 모든 피자주문내역, 사이드주문내역, 기타주문내역 가져오기 -->
-						<%
-							int orderNo = cart.getNo();
-							int orderSize = 0;	
-						
-							PizzaDetailDao pizzaDetailDao = new PizzaDetailDao();
-							SideDetailDao sideDetailDao = new SideDetailDao();
-							EtcDetailDao etcDetailDao = new EtcDetailDao();
-							
-							List<PizzaOrderDto> pol = pizzaDetailDao.getPizzaOrdersByOrderNo(orderNo);
-							orderSize += pol.size();
-							
-							PizzaOrderDto first = pol.get(0);
-							
-							List<SideOrderDto> sol = sideDetailDao.getSideOrdersByOrderNo(orderNo);
-							orderSize += sol.size();
-							
-							List<EtcOrderDto> eol = etcDetailDao.getEtcOrdersByOrderNo(orderNo);
-							orderSize += eol.size();
-						%>
-								<div id="orderlog-main">
-									<h5>
-										<%=first.getPizzaName() %> <%=first.getDoughName() %> 
-										<%=first.getPizzaSize() %> x <%=first.getOrderAmount() %> / <%=first.getPizzaPrice() %> 
-						<%
-									if (orderSize>0) {
-						%>
-										외 <%=orderSize-1 %>건
-						<%				
+					<div style="background-color: black; height: 2px;" class="mt-5"></div>
+					<div class="card" id="payform-orderlog">
+						<div class="card-header" id="orderlog-title">
+							<h5 class="font-weight-bold">주문내역</h5>
+						</div>
+						<div class="card-body">
+							<%
+								int orderNo = cart.getNo();
+								int orderSize = 0;	
+								
+								PizzaDetailDao pizzaDetailDao = new PizzaDetailDao();
+								SideDetailDao sideDetailDao = new SideDetailDao();
+								EtcDetailDao etcDetailDao = new EtcDetailDao();
+								
+								List<PizzaOrderDto> pol = pizzaDetailDao.getPizzaOrdersByOrderNo(orderNo);
+								orderSize += pol.size();
+								
+								PizzaOrderDto first = pol.get(0);
+								
+								List<SideOrderDto> sol = sideDetailDao.getSideOrdersByOrderNo(orderNo);
+								orderSize += sol.size();
+								
+								List<EtcOrderDto> eol = etcDetailDao.getEtcOrdersByOrderNo(orderNo);
+								orderSize += eol.size();
+							%>
+									<div id="orderlog-main">
+										<h5>
+											<%=first.getPizzaName() %> <%=first.getDoughName() %> 
+											<%=first.getPizzaSize() %> x <%=first.getOrderAmount() %> 
+							<%
+										if (orderSize>0) {
+							%>
+											외 <%=orderSize-1 %>건
+							<%				
+										}
+							%>				
+										</h5>
+										<hr/>
+									</div>
+									<div id="orderlog-detail">
+							<%	
+								if (!pol.isEmpty()) {
+									for (PizzaOrderDto po : pol) {
+										String pizzaName = po.getPizzaName() + " (" + po.getDoughName() + ")";
+										String size = po.getPizzaSize();
+										int price = po.getPizzaPrice();
+										allTotalDiscountPrice += po.getDiscountPrice();
+										allTotalPrice += price;
+	
+										ToppingDetailDao toppingDetailDao = new ToppingDetailDao();
+										List<ToppingOrderDto> tol = toppingDetailDao.getToppingOrdersByPizzaNo(po.getNo());
+										for (ToppingOrderDto to : tol) {
+											price += to.getOrderPrice();
+										}
+							%>
+										<p><%=pizzaName %> <%=size %> x <%=po.getOrderAmount() %> / <%=NumberUtil.numberWithComma(price) %>원 </p>
+							<%
+										for (ToppingOrderDto to : tol) {
+							%>			
+										<p class="text-muted">+ <%=to.getName() %> (<%=to.getOrderAmount() %> x 피자 1)</p>
+							<%		
+										}
 									}
-						%>				
-									</h5>
-									<hr/>
-								</div>
-								<div id="orderlog-detail">
-						<%	
-							if (!pol.isEmpty()) {
-								for (PizzaOrderDto po : pol) {
-									String pizzaName = po.getPizzaName() + " (" + po.getDoughName() + ")";
-									String size = po.getPizzaSize();
-									int price = po.getPizzaPrice();
-									allTotalDiscountPrice += po.getDiscountPrice();
-									allTotalPrice += price;
-						%>
-									<p><%=pizzaName %> <%=size %> x <%=po.getOrderAmount() %> / <%=price %> (가격에 토핑가격도 포함)</p>
-						<%
-									// Topping주문 리스트 뽑기
-									//	 if (!tol.isempty) {
-						%>			
-									<p class="text-muted">+ 토핑명 (수량 X 피자 1)  // 토핑이 있을때만</p>
-						<%		
-									// }
 								}
-							}
-							if (!sol.isEmpty()) {
-								for (SideOrderDto so : sol) {
-						%>
-									<p> <%=so.getSideName() %> (사이드디시) x <%=so.getOrderAmount() %> / <%=so.getOrderPrice() %> </p>
-						<%	
+								if (!sol.isEmpty()) {
+									for (SideOrderDto so : sol) {
+										allTotalPrice += so.getOrderPrice();
+										allTotalDiscountPrice += so.getOrderPrice();
+							%>
+										<p> <%=so.getSideName() %> (사이드디시) x <%=so.getOrderAmount() %> / <%=NumberUtil.numberWithComma(so.getOrderPrice()) %>원 </p>
+							<%	
+									}
 								}
-							}
-							if (!eol.isEmpty()) {
-								for (EtcOrderDto eo : eol) {
-						%>
-									<p> <%=eo.getEtcName() %> (기타메뉴) x <%=eo.getOrderAmount() %> / <%=eo.getOrderPrice() %> </p>
-						<%		
+								if (!eol.isEmpty()) {
+									for (EtcOrderDto eo : eol) {
+										allTotalPrice += eo.getOrderPrice();
+										allTotalDiscountPrice += eo.getOrderPrice();
+							%>
+										<p> <%=eo.getEtcName() %> (기타메뉴) x <%=eo.getOrderAmount() %> / <%=NumberUtil.numberWithComma(eo.getOrderPrice()) %>원 </p>
+							<%		
+									}
 								}
-							}
-						%>
-								</div>
-					
-					</div>	
-				</div>
-				<div style="background-color: black; height: 2px;" class="mt-5"></div>
-				<div class="card" id="price-calculate">
-					<div class="card-header">
-						<h5 class="font-weight-bold">최종결제금액</h5>
+								allTotalDiscountPrice = (int) (allTotalDiscountPrice * (1 - totalDC));
+							%>
+									</div>
+							<div class="form-group">
+								<input type="hidden" name="totalprice" value="<%=allTotalPrice %>">
+								<input type="hidden" name="totaldiscount" value="<%=allTotalDiscountPrice %>">
+							</div>
+						</div>	
 					</div>
-					<div class="row justify-content-center">
-						<div class="col-2 text-center">
-							<label class="small">총 상품금액</label>
-							<p><strong><%=allTotalPrice %>원</strong></p>
+					<div style="background-color: black; height: 2px;" class="mt-5"></div>
+					<div class="card" id="price-calculate">
+						<div class="card-header">
+							<h5 class="font-weight-bold">최종결제금액</h5>
 						</div>
-						<div class="col-2 text-center">
-							<p></p>
-							<p><strong>-</strong></p>
-						</div>
-						<div class="col-2 text-center">
-							<label class="small">총 할인금액</label>
-							<p style="color: red"><strong><%=allTotalPrice - allTotalDiscountPrice %></strong></p>
-						</div>
-						<div class="col-2 text-center">
-							<p></p>
-							<p><strong>=</strong></p>
-						</div>
-						<div class="col-2 text-center">
-							<label class="small">총 결제금액</label>
-							<p><strong><%=allTotalDiscountPrice %>원</strong></p>
-						</div>
-					</div>	
-				</div>
-				<div class="mt-5 mb-5">
-					<div class="text-center">
-						<button type="button" class="btn btn-danger btn-lg">결제하기</button>
-					</div>			
-				</div>
+						<div class="row justify-content-center">
+							<div class="col-2 text-center">
+								<label class="small">총 상품금액</label>
+								<p><strong><%=NumberUtil.numberWithComma(allTotalPrice) %>원</strong></p>
+							</div>
+							<div class="col-2 text-center">
+								<p></p>
+								<p><strong>-</strong></p>
+							</div>
+							<div class="col-2 text-center">
+								<label class="small">총 할인금액</label>
+								<p><strong style="color: red"><%=NumberUtil.numberWithComma(allTotalPrice - allTotalDiscountPrice) %>원</strong></p>
+							</div>
+							<div class="col-2 text-center">
+								<p></p>
+								<p><strong>=</strong></p>
+							</div>
+							<div class="col-2 text-center">
+								<label class="small">총 결제금액</label>
+								<p><strong><%=NumberUtil.numberWithComma(allTotalDiscountPrice) %>원</strong></p>
+							</div>
+						</div>	
+					</div>
+					<div class="mt-5 mb-5">
+						<div class="text-center">
+							<button type="button" class="btn btn-danger btn-lg" onclick="checkFormsAndSubmit()">결제하기</button>
+						</div>			
+					</div>
 			</div>
+			</form>
 		</div>
 	</div>
 </div>
@@ -276,7 +312,6 @@
 <script type="text/javascript">
 	function fillInputForm(event) {
 		var userNo = event.target.value;
-		
 		var checked = event.target.checked;
 		
 		if (checked) {
@@ -313,7 +348,6 @@
 		} else {
 			document.querySelector("#request-self").style = "display: none";
 		}
-		
 	}
 	
 	function toggleCheck() {
@@ -321,7 +355,17 @@
 		if (checkbox.checked) {
 			checkbox.checked = false;
 		}
-		
+	}
+	
+	function checkFormsAndSubmit() {
+		var forms = document.querySelectorAll("#payform-form input");
+		for (var i = 0; i < forms.length; i++) {
+			if (!forms[i].value) {
+				alert("값이 비어 있는 입력창이 있습니다. 먼저 입력창을 모두 채워주세요.");
+				return;
+			} 
+		}
+		document.getElementById("payform-form").submit();
 	}
 </script>
 </body>

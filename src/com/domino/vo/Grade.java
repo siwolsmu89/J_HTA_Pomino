@@ -1,14 +1,11 @@
 package com.domino.vo;
 
-import java.util.Date;
-
 public class Grade {
 	
 	private String name;
 	private int orderCount;
 	private int orderPrice;
 	private double discountRate;
-	private Date achievedDate;
 
 	public Grade() {}
 	
@@ -35,12 +32,6 @@ public class Grade {
 	}
 	public void setDiscountRate(double discountRate) {
 		this.discountRate = discountRate;
-	}
-	public Date getAchievedDate() {
-		return achievedDate;
-	}
-	public void setAchievedDate(Date achievedDate) {
-		this.achievedDate = achievedDate;
 	}
 	
 }

@@ -32,7 +32,7 @@ VALUES
 INSERT INTO deliver_locations
 (location_no, location_addr_first, location_addr_second, location_addr_detail, user_no)
 VALUES
-(location_no_seq.NEXTVAL, '서울시 종로구', '봉익동 율곡로', '어디어디 디아망빌당3층', 104)
+(location_no_seq.NEXTVAL, '서울시 종로구', '봉익동 율곡로', '어디어디 디아망빌당3층', 101)
 ;
 
 INSERT INTO pizzas

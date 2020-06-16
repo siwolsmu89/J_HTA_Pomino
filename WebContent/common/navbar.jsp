@@ -5,11 +5,11 @@
 		<div class="col-12">
 			<div class="row">
 				<div class="col-3"> <!-- 로고 -->
-					<a class="navbar-brand" href="../common/home.jsp">
+					<a class="navbar-brand" href="/domino/common/home.jsp">
 						<img src="../resource/images/logo/domino.png" alt="도미노 로고"/>
 					</a> 
 				</div>
-				<div class="col-6">	<!-- 검색창 -->
+				<div class="col-5">	<!-- 검색창 -->
 					<div class="row row-vh align-items-center">
 						<div class="col-12">
 							<form class="form-inline d-flex justify-content-center md-form form-sm">
@@ -19,7 +19,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-3"><!-- 작은 버튼 로그인 로그아웃 등.. -->
+				<div class="col-4"><!-- 작은 버튼 로그인 로그아웃 등.. -->
 					<div class="row small">
 					<%
 						if("Yes".equals(loginYn)) {

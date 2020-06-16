@@ -1,5 +1,8 @@
+<%@page import="com.domino.vo.User"%>
+<%@page import="com.domino.dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@include file="../common/logincheck.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,6 +15,10 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+<%
+	String position = "login";
+	String subPosition = "userques";
+%>
 <%@ include file="../common/navbar.jsp"%>
 <div class="container">
 	<div class="header">
@@ -44,10 +51,18 @@
 			<div class="col-12">
 				<div class="navbar navbar-expand-sm ">
 					<ul class="navbar-nav">
-						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="detailform.jsp">매니아등급</a></li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="orderlist.jsp">주문내역</a></li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted text-dark font-weight-bold" href="questionform.jsp">1:1문의</a></li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="modifyform.jsp">정보수정</a></li>
+						<li class="nav-item  d-flex justify-content-between align-itens-center small">
+							<a class="nav-link <%="usergrade".equals(subPosition) ? "font-weight-bold text-dark" : "text-muted"%>" href="detailform.jsp">매니아등급</a>
+						</li>
+						<li class="nav-item  d-flex justify-content-between align-itens-center small">
+							<a class="nav-link <%="userorder".equals(subPosition) ? "font-weight-bold text-dark" : "text-muted"%>" href="orderlist.jsp">주문내역</a>
+						</li>
+						<li class="nav-item  d-flex justify-content-between align-itens-center small">
+							<a class="nav-link <%="userques".equals(subPosition) ? "font-weight-bold text-dark" : "text-muted"%>" href="questionform.jsp">1:1문의</a>
+						</li>
+						<li class="nav-item  d-flex justify-content-between align-itens-center small">
+							<a class="nav-link <%="usermodi".equals(subPosition) ? "font-weight-bold text-dark" : "text-muted"%>" href="modifyform.jsp">정보수정</a>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -56,14 +71,18 @@
 
 	
 	<div class="body">
+		<%
+			UserDao userDao = new UserDao();
+			User user = userDao.getUserByNo(loginUserNo);
+		%>
 		<div class="row">
 			<div class="col-12">
 				<div class="jumbotron bg-dark text-white">
 					<div class="row">
 						<div class="col12">
-						  <h2 class="">@@님께서 문의하신 내용입니다.</h2>
+						  <h2 class=""><%=loginUserName %>님께서 문의하신 내용입니다.</h2>
 						  <div style="background-color: #00B9FF; height: 4px; width: 100%;" class="my-3"></div>
-						  <p class="text-muted">@@님께서 문의하신 내용은 <strong class="text-white">총0건</strong>입니다.</p>
+						  <p class="text-muted"><%=loginUserName %>님께서 문의하신 내용은 <strong class="text-white">총0건</strong>입니다.</p>
 						</div>
 					</div>
 				</div>

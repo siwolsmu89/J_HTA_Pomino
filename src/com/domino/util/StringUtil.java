@@ -1,7 +1,21 @@
 package com.domino.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class StringUtil {
 
+	private static SimpleDateFormat yyyymmdd = new SimpleDateFormat("yyyy-MM-dd");
+	
+	public static Date stringToDate(String str) throws ParseException {
+		if (str == null) {
+			return null;
+		}
+		return yyyymmdd.parse(str);
+		
+	}
+	
 	/**
 	 * 문자열 값이 null이면 지정된 defaultValue 값을 반환한다.
 	 * @param str null인지 체크할 문자열

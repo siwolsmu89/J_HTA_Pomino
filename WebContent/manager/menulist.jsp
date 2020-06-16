@@ -1,3 +1,11 @@
+<%@page import="com.domino.vo.Etc"%>
+<%@page import="com.domino.dao.EtcDao"%>
+<%@page import="com.domino.vo.Topping"%>
+<%@page import="com.domino.dao.ToppingDao"%>
+<%@page import="com.domino.vo.Dough"%>
+<%@page import="com.domino.dao.DoughDao"%>
+<%@page import="com.domino.dao.SideDao"%>
+<%@page import="com.domino.vo.Side"%>
 <%@page import="com.domino.vo.Pizza"%>
 <%@page import="java.util.List"%>
 <%@page import="com.domino.dao.PizzaDao"%>
@@ -19,6 +27,9 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+<%
+	String position = "manager";
+%>
 	<%@ include file="../common/navbar.jsp"%>
 	<div class="container">
 		<div class="header">
@@ -89,7 +100,8 @@
 							</div>
 						</div>
 					</form>
-					<!-- 피자 메뉴 -->
+					
+<!-- 피자 메뉴 -->
 					<%
 						PizzaDao pizzaDao = new PizzaDao();
 						List<Pizza> pizzas = pizzaDao.getAllPizza();
@@ -121,19 +133,51 @@
 						<tbody>
 						<%
 							for(Pizza pizza : pizzas) {
+								if("n".equals(pizza.getDisableYn())) {
 						%>						
-							<tr>
+							<tr class="font-weight-bold">
 								<td><%=pizza.getNo() %></td>
 								<td><%=pizza.getName() %></td>
 								<td><%=pizza.getLprice() %>원</td>
 								<td><%=pizza.getMprice() %>원</td>
-								<td><%=pizza.getDisableYn() %></td>
+								<td><%=("n".equals(pizza.getDisableYn())) ? "아니오":"예" %></td>
 								<td>여름방학시즌(피자테이블 + 이벤트테이블 조인)</td>
 								<td><a class="btn btn-primary text-light"
-									href="pizzamodifyform.jsp">수정</a></td>
-								<td><a class="btn btn-danger text-light">비활성</a></td>
+									href="pizzamodifyform.jsp?yn=n&pizzano=<%=pizza.getNo() %>">수정</a></td>
+								<td>
+									<form method="post" action="pizzamodify.jsp" enctype="multipart/form-data">
+										<input type="hidden" name="yn" value="y">
+										<input type="hidden" name="pizzano" value=<%=pizza.getNo() %>>
+										<button class="btn btn-secondary text-light" type="submit">
+											비활성
+										</button>
+									</form>
+								</td>
 							</tr>
 						<%
+								} else {
+						%>	
+							<tr>
+								<td class="text-muted"><%=pizza.getNo() %></td>
+								<td class="text-muted"><%=pizza.getName() %></td>
+								<td class="text-muted"><%=pizza.getLprice() %>원</td>
+								<td class="text-muted"><%=pizza.getMprice() %>원</td>
+								<td class="text-muted"><%=("n".equals(pizza.getDisableYn())) ? "아니오":"예" %></td>
+								<td>-</td>
+								<td><a class="btn btn-primary text-light"
+									href="pizzamodifyform.jsp?yn=n&pizzano=<%=pizza.getNo() %>">수정</a></td>
+								<td>
+									<form method="post" action="pizzamodify.jsp" enctype="multipart/form-data">
+										<input type="hidden" name="yn" value="yn">
+										<input type="hidden" name="pizzano" value=<%=pizza.getNo() %>>
+										<button class="btn btn-danger text-light" type="submit">
+											활성
+										</button>
+									</form>
+								</td>
+							</tr>		
+						<% 		
+								}
 							}
 						%>
 						</tbody>
@@ -150,8 +194,12 @@
 						<li class="page-item"><a class="page-link" href="#">다음</a></li>
 					</ul>
 					<!-- 페이지 처리 끝 -->
-
-					<!-- 사이드 메뉴 -->
+										
+<!-- 사이드 메뉴 -->
+					<%
+						SideDao sideDao = new SideDao();
+						List<Side> sides = sideDao.getAllSide();
+					%>
 					<table id="side-menu" class="table text-center">
 						<colgroup>
 							<col width="20%">
@@ -172,15 +220,31 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>크리스피 핫 순살 치킨(8조각)</td>
-								<td>4,800원</td>
-								<td>N</td>
+						<%
+							for(Side side : sides) {
+									
+						%>
+							<tr class="font-weight-bold">
+								<td><%=side.getNo() %></td>
+								<td><%=side.getName() %></td>
+								<td><%=side.getPrice() %></td>
+								<td><%=("N".equals(side.getDisableYn())) ? "아니오":"예" %></td>
 								<td><a class="btn btn-primary text-light"
-									href="sidemenumodifyform.jsp">수정</a></td>
-								<td><a class="btn btn-danger text-light">비활성</a></td>
-							</tr>
+									href="sidemenumodifyform.jsp?yn=n&sideno=<%=side.getNo() %>">수정</a></td>
+								<td>
+									<form method="post" action="sidemenumodify.jsp" enctype="multipart/form-data">
+										<input type="hidden" name="yn" value="yn">
+										<input type="hidden" name="sideno" value=<%=side.getNo() %>>
+										<button class="btn btn-danger text-light" type="submit">
+											비활성
+										</button>
+									</form>
+								</td>
+							</tr>							
+						<%
+							}
+						%>	
+							
 						</tbody>
 					</table>
 					<!-- 페이지 처리 시작 -->
@@ -196,7 +260,11 @@
 					</ul>
 					<!-- 페이지 처리 끝 -->
 
-					<!-- 도우 메뉴 -->
+<!-- 도우 메뉴 -->
+					<%
+						DoughDao doughDao = new DoughDao();
+						List<Dough> doughs = doughDao.getAllDough();
+					%>
 					<table id="doughs-menu" class="table text-center">
 						<colgroup>
 							<col width="20%">
@@ -217,24 +285,21 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>슈퍼시드 함유 도우</td>
-								<td>2,000원</td>
-								<td>N</td>
+						<%
+							for(Dough dough : doughs) {
+						%>
+							<tr class="font-weight-bold">
+								<td><%=dough.getNo() %></td>
+								<td><%=dough.getName() %></td>
+								<td><%=dough.getPrice() %></td>
+								<td><%=("N".equals(dough.getDisableYn())) ? "아니오":"예" %></td>
 								<td><a class="btn btn-primary text-light"
 									href="doughmodifyform.jsp">수정</a></td>
 								<td><a class="btn btn-danger text-light">비활성</a></td>
 							</tr>
-							<tr>
-								<td>2</td>
-								<td>오리지널 도우</td>
-								<td>0원</td>
-								<td>N</td>
-								<td><a class="btn btn-primary text-light"
-									href="doughmodifyform.jsp">수정</a></td>
-								<td><a class="btn btn-danger text-light">비활성</a></td>
-							</tr>
+						<%
+							}
+						%>
 						</tbody>
 					</table>
 					<!-- 페이지 처리 시작 -->
@@ -250,7 +315,11 @@
 					</ul>
 					<!-- 페이지 처리 끝 -->
 
-					<!-- 토핑 메뉴 -->
+<!-- 토핑 메뉴 -->
+					<%
+						ToppingDao toppingDao = new ToppingDao();
+						List<Topping> toppings = toppingDao.getAllTopping();
+					%>
 					<table id="topping-menu" class="table text-center">
 						<colgroup>
 							<col width="10%">
@@ -273,16 +342,22 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>오리엔탈 통새우</td>
-								<td>메인</td>
-								<td>3,500원</td>
-								<td>N</td>
+						<%
+							for(Topping topping : toppings) {
+						%>
+							<tr class="font-weight-bold">
+								<td><%=topping.getNo() %></td>
+								<td><%=topping.getName() %></td>
+								<td><%=topping.getCategory() %></td>
+								<td><%=topping.getPrice() %></td>
+								<td><%=("N".equals(topping.getDisableYn())) ? "아니오":"예" %></td>
 								<td><a class="btn btn-primary text-light"
 									href="toppingmodifyform.jsp">수정</a></td>
 								<td><a class="btn btn-danger text-light">비활성</a></td>
 							</tr>
+						<%
+							}
+						%>
 						</tbody>
 					</table>
 					<!-- 페이지 처리 시작 -->
@@ -298,7 +373,11 @@
 					</ul>
 					<!-- 페이지 처리 끝 -->
 
-					<!-- 기타 메뉴 -->
+<!-- 기타 메뉴 -->
+					<%
+						EtcDao etcDao = new EtcDao();
+						List<Etc> etcs = etcDao.getAllEtc();
+					%>
 					<table id="etc-menu" class="table text-center">
 						<colgroup>
 							<col width="20%">
@@ -319,16 +398,21 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>코카콜라1.25L</td>
-								<td>2,000원</td>
-								<td>N</td>
+						<%
+							for(Etc etc : etcs) {
+						%>
+							<tr class="font-weight-bold">
+								<td><%=etc.getNo() %></td>
+								<td><%=etc.getName() %></td>
+								<td><%=etc.getPrice() %></td>
+								<td><%=("N".equals(etc.getDisableYn())) ? "아니오":"예" %></td>
 								<td><a class="btn btn-primary text-light"
 									href="etcmenumodifyform.jsp">수정</a></td>
 								<td><a class="btn btn-danger text-light">비활성</a></td>
 							</tr>
-
+						<%
+							}
+						%>
 						</tbody>
 					</table>
 					<!-- 페이지 처리 시작 -->

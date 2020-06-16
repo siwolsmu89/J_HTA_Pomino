@@ -5,8 +5,9 @@ public class Topping {
 	private int no;
 	private String name;
 	private int price;
-	private String category;
+	private int category;
 	private String imageSrc;
+	private String disableYn;
 	
 	public Topping() {}
 
@@ -34,11 +35,11 @@ public class Topping {
 		this.price = price;
 	}
 
-	public String getCategory() {
+	public int getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(int category) {
 		this.category = category;
 	}
 
@@ -49,5 +50,14 @@ public class Topping {
 	public void setImageSrc(String imageSrc) {
 		this.imageSrc = imageSrc;
 	}
+
+	public String getDisableYn() {
+		return disableYn;
+	}
+
+	public void setDisableYn(String disableYn) {
+		this.disableYn = disableYn;
+	}
+	
 	
 }

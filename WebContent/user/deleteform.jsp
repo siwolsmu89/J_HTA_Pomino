@@ -12,6 +12,10 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+<%
+	String position = "login";
+	String subPosition = "usermodi";
+%>
 <%@ include file="../common/navbar.jsp"%>
 <div class="container">
 	<div class="header">
@@ -44,10 +48,18 @@
 			<div class="col-12">
 				<div class="navbar navbar-expand-sm ">
 					<ul class="navbar-nav">
-						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="detailform.jsp">매니아등급</a></li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="orderlist.jsp">주문내역</a></li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-muted" href="">1:1문의</a></li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small"><a class="nav-link text-dark font-weight-bold " href="modifyform.jsp">정보수정</a></li>
+						<li class="nav-item  d-flex justify-content-between align-itens-center small">
+							<a class="nav-link <%="usergrade".equals(subPosition) ? "font-weight-bold text-dark" : "text-muted"%>" href="detailform.jsp">매니아등급</a>
+						</li>
+						<li class="nav-item  d-flex justify-content-between align-itens-center small">
+							<a class="nav-link <%="userorder".equals(subPosition) ? "font-weight-bold text-dark" : "text-muted"%>" href="orderlist.jsp">주문내역</a>
+						</li>
+						<li class="nav-item  d-flex justify-content-between align-itens-center small">
+							<a class="nav-link <%="userques".equals(subPosition) ? "font-weight-bold text-dark" : "text-muted"%>" href="">1:1문의</a>
+						</li>
+						<li class="nav-item  d-flex justify-content-between align-itens-center small">
+							<a class="nav-link <%="usermodi".equals(subPosition) ? "font-weight-bold text-dark" : "text-muted"%>" href="modifyform.jsp">정보수정</a>
+						</li>
 					</ul>
 				</div>
 			</div>

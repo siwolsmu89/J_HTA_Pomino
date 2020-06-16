@@ -16,6 +16,9 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+<%
+	String position = "manager";
+%>
 	<%@ include file="../common/navbar.jsp"%>
 	<div class="container">
 		<div class="header">
