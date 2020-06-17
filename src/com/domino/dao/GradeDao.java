@@ -50,7 +50,7 @@ public class GradeDao {
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("grade.getAllGrades"));
 		ResultSet rs = pstmt.executeQuery();
 		
-		if (rs.next()) {
+		while (rs.next()) {
 			Grade grade = resultSetToGrade(rs);
 			gl.add(grade);
 		}

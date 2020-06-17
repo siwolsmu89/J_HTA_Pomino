@@ -157,12 +157,12 @@
 						<%
 								} else {
 						%>	
-							<tr>
-								<td class="text-muted"><%=pizza.getNo() %></td>
-								<td class="text-muted"><%=pizza.getName() %></td>
-								<td class="text-muted"><%=pizza.getLprice() %>원</td>
-								<td class="text-muted"><%=pizza.getMprice() %>원</td>
-								<td class="text-muted"><%=("n".equals(pizza.getDisableYn())) ? "아니오":"예" %></td>
+							<tr class="text-muted">
+								<td ><%=pizza.getNo() %></td>
+								<td ><%=pizza.getName() %></td>
+								<td ><%=pizza.getLprice() %>원</td>
+								<td ><%=pizza.getMprice() %>원</td>
+								<td ><%=("n".equals(pizza.getDisableYn())) ? "아니오":"예" %></td>
 								<td>-</td>
 								<td><a class="btn btn-primary text-light"
 									href="pizzamodifyform.jsp?yn=n&pizzano=<%=pizza.getNo() %>">수정</a></td>
@@ -222,13 +222,33 @@
 						<tbody>
 						<%
 							for(Side side : sides) {
-									
+								if("n".equals(side.getDisableYn())) {
 						%>
 							<tr class="font-weight-bold">
 								<td><%=side.getNo() %></td>
 								<td><%=side.getName() %></td>
 								<td><%=side.getPrice() %></td>
-								<td><%=("N".equals(side.getDisableYn())) ? "아니오":"예" %></td>
+								<td><%=("n".equals(side.getDisableYn())) ? "아니오":"예" %></td>
+								<td><a class="btn btn-primary text-light"
+									href="sidemenumodifyform.jsp?yn=n&sideno=<%=side.getNo() %>">수정</a></td>
+								<td>
+									<form method="post" action="sidemenumodify.jsp" enctype="multipart/form-data">
+										<input type="hidden" name="yn" value="y">
+										<input type="hidden" name="sideno" value=<%=side.getNo() %>>
+										<button class="btn btn-secondary text-light" type="submit">
+											비활성
+										</button>
+									</form>
+								</td>
+							</tr>							
+						<%
+								} else {
+						%>
+							<tr class="text-muted">
+								<td><%=side.getNo() %></td>
+								<td><%=side.getName() %></td>
+								<td><%=side.getPrice() %></td>
+								<td><%=("n".equals(side.getDisableYn())) ? "아니오":"예" %></td>
 								<td><a class="btn btn-primary text-light"
 									href="sidemenumodifyform.jsp?yn=n&sideno=<%=side.getNo() %>">수정</a></td>
 								<td>
@@ -236,12 +256,13 @@
 										<input type="hidden" name="yn" value="yn">
 										<input type="hidden" name="sideno" value=<%=side.getNo() %>>
 										<button class="btn btn-danger text-light" type="submit">
-											비활성
+											활성
 										</button>
 									</form>
 								</td>
-							</tr>							
+							</tr>
 						<%
+								}
 							}
 						%>	
 							
@@ -287,17 +308,47 @@
 						<tbody>
 						<%
 							for(Dough dough : doughs) {
+								if("N".equals(dough.getDisableYn())) {
 						%>
 							<tr class="font-weight-bold">
 								<td><%=dough.getNo() %></td>
 								<td><%=dough.getName() %></td>
 								<td><%=dough.getPrice() %></td>
-								<td><%=("N".equals(dough.getDisableYn())) ? "아니오":"예" %></td>
+								<td><%=("N".equals(dough.getDisableYn())) ? "아니오":"예" %></td>								
 								<td><a class="btn btn-primary text-light"
-									href="doughmodifyform.jsp">수정</a></td>
-								<td><a class="btn btn-danger text-light">비활성</a></td>
+									href="doughmodifyform.jsp?yn=n&doughno=<%=dough.getNo() %>">수정</a></td>
+								<td>
+									<form method="post" action="doughmodify.jsp" enctype="multipart/form-data">
+										<input type="hidden" name="yn" value="y">
+										<input type="hidden" name="doughno" value=<%=dough.getNo() %>>
+										<button class="btn btn-secondary text-light" type="submit">
+											비활성
+										</button>
+									</form>
+								</td>
+							</tr>						
+						<%
+								} else {
+						%>
+							<tr class="text-muted">
+								<td><%=dough.getNo() %></td>
+								<td><%=dough.getName() %></td>
+								<td><%=dough.getPrice() %></td>
+								<td><%=("N".equals(dough.getDisableYn())) ? "아니오":"예" %></td>								
+								<td><a class="btn btn-primary text-light"
+									href="doughmodifyform.jsp?yn=n&doughno=<%=dough.getNo() %>">수정</a></td>
+								<td>
+									<form method="post" action="doughmodify.jsp" enctype="multipart/form-data">
+										<input type="hidden" name="yn" value="yn">
+										<input type="hidden" name="doughno" value=<%=dough.getNo() %>>
+										<button class="btn btn-danger text-light" type="submit">
+											활성
+										</button>
+									</form>
+								</td>
 							</tr>
 						<%
+								}
 							}
 						%>
 						</tbody>
@@ -344,18 +395,49 @@
 						<tbody>
 						<%
 							for(Topping topping : toppings) {
+								if("N".equals(topping.getDisableYn())) {
 						%>
 							<tr class="font-weight-bold">
 								<td><%=topping.getNo() %></td>
 								<td><%=topping.getName() %></td>
 								<td><%=topping.getCategory() %></td>
 								<td><%=topping.getPrice() %></td>
-								<td><%=("N".equals(topping.getDisableYn())) ? "아니오":"예" %></td>
+								<td><%=("N".equals(topping.getDisableYn())) ? "아니오":"예" %></td>								
 								<td><a class="btn btn-primary text-light"
-									href="toppingmodifyform.jsp">수정</a></td>
-								<td><a class="btn btn-danger text-light">비활성</a></td>
+									href="toppingmodifyform.jsp?yn=n&toppingno=<%=topping.getNo() %>">수정</a></td>
+								<td>
+									<form method="post" action="toppingmodify.jsp" enctype="multipart/form-data">
+										<input type="hidden" name="yn" value="y">
+										<input type="hidden" name="toppingno" value=<%=topping.getNo() %>>
+										<button class="btn btn-secondary text-light" type="submit">
+											비활성
+										</button>
+									</form>
+								</td>
 							</tr>
 						<%
+								} else {
+						%>
+							<tr class="text-muted">
+								<td><%=topping.getNo() %></td>
+								<td><%=topping.getName() %></td>
+								<td><%=topping.getCategory() %></td>
+								<td><%=topping.getPrice() %></td>
+								<td><%=("N".equals(topping.getDisableYn())) ? "아니오":"예" %></td>								
+								<td><a class="btn btn-primary text-light"
+									href="toppingmodifyform.jsp?yn=n&toppingno=<%=topping.getNo() %>">수정</a></td>
+								<td>
+									<form method="post" action="toppingmodify.jsp" enctype="multipart/form-data">
+										<input type="hidden" name="yn" value="yn">
+										<input type="hidden" name="toppingno" value=<%=topping.getNo() %>>
+										<button class="btn btn-danger text-light" type="submit">
+											활성
+										</button>
+									</form>
+								</td>
+							</tr>
+						<%
+								}
 							}
 						%>
 						</tbody>
@@ -400,6 +482,7 @@
 						<tbody>
 						<%
 							for(Etc etc : etcs) {
+								if("N".equals(etc.getDisableYn())) {
 						%>
 							<tr class="font-weight-bold">
 								<td><%=etc.getNo() %></td>
@@ -407,10 +490,39 @@
 								<td><%=etc.getPrice() %></td>
 								<td><%=("N".equals(etc.getDisableYn())) ? "아니오":"예" %></td>
 								<td><a class="btn btn-primary text-light"
-									href="etcmenumodifyform.jsp">수정</a></td>
-								<td><a class="btn btn-danger text-light">비활성</a></td>
+									href="etcmenumodifyform.jsp?yn=n&etcno=<%=etc.getNo() %>">수정</a></td>
+								<td>
+									<form method="post" action="etcmenumodify.jsp" enctype="multipart/form-data">
+										<input type="hidden" name="yn" value="y">
+										<input type="hidden" name="etcno" value=<%=etc.getNo() %>>
+										<button class="btn btn-secondary text-light" type="submit">
+											비활성
+										</button>
+									</form>
+								</td>
 							</tr>
 						<%
+								} else {
+						%>
+							<tr class="text-muted">
+								<td><%=etc.getNo() %></td>
+								<td><%=etc.getName() %></td>
+								<td><%=etc.getPrice() %></td>
+								<td><%=("N".equals(etc.getDisableYn())) ? "아니오":"예" %></td>
+								<td><a class="btn btn-primary text-light"
+									href="etcmenumodifyform.jsp?yn=n&etcno=<%=etc.getNo() %>">수정</a></td>
+								<td>
+									<form method="post" action="etcmenumodify.jsp" enctype="multipart/form-data">
+										<input type="hidden" name="yn" value="yn">
+										<input type="hidden" name="etcno" value=<%=etc.getNo() %>>
+										<button class="btn btn-danger text-light" type="submit">
+											활성
+										</button>
+									</form>
+								</td>
+							</tr>
+						<%
+								}
 							}
 						%>
 						</tbody>

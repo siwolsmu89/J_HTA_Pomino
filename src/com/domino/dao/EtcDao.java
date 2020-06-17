@@ -77,7 +77,7 @@ public class EtcDao {
 	
 	public void updateEtc(Etc etc) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
-		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("etc.insertEtc"));
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("etc.updateEtc"));
 		pstmt.setString(1, etc.getName());
 		pstmt.setInt(2, etc.getPrice());
 		pstmt.setString(3, etc.getImageSrc());

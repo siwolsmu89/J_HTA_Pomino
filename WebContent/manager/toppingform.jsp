@@ -84,20 +84,20 @@
 						</div>
 						<div class="card-body">
 							<!-- 토핑등록 입력 폼 시작  -->
-							<form method="post" action="topping.jsp">
+							<form method="post" action="topping.jsp" enctype="multipart/form-data">
 								<div class="form-group">
 									<label>토핑이름</label> <input type="text" class="form-control"
 										name="name" placeholder="예)페퍼로니" />
 								</div>
 								<div class="form-group">
-									<label>토핑가격</label> <input type="text" class="form-control"
-										name="lprice" placeholder="1500" />
+									<label>토핑가격</label> <input type="number" class="form-control"
+										name="price" placeholder="1500" />
 								</div>
 								<div class="form-group">
-									<label>카테고리</label> <select name="cars" class="custom-select">
-										<option value="main" selected>메인</option>
-										<option value="cheese">치즈</option>
-										<option value="after">애프터</option>
+									<label>카테고리</label> <select name="category" class="form-control">
+										<option value="1" selected>메인</option>
+										<option value="2">치즈</option>
+										<option value="3">애프터</option>
 									</select>
 								</div>
 								<!-- 사진등록 -->

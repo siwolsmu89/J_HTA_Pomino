@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
+import com.domino.dto.UserDto;
 import com.domino.util.ConnectionUtil;
 import com.domino.util.QueryUtil;
 import com.domino.vo.User;
@@ -40,6 +42,14 @@ public class UserDao {
 		
 		return user;
 	}
+	
+	private UserDto resultSetToUserDto(ResultSet rs) throws SQLException {
+		UserDto userDto = new UserDto();
+		
+		userDto.setNo(rs.getInt("user_no"));
+		userDto.setUserTotalPrice(rs.getInt("user_total_price"));
+		return userDto;
+	}
 
 	/**
 	 * user번호로 User 정보를 조회하는 메소드
@@ -66,7 +76,13 @@ public class UserDao {
 		
 		return user;
 	}
-	
+	/**
+	 * user아이디로 User 정보를 조회하는 메소드
+	 * @param userId 사용자 아이디
+	 * @return 조회에 성공하면 정보가 들어 있는 User 객체가 반환되고, 조회에 실패하면 null이 반환
+	 * @throws SQLException
+	 * @author 하영
+	 */
 	public User getUserById(String userId) throws SQLException{
 		User user = null;
 		
@@ -85,6 +101,7 @@ public class UserDao {
 		
 		return user;
 	}
+	
 	
 	/**
 	 * user객체에 데이터를 담아 DB에 등록하는 메소드
@@ -128,12 +145,54 @@ public class UserDao {
 		pstmt.setString(7, user.getQuitDetail());
 		pstmt.setInt(8, user.getOrderCount());
 		pstmt.setInt(9, user.getQuickOrderNo());
-		pstmt.setInt(10, user.getNo());
+		if (user.getGradeDate() != null) {
+			pstmt.setDate(10, new java.sql.Date(user.getGradeDate().getTime()));
+		} else {
+			pstmt.setDate(10, new java.sql.Date(new Date().getTime()));
+		}
+		pstmt.setInt(11, user.getNo());
 		
 		pstmt.executeUpdate();
 		
 		pstmt.close();
 		connection.close();
+	}
+	
+	public UserDto getTotalPriceUserByNo(int userNo) throws SQLException {
+		UserDto userDto = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("user.getTotalPriceUserByNo"));
+		pstmt.setInt(1, userNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while (rs.next()) {
+			userDto = resultSetToUserDto(rs);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return userDto;
+	}
+	
+	/**
+	 * 마지막 주문일이 1년 이상 지나간 유저의 등급을 'regular'(가장 낮은 등급)로 전환하는 메소드 
+	 * @return 등급이 전환된 유저의 수
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	public int refreshGradeStatus() throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("user.refreshGradeStatus"));
+		
+		int result = pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+		
+		return result;
 	}
 	
 }

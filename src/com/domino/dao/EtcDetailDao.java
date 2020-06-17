@@ -59,4 +59,21 @@ public class EtcDetailDao {
 		
 		return eol;
 	}
+	
+	/**
+	 * 기타 메뉴 주문 정보를 삭제하는 메소드
+	 * @param no 기타 메뉴 주문 번호
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	public void deleteEtcOrderByNo(int no) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("etcdetail.deleteEtcOrderByNo"));
+		pstmt.setInt(1, no);
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
 }

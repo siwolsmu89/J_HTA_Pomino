@@ -1,42 +1,35 @@
+<%@page import="com.domino.dao.SideDao"%>
+<%@page import="com.domino.vo.Side"%>
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@page import="com.domino.util.NumberUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <title></title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-</head>
-<body>
 <%
-	String position = "manager";
+	request.setCharacterEncoding("utf-8");
+
+	//파입업로드 세팅
+	String saveDirectory = application.getInitParameter("sidemenuImgSaveDirectory");
+	int maxPostSize = NumberUtil.stringToInt(application.getInitParameter("maxUploadFileSize"));
+	String encoding = "utf-8";
+	
+	MultipartRequest mr = new MultipartRequest(request, saveDirectory, maxPostSize, encoding, new DefaultFileRenamePolicy());
+	System.out.println(mr.getParameter("upfile"));
+	
+	// 사이드메뉴객체 넣을 값 준비
+	String name = mr.getParameter("name");
+	String imageSrc = mr.getFilesystemName("upfile");
+	int price = NumberUtil.stringToInt(mr.getParameter("price"));
+	
+	// 사이드객체에 값 넣기
+	Side side = new Side();
+	side.setName(name);
+	side.setImageSrc(imageSrc);
+	side.setPrice(price);
+	
+	// 사이드 생성
+	SideDao sideDao = new SideDao();
+	sideDao.insertSide(side);
+	
+	response.sendRedirect("/domino/manager/menulist.jsp");
 %>
-<%@ include file="../common/navbar.jsp"%>
-<div class="container">
-	<div class="header">
-		<div class="row">	
-			<div class="col-4">
-				<h4>
-				
-				</h4>
-			</div>			
-			<div class="col-8">
-				<ul class="nav justify-content-end">
-				  <li class="nav-item">
-				    <a class="nav-link active" href="#">홈</a></li>
-				    <li class="nav-item"><a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">></a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div class="container">
-		
-	</div>
-</div>
-<%@ include file="../common/footer.jsp" %>
-</body>
-</html>

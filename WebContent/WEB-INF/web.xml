@@ -40,22 +40,22 @@
 	
 	<context-param>
 		<param-name>sidemenuImgSaveDirectory</param-name>
-		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\pizza</param-value>
+		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\sidemenu</param-value>
 	</context-param>
 	
 	<context-param>
 		<param-name>doughImgSaveDirectory</param-name>
-		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\pizza</param-value>
+		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\dough</param-value>
 	</context-param>
 	
 	<context-param>
 		<param-name>toppingImgSaveDirectory</param-name>
-		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\pizza</param-value>
+		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\topping</param-value>
 	</context-param>
 	
 	<context-param>
 		<param-name>etcmenuImgSaveDirectory</param-name>
-		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\pizza</param-value>
+		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\etcmenu</param-value>
 	</context-param>
 	
 </web-app>

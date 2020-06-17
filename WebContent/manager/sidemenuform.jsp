@@ -84,7 +84,7 @@
 						</div>
 						<div class="card-body">
 							<!-- 사이드메뉴등록 입력 폼 시작  -->
-							<form method="post" action="pizza.jsp">
+							<form method="post" action="sidemenu.jsp" enctype="multipart/form-data">
 								<div class="form-group">
 									<label>사이드이름</label> <input type="text" class="form-control"
 										name="name" placeholder="예)오리엔탈 통새우" />
@@ -92,7 +92,7 @@
 
 								<div class="form-group">
 									<label>가격</label> <input type="text" class="form-control"
-										name="lprice" placeholder="3500" />
+										name="price" placeholder="3500" />
 								</div>
 								<!-- 사진등록 -->
 								<div class="form-group">

@@ -48,22 +48,22 @@
 			<div class="col-4">
 				<h4>결제하기</h4>
 			</div>
-			<div class="col-8">
-				<ul class="nav justify-content-end">
+			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
+				<ul class="nav justify-content-end small text-muted">
 				  <li class="nav-item">
-				    <a class="nav-link active" href="#">홈</a>
+				    <a class="nav-link text-muted active pr-1" href="../common/home.jsp">홈</a>	
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">></a>
+				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link active" href="#">장바구니</a>
+				    <a class="nav-link text-muted active pr-1" href="cart.jsp">장바구니</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">></a>
+				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">결제하기</a>
+				    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">결제하기</a>
 				  </li>
 				</ul>
 			</div>
@@ -72,9 +72,7 @@
 	</div>
 	
 	<%
-			// 로그인된 userNo가 세션에 저장되어 있을 것
-			//	int userNo = loginUserNo;
-				int userNo = 100;
+				int userNo = loginUserNo;
 			// location도 세션에 있을 것
 			//  int locationNo = savedLocationNo;
 				int locationNo = 100;

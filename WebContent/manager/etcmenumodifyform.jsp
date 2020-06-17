@@ -1,3 +1,7 @@
+<%@page import="com.domino.vo.Etc"%>
+<%@page import="com.domino.dao.EtcDao"%>
+<%@page import="com.domino.util.NumberUtil"%>
+<%@page import="com.domino.util.StringUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -77,14 +81,22 @@
 							<strong>기타 메뉴 정보 수정</strong>
 						</div>
 						<div class="card-body">
-							<form method="post" action="doughmodify.jsp">
+						<%
+							String yn = StringUtil.nullToValue(request.getParameter("yn"), "n");
+							int etcNo = NumberUtil.stringToInt(request.getParameter("etcno"));
+							EtcDao etcDao = new EtcDao();
+							Etc etc = etcDao.getEtcByNo(etcNo);
+						%>
+							<form method="post" action="etcmenumodify.jsp" enctype="multipart/form-data">
+								<input type="hidden" name="etcno" value="<%=etcNo%>">
+								<input type="hidden" name="yn" value="<%=yn%>">
 								<div class="form-group">
 									<label>기타메뉴 이름</label> <input type="text" class="form-control"
-										name="name" placeholder="기존값 표시" />
+										name="name" value="<%=etc.getName() %>" />
 								</div>
 								<div class="form-group">
 									<label>기타메뉴 가격</label> <input type="text" class="form-control"
-										name="lprice" placeholder="기존값 표시" />
+										name="price" value="<%=etc.getPrice() %>" />
 								</div>
 								<!-- 사진등록 -->
 								<div class="form-group">

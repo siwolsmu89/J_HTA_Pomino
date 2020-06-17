@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@include file="../common/logincheck.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -99,12 +100,6 @@
 								<label>비밀번호</label>
 								<input type="password" class="form-control" name="userpwd" placeholder="영문(대소문자),숫자,특수기호를 조합해주세요."/>
 								<div class="m-1 text-white text-right"><button type="button" class="btn btn-dark btn-sm">확인</button></div>
-							</div>
-							<div class="form-group">
-								<label>생년월일</label>
-								<div>
-									<input type="date" id="birth"/>
-								</div>
 							</div>
 							<div class="form-group">
                         		<label>휴대폰 번호</label>

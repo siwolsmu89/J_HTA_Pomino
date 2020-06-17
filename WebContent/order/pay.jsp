@@ -41,19 +41,21 @@
 	orderDao.updateOrder(order);
 	
 	User user = userDao.getUserByNo(userNo);
-	int orderCount = user.getOrderCount();
-	user.setOrderCount(orderCount+1);
+	int orderCount = user.getOrderCount() + 1;
+	user.setOrderCount(orderCount);
 	
 	GradeDao gradeDao = new GradeDao();
 	List<Grade> grades = gradeDao.getAllGrades();
 	for (Grade grade : grades) {
-		if (user.getOrderCount() >= grade.getOrderCount()) {
+		if (orderCount >= grade.getOrderCount()) {
 			user.setGradeName(grade.getName());
 			Date date = new Date();
 			user.setGradeDate(date);
 			break;
-		}		
+		}
 	}
 	
 	userDao.updateUser(user);
+	
+	response.sendRedirect("success.jsp");
 %>

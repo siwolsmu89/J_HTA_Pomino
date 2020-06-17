@@ -84,14 +84,14 @@
 						</div>
 						<div class="card-body">
 							<!-- 기타메뉴등록 입력 폼 시작  -->
-							<form method="post" action="pizza.jsp">
+							<form method="post" action="etcmenu.jsp" enctype="multipart/form-data">
 								<div class="form-group">
 									<label>기타메뉴 이름</label> <input type="text" class="form-control"
 										name="name" placeholder="예)코카콜라 1.25L" />
 								</div>
 								<div class="form-group">
 									<label>기타메뉴 가격</label> <input type="text" class="form-control"
-										name="lprice" placeholder="2000" />
+										name="price" placeholder="2000" />
 								</div>
 								<!-- 사진등록 -->
 								<div class="form-group">

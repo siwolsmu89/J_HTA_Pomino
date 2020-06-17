@@ -1,3 +1,4 @@
+<%@page import="com.domino.dto.UserDto"%>
 <%@page import="com.domino.vo.User"%>
 <%@page import="com.domino.dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -25,26 +26,28 @@
 	<div class="header">
 		<div class="row">	
 			<div class="col-4"><!-- 페이지명 바꿔서 사용하기 -->
-				<h4>나의 정보</h4>
+				<h4>나의정보</h4>
 			</div>
 			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
-				<ul class="nav justify-content-end ">
+				<ul class="nav justify-content-end small text-muted">
 				  <li class="nav-item">
-				    <a class="nav-link active" href="#">홈</a>
+				    <a class="nav-link text-muted active pr-1" href="#">홈</a>	<!--text-muted pr-1  -->
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" aria-disabled="true">></a>
-				  </li>
-				 <li class="nav-item">
-				    <a class="nav-link " href="#">나의정보</a>
+				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">></a>
+				    <a class="nav-link text-muted active pr-1" href="#">나의정보</a><!--text-muted active pr-1  -->
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">매니아등급</a>
+				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">매니아등급</a>
+				  	<!--text-dark font-weight-bold pr-1  -->
 				  </li>
 				</ul>
+				
 			</div>
 		</div>
 	<div style="background-color: black; height: 2px;" class="mb-2"></div>
@@ -74,6 +77,7 @@
 		<%
 			UserDao userDao = new UserDao();
 			User user = userDao.getUserByNo(loginUserNo);
+			UserDto userDto = userDao.getTotalPriceUserByNo(loginUserNo);
 		%>
 		<div class="row">
 			<div class="col-12">
@@ -81,18 +85,20 @@
 					<div class="row">
 						<div class="col-6">
 						  <h4 class=""><%=loginUserName %>님</h4>
-						  <p class="display-4 font-weight-bold"><%=user.getGradeName() %></p><!-- 등급불러오기 -->
+						  <p class="display-4 font-weight-bold"><%=user.getGradeName() == null ? "regular" : user.getGradeName()%></p><!-- 등급불러오기 -->
 <!-- 등급별 혜택보기 만들기 -->	  <p><a class="text-muted" href="#"><small>등급별 혜택 보기 ></small></a></p>
 						</div>
 						<div class="col-3" style="border-left: 1px solid white; border-right: 1px solid white;">
 							<p class="text-muted"><small>주문</small></p>
-							<p class="text-muted"><small>(2020-01~2021~01)</small></p>
+							<p class="text-muted pb-0 mb-0"><small>(<%=user.getGradeDate() %>)</small></p>
+							<p class="text-muted pt-0 mt-0"><small>(해당 일자로부터 1년 유효기간입니다.)</small></p>
 							<p class="display-4 text-center font-weight-bold"><%=user.getOrderCount() %></p>
 						</div>
 						<div class="col-3">
 							<p class="text-muted"><small>총 주문금액</small></p>
-							<p class="text-muted"><small>(2020-01~2021~01)</small></p>
-<!-- 주문쪽 다 만들면 다시하기 -->		<p class="display-4 text-center font-weight-bold">61,900</p>
+							<p class="text-muted pb-0 mb-0"><small>(<%=user.getGradeDate() %>)</small></p>
+							<p class="text-muted pt-0 mt-0"><small>(해당 일자로부터 1년 유효기간입니다.)</small></p>
+							<p class="display-4 text-center font-weight-bold"><%=userDto.getUserTotalPrice() %></p>
 						</div>
 					</div>
 				</div>

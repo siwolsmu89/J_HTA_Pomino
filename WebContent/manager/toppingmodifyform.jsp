@@ -1,3 +1,7 @@
+<%@page import="com.domino.vo.Topping"%>
+<%@page import="com.domino.dao.ToppingDao"%>
+<%@page import="com.domino.util.NumberUtil"%>
+<%@page import="com.domino.util.StringUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -77,20 +81,31 @@
 							<strong>토핑 정보 수정</strong>
 						</div>
 						<div class="card-body">
-							<form method="post" action="toppingmodify.jsp">
+						<%
+							String yn = StringUtil.nullToValue(request.getParameter("yn"), "n");
+							int toppingNo = NumberUtil.stringToInt(request.getParameter("toppingno"));
+							ToppingDao toppingDao = new ToppingDao();
+							Topping topping = toppingDao.getToppingByNo(toppingNo);
+						%>
+							<form method="post" action="toppingmodify.jsp" enctype="multipart/form-data">
+								<input type="hidden" name="sideno" value="<%=toppingNo%>">
+								<input type="hidden" name="yn" value="<%=yn%>">
 								<div class="form-group">
-									<label>토핑 이름</label> <input type="text" class="form-control"
-										name="name" placeholder="기존값 표시" />
+									<label>토핑 이름</label> 
+									<input type="text" class="form-control"
+										name="name" value="<%=topping.getName() %>" />
 								</div>
 								<div class="form-group">
-									<label>토핑 가격</label> <input type="text" class="form-control"
-										name="lprice" placeholder="기존값 표시" />
+									<label>토핑 가격</label> 
+									<input type="text" class="form-control"
+										name="price" value="<%=topping.getPrice() %>" />
 								</div>
 								<div class="form-group">
-									<label>카테고리</label> <select name="cars" class="custom-select">
-										<option value="main">메인</option>
-										<option value="cheese" selected>치즈</option>
-										<option value="after">애프터</option>
+									<label>카테고리</label> 
+									<select name="category" class="form-control">
+										<option value="1" <%=(1==topping.getCategory()) ? "selected":"" %>>메인</option>
+										<option value="2" <%=(2==topping.getCategory()) ? "selected":"" %>>치즈</option>
+										<option value="3" <%=(3==topping.getCategory()) ? "selected":"" %>>애프터</option>
 									</select>
 								</div>
 								<!-- 사진등록 -->

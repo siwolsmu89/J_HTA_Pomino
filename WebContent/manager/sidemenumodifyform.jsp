@@ -1,3 +1,7 @@
+<%@page import="com.domino.vo.Side"%>
+<%@page import="com.domino.dao.SideDao"%>
+<%@page import="com.domino.util.NumberUtil"%>
+<%@page import="com.domino.util.StringUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -77,14 +81,22 @@
 						<strong>사이드 정보 수정</strong>
 					</div>
 					<div class="card-body">
-						<form method="post" action="sidemenumodify.jsp">
+					<%
+						String yn = StringUtil.nullToValue(request.getParameter("yn"), "n");
+						int sideNo = NumberUtil.stringToInt(request.getParameter("sideno"));
+						SideDao sideDao = new SideDao();
+						Side side = sideDao.getSideByNo(sideNo);
+					%>
+						<form method="post" action="sidemenumodify.jsp" enctype="multipart/form-data">
+							<input type="hidden" name="sideno" value="<%=sideNo%>">
+							<input type="hidden" name="yn" value="<%=yn%>">
 							<div class="form-group">
 								<label>사이드메뉴 이름</label> <input type="text" class="form-control"
-									name="name" placeholder="기존값 표시" />
+									name="name" value="<%=side.getName() %>" />
 							</div>
 							<div class="form-group">
 								<label>사이드메뉴 가격</label> <input type="text" class="form-control"
-									name="lprice" placeholder="기존값 표시" />
+									name="price" value="<%=side.getPrice() %>" />
 							</div>
 							<!-- 사진등록 -->
 							<div class="form-group">

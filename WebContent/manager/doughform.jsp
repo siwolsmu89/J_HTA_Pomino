@@ -84,14 +84,14 @@
 						</div>
 						<div class="card-body">
 							<!-- 도우등록 입력 폼 시작  -->
-							<form method="post" action="pizza.jsp">
+							<form method="post" action="dough.jsp" enctype="multipart/form-data">
 								<div class="form-group">
 									<label>도우이름</label> <input type="text" class="form-control"
 										name="name" placeholder="예)슈퍼시드 도우" />
 								</div>
 								<div class="form-group">
 									<label>도우가격</label> <input type="text" class="form-control"
-										name="lprice" placeholder="2000(default : 0)" />
+										name="price" placeholder="2000(default : 0)" />
 								</div>
 								<!-- 사진등록 -->
 								<div class="form-group">
