@@ -1,47 +1,31 @@
+<%@page import="com.domino.util.NumberUtil"%>
+<%@page import="com.domino.dto.UserDto"%>
+<%@page import="com.domino.vo.User"%>
+<%@page import="com.domino.dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <title></title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-</head>
-<body>
-<%@ include file="../common/navbar.jsp"%>
-<div class="container">
-	<div class="header">
-		<div class="row">	
-			<div class="col-4"><!-- 페이지명 바꿔서 사용하기 -->
-				<h4><!-- 페이지명 --></h4>
-			</div>
-			
-			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
-				<ul class="nav justify-content-end">
-				  <li class="nav-item">
-				    <a class="nav-link active" href="#">홈</a>
-				  </li>
-				 <!--  사용할만큼 추가하기
-				  <li class="nav-item">
-				    <a class="nav-link" href="#">Link</a>
-				  </li>
-				  -->
-				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">></a>
-				  </li>
-				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><!-- 페이지명 --></a>
-				  </li>
-				</ul>
-			</div>
-		</div>
-	</div>
-
-</div>
-<%@ include file="../common/footer.jsp" %>
-</body>
-</html>
+<%
+	
+	request.setCharacterEncoding("utf-8");
+	int userNo = Integer.parseInt(request.getParameter("userno"));
+	String password = request.getParameter("userpwd");
+	String tel = request.getParameter("usertel");
+	String email = request.getParameter("useremail");
+	
+	UserDao userDao = new UserDao();
+	User userr = userDao.getUserByNo(userNo);
+	
+	
+	User user = new User();
+	user.setNo(userr.getNo());
+	user.setId(userr.getId());
+	user.setName(userr.getName());
+	user.setPassword(password);
+	user.setTel(tel);
+	user.setEmail(email);
+	
+	userDao.updateModifyUser(user);
+	
+	response.sendRedirect("/domino/common/home.jsp");
+	
+%>

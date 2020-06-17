@@ -108,6 +108,7 @@
 								<th>처리상태</th>
 							</tr>
 						</thead>
+						
 						<tbody>
 							<tr>
 								<td>1</td>
@@ -126,6 +127,7 @@
 								</td>
 							</tr>
 						</tbody>
+						
 					</table>
 					<div class="row">
 						<div class="col-12 text-center">

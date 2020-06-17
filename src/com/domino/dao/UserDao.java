@@ -43,13 +43,6 @@ public class UserDao {
 		return user;
 	}
 	
-	private UserDto resultSetToUserDto(ResultSet rs) throws SQLException {
-		UserDto userDto = new UserDto();
-		
-		userDto.setNo(rs.getInt("user_no"));
-		userDto.setUserTotalPrice(rs.getInt("user_total_price"));
-		return userDto;
-	}
 
 	/**
 	 * user번호로 User 정보를 조회하는 메소드
@@ -158,6 +151,28 @@ public class UserDao {
 		connection.close();
 	}
 	
+	/**
+	 * 회원정보수정 시 데이터를 수정할 때 사용하는 메소드
+	 * @param user 새로 변경할 사용자 정보가 담긴 User객체 user
+	 * @throws SQLException
+	 * @author 하영
+	 */
+	public void updateModifyUser(User user) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("user.updateModifyUser"));
+		
+		pstmt.setString(1, user.getId());
+		pstmt.setString(2, user.getName());
+		pstmt.setString(3, user.getPassword());
+		pstmt.setString(4, user.getTel());
+		pstmt.setString(5, user.getEmail());
+		pstmt.setInt(6, user.getNo());
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
+	
 	public UserDto getTotalPriceUserByNo(int userNo) throws SQLException {
 		UserDto userDto = null;
 		
@@ -166,8 +181,11 @@ public class UserDao {
 		pstmt.setInt(1, userNo);
 		ResultSet rs = pstmt.executeQuery();
 		
-		while (rs.next()) {
-			userDto = resultSetToUserDto(rs);
+		if (rs.next()) {
+			userDto = new UserDto();
+			
+			userDto.setNo(rs.getInt("user_no"));
+			userDto.setUserTotalPrice(rs.getInt("user_total_price"));
 		}
 		
 		rs.close();

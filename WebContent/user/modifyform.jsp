@@ -1,3 +1,5 @@
+<%@page import="com.domino.vo.User"%>
+<%@page import="com.domino.dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../common/logincheck.jsp" %>
@@ -11,6 +13,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <style type="text/css">
+  	.field-error {
+		border: 1px solid red;
+	}	
+  </style>
 </head>
 <body>
 <%
@@ -82,49 +89,85 @@
 		</div>
 		<div style="background-color: black; height: 2px;" class="mb-2"></div>
 		<div class="row">
-				<div class="col-12 mt-2">				
-					<!-- 회원가입폼을 포함하고 있는 card 컴포넌트 시작 -->
-					<div class="card ">
+			<%
+				UserDao userDao = new UserDao();
+				User user = userDao.getUserByNo(loginUserNo);
+				
+			%>
+			<div class="col-12 mt-2">				
+				<!-- 회원가입폼을 포함하고 있는 card 컴포넌트 시작 -->
+			
+				<div class="card ">
 					<div class="card-body">
 						<!-- 회원가입 입력 폼 시작  -->
-						<form method="post" action="modify.jsp">
+						<form method="post" action="modify.jsp" onsubmit="checkField(event)">
+							<input type="hidden" class="form-control" name="userno" value="<%=user.getNo()%>">
 							<div class="form-group">
 								<label>이름</label>
-								<input type="text" class="form-control" name="id" disabled/>
+								<input type="text" class="form-control" name="username" value=<%=user.getName() %> disabled/>
 							</div>
 							<div class="form-group">
 								<label>아이디</label>
-								<input type="text" class="form-control" name="userid" disabled/>
+								<input type="text" class="form-control" name="userid" value=<%=user.getId() %> disabled/>
 							</div>
 							<div class="form-group">
 								<label>비밀번호</label>
 								<input type="password" class="form-control" name="userpwd" placeholder="영문(대소문자),숫자,특수기호를 조합해주세요."/>
-								<div class="m-1 text-white text-right"><button type="button" class="btn btn-dark btn-sm">확인</button></div>
+								<p class="small px-1 text-danger">(변경을 안하면 원래 비밀번호로 입력해주세요)</p>
 							</div>
 							<div class="form-group">
                         		<label>휴대폰 번호</label>
-                        			<input type="tel" class="form-control" id="inputMobile" placeholder="예)010-1234-5678">
+                        			<input type="tel" class="form-control" name="usertel" value=<%=user.getTel() %>>
                     		</div>
 							<div class="form-group">
 								<label for="exampleFormControlInput1">이메일</label>
-    							<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="예)name@example.com">
+    							<input type="email" class="form-control" name="useremail" value=<%=user.getEmail() %>>
 							</div>
                 
 							<div class="text-center">
 								<button type="reset" class="btn btn-light btn-lg">초기화</button>
-								<button type="submit" class="btn btn-info btn-lg">수정하기</button>
+								<button type="submit" class="btn btn-info btn-lg" onclick="alertcomplete(event)">수정하기</button>
 								<div class="small text-muted m-2">도미노피자를 더 이상 이용하지 않는다면 <a href="deleteform.jsp" class="text-dark font-weight-bold">회원탈퇴 바로가기 ></a></div>
 							</div>
 						</form>
-					
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</div>
 	<div class="mb-3"></div>
 </div>
 <%@ include file="../common/footer.jsp" %>
+<script type="text/javascript">
+function checkField(event) {
+	clearErrorField();
+	var pwdField = document.querySelector("input[name=userpwd]");
+	
+	var isPassed = true;
+	if(!pwdField.value) {
+		pwdField.classList.add("field-error");
+		isPassed = false;
+	}
+	
+	if(!isPassed){
+		event.preventDefault();
+	}
+}
+
+function clearErrorField() {
+	var fields = document.querySelectorAll(".form-group input");
+	for(var i=0;i<fields.length;i++) {
+		var input = fields[i];
+		input.classList.remove('field-error');
+	}
+}
+function alertcomplete(event) {
+	if(confirm('수정하시겠습니까?')){
+	
+	} else {
+		event.preventDefault();
+	}
+}
+</script>
 </body>
 </html>

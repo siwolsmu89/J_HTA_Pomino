@@ -67,7 +67,7 @@ VALUES
 INSERT INTO orders
 (order_no, order_total_price, order_discount_price, order_status, order_receiver_name, order_receiver_tel, user_no, order_request_time, branch_no, order_request_detail, location_no, order_type, order_reg_date)
 VALUES
-(order_no_seq.NEXTVAL, 0, 0, 0, '김김이', '010-1234-1234', 100, sysdate, 100, '빨리배달해주세요', 100, 'O', sysdate );
+(order_no_seq.NEXTVAL, 0, 0, 0, '김김이', '010-1234-1234', 100, sysdate, 100, '빨리배달해주세요', 100, 'C', sysdate );
 
 INSERT INTO pizza_orders
 (pizza_order_no, pizza_no, pizza_size, dough_no, pizza_order_amount, pizza_order_price, pizza_discount_price, order_no)

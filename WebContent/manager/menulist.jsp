@@ -89,6 +89,7 @@
 								<div class="input-group mb-3">
 									<div class="input-group-prepend">
 										<select class="form-control" name="searchOption">
+											<option value="pizza">전체메뉴</option>
 											<option value="pizza">피자메뉴</option>
 											<option value="sidemenu">사이드메뉴</option>
 											<option value="dough">도우메뉴</option>
@@ -200,7 +201,7 @@
 						SideDao sideDao = new SideDao();
 						List<Side> sides = sideDao.getAllSide();
 					%>
-					<table id="side-menu" class="table text-center">
+					<table id="side-menu" class=" table text-center">
 						<colgroup>
 							<col width="20%">
 							<col width="20%">
@@ -286,7 +287,7 @@
 						DoughDao doughDao = new DoughDao();
 						List<Dough> doughs = doughDao.getAllDough();
 					%>
-					<table id="doughs-menu" class="table text-center">
+					<table id="doughs-menu" class=" table text-center">
 						<colgroup>
 							<col width="20%">
 							<col width="20%">
@@ -371,7 +372,7 @@
 						ToppingDao toppingDao = new ToppingDao();
 						List<Topping> toppings = toppingDao.getAllTopping();
 					%>
-					<table id="topping-menu" class="table text-center">
+					<table id="topping-menu" class=" table text-center">
 						<colgroup>
 							<col width="10%">
 							<col width="20%">
@@ -460,7 +461,7 @@
 						EtcDao etcDao = new EtcDao();
 						List<Etc> etcs = etcDao.getAllEtc();
 					%>
-					<table id="etc-menu" class="table text-center">
+					<table id="etc-menu" class=" table text-center">
 						<colgroup>
 							<col width="20%">
 							<col width="20%">

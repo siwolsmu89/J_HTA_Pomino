@@ -58,4 +58,9 @@
 		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\etcmenu</param-value>
 	</context-param>
 	
+	<context-param>
+		<param-name>branchImgSaveDirectory</param-name>
+		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\branch</param-value>
+	</context-param>
+	
 </web-app>

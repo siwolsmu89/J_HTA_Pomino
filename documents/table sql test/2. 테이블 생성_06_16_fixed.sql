@@ -191,7 +191,8 @@ CREATE TABLE questions
 	-- 사용자 테이블 pk 참조
 	question_writer number(3),
 	question_title varchar2(300) NOT NULL,
-	quesetion_content varchar2(4000) NOT NULL,
+	question_content varchar2(4000) NOT NULL,
+    question_type varchar2(50) NOT NULL,
 	answered_yn char DEFAULT 'N',
 	question_del_yn char DEFAULT 'N',
 	question_reg_date date DEFAULT sysdate,

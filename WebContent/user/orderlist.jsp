@@ -1,3 +1,15 @@
+<%@page import="com.domino.util.NumberUtil"%>
+<%@page import="com.domino.dto.EtcOrderDto"%>
+<%@page import="com.domino.dao.EtcDetailDao"%>
+<%@page import="com.domino.dto.SideOrderDto"%>
+<%@page import="com.domino.dao.SideDetailDao"%>
+<%@page import="com.domino.dao.PizzaDetailDao"%>
+<%@page import="com.domino.dto.PizzaOrderDto"%>
+<%@page import="com.domino.vo.Branch"%>
+<%@page import="com.domino.dao.BranchDao"%>
+<%@page import="com.domino.vo.Order"%>
+<%@page import="java.util.List"%>
+<%@page import="com.domino.dao.OrderDao"%>
 <%@page import="com.domino.vo.User"%>
 <%@page import="com.domino.dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -18,38 +30,38 @@
 <%
 	String position = "login";
 	String subPosition = "userorder";
+	//민석씨가 하기
 %>
 <%@ include file="../common/navbar.jsp"%>
 <div class="container">
 	<div class="header">
 		<div class="row">	
-			<div class="col-4"><!-- 페이지명 바꿔서 사용하기 -->
+			<div class="col-4">
 				<h4>나의정보</h4>
 			</div>
-			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
+			<div class="col-8">
 				<ul class="nav justify-content-end small text-muted">
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="#">홈</a>	<!--text-muted pr-1  -->
+				    <a class="nav-link text-muted active pr-1" href="#">홈</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
+				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="#">나의정보</a><!--text-muted active pr-1  -->
+				    <a class="nav-link text-muted active pr-1" href="#">나의정보</a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">주문내역</a>
-				  	<!--text-dark font-weight-bold pr-1  -->
 				  </li>
 				</ul>
 				
 			</div>
 		</div>
-	<div style="background-color: black; height: 2px;" class="mb-2"></div>
-	<div class="row">
+		<div style="background-color: black; height: 2px;" class="mb-2"></div>
+		<div id="userinfo-navbar" class="row">
 			<div class="col-12">
 				<div class="navbar navbar-expand-sm ">
 					<ul class="navbar-nav">
@@ -75,27 +87,25 @@
 			UserDao userDao = new UserDao();
 			User user = userDao.getUserByNo(loginUserNo);
 		%>	
-		<div class="row">
+		<div id="page-header" class="row">
 			<div class="col-12">
 				<div class="jumbotron bg-dark text-white">
 					<div class="row">
 						<div class="col-9">
-						  <h2 class=""><%=loginUserName %>님이 주문하신 내역입니다.</h2>
-						  <div style="background-color: #00B9FF; height: 4px; width:60%;" class="my-3"></div>
-						  <p class="text-muted">주문을 취소하시려면 해당 매장으로 전화하셔야 합니다.</p>
+							<h2 class=""><%=loginUserName %>님이 주문하신 내역입니다.</h2>
+							<div style="background-color: #00B9FF; height: 4px; width:60%;" class="my-3"></div>
+							<p class="text-muted">주문을 취소하시려면 해당 매장으로 전화하셔야 합니다.</p>
 						</div>
 						<div class="col-3 text-right d-flex align-items-center justify-content-end"> <!-- 이용안내 만들기 -->
 							<button type="button" class="btn btn-link btn-sm text-muted " data-toggle="modal" data-target="#exampleModal">
 							  이용안내 > 
 							</button>
 						</div>
-						
-						
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div id="modal-container" class="row">
 			<div class="col-12">
 				<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				  <div class="modal-dialog modal-dialog-scrollable">
@@ -136,89 +146,135 @@
 				        		</div>
 							</div>
 						</div>
-				       
 				      </div>
 				      <div class="modal-footer">
-				       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				       	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				      </div>
 				    </div>
-				      
 				  </div>
 				</div>
-			  </div>
-		   </div>
-		</div>
-		
-		<div class="row">
-			<div class="col-12">
-				<p class="text-center font-weight-bold" style="border: 1px solid black; border-bottom: none;">피자 주문</p>
 			</div>
 		</div>
-		
-		<div class="row">
-			<div class="col-12">
-				<div class="m-4 p-4 text-center font-weight-bold">
-					<p>주문내역이 없습니다.</p>
+		<div id="page-body-orderlist">
+			<div id="orderlist-header" class="row">
+				<div class="col-12">
+					<p class="text-center font-weight-bold" style="border: 1px solid black; border-bottom: none;">피자 주문</p>
 				</div>
-				<hr/>	
+			</div>
+		<%
+			// 주문목록 가져오기
+			// !!주문목록 페이징 처리하기!!
+			OrderDao orderDao = new OrderDao();
+			List<Order> ol = orderDao.getOrdersByUserNo(loginUserNo);
+			if (ol.isEmpty()) {
+		%>		
+			<div id="orderlist-empty" class="row">
+				<div class="col-12">
+					<div class="m-4 p-4 text-center font-weight-bold">
+						<p>주문내역이 없습니다.</p>
+					</div>
+				</div>
+			</div>
+		<%
+			} else {
+				for (Order order : ol) {
+					
+					int orderNo = order.getNo();
+					
+					BranchDao branchDao = new BranchDao();
+					Branch branch = branchDao.getBranchByNo(order.getBranchNo());
+					PizzaDetailDao pizzaDetailDao = new PizzaDetailDao();
+					List<PizzaOrderDto> pol = pizzaDetailDao.getPizzaOrdersByOrderNo(orderNo);
+					
+					SideDetailDao sideDetailDao = new SideDetailDao();
+					List<SideOrderDto> sol = sideDetailDao.getSideOrdersByOrderNo(orderNo);
+					
+					EtcDetailDao etcDetailDao = new EtcDetailDao();
+					List<EtcOrderDto> eol = etcDetailDao.getEtcOrdersByOrderNo(orderNo);
+					
+					int totalCount = pol.size() + sol.size() + eol.size();
+					String simpleOrderTitle = "";
+					if (!pol.isEmpty()) {
+						simpleOrderTitle = pol.get(0).getPizzaName() + pol.get(0).getDoughName() + (totalCount > 1 ? " 외 " + (totalCount - 1) + "건" : "");
+					} else if(!eol.isEmpty()) {
+						simpleOrderTitle = sol.get(0).getSideName() + (totalCount > 1 ? "외 " + (totalCount - 1) + "건" : "");
+					}
+					
+					int orderStatus = order.getOrderStatus();
+					String statusString = "";
+					if (orderStatus == 0) {
+						statusString = "접수완료";
+					} else if (orderStatus == 1) {
+						statusString = "요리중";
+					} else if (orderStatus == 2) {
+						statusString = "배달중";
+					} else if (orderStatus == 3) {
+						statusString = "배달완료";
+					} else if(orderStatus == 4) {
+						statusString = "수령완료";
+					} else {
+						statusString = "주문취소";
+					}
+		%>	
+		<div style="background-color: black; height: 2px;" class="mb-2"></div>
+		<div id="orderlist-list" class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">
+						<div class="row small font-weight-bold">
+							<div class="col-6 text-left"> 
+								<div class="row">
+									<div class="col-2">
+										<p>배달주문</p>
+									</div>
+									<div class="col-5">
+										<p>주문일자 <%=order.getRegDate() %></p>
+									</div>
+									<div class="col-5">
+										<p>주문번호 <%=orderNo %></p>
+									</div>
+								</div>
+							</div>
+							<div class="col-6 text-right"> 
+								<div class="row">
+									<div class="col-6"></div>
+									<div class="col-3">
+										<div><a class="text-dark" href="#">+재주문하기</a></div>
+									</div>	
+									<div class="col-3">
+										<div><a class="text-muted" href="#">+퀵오더등록</a></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-body row">
+						<div class="col-2">
+							<h4 class=""><%=statusString %></h4>
+							<p class="small text-muted"><%=branch.getName() %> <%=branch.getTel() %></p>
+						</div>
+						<div class="col-7 text-center">
+							<p><%=simpleOrderTitle %> <%=NumberUtil.numberWithComma(order.getDiscountPrice()) %>원</p>
+						</div>
+						<div class="col-3 text-right text-white">
+							<a type="button" href="#" class="btn btn-dark small font-weight-bold">상세보기</a>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-		
-		<div class="row"><!-- 제품리스트 완료되면 연결하기 -->
+		<%
+				}
+			}
+		%>
+		</div>
+		<div id="page-footer" class="row mt-5 mb-5"><!-- 제품리스트 완료되면 연결하기 -->
 			<div class="col-12 text-center">
 				<a href="#" class="btn btn-info btn-lg" role="button">신제품보러가기</a>
 				<a href="#" class="btn btn-secondary btn-lg" role="button">다른제품 보러가기</a>
 			</div>
 		</div>
-		
-		<!-- 주문완료되면 연결하기
-		<div class="row">
-			<div class="col-12">
-			
-				<div class="row small font-weight-bold">
-					<div class="col-6 text-left"> 
-						<div class="row">
-							<div class="col-2">
-								<p>배달</p>
-							</div>
-							<div class="col-5">
-								<p>주문번호 12121212121</p>
-							</div>
-							<div class="col-5">
-								<p>주문일자 20200506</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-6 text-right"> 
-						<div class="row">
-							<div class="col-6"></div>
-							<div class="col-3">
-								<div><a class="text-dark" href="#">+재주문하기</a></div>
-							</div>	
-							<div class="col-3">
-								<div><a class="text-muted" href="#">+퀵오더등록</a></div>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<hr/>
-				<div class="row">
-					<div class="col-3">
-						<h4 class="">수령완료</h4>
-						<p class="small text-muted">안양석수점 031-1111-1212</p>
-					</div>
-					<div class="col-6 text-center">
-						<p>시리얼 칠리크랩 슈퍼시드 함유도우 슈퍼시드 함유 도우 27,650원</p>
-					</div>
-					<div class="col-3 text-right text-white">
-						<a type="button" class="btn btn-dark small font-weight-bold">상세보기</a>
-					</div>
-				</div>
-			</div>
-		</div>
-			 -->
-	
+	</div>
 	<div class="mb-3"></div>
 </div>
 <%@ include file="../common/footer.jsp" %>

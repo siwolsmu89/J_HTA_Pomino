@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.domino.util.ConnectionUtil;
 import com.domino.util.QueryUtil;
@@ -38,6 +40,26 @@ public class BranchDao {
 		return branch;
 	}
 	
+	public List<Branch> getAllBranch() throws SQLException {
+		List<Branch> branchs = new ArrayList<Branch>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("branch.getAllBranch"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Branch branch = new Branch();
+			branch = resultSetToBranch(rs);
+			branchs.add(branch);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return branchs;
+	}
+	
 	/**
 	 * 매장번호로 매장정보를 조회하는 메소드
 	 * @param branchNo 매장번호
@@ -63,5 +85,62 @@ public class BranchDao {
 		
 		return branch;
 	}
+	
+	/**
+	 * 
+	 * @param branchNo
+	 * @return
+	 * @throws SQLException
+	 */
+	public Branch getBranchByName(String branchName) throws SQLException {
+		Branch branch = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("branch.getBranchByName"));
+		pstmt.setString(1, branchName);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if (rs.next()) {
+			branch = resultSetToBranch(rs);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return branch;
+	}
+	
+	/**
+	 * 신규매장을 등록하는 메소드
+	 * @param branch 매장객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
+	public void insertBranch(Branch branch) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("branch.insertBranch"));
+		pstmt.setString(1, branch.getName());
+		pstmt.setString(2, branch.getAddrFirst());
+		pstmt.setString(3, branch.getAddrSecond());
+		pstmt.setString(4, branch.getAddrDetail());
+		pstmt.setString(5, branch.getTel());
+		pstmt.setString(6, branch.getOpenTime());
+		pstmt.setString(7, branch.getCloseTime());
+		pstmt.setString(8, branch.getComment());
+		pstmt.setString(9, branch.getImageSrc());
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
 
 }
+
+
+
+
+
+
+
+

@@ -49,3 +49,7 @@ INSERT INTO grades
 (grade_name, grade_order_count, grade_order_price, grade_discount_rate)
 VALUES
 ('regular', 2, 50000, 0.1);
+
+SELECT grade_name, grade_order_count, grade_order_price, grade_discount_rate 
+				   FROM grades 
+				   ORDER BY grade_order_count DESC;

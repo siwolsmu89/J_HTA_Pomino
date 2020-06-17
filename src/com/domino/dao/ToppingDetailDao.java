@@ -64,5 +64,33 @@ public class ToppingDetailDao {
 		
 		return tol;
 	}
+	
 
+	/**
+	 * 토핑 주문 정보를 삭제하는 메소드
+	 * @param no 토핑 주문 번호
+	 * @throws SQLException
+	 * @author 영준
+	 */
+	public void deleteToppingOrderByNo(int no) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("toppingdetail.deleteToppingOrderByNo"));
+		pstmt.setInt(1, no);
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
+	
+	public void deleteToppingOrdersByPizzaOrderNo(int pizzaOrderNo) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("toppingdetail.deleteToppingOrdersByPizzaOrderNo"));
+		pstmt.setInt(1, pizzaOrderNo);
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
 }

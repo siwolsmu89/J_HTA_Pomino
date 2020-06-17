@@ -101,7 +101,7 @@
 						<h6 class="mt-3 font-weight-bold">&emsp;주문내역</h6>
 					</div>
 					<div>
-						<table class="table w-auto small">
+						<table class="table">
 							<colgroup>
 								<col width="40%">
 								<col width="30%">
@@ -161,7 +161,7 @@
 										</div>
 									</td>
 									<td><br/><!-- 금액 --><%=orderPrice*pizzaOrderDto.getOrderAmount() %> 원</td>
-									<td><br/><!-- 전체삭제 --><button class="btn btn-light" name="pizza" onclick="removeCheck()">X</button></td>
+									<td><br/><!-- 전체삭제 --><button class="btn btn-light" name="pizza" onclick="removeCheck(<%=pizzaOrderDto.getNo()%>)">X</button></td>
 								</tr>
 <%
 								totalPrice += orderPrice*pizzaOrderDto.getOrderAmount();
@@ -186,7 +186,7 @@
 										</div>
 									</td>
 									<td><br/><!-- 금액 --><%=sod.getOrderPrice() %> 원</td>
-									<td><br/><!-- 전체삭제 --><button class="btn btn-light" name="side" onclick="removeCheck()">X</button></td>
+									<td><br/><!-- 전체삭제 --><button class="btn btn-light" name="side" onclick="removeCheck(<%=sod.getNo() %>)">X</button></td>
 								</tr>
 						<%
 								totalPrice += sod.getOrderPrice();
@@ -213,7 +213,7 @@
 										</div>
 									</td>
 									<td><br/><!-- 금액 --><%=edd.getOrderPrice() %> 원</td>
-									<td><br/><!-- 전체삭제 --><button class="btn btn-light" name="etc" onclick="removeCheck()">X</button></td>
+									<td><br/><!-- 전체삭제 --><button class="btn btn-light" name="etc" onclick="removeCheck(<%=edd.getNo() %>)">X</button></td>
 								</tr>
 						<%
 								totalPrice += edd.getOrderPrice(); 
@@ -280,7 +280,7 @@
 	
 	function toppingRemoveCheck(no) {
 		if (confirm("선택하신 토핑을 삭제하시겠습니까?")){
-		     location.href="delcart.jsp?type='topping'&no=" + no;
+		     location.href="delcart.jsp?type=topping&no=" + no;
 		}
 	}
 </script>

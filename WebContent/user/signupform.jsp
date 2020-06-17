@@ -1,3 +1,6 @@
+<%@page import="com.domino.vo.Branch"%>
+<%@page import="com.domino.dao.BranchDao"%>
+<%@page import="com.domino.util.NumberUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -40,7 +43,12 @@
 	</div>
 	<div style="background-color: black; height: 2px;" class="mb-2"></div>
 	<div class="body">
-		<%
+		<%	
+			// 가맹점등록 페이지로부터 받은 쿼리스트링 값 저장
+			String status = request.getParameter("status");
+			int branchNo = NumberUtil.stringToInt(request.getParameter("branchNo"));
+			
+			// 에러페이지용
 			String error = request.getParameter("error");
 		%>
 		<div class="row">
@@ -74,6 +82,82 @@
 							<div class="card ">
 							<div class="card-body">
 								<!-- 회원가입 입력 폼 시작  -->
+							<%
+								// 가맹점등록페이지(branch.jsp)에서 접근했는지 검사
+								if("branch".equals(status)) {
+									BranchDao branchDao = new BranchDao();
+									Branch branch = branchDao.getBranchByNo(branchNo);
+							%>
+									<form method="post" action="signup.jsp" onsubmit="checkField(event)">
+									<div class="form-group">
+										<label>이름</label>
+										<input type="text" class="form-control" name="username" value="<%=branch.getName()%>" />
+									</div>
+									<div class="form-group">
+										<label>아이디</label>
+										<input type="text" class="form-control" name="userid" value="branch-<%=branch.getNo()%>"  />
+									</div>
+									<div class="form-group">
+										<label>비밀번호</label>
+										<input type="password" class="form-control" name="userpwd" placeholder="영문(대소문자),숫자,특수기호를 조합해주세요."/>
+									</div>
+									<div class="form-group">
+										<label>생년월일</label>
+										<div>
+											<input type="date"  class="form-control" name="userbirth" />
+										</div>
+									</div>
+									<!-- 라디오버튼 예시 시작 -->
+									<div class="form-group">
+										<label>성별</label>
+										<div>
+											<div class="custom-control custom-radio custom-control-inline">
+												<input type="radio" class="custom-control-input" name="usergender" id="gender-male" value="M" checked>
+												<label class="custom-control-label" for="gender-male">남자</label>
+			  								</div>
+											<div class="custom-control custom-radio custom-control-inline">
+												<input type="radio" class="custom-control-input" name="usergender" id="gender-female" value="F">
+												<label class="custom-control-label" for="gender-female">여자</label>
+			  								</div>
+										</div>
+									</div>
+									<!-- 라디오버튼 예시 끝 -->
+									<div class="form-group">
+		                        		<label>전화번호</label>
+		                        			<input type="tel" class="form-control" name="usertel" id="inputMobile" value="<%=branch.getTel()%>" >
+		                    		</div>
+									<div class="form-group">
+										<label for="exampleFormControlInput1">이메일</label>
+		    							<input type="email" class="form-control" name="useremail" id="exampleFormControlInput1" placeholder="예)name@example.com">
+									</div>
+									<div class="form-group">
+										<label>이메일 수신여부</label>
+		                    			<label>
+		                            		<input type="radio" id="emailReceiveYn" name="emailReceiveYn" value="Y" checked> 동의합니다.
+		                       			</label>
+		                        		<label>
+		                            		<input type="radio" id="emailReceiveYn" name="emailReceiveYn" value="N"> 동의하지 않습니다.
+		                        		</label>
+									</div>
+									
+									 <div class="form-group">
+		                    			<label>SMS 수신여부</label>
+				                        <label>
+				                            <input type="radio" id="smsReceiveYn" name="smsReceiveYn" value="Y" checked> 동의합니다.
+				                        </label>
+				                        <label class="radio-inline">
+				                            <input type="radio" id="smsReceiveYn" name="smsReceiveYn" value="N"> 동의하지 않습니다.
+				                        </label>
+		                    		</div>
+		                
+									
+									<div class="text-right">
+										<button type="submit" class="btn btn-primary">가입하기</button>
+									</div>
+								</form>
+							<%
+								} else {
+							%>
 								<form method="post" action="signup.jsp" onsubmit="checkField(event)">
 									<div class="form-group">
 		                    			<label>개인정보취급방침</label>
@@ -163,6 +247,9 @@
 										<button type="submit" class="btn btn-primary">가입하기</button>
 									</div>
 								</form>
+							<%
+								}
+							%>
 								<!-- 회원가입 입력 폼 끝  -->
 							</div>
 						</div>

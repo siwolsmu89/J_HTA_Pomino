@@ -1,3 +1,6 @@
+<%@page import="com.domino.vo.Branch"%>
+<%@page import="java.util.List"%>
+<%@page import="com.domino.dao.BranchDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -98,6 +101,10 @@
 						</div>
 					</form>
 					<!-- 검색조건, 정렬기준 입력 폼 끝 -->
+					<%
+						BranchDao branchDao = new BranchDao();
+						List<Branch> branchs = branchDao.getAllBranch();
+					%>
 					<table class="table text-center">
 						<colgroup>
 							<col width="10%">
@@ -111,43 +118,132 @@
 							<tr>
 								<th>번호</th>
 								<th>가맹점명</th>
-								<th>주소(대)</th>
-								<th>주소(소)</th>
+								<th>주소(first)</th>
+								<th>주소(second)</th>
 								<th>전화번호</th>
-								<th>영업여부</th>
+								<th colspan='2'><a class="btn btn-light"
+									href="branchform.jsp">가맹점 등록</a></th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>종로3가점</td>
-								<td>서울특별시 종로구</td>
-								<td>종로3가 디아망건물</td>
-								<td>010-1111-2222</td>
+						<%
+							for(Branch branch : branchs) {
+						%>
+							<tr >
+								<td><%=branch.getNo() %></td>
+								<td><%=branch.getName() %></td>
+								<td><%=branch.getAddrFirst() %></td>
+								<td><%=branch.getAddrSecond() %></td>
+								<td><%=branch.getTel() %></td>
 								<td>
-									<button class="btn btn-success">영업중</button>
+							<%
+									String yn = branch.getQuitYn();
+									if("N".equals(yn)) {
+							%>					
+									<button type="button"  class="btn btn-success" data-toggle="modal" data-target="#<%=branch.getName() %>">영업중</button>
+							<%
+									} else {
+							%>
+									<button type="button"  class="btn btn-dark" data-toggle="modal" data-target="#<%=branch.getName() %>">영업종료</button>
+							<%
+									}
+							%>
 								</td>
 							</tr>
 							<tr>
-								<td>2</td>
-								<td>광화문점</td>
-								<td>서울특별시 종로구</td>
-								<td>종로3가 디아망건물</td>
-								<td>010-1111-2222</td>
-								<td>
-									<button class="btn btn-secondary">휴일</button>
+								<!-- Modal - qnadetail -->
+								<td class="modal fade" id="<%=branch.getName() %>" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog modal-dialog-scrollable modal-lg">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel"><%=branch.getName() %></h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+
+											<form method="post" action="question.jsp">
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-6">
+															<div class="form-group">
+																<label>가맹점번호</label> <input type="text"
+																	class="form-control" value="<%=branch.getNo() %>" disabled />
+															</div>
+															<div class="form-group">
+																<label>가맹점명</label> <input type="tel"
+																	class="form-control" value="<%=branch.getName() %>" disabled />
+															</div>
+															<div class="form-group">
+																<label>주소(1)</label> <input type="email"
+																	class="form-control" value="<%=branch.getAddrFirst() %>" disabled />
+															</div>
+															<div class="form-group">
+																<label>주소(2)</label> <input type="email"
+																	class="form-control" value="<%=branch.getAddrSecond() %>" disabled />
+															</div>
+															<div class="form-group">
+																<label>주소(3)</label> <input type="email"
+																	class="form-control" value="<%=branch.getAddrDetail() %>" disabled />
+															</div>
+															<div class="form-group">
+																<label>전화번호</label> <input type="email"
+																	class="form-control" value="<%=branch.getTel() %>" disabled />
+															</div>
+															
+														</div>
+														<div class="col-6">
+															<div class="form-group">
+																<label>가맹점등록일</label> <input type="email"
+																	class="form-control" value="<%=branch.getRegDate() %>" disabled />
+															</div>
+															<div class="form-group">
+																<label>주차가능여부</label> <input type="email"
+																	class="form-control" value="<%=branch.getParkingYn() %>" disabled />
+															</div>
+															<div class="form-group">
+																<label>오픈시간</label> <input type="email"
+																	class="form-control" value="<%=branch.getOpenTime() %>" disabled />
+															</div>
+															<div class="form-group">
+																<label>마감시간</label> <input type="email"
+																	class="form-control" value="<%=branch.getCloseTime() %>" disabled />
+															</div>
+															<div class="form-group">
+																<label>코멘트</label> <input type="email"
+																	class="form-control" value="<%=branch.getComment() %>" disabled />
+															</div>
+															<div class="form-group">
+																<label>할인율</label> <input type="text"
+																	class="form-control" value="<%=branch.getDiscountRate() %>" disabled />
+															</div>
+														</div>
+														<div class="col-12">
+															<div class="form-group">
+																<label>매장사진</label> <input type="text"
+																	class="form-control" value="<%=branch.getImageSrc() %>" disabled />
+															</div>
+														</div>
+													</div>
+																								
+												</div>
+												
+												<div class="modal-footer">
+													<a class="btn btn-primary text-light" 
+														href="/domino/branch/modify.jsp?branchno=<%=branch.getNo() %>">수정하기</a>
+												</div>
+												
+											</form>
+										</div>
+									</div>
 								</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>송파점</td>
-								<td>서울특별시 강남구</td>
-								<td>종로3가 디아망건물</td>
-								<td>010-1111-2222</td>
-								<td>
-									<button class="btn btn-danger">영업종료</button>
-								</td>
-							</tr>
+							</tr>				
+						<%
+							}
+						%>
 						</tbody>
 					</table>
 					<!-- 페이지 처리 시작 -->
@@ -163,10 +259,36 @@
 					</ul>
 					<!-- 페이지 처리 끝 -->
 					<!-- 검색조건, 정렬기준, 테이블, 페이지처리 내용을 포함하는 card 끝 -->
+					
+					
 				</div>
 			</div>
 		</div>
 	</div>
 	<%@ include file="../common/footer.jsp"%>
+	
+	<script type="text/javascript">
+		
+	</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
