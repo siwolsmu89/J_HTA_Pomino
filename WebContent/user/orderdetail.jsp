@@ -130,82 +130,88 @@
 				<hr/>
 			</div>
 		</div>
-		<div class="card mb-5">
-			<div class="card-header row" id="ordered-items">
-				<div class="col-1"></div>
-				<div id="order-items" class="col-5">
-					<div>
-						<h4>주문내역</h4>
-					</div>
-					<div class="small text-mute">
-		<%
-				if (!pol.isEmpty()) {
-					for (PizzaOrderDto po : pol) {
-						String orderTitle = po.getPizzaName() + po.getDoughName();
-						String orderPrice = NumberUtil.numberWithComma(po.getOrderPrice()) + "원";
-		%>
-					<p>-<%=orderTitle %> / <%=orderPrice %> </p>
-		<%
-						List<ToppingOrderDto> tol = toppingDetailDao.getToppingOrdersByPizzaNo(po.getNo());
-						for (ToppingOrderDto to : tol) {
-		%>
-					<p class="text-muted">&emsp;&emsp;-<%=to.getName() %> x <%=to.getOrderAmount() %> / <%=NumberUtil.numberWithComma(to.getOrderPrice()) %>원 </p>
-		<%					
+		<div class="row">
+			<div class="card mb-5 col-12">
+				<div class="card-header row" id="ordered-items">
+					<div class="col-1"></div>
+					<div id="order-items" class="col-5">
+						<div>
+							<h4>주문내역</h4>
+						</div>
+						<div class="small text-mute">
+			<%
+					if (!pol.isEmpty()) {
+						for (PizzaOrderDto po : pol) {
+							String orderTitle = po.getPizzaName() + po.getDoughName();
+							String orderPrice = NumberUtil.numberWithComma(po.getOrderPrice()) + "원";
+			%>
+						<p>-<%=orderTitle %> / <%=orderPrice %> </p>
+			<%
+							List<ToppingOrderDto> tol = toppingDetailDao.getToppingOrdersByPizzaNo(po.getNo());
+							for (ToppingOrderDto to : tol) {
+			%>
+						<p class="text-muted">&emsp;&emsp;-<%=to.getName() %> x <%=to.getOrderAmount() %> / <%=NumberUtil.numberWithComma(to.getOrderPrice()) %>원 </p>
+			<%					
+							}
 						}
 					}
-				}
-				
-				if (!sol.isEmpty()) {
-					for (SideOrderDto so : sol) {
-						String orderTitle = so.getSideName() ;
-						String orderPrice = NumberUtil.numberWithComma(so.getOrderPrice()) + "원";
-		%>
-					<p>-<%=orderTitle %> / <%=orderPrice %> </p>
-		<%
+					
+					if (!sol.isEmpty()) {
+						for (SideOrderDto so : sol) {
+							String orderTitle = so.getSideName() ;
+							String orderPrice = NumberUtil.numberWithComma(so.getOrderPrice()) + "원";
+			%>
+						<p>-<%=orderTitle %> / <%=orderPrice %> </p>
+			<%
+						}
 					}
-				}
-				
-				if (!eol.isEmpty()) {
-					for (EtcOrderDto eo : eol) {
-						String orderTitle = eo.getEtcName() ;
-						String orderPrice = NumberUtil.numberWithComma(eo.getOrderPrice()) + "원";
-		%>
-					<p>-<%=orderTitle %> / <%=orderPrice %> </p>
-		<%
+					
+					if (!eol.isEmpty()) {
+						for (EtcOrderDto eo : eol) {
+							String orderTitle = eo.getEtcName() ;
+							String orderPrice = NumberUtil.numberWithComma(eo.getOrderPrice()) + "원";
+			%>
+						<p>-<%=orderTitle %> / <%=orderPrice %> </p>
+			<%
+						}
 					}
-				}
-		%>
-					</div>
-				</div>
-				<div class="col-1" style="border-left: 1px solid lightgray;"></div>
-				<div id="order-prices" class="col-5">
-					<div class="row">
-						<div class="col-4">
-							<p>주문금액</p>
-							<p>할인금액</p>
-						</div>
-						<div class="col-4">
-						</div>
-						<div class="col-4">
-							<p><%=order.getTotalPrice() %>원</p>
-							<p>-<%=order.getTotalPrice() - order.getDiscountPrice() %>원</p>
+			%>
 						</div>
 					</div>
-					<hr/>
-					<div class="row">
-						<div class="col-4">
-							<p>결제금액</p>
+					<div class="col-1" style="border-left: 1px solid lightgray;"></div>
+					<div id="order-prices" class="col-5">
+						<div class="row">
+							<br/>
+							<br/>
 						</div>
-						<div class="col-4"></div>
-						<div class="col-4">
-							<p><%=order.getDiscountPrice() %>원</p>
+						<div class="row">
+							<div class="col-4">
+								<p>주문금액</p>
+								<p>할인금액</p>
+							</div>
+							<div class="col-4">
+							</div>
+							<div class="col-4">
+								<p><%=NumberUtil.numberWithComma(order.getTotalPrice()) %>원</p>
+								<p>-<%=NumberUtil.numberWithComma(order.getTotalPrice() - order.getDiscountPrice()) %>원</p>
+							</div>
+						</div>
+						<hr/>
+						<div class="row">
+							<div class="col-4">
+								<p>결제금액</p>
+							</div>
+							<div class="col-4"></div>
+							<div class="col-4">
+								<p><%=NumberUtil.numberWithComma(order.getDiscountPrice()) %>원</p>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div id="order-info">
-			<div class="card">
+		<div id="order-info row">
+			<div class="card col-12">
 				<div class="card-header">
 					<p>주문정보</p>
 				</div>
@@ -245,15 +251,19 @@
 				</div>
 			</div>
 		</div>
-		<div id="buttons">
-			<div id="to-orderlist">
-				<button>목록</button>
+		<div class="row mt-5 mb-5" id="buttons">
+			<div class="col-3 ml-5" id="to-orderlist">
+				<button class="btn btn-outline-secondary btn-lg">목록</button>
 			</div>
-			<div id="to-reorder">
-				<button>재주문</button>
-			</div>
-			<div id="to-quickorder">
-				<button>퀵오더</button>
+			<div class="col-8 text-center" id="to-orders">
+				<div class="row justify-content-center">
+					<div class="col-2" id="to-reorder">
+						<button class="btn btn-danger btn-lg">재주문</button>
+					</div>
+					<div class="col-2" id="to-quickorder">
+						<button class="btn btn-secondary btn-lg">퀵오더</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

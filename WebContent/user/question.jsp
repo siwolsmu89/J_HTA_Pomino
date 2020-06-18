@@ -8,7 +8,7 @@
 	request.setCharacterEncoding("utf-8");
 
 	String type = request.getParameter("questiontype");
-	int branch = Integer.parseInt(request.getParameter("branchname"));
+	int branch = NumberUtil.stringToInt(request.getParameter("branchname"));
 	String title = request.getParameter("questiontitle");
 	String content = request.getParameter("questioncontent");
 	
@@ -18,6 +18,11 @@
 	question.setBranchNo(branch);
 	question.setTitle(title);
 	question.setContent(content);
+	
+	if(question.getBranchNo() == 0 || question == null){
+		response.sendRedirect("questionform.jsp?error=empty");
+		return;
+	}
 	
 	QnaDao qnaDao = new QnaDao();
 	qnaDao.insertQuestion(question);

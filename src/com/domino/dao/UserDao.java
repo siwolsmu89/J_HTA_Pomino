@@ -178,6 +178,12 @@ public class UserDao {
 		return user;
 	}
 	
+	/**
+	 * user번호에 해당되는 order의 order_total_price를 전부 더하여 User의 정보를 조회하는 메소드
+	 * @param userNo 사용자 번호
+	 * @return 조회에 성공하면 정보가 들어 있는 UserDto 객체가 반환됨
+	 * @throws SQLException
+	 */
 	public UserDto getTotalPriceUserByNo(int userNo) throws SQLException {
 		UserDto userDto = null;
 		
@@ -200,6 +206,12 @@ public class UserDao {
 		return userDto;
 	}
 	
+	/**
+	 * 
+	 * @param userNo
+	 * @return
+	 * @throws SQLException
+	 */
 	public UserDto getCountQuestionUserByNo(int userNo) throws SQLException {
 		UserDto userDto = null;
 		Connection connection = ConnectionUtil.getConnection();
@@ -211,7 +223,7 @@ public class UserDao {
 			userDto = new UserDto();
 			
 			userDto.setNo(rs.getInt("user_no"));
-			userDto.setUserTotalPrice(rs.getInt("count_question"));
+			userDto.setQuestionCount(rs.getInt("count_question"));
 		}
 		
 		rs.close();

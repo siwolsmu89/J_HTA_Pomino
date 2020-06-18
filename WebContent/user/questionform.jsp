@@ -170,18 +170,21 @@
 								
 								<form method="post" action="question.jsp">
 									<div class="modal-body">
+										<%
+											String error = request.getParameter("error");
+										%>
 										<div class="row">
 										
 											<div class="col-12">
+												<%
+													if("empty".equals(error)) {
+												%>
 												<div class="alert alert-danger">
-													<strong>오류!</strong> 제목 또는 내용을 입력하지 않았습니다.
+													<strong>오류!</strong> 정보를 선택 또는 입력하세요.
 												</div>
-												<div class="alert alert-danger">
-													<strong>오류!</strong> 문의사항을 선택하지 않았습니다.
-												</div>
-												<div class="alert alert-danger">
-													<strong>오류!</strong> 매장을 선택하지 않았습니다.
-												</div>
+												<%
+													}
+												%>
 												<div class="form-group">
 													<label>아이디</label>
 													<input type="text" class="form-control"
@@ -268,7 +271,7 @@
 								</div>
 								<div class="modal-footer">
 									<button type="reset" class="btn btn-secondary">다시 작성</button>
-									<button type="submit" class="btn btn-info">답변 등록</button>
+									<button type="submit" class="btn btn-info" onclick="alertcomplete(event)">질문 등록</button>
 								</div>
 							</form>
 						</div>
@@ -316,5 +319,13 @@
 		xhr.open("get", "json/branches.jsp?addr=" + comboboxValue);
 		xhr.send();
 	}
+	function alertcomplete(event) {
+		if(confirm('등록하시겠습니까?')){
+		
+		} else {
+			event.preventDefault();
+		}
+	}
+	
 </script>
 </html>

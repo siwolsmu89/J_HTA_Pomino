@@ -34,9 +34,12 @@
 				</ul>
 			</div>
 		</div>
+	</div>
+		<div style="background-color: black; height: 3px;" class="mt-5"></div>
+	<div class="body">
+		<div class="row">
 		
-		<div style="background-color: black; height: 3px;" class="mt-2"></div>
-		
+		</div>
 	</div>
 </div>
 <%@ include file="../common/footer.jsp" %>
