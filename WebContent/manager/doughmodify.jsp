@@ -12,8 +12,7 @@
 	int maxPostSize = NumberUtil.stringToInt(application.getInitParameter("maxUploadFileSize"));
 	String encoding = "utf-8";
 
-	MultipartRequest mr = new MultipartRequest(request, saveDirectory, maxPostSize, encoding,
-			new DefaultFileRenamePolicy());
+	MultipartRequest mr = new MultipartRequest(request, saveDirectory, maxPostSize, encoding);
 	int doughNo = NumberUtil.stringToInt(mr.getParameter("doughno"));
 	String yn = StringUtil.nullToBlank(mr.getParameter("yn"));
 

@@ -24,5 +24,6 @@
 	session.setAttribute("사용자번호", user.getNo());
 	session.setAttribute("로그인여부", "Yes");
 	
+	
 	response.sendRedirect("/domino/common/home.jsp");
 %>

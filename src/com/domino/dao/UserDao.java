@@ -5,11 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 
 import com.domino.dto.UserDto;
 import com.domino.util.ConnectionUtil;
 import com.domino.util.QueryUtil;
+import com.domino.vo.Branch;
 import com.domino.vo.User;
+import com.domino.util.JdbcHelper;
+import com.domino.util.JdbcHelper.RowMapper;
 
 public class UserDao {
 	
@@ -43,57 +47,6 @@ public class UserDao {
 		return user;
 	}
 	
-
-	/**
-	 * user번호로 User 정보를 조회하는 메소드
-	 * @param userNo 사용자 번호
-	 * @return 조회에 성공하면 정보가 들어 있는 User 객체가 반환되고, 조회에 실패하면 null이 반환
-	 * @throws SQLException
-	 * @author 민석
-	 */
-	public User getUserByNo(int userNo) throws SQLException {
-		User user = null;
-		
-		Connection connection = ConnectionUtil.getConnection();
-		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("user.getUserByNo"));
-		pstmt.setInt(1, userNo);
-		ResultSet rs = pstmt.executeQuery();
-		
-		if (rs.next()) {
-			user = resultSetToUser(rs);
-		}
-		
-		rs.close();
-		pstmt.close();
-		connection.close();
-		
-		return user;
-	}
-	/**
-	 * user아이디로 User 정보를 조회하는 메소드
-	 * @param userId 사용자 아이디
-	 * @return 조회에 성공하면 정보가 들어 있는 User 객체가 반환되고, 조회에 실패하면 null이 반환
-	 * @throws SQLException
-	 * @author 하영
-	 */
-	public User getUserById(String userId) throws SQLException{
-		User user = null;
-		
-		Connection connection = ConnectionUtil.getConnection();
-		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("user.getUserById"));
-		pstmt.setString(1, userId);
-		ResultSet rs = pstmt.executeQuery();
-		
-		while(rs.next()) {
-			user = resultSetToUser(rs);
-			
-		}
-		rs.close();
-		pstmt.close();
-		connection.close();
-		
-		return user;
-	}
 	
 	
 	/**
@@ -118,6 +71,7 @@ public class UserDao {
 		connection.close();
 		pstmt.close();
 	}
+	
 	
 	/**
 	 * DB에 존재하는 user 데이터를 업데이트하는 메소드
@@ -173,6 +127,57 @@ public class UserDao {
 		connection.close();
 	}
 	
+	/**
+	 * user번호로 User 정보를 조회하는 메소드
+	 * @param userNo 사용자 번호
+	 * @return 조회에 성공하면 정보가 들어 있는 User 객체가 반환되고, 조회에 실패하면 null이 반환
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	public User getUserByNo(int userNo) throws SQLException {
+		User user = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("user.getUserByNo"));
+		pstmt.setInt(1, userNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if (rs.next()) {
+			user = resultSetToUser(rs);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return user;
+	}
+	/**
+	 * user아이디로 User 정보를 조회하는 메소드
+	 * @param userId 사용자 아이디
+	 * @return 조회에 성공하면 정보가 들어 있는 User 객체가 반환되고, 조회에 실패하면 null이 반환
+	 * @throws SQLException
+	 * @author 하영
+	 */
+	public User getUserById(String userId) throws SQLException{
+		User user = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("user.getUserById"));
+		pstmt.setString(1, userId);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			user = resultSetToUser(rs);
+			
+		}
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return user;
+	}
+	
 	public UserDto getTotalPriceUserByNo(int userNo) throws SQLException {
 		UserDto userDto = null;
 		
@@ -186,6 +191,27 @@ public class UserDao {
 			
 			userDto.setNo(rs.getInt("user_no"));
 			userDto.setUserTotalPrice(rs.getInt("user_total_price"));
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return userDto;
+	}
+	
+	public UserDto getCountQuestionUserByNo(int userNo) throws SQLException {
+		UserDto userDto = null;
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("user.getCountQuestionUserByNo"));
+		pstmt.setInt(1, userNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while (rs.next()) {
+			userDto = new UserDto();
+			
+			userDto.setNo(rs.getInt("user_no"));
+			userDto.setUserTotalPrice(rs.getInt("count_question"));
 		}
 		
 		rs.close();
@@ -213,4 +239,22 @@ public class UserDao {
 		return result;
 	}
 	
+	
+	/**
+	 * Branches에서 지역(예:서울)에 해당하는 번호와 이름을 찾는 메소드
+	 * @param addr 지역(예:서울)
+	 * @return 정보가 채워진 Branch 객체
+	 * @author 하영
+	 */
+	public List<Branch> getBranchesByAddrFirst(String addr) {
+		return JdbcHelper.selectList(QueryUtil.getSQL("user.getBranchesByAddrFirst"), new RowMapper<Branch>() {
+			@Override
+			public Branch mapRow(ResultSet rs) throws SQLException {
+				Branch branch = new Branch();
+				branch.setNo(rs.getInt("branch_no"));
+				branch.setName(rs.getString("branch_name"));
+				return branch;
+			}
+		}, addr);
+	}
 }

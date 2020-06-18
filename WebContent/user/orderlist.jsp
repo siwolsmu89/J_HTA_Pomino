@@ -30,7 +30,6 @@
 <%
 	String position = "login";
 	String subPosition = "userorder";
-	//민석씨가 하기
 %>
 <%@ include file="../common/navbar.jsp"%>
 <div class="container">
@@ -158,14 +157,19 @@
 		<div id="page-body-orderlist">
 			<div id="orderlist-header" class="row">
 				<div class="col-12">
-					<p class="text-center font-weight-bold" style="border: 1px solid black; border-bottom: none;">피자 주문</p>
+					<p class="	text-center font-weight-bold" style="border: 1px solid black; border-bottom: none;">피자 주문</p>
 				</div>
 			</div>
 		<%
+			int rowsPerPage = 5;
+			int pageNo = NumberUtil.stringToInt(request.getParameter("page"), 1);
+			
+			int begin = (pageNo-1) * rowsPerPage + 1;
+			int end = pageNo * rowsPerPage;
 			// 주문목록 가져오기
 			// !!주문목록 페이징 처리하기!!
 			OrderDao orderDao = new OrderDao();
-			List<Order> ol = orderDao.getOrdersByUserNo(loginUserNo);
+			List<Order> ol = orderDao.getOrdersByUserNoAndRange(loginUserNo, begin, end);
 			if (ol.isEmpty()) {
 		%>		
 			<div id="orderlist-empty" class="row">
@@ -178,7 +182,6 @@
 		<%
 			} else {
 				for (Order order : ol) {
-					
 					int orderNo = order.getNo();
 					
 					BranchDao branchDao = new BranchDao();
@@ -216,59 +219,90 @@
 						statusString = "주문취소";
 					}
 		%>	
-		<div style="background-color: black; height: 2px;" class="mb-2"></div>
-		<div id="orderlist-list" class="row">
-			<div class="col-12">
-				<div class="card">
-					<div class="card-header">
-						<div class="row small font-weight-bold">
-							<div class="col-6 text-left"> 
-								<div class="row">
-									<div class="col-2">
-										<p>배달주문</p>
+			<div style="background-color: black; height: 2px;" class="mb-2"></div>
+			<div id="orderlist-list" class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<div class="row small font-weight-bold">
+								<div class="col-6 text-left"> 
+									<div class="row">
+										<div class="col-2">
+											<p>배달주문</p>
+										</div>
+										<div class="col-5">
+											<p>주문일자 <%=order.getRegDate() %></p>
+										</div>
+										<div class="col-5">
+											<p>주문번호 <%=orderNo %></p>
+										</div>
 									</div>
-									<div class="col-5">
-										<p>주문일자 <%=order.getRegDate() %></p>
-									</div>
-									<div class="col-5">
-										<p>주문번호 <%=orderNo %></p>
+								</div>
+								<div class="col-6 text-right"> 
+									<div class="row">
+										<div class="col-6"></div>
+										<div class="col-3">
+											<div><a class="text-dark" href="../order/reorder.jsp?orderno=<%=orderNo %>">+재주문하기</a></div>
+										</div>	
+										<div class="col-3">
+											<div><a class="text-muted" href="#" onclick="addQuickOrder(<%=orderNo %>)">+퀵오더등록</a></div>
+										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-6 text-right"> 
-								<div class="row">
-									<div class="col-6"></div>
-									<div class="col-3">
-										<div><a class="text-dark" href="#">+재주문하기</a></div>
-									</div>	
-									<div class="col-3">
-										<div><a class="text-muted" href="#">+퀵오더등록</a></div>
-									</div>
-								</div>
+						</div>
+						<div class="card-body row">
+							<div class="col-2">
+								<h4 class=""><%=statusString %></h4>
+								<p class="small text-muted"><%=branch.getName() %> <%=branch.getTel() %></p>
 							</div>
-						</div>
-					</div>
-					<div class="card-body row">
-						<div class="col-2">
-							<h4 class=""><%=statusString %></h4>
-							<p class="small text-muted"><%=branch.getName() %> <%=branch.getTel() %></p>
-						</div>
-						<div class="col-7 text-center">
-							<p><%=simpleOrderTitle %> <%=NumberUtil.numberWithComma(order.getDiscountPrice()) %>원</p>
-						</div>
-						<div class="col-3 text-right text-white">
-							<a type="button" href="#" class="btn btn-dark small font-weight-bold">상세보기</a>
+							<div class="col-7 text-center">
+								<p><%=simpleOrderTitle %> <%=NumberUtil.numberWithComma(order.getDiscountPrice()) %>원</p>
+							</div>
+							<div class="col-3 text-right text-white">
+								<a type="button" href="orderdetail.jsp?orderno=<%=orderNo %>" class="btn btn-dark small font-weight-bold">상세보기</a>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+			<div id="orderlist-footer" class="row">
+				<div class="col-12">
+					<div class="text-center" style="border-top: 1px solid lightgray;">
 		<%
 				}
 			}
+			
+			int pagesPerBlock = 5;
+			int orderCount = orderDao.getOrdersByUserNo(loginUserNo).size();
+
+			int pageCount = (int) Math.ceil((double) orderCount / rowsPerPage);
+			int currentBlock = (int) Math.ceil((double) pageNo / pagesPerBlock);
+			
+			int beginPage = (currentBlock - 1) * pagesPerBlock + 1;
+			int endPage = currentBlock * pagesPerBlock;
 		%>
+						<a href=<%=pageNo > 1 ? "orderlist.jsp?page=" + (pageNo - 1) : "#" %>>&laquo;</a>
+		<% 				
+			for (int i = beginPage; i<=endPage; i++) {
+				if (endPage>pageCount) {
+					endPage=pageCount;
+				}
+				String style = "";
+				if (i == pageNo) {
+					style = "style='color: red; font-weight:bold;'";
+				}
+		%>
+						<a <%=style %> href="orderlist.jsp?page=<%=i %>"><%=i %></a>
+		<%
+			}
+		%>
+						<a href=<%=pageNo < pageCount ? "orderlist.jsp?page=" + (pageNo + 1) : "#" %>>&raquo;</a>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div id="page-footer" class="row mt-5 mb-5"><!-- 제품리스트 완료되면 연결하기 -->
+		<div id="page-footer" class="row mt-5 mb-5">
 			<div class="col-12 text-center">
 				<a href="#" class="btn btn-info btn-lg" role="button">신제품보러가기</a>
 				<a href="#" class="btn btn-secondary btn-lg" role="button">다른제품 보러가기</a>
@@ -278,5 +312,24 @@
 	<div class="mb-3"></div>
 </div>
 <%@ include file="../common/footer.jsp" %>
+<script type="text/javascript">
+	function addQuickOrder(orderNo) {
+		if (confirm("해당 주문을 퀵 오더로 등록하시겠습니까?")) {
+			var xhr = new XMLHttpRequest();
+			
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState ==4 && xhr.status == 200) {
+					alert("주문번호 [" + orderNo + "] 주문이 회원님의 퀵 오더로 등록되었습니다.");
+				}
+			}
+			
+			xhr.open("GET", "../order/registerqo.jsp?orderno=" + orderNo);
+			
+			xhr.send();
+		} else {
+			alert("퀵 오더 등록을 취소했습니다.")
+		}
+	}
+</script>
 </body>
 </html>

@@ -88,4 +88,58 @@ public class PizzaDetailDao {
 		pstmt.close();
 		connection.close();
 	}
+	
+	/**
+	 * 피자 주문 수량을 업데이트하는 메소드
+	 * @param amount 피자 주문 수량
+	 * @param no 피자 주문 번호
+	 * @throws SQLException
+	 * @author 영준
+	 */
+	public void updatePizzaOrder(PizzaOrderDto pizzaOrderDto) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("pizzadetail.updatePizzaOrder"));
+		pstmt.setInt(1, pizzaOrderDto.getOrderAmount());
+		pstmt.setInt(2, pizzaOrderDto.getOrderPrice());
+		pstmt.setInt(3, pizzaOrderDto.getDiscountPrice());
+		pstmt.setInt(4, pizzaOrderDto.getNo());
+
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+		
+	}
+	
+	/**
+	 * 퀵오더 또는 재주문하기 실행 시, 주문 번호를 입력받아 상세정보가 같은 주문 객체를 생성한다.
+	 * @param orderNo
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	public void insertReorderCart(int orderNo, int cartNo) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("pizzadetail.insertReorderCart"));
+		pstmt.setInt(1, cartNo);
+		pstmt.setInt(2, orderNo);
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
+	
+	public PizzaOrderDto getPizzaOrderByNo(int no) throws SQLException {
+		PizzaOrderDto pod = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("pizzadetail.getPizzaOrderByNo"));
+		pstmt.setInt(1, no);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if (rs.next()) {
+			pod = resultSetToPizzaOrderDto(rs);
+		}
+		return pod;
+	}
 }

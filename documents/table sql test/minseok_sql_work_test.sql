@@ -53,3 +53,6 @@ VALUES
 SELECT grade_name, grade_order_count, grade_order_price, grade_discount_rate 
 				   FROM grades 
 				   ORDER BY grade_order_count DESC;
+                   
+                   SELECT order_no_seq.NEXTVAL
+                   FROM dual;

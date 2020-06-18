@@ -95,6 +95,54 @@ public class OrderDao {
 	}
 	
 	/**
+	 * 사용자 정보로 주문을 가져오되, 일정 범위에 해당하는 주문만 가져오기
+	 * @param userNo 사용자 번호
+	 * @param begin 가져오기 시작할 주문 순서에 해당하는 숫자
+	 * @param end 마지막으로 가져올 주문 순서에 해당하는 숫자
+	 * @return 주문 순서 범위에 일치하는 Order 객체들을 담고 있는 ArrayList
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	public List<Order> getOrdersByUserNoAndRange(int userNo, int begin, int end) throws SQLException {
+		List<Order> ol = new ArrayList<Order>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrdersByUserNoAndRange"));
+		pstmt.setInt(1, begin);
+		pstmt.setInt(2, end);
+		pstmt.setInt(3, userNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while (rs.next()) {
+			Order order = resultSetToOrder(rs);
+			ol.add(order);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return ol;
+	}
+	
+	/**
+	 * 퀵오더 또는 재주문하기 실행 시, 주문 번호를 입력받아 상세정보가 같은 주문 객체를 생성한다.
+	 * @param orderNo
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	public void insertReorderCart(int orderNo) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.insertReorderCart"));
+		pstmt.setInt(1, orderNo);
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
+	
+	/**
 	 * 주문 정보를 업데이트하는 메소드
 	 * @param 업데이트할 주문 정보가 담긴 order 주문 객체
 	 * @throws SQLException
@@ -139,4 +187,67 @@ public class OrderDao {
 		connection.close();
 	}
 	
+	/**
+	 * 주문번호로 주문 정보를 조회하는 메소드
+	 * @param orderNo 주문번호
+	 * @return 조회 성공시 입력받은 주문번호에 해당하는 주문 정보를 담은 Order 객체를 반환하고 실패시 null을 반환
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	public Order getOrderByNo(int orderNo) throws SQLException {
+		Order order = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrderByNo"));
+		pstmt.setInt(1, orderNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if (rs.next()) {
+			order = resultSetToOrder(rs);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return order;
+	}
+	
+	public List<Order> getAllOrders() throws SQLException {
+		List<Order> orders = new ArrayList<Order>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getAllOrders"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Order order = new Order();
+			order = resultSetToOrder(rs);
+			orders.add(order);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return orders;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

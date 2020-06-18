@@ -1,3 +1,14 @@
+<%@page import="com.domino.dto.EtcOrderDto"%>
+<%@page import="com.domino.dto.SideOrderDto"%>
+<%@page import="com.domino.dto.PizzaOrderDto"%>
+<%@page import="com.domino.dao.EtcDetailDao"%>
+<%@page import="com.domino.dao.SideDetailDao"%>
+<%@page import="com.domino.dao.PizzaDetailDao"%>
+<%@page import="com.domino.vo.Branch"%>
+<%@page import="com.domino.dao.BranchDao"%>
+<%@page import="com.domino.vo.Order"%>
+<%@page import="java.util.List"%>
+<%@page import="com.domino.dao.OrderDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -108,6 +119,10 @@
 						</div>
 					</form>
 					<!-- 검색조건, 정렬기준 입력 폼 끝 -->
+					<%
+						OrderDao orderDao = new OrderDao();
+						List<Order> orders = orderDao.getAllOrders();
+					%>
 					<table class="table text-center">
 						<colgroup>
 							<col width="15%">
@@ -128,36 +143,84 @@
 							</tr>
 						</thead>
 						<tbody>
+					<%
+						for(Order order : orders) {
+							// 주문한 매장 정보 가져오기
+							BranchDao branchDao = new BranchDao();
+							Branch branch = branchDao.getBranchByNo(order.getBranchNo());
+							
+							// 피자 주문갯수 및 주문한 피자 디테일 정보 가져오기
+							PizzaDetailDao pizzaDetailDao = new PizzaDetailDao();
+							List<PizzaOrderDto> pod = pizzaDetailDao.getPizzaOrdersByOrderNo(order.getNo());
+							
+							// 사이즈 메뉴 정보 가져오기
+							SideDetailDao sideDetailDao = new SideDetailDao();
+							List<SideOrderDto> sod = sideDetailDao.getSideOrdersByOrderNo(order.getNo());
+							
+							// 기타 메뉴 정보 가져오기
+							EtcDetailDao etcDetailDao = new EtcDetailDao();
+							List<EtcOrderDto> eod = etcDetailDao.getEtcOrdersByOrderNo(order.getNo());
+							
+							// 주문갯수세기
+							String simpleMenu = "";
+							int orderCount = pod.size() + sod.size() + eod.size();
+							if(!pod.isEmpty()){
+								simpleMenu = pod.get(0).getPizzaName() + " " + pod.get(0).getDoughName() + " " + (orderCount > 1 ? "외 " + (orderCount - 1) + "건" : "");
+							} else if(!sod.isEmpty()){
+								simpleMenu = sod.get(0).getSideName() + (orderCount > 1 ? "외" + (orderCount - 1) + "건" : "");
+							}
+					%>
 							<tr>
-								<td>129</td>
-								<td>종로3가점</td>
-								<td>시푸드피자</td>
-								<td>56,000원</td>
-								<td>21:50</td>
+								<td><%=order.getNo() %></td>
+								<td><%=branch.getName() %></td>
 								<td>
-									<button class="btn btn-success">배달중</button>
+									<%=simpleMenu%>
 								</td>
-							</tr>
-							<tr>
-								<td>129</td>
-								<td>종로3가점</td>
-								<td>시푸드피자</td>
-								<td>56,000원</td>
-								<td>21:50</td>
+								<td><%=order.getDiscountPrice()%></td>
+								<td><%=order.getRequestTime() %></td>
+					<%
+								if(order.getOrderStatus() == 0) {
+					%>
 								<td>
-									<button class="btn btn-secondary">배달완료</button>
+									<button class="btn btn-primary">접수완료</button>
 								</td>
-							</tr>
-							<tr>
-								<td>129</td>
-								<td>종로3가점</td>
-								<td>시푸드피자</td>
-								<td>56,000원</td>
-								<td>21:50</td>
+					<%
+								} else if (order.getOrderStatus() == 1) {
+					%>
 								<td>
-									<button class="btn btn-primary">조리중</button>
+									<button class="btn btn-primary">요리중</button>
 								</td>
+					<%
+								} else if (order.getOrderStatus() == 2) {
+					%>
+								<td>
+									<button class="btn btn-sucess">배달중</button>
+								</td>
+					<%
+								} else if (order.getOrderStatus() == 3) {
+					%>
+								<td>
+									<button class="btn btn-success">배달완료</button>
+								</td>
+					<%
+								} else if (order.getOrderStatus() == 4) {
+					%>
+								<td>
+									<button class="btn btn-secondary">수령완료</button>
+								</td>
+					<%
+								} else {
+					%>
+								<td>
+									<button class="btn btn-dark">주문취소</button>
+								</td>
+					<%
+								}
+					%>
 							</tr>
+					<%
+						}
+					%>
 						</tbody>
 					</table>
 					<!-- 페이지 처리 시작 -->

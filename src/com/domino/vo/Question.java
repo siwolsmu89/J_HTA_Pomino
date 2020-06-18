@@ -10,9 +10,27 @@ public class Question {
 	private String content;
 	private String answeredYn;
 	private String questionDelYn;
+	private String type;
+	private int branchNo;
 	private Date regDate;
 	
 	public Question() {}
+
+	public int getBranchNo() {
+		return branchNo;
+	}
+
+	public void setBranchNo(int branchNo) {
+		this.branchNo = branchNo;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public int getNo() {
 		return no;

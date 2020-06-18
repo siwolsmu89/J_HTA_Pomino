@@ -18,12 +18,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 <style>
-	div > h6 {
-		font-size: 4px;
-		color : gray;
-	}
 	div > p > small{
 		font-size: small;
+		color : gray;
 	}
 	div > p > strong{
 		font-size: XX-large;
@@ -44,16 +41,16 @@
 <div class="container">
 	<div class="header">
 		<div class="row">	
-			<div class="col-4"><!-- 페이지명 바꿔서 사용하기 -->
+			<div class="col-4">
 				<h4>장바구니</h4>
 			</div>
-			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
+			<div class="col-8">
 				<ul class="nav justify-content-end small text-muted">
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="../common/home.jsp">홈</a>	<!--text-muted pr-1  -->
+				    <a class="nav-link text-muted active pr-1" href="../common/home.jsp">홈</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
+				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">장바구니</a>
@@ -65,9 +62,8 @@
 	</div>
 	<div class="body">
 		<%	
-			int userNo = 100;
 			OrderDao orderDao = new OrderDao();
-			Order order = orderDao.getCartByUserNo(userNo);
+			Order order = orderDao.getCartByUserNo(loginUserNo);
 			
 			if (order != null) {
 				BranchDao branchDao = new BranchDao();
@@ -82,32 +78,37 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="card-header">
-					<h6 class="mt-3 font-weight-bold">&emsp;배달주문</h6>
+					<h5 class="mt-3 font-weight-bold">&emsp;배달주문</h5>
 				</div>
 				<div class="row">
 					<div class="col-9">
-						<p class="mt-4">&emsp;<small><%=branch.getAddrFirst() + branch.getAddrSecond() + branch.getAddrDetail() %></small></p>
+						<p class="mt-4">&emsp;<%=branch.getAddrFirst() + branch.getAddrSecond() + branch.getAddrDetail() %></p>
 					</div>
 					<div class="col-2 text-right mt-4 ml-5">
-						<button class="btn btn-outline-secondary btn-sm rounded" style="border-radius: 50%;">수정</button>
+						<a href="selectlocation.jsp"><button class="btn  btn-outline-secondary btn-sm" style="border-radius: 14px;padding: 0 13px;height: 30px;">수정</button></a>
 					</div>
 				</div>
 				<div>
 					&emsp;<button class="btn btn-outline-secondary btn-sm" disabled><%=branch.getName() %></button>
 				<span><%=branch.getTel() %></span>
 				<div>
-					<div style="background-color: black; height: 3px;" class="mt-3"></div>
-					<div class="card-header" >
-						<h6 class="mt-3 font-weight-bold">&emsp;주문내역</h6>
+					<div style="background-color: black; height: 3px; width: 100%" class="mt-3"></div>
+					<div class="card-header row">
+						<div class="col-10">
+							<h5 class="mt-3 font-weight-bold">&emsp;주문내역</h5>
+						</div>
+						<div class="text-right col-2">
+							<button class="btn btn-link" style="color : gray;" name="all" onclick="allRemoveCheck()">전체삭제</button>
+						</div>
 					</div>
 					<div>
 						<table class="table">
 							<colgroup>
 								<col width="40%">
-								<col width="30%">
-								<col width="10%">
-								<col width="10%">
-								<col width="10%">
+								<col width="40%">
+								<col width="4%">
+								<col width="9%">
+								<col width="7%">
 							</colgroup>
 							<thead>
 								<tr class="text-center">
@@ -115,7 +116,7 @@
 									<th>추가토핑</th>
 									<th>수량</th>
 									<th>금액</th>
-									<th>전체삭제</th>
+									<th></th>
 								</tr>
 							</thead>
 					<%
@@ -124,12 +125,12 @@
 					%>
 							<tbody>
 								<tr class="text-center">
-									<td class="text"><!-- 피자결제정보 -->
+									<td class="text">
 									<p>
-									<img class=" tm-5 rm-5 float-left" alt="시리얼 칠리크랩" width="90px;" style=";" src="../resource/images/pizza/20200602_0uirYrYy.jpg">
-									<br/><%=pizzaOrderDto.getPizzaName() %><br/>
-									<small><%=pizzaOrderDto.getDoughName() %>/<%=pizzaOrderDto.getPizzaSize() %></small><br/>
-									<%=NumberUtil.numberWithComma(pizzaOrderDto.getOrderPrice()) %>원
+									<img class="tm-5 rm-5 float-left" alt="시리얼 칠리크랩" width="90px;" src="../resource/images/pizza/20200602_0uirYrYy.jpg">
+									<%=pizzaOrderDto.getPizzaName() %><br/>
+									<small style="color: gray; font-size: 14px;"><%=pizzaOrderDto.getDoughName() %>/<%=pizzaOrderDto.getPizzaSize() %></small><br/>
+									<%=NumberUtil.numberWithComma(pizzaOrderDto.getPizzaPrice()) %>원
 									</p>
 									</td>
 									<td>
@@ -138,15 +139,13 @@
 							ToppingDetailDao dao = new ToppingDetailDao();
 							List<ToppingOrderDto> toppingOrderDtos = dao.getToppingOrdersByPizzaNo(pizzaOrderDto.getNo());
 							for (ToppingOrderDto tol : toppingOrderDtos) {
-								orderPrice += tol.getOrderPrice();
+								orderPrice += tol.getOrderPrice() * pizzaOrderDto.getOrderAmount();
 					%>			
 									<div class="row justify-content-center">
-										<div class="col-7">
-											<br/>
-											<%=tol.getName()%>(+<%=tol.getPrice()%>)X<%=tol.getOrderAmount() %>
+										<div class="col-7" style="font-size: 14px; col">
+											<%=tol.getName()%>(+<%=tol.getPrice()%>)x<%=tol.getOrderAmount() %>
 										</div>
 										<div class="col-1">
-											<br/>
 											<button class="btn btn-sm" onclick="toppingRemoveCheck(<%=tol.getNo()%>)">x</button>
 										</div>
 									</div>
@@ -154,66 +153,65 @@
 							}
 					%>			
 									</td>
-									<td><!-- 수량 -->
+									<td>
 										<br/>
 										<div class="">
-											<input type="number" name="amount" value="<%=pizzaOrderDto.getOrderAmount() %>" min="1">
+											<input type="number" name="pizza" style="width: 60px; text-align: center; height: 30px;" onchange="modifyAmount(event, <%=pizzaOrderDto.getNo() %>)" value="<%=pizzaOrderDto.getOrderAmount() %>" min="1">
 										</div>
 									</td>
-									<td><br/><!-- 금액 --><%=orderPrice*pizzaOrderDto.getOrderAmount() %> 원</td>
-									<td><br/><!-- 전체삭제 --><button class="btn btn-light" name="pizza" onclick="removeCheck(<%=pizzaOrderDto.getNo()%>)">X</button></td>
+									<td><br/><%=NumberUtil.numberWithComma(orderPrice) %> 원</td>
+									<td><br/><button class="btn btn-light" name="pizza" onclick="removeCheck(<%=pizzaOrderDto.getNo()%>)">X</button></td>
 								</tr>
 <%
-								totalPrice += orderPrice*pizzaOrderDto.getOrderAmount();
+								totalPrice += orderPrice;
 						}
 							SideDetailDao sideDetailDao = new SideDetailDao();
-							List<SideOrderDto> sdl = sideDetailDao.getSideOrdersByOrderNo(100);
+							List<SideOrderDto> sdl = sideDetailDao.getSideOrdersByOrderNo(order.getNo());
 							for (SideOrderDto sod : sdl) {
 %>
 								<tr id="side" class="text-center">
-									<td><!-- 사이드결제정보 -->
+									<td>
 									<p>
-										<img class=" tm-5 img-thumbnail float-left" alt="사이드메뉴" width="100px;" src="../resource/images/sidemenu/20200429_zUBSp7rE.jpg">
-										<br/><%=sod.getSideName() %><br/>
+										<img class=" tm-5 rm-5 float-left" alt="시리얼 칠리크랩" width="90px;" style=";" src="../resource/images/sidemenu/20200429_zUBSp7rE.jpg">
+										<%=sod.getSideName() %><br/>
 										<%=sod.getSidePrice() %> 원
 									</p>
 									</td>
 									<td></td>
-									<td><!-- 수량 -->
+									<td>
 										<br/>
 										<div class="">
-											<input type="number" name="amount" value="<%=sod.getOrderAmount() %>" min="1">
+											<input type="number" name="side" style="width: 60px; text-align: center; height: 30px;" onchange="modifyAmount(event, <%=sod.getNo() %>)" value="<%=sod.getOrderAmount() %>" min="1">
 										</div>
 									</td>
-									<td><br/><!-- 금액 --><%=sod.getOrderPrice() %> 원</td>
-									<td><br/><!-- 전체삭제 --><button class="btn btn-light" name="side" onclick="removeCheck(<%=sod.getNo() %>)">X</button></td>
+									<td><br/><%=NumberUtil.numberWithComma(sod.getOrderPrice()) %> 원</td>
+									<td><br/><button class="btn btn-light" name="side" onclick="removeCheck(<%=sod.getNo() %>)">X</button></td>
 								</tr>
 						<%
 								totalPrice += sod.getOrderPrice();
 							}
 							
 							EtcDetailDao etcDetailDao = new EtcDetailDao();
-							List<EtcOrderDto> edl = etcDetailDao.getEtcOrdersByOrderNo(100);
+							List<EtcOrderDto> edl = etcDetailDao.getEtcOrdersByOrderNo(order.getNo());
 							for (EtcOrderDto edd :edl) {
 						%>
 								<tr class="text-center">
-									<td><!-- 음료결제정보 -->
+									<td>
 									<p>
-									<img class=" tm-5 img-thumbnail float-left" alt="코카콜라" width="100px;" src="../resource/images/etcmenu/20200309_J6k5xlTF.jpg">
-									<br/>
+									<img class=" tm-5 rm-5 float-left" alt="시리얼 칠리크랩" width="90px;" style=";" src="../resource/images/etcmenu/20200309_J6k5xlTF.jpg">
 									<%=edd.getEtcName() %><br/>
 									<%=edd.getEtcPrice() %> 원
 									</p>
 									</td>
 									<td></td>
-									<td><!-- 수량 -->
+									<td>
 										<div class="">
 										<br/>
-											<input type="number" name="amount" value="<%=edd.getOrderAmount() %>" min="1">
+											<input type="number" style="width: 60px; text-align: center; height: 30px;" name="etc" onchange="modifyAmount(event, <%=edd.getNo() %>)" value="<%=edd.getOrderAmount() %>" min="1">
 										</div>
 									</td>
-									<td><br/><!-- 금액 --><%=edd.getOrderPrice() %> 원</td>
-									<td><br/><!-- 전체삭제 --><button class="btn btn-light" name="etc" onclick="removeCheck(<%=edd.getNo() %>)">X</button></td>
+									<td><br/><%=NumberUtil.numberWithComma(edd.getOrderPrice()) %> 원</td>
+									<td><br/><button class="btn btn-light" name="etc" onclick="removeCheck(<%=edd.getNo() %>)">X</button></td>
 								</tr>
 						<%
 								totalPrice += edd.getOrderPrice(); 
@@ -225,20 +223,20 @@
 					</div>
 					<div style="background-color: black; height: 2px;" class="mb-3"></div>
 					<div class="row">
-						<div class="col-6">
-							<p><small>&ensp;* 할인적용은 다음 단계에서 가능합니다.</small></p>
-							<p><small>&ensp;* 피클&소스는 구매하셔야합니다.</small></p>
-							<p><small>&ensp;- 메뉴>음료&기타 추가구매 가능</small></p>
+						<div class="col-6 mb-5">
+							<br/><p><small>&ensp;&ensp;* 할인적용은 다음 단계에서 가능합니다.><br/>
+							&ensp;&ensp;* 피클&소스는 구매하셔야합니다.<br/>
+							&ensp;&ensp;- 메뉴>음료&기타 추가구매 가능</small></p>
 						</div>
-						<div class="col-6 text-right">
+						<div class="col-6 text-right lm-5">
 							<p>총 금액 <strong>&ensp;<%=NumberUtil.numberWithComma(totalPrice) %>원</strong></p>
 						</div>
 					</div>
 				</div>
 				<div style="background-color: gray; height: 1px;" class="mb-5"></div>
 				<div class="text-center mb-5">
-					<a href="../pizza/pizzamenu.jsp"><button class="btn btn-outline-secondary" style="width: 150px;">+ 메뉴 추가하기</button></a>
-					<a href="payform.jsp"><button class="btn btn-danger" style="width: 150px;">주문하기</button></a>
+					<a href="../pizza/pizzamenu.jsp"><button class="btn btn-outline-secondary" style="width: 200px; height: 65px; color: black;">+ 메뉴 추가하기</button></a>
+					<a href="payform.jsp"><button class="btn btn-danger" style="width: 200px; height: 65px;">주문하기</button></a>
 				</div>
 			</div>
 		</div>
@@ -271,17 +269,30 @@
 </div>
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">
+	function modifyAmount(event, no) {
+		var type = event.target.name;
+		var amount = event.target.value;
+		location.href="modifycart.jsp?no=" + no + "&amount=" + amount + "&type=" + type;
+	}
+
 	function removeCheck(no) {
 		 if (confirm("해당 제품을 장바구니에서 삭제하시겠습니까?")){
-			 var type = event.target.name
+			 var type = event.target.name;
 		     location.href="delcart.jsp?no=" + no+ "&type=" + type;
 		 }	
 	}
-	
+
 	function toppingRemoveCheck(no) {
 		if (confirm("선택하신 토핑을 삭제하시겠습니까?")){
 		     location.href="delcart.jsp?type=topping&no=" + no;
 		}
+	}
+	
+	function allRemoveCheck() {
+		 if (confirm("모든 제품을 삭제하시겠습니까?")){
+			 var type = event.target.name;
+		     location.href="delcart.jsp?type=" + type;
+		 }	
 	}
 </script>
 </body>

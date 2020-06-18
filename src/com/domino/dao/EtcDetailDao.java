@@ -76,4 +76,58 @@ public class EtcDetailDao {
 		pstmt.close();
 		connection.close();
 	}
+
+	/**
+	 * 퀵오더 또는 재주문하기 실행 시, 주문 번호를 입력받아 상세정보가 같은 주문 객체를 생성한다.
+	 * @param orderNo
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	public void insertReorderCart(int orderNo, int cartNo) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("etcdetail.insertReorderCart"));
+		pstmt.setInt(1, cartNo);
+		pstmt.setInt(2, orderNo);
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
+	
+	/**
+	 * 기타 주문 수량을 업데이트하는 메서드
+	 * @param amount 기타 주문 수량
+	 * @param no 기타 주문 번호
+	 * @throws SQLException
+	 * @author 영준
+	 */
+	public void updateEtcOrder(EtcOrderDto etcOrderDto) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("etcdetail.updateEtcOrder"));
+		pstmt.setInt(1, etcOrderDto.getOrderAmount());
+		pstmt.setInt(2, etcOrderDto.getOrderPrice());
+		pstmt.setInt(3, etcOrderDto.getNo());
+
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
+	
+	public EtcOrderDto getEtcOrderByNo(int no) throws SQLException {
+		EtcOrderDto eod = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("etcdetail.getEtcOrderByNo"));
+		pstmt.setInt(1, no);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if (rs.next()) {
+			eod = resultSetToEtcOrderDto(rs);
+		}
+		
+		return eod;
+	}
+	
 }

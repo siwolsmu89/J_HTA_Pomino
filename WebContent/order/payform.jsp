@@ -193,25 +193,31 @@
 								List<PizzaOrderDto> pol = pizzaDetailDao.getPizzaOrdersByOrderNo(orderNo);
 								orderSize += pol.size();
 								
-								PizzaOrderDto first = pol.get(0);
-								
 								List<SideOrderDto> sol = sideDetailDao.getSideOrdersByOrderNo(orderNo);
 								orderSize += sol.size();
 								
 								List<EtcOrderDto> eol = etcDetailDao.getEtcOrdersByOrderNo(orderNo);
 								orderSize += eol.size();
+
+								String firstOrderName = "";
+								if (!pol.isEmpty()) {
+									PizzaOrderDto first = pol.get(0);
+									firstOrderName += first.getPizzaName() + "(" + first.getDoughName() + ")";
+								} else if (!sol.isEmpty()) {
+									SideOrderDto first = sol.get(0);
+									firstOrderName += first.getSideName();
+								} else if (!eol.isEmpty()) {
+									EtcOrderDto first = eol.get(0);
+									firstOrderName += first.getEtcName();
+								}
+								
+								String firstOrderAmount = orderSize > 1 ? "외 " + (orderSize - 1) + "건" : "";
+								
 							%>
 									<div id="orderlog-main">
 										<h5>
-											<%=first.getPizzaName() %> <%=first.getDoughName() %> 
-											<%=first.getPizzaSize() %> x <%=first.getOrderAmount() %> 
-							<%
-										if (orderSize>0) {
-							%>
-											외 <%=orderSize-1 %>건
-							<%				
-										}
-							%>				
+											<%=firstOrderName %> 
+											<%=firstOrderAmount %> 
 										</h5>
 										<hr/>
 									</div>
@@ -222,14 +228,15 @@
 										String pizzaName = po.getPizzaName() + " (" + po.getDoughName() + ")";
 										String size = po.getPizzaSize();
 										int price = po.getPizzaPrice();
-										allTotalDiscountPrice += po.getDiscountPrice();
-										allTotalPrice += price;
-	
+										int discountPrice = po.getDiscountPrice();
 										ToppingDetailDao toppingDetailDao = new ToppingDetailDao();
 										List<ToppingOrderDto> tol = toppingDetailDao.getToppingOrdersByPizzaNo(po.getNo());
 										for (ToppingOrderDto to : tol) {
-											price += to.getOrderPrice();
+											price += to.getOrderPrice() * to.getOrderAmount();
+											discountPrice += to.getOrderPrice() * to.getOrderAmount();
 										}
+										allTotalPrice += price;
+										allTotalDiscountPrice += discountPrice;
 							%>
 										<p><%=pizzaName %> <%=size %> x <%=po.getOrderAmount() %> / <%=NumberUtil.numberWithComma(price) %>원 </p>
 							<%

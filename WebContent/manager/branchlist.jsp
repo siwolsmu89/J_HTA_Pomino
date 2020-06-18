@@ -155,7 +155,7 @@
 								<td class="modal fade" id="<%=branch.getName() %>" tabindex="-1"
 									role="dialog" aria-labelledby="exampleModalLabel"
 									aria-hidden="true">
-									<div class="modal-dialog modal-dialog-scrollable modal-lg">
+									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
 											<div class="modal-header">
 												<h5 class="modal-title" id="exampleModalLabel"><%=branch.getName() %></h5>
@@ -165,66 +165,76 @@
 												</button>
 											</div>
 
-											<form method="post" action="question.jsp">
+											<form method="post" action="/domino/branch/modify.jsp?branchno=<%=branch.getNo() %>" enctype="multipart/form-data">
 												<div class="modal-body">
 													<div class="row">
+														<div class="col-12">
+															<div class="form-group">
+																<img src="../resource/images/branch/<%=branch.getImageSrc()%>">
+															</div>
+															<div class="form-group">
+																<label>
+																	첨부파일(<%=branch.getImageSrc()%>)
+																</label>
+																<p class="text-danger">
+																	이미지 이름 동일하게 해서 업데이트
+																</p>
+																<div>
+																	<input type="file" name="upfile" />
+																</div>
+															</div>
+														</div>
 														<div class="col-6">
 															<div class="form-group">
-																<label>가맹점번호</label> <input type="text"
+																<label>가맹점번호</label> <input type="number"
 																	class="form-control" value="<%=branch.getNo() %>" disabled />
 															</div>
 															<div class="form-group">
-																<label>가맹점명</label> <input type="tel"
+																<label>가맹점명</label> <input type="text"
 																	class="form-control" value="<%=branch.getName() %>" disabled />
 															</div>
 															<div class="form-group">
-																<label>주소(1)</label> <input type="email"
+																<label>주소(1)</label> <input type="text"
 																	class="form-control" value="<%=branch.getAddrFirst() %>" disabled />
 															</div>
 															<div class="form-group">
-																<label>주소(2)</label> <input type="email"
+																<label>주소(2)</label> <input type="text"
 																	class="form-control" value="<%=branch.getAddrSecond() %>" disabled />
 															</div>
 															<div class="form-group">
-																<label>주소(3)</label> <input type="email"
-																	class="form-control" value="<%=branch.getAddrDetail() %>" disabled />
+																<label>주소(3)</label> <input type="text"
+																	class="form-control" value="<%=branch.getAddrDetail() %>" name="addrdetail" />
 															</div>
 															<div class="form-group">
-																<label>전화번호</label> <input type="email"
-																	class="form-control" value="<%=branch.getTel() %>" disabled />
+																<label>전화번호</label> <input type="text"
+																	class="form-control" value="<%=branch.getTel() %> "name="tel" />
 															</div>
 															
 														</div>
 														<div class="col-6">
 															<div class="form-group">
-																<label>가맹점등록일</label> <input type="email"
+																<label>가맹점등록일</label> <input type="text"
 																	class="form-control" value="<%=branch.getRegDate() %>" disabled />
 															</div>
 															<div class="form-group">
-																<label>주차가능여부</label> <input type="email"
-																	class="form-control" value="<%=branch.getParkingYn() %>" disabled />
+																<label>주차가능여부</label> <input type="text"
+																	class="form-control" value="<%=branch.getParkingYn() %>" name="parking"/>
 															</div>
 															<div class="form-group">
-																<label>오픈시간</label> <input type="email"
-																	class="form-control" value="<%=branch.getOpenTime() %>" disabled />
+																<label>오픈시간</label> <input type="text"
+																	class="form-control" value="<%=branch.getOpenTime() %>" name="opentime" />
 															</div>
 															<div class="form-group">
-																<label>마감시간</label> <input type="email"
-																	class="form-control" value="<%=branch.getCloseTime() %>" disabled />
+																<label>마감시간</label> <input type="text"
+																	class="form-control" value="<%=branch.getCloseTime() %>" name="closetime" />
 															</div>
 															<div class="form-group">
-																<label>코멘트</label> <input type="email"
-																	class="form-control" value="<%=branch.getComment() %>" disabled />
+																<label>코멘트</label> <input type="text"
+																	class="form-control" value="<%=branch.getComment() %>" name="comment" />
 															</div>
 															<div class="form-group">
 																<label>할인율</label> <input type="text"
-																	class="form-control" value="<%=branch.getDiscountRate() %>" disabled />
-															</div>
-														</div>
-														<div class="col-12">
-															<div class="form-group">
-																<label>매장사진</label> <input type="text"
-																	class="form-control" value="<%=branch.getImageSrc() %>" disabled />
+																	class="form-control" value="<%=branch.getDiscountRate() %>" name="discount"/>
 															</div>
 														</div>
 													</div>
@@ -232,8 +242,7 @@
 												</div>
 												
 												<div class="modal-footer">
-													<a class="btn btn-primary text-light" 
-														href="/domino/branch/modify.jsp?branchno=<%=branch.getNo() %>">수정하기</a>
+													<button type="submit" class="btn btn-primary text-light" >수정하기</button>
 												</div>
 												
 											</form>

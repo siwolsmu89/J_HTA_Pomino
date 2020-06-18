@@ -12,62 +12,64 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-<div>
-	<%
+<%
 		String position = "home";
-	%>
-	<%@ include file="../common/navbar.jsp"%>
+%>
+<%@ include file="../common/navbar.jsp"%>
+<div>
+	
+	<!-- 배너 광고 시작 --> <!-- 배너는 컨테이너 포함x -->
+	<div class="row">
+		<div class="col-12">
+			<!-- 배너광고 슬라이드 시작  -->
+			<div id="demo" class="carousel slide" data-ride="carousel">
+  				<!-- 배너의 하단에 표시되는 바로가기 표시 시작  -->
+  				<ol class="carousel-indicators">
+    				<li data-target="#demo" data-slide-to="0" class="active"></li>
+    				<li data-target="#demo" data-slide-to="1"></li>
+    				<li data-target="#demo" data-slide-to="2"></li>
+  				</ol>
+  				<!-- 배너의 하단에 표시되는 바로가기 표시 끝  -->
 
-			<!-- 배너 광고 시작 --> <!-- 배너는 컨테이너 포함x -->
-			<div class="row">
-				<div class="col-12">
-					<!-- 배너광고 슬라이드 시작  -->
-					<div id="demo" class="carousel slide" data-ride="carousel">
-		  				<!-- 배너의 하단에 표시되는 바로가기 표시 시작  -->
-		  				<ol class="carousel-indicators">
-		    				<li data-target="#demo" data-slide-to="0" class="active"></li>
-		    				<li data-target="#demo" data-slide-to="1"></li>
-		    				<li data-target="#demo" data-slide-to="2"></li>
-		  				</ol>
-		  				<!-- 배너의 하단에 표시되는 바로가기 표시 끝  -->
-		
-		  				<!-- 배너 이미지 시작 -->
-		  				<div class="carousel-inner">
-		    				<div class="carousel-item active">
-		    					<a href="">	<!-- 이벤트 링크 등록 -->
-			      					<img src="../resource/images/banners/20200401_sJg8GN4w.jpg" alt="설명1">
-		    					</a>
-		    				</div>
-		    				<div class="carousel-item">
-		      					<a href="">	<!-- 이벤트 링크 등록 -->
-			      					<img src="../resource/images/banners/20200428_MTAHCg8j.jpg" alt="설명2">
-		    					</a>
-		    				</div>
-		    				<div class="carousel-item">
-		      					<a href="">	<!-- 이벤트 링크 등록 -->
-			      					<img src="../resource/images/banners/20200311_N85WARBN.jpg" alt="설명3">
-		    					</a>
-		    				</div>
-		  			</div>
-  					<!-- 배너 이미지 끝 -->
+  				<!-- 배너 이미지 시작 -->
+  				<div class="carousel-inner">
+    				<div class="carousel-item active">
+    					<a href="">	<!-- 이벤트 링크 등록 -->
+	      					<img src="../resource/images/banners/20200401_sJg8GN4w.jpg" alt="설명1">
+    					</a>
+    				</div>
+    				<div class="carousel-item">
+      					<a href="">	<!-- 이벤트 링크 등록 -->
+	      					<img src="../resource/images/banners/20200428_MTAHCg8j.jpg" alt="설명2">
+    					</a>
+    				</div>
+    				<div class="carousel-item">
+      					<a href="">	<!-- 이벤트 링크 등록 -->
+	      					<img src="../resource/images/banners/20200311_N85WARBN.jpg" alt="설명3">
+    					</a>
+    				</div>
+  			</div>
+					<!-- 배너 이미지 끝 -->
 
-		  			<!-- 이전/다음 표시 시작 -->
-		  			<a class="carousel-control-prev" href="#demo" data-slide="prev">
-		    			<span class="carousel-control-prev-icon"></span>
-		  			</a>
-		  			<a class="carousel-control-next" href="#demo" data-slide="next">
-		    			<span class="carousel-control-next-icon"></span>
-		  			</a>
-		  			<!-- 이전/다음 표시 끝 -->
-					</div>
-					<!-- 배너광고 슬라이드 끝  -->
-				</div>
+  			<!-- 이전/다음 표시 시작 -->
+  			<a class="carousel-control-prev" href="#demo" data-slide="prev">
+    			<span class="carousel-control-prev-icon"></span>
+  			</a>
+  			<a class="carousel-control-next" href="#demo" data-slide="next">
+    			<span class="carousel-control-next-icon"></span>
+  			</a>
+  			<!-- 이전/다음 표시 끝 -->
 			</div>
-			<!-- 배너 광고 끝 -->
+			<!-- 배너광고 슬라이드 끝  -->
+		</div>
+	</div>
+	<!-- 배너 광고 끝 -->
+	
 	<div class="container"> <!-- 몸체 시작 -->
-		<div>		
-			<div>	<!-- 배달, 포장 주문 버튼 (버튼 2개임)-->
+		<div>
+				
+	<!--	
+	 		<div>	 배달, 포장 주문 버튼 (추가기능)
 				<div class="row">
 					<div class="col-12">
 						<div class="d-flex justify-content-center">
@@ -76,101 +78,118 @@
 						</div>
 					</div>
 				</div>
-				<!-- 로그인 안되있을 때  -->
-				
-				<%
-					// if문으로 로그인 확인,
-					if(true) {
-				%>
-				
-				<!-- 비로그인 상태면 로그인 화면으로 이동-->
-				<!-- "../user/loginform.jsp 등등...으로 이동 -->
-				<a href="../user/loginform.jsp"></a>
-				
-				<%
-					// if문 닫고
-					}
-				%>
-				
-				<%
-					// else 로 로그인 상태면
-					
-				%>
-				
-					<!-- 주문 화면으로 이동 -->
-					<!-- ../order/....form...? 등등으로 이동 -->
-				<a href=""></a>
-				<%
-					// else 닫고
-					
-				%>
-
 			</div>
-			
+	-->
+		 
 			<div><!-- 도미챗, 퀵오더, 드라이빙 픽업 주문 (추가기능) --></div>
 			
 			<div>
 				<div class="row">
 					
-					<div class="col-12">
-						<div class="d-flex justify-content-center">
+					<div class="col-12 ">
+						<div class="d-flex justify-content-center " style="padding: 30px 0; background: #f6f6f6;">
 						
-						<!-- 비로그인 상태면 로그인 버튼 표시 -->
 						<%
-							// if문으로 비로그인 확인, 비로그인 시
-							// 아래 3 div 교체
+							// if문으로 로그인 확인
+							if ("Yes".equals(loginYn)) {
 						%>
-							<div class="p-1">
-								<p>도미노 피자의</p>
-								<p>특별한 매니아 혜택을</p>
-								<p>누려보세요!</p>
-								<a href="../user/loginform.jsp">로그인</a>
+						
+							<div class="p-4 ">
+								<p>　</p>
+								<p class=""><strong><%=loginUserName%></strong> 님의 현재 등급</p> <!-- 사용자 이름 -->
+								<p class="text-center"><strong><% %></strong><!-- 등급 -->등급 여기 나오면 지우자</p>
+								<a href="#"><button type="button" class="btn btn-dark">혜택보기</button></a>
+								<a href="#"><button type="button" class="btn btn-dark">주문내역</button></a>
 							</div>
 							
-							<div class="p-1"> <!-- 회원가입 즉시 20% 이라는 글자 추가 -->
-								<a href="#"><img src="../resource/images/home/main_card1_bg.png" alt="혜택1"/></a>
+	<!--					
+							<div class="p-4 text-center bg-dark text-white"> 
+								<p>　</p>
+								<p>보유쿠폰</p>
+								<span><strong><%// 원래는 쿠폰 들어가야됨%>0</strong>개</span>
 							</div>
 							
-							<div class="p-1"> <!-- 홈 화면 맨 위로 이동,, 로그인 폼으로 이동시켜도 될듯? -->
-								<a href="#"><img src="../resource/images/home/main_card2_bg.gif" alt="혜택2"/></a>
+							<div class="p-4 text-center bg-primary text-white">  
+								<p>　</p>
+								<span><strong><%// 다음 등급까지 횟수 들어가야됨%>0</strong>번만 더 주문하면 등급 UP</span>
 							</div>
-						<%
-							// if문 닫고
-						%>							
-							
-						<%
-							// else문으로 로그인 상태면 혜택, 주문 등 변경된 화면 표시
-						%>
-							<div class="p-1">
-								<p><% %>님 현재 등급<!-- 사용자 이름 --></p>
-								<p><% %><!-- 등급 --></p>
-								<a href="#">혜택보기</a>
-								<a href="#">주문내역</a>
+	-->						
+	 
+	<!-- 보유 쿠폰 00개 -->
+	<!-- 					
+							<div class="p-1"> 
+								<a href=""><img src="../resource/images/home/main_card1_bg.png" alt="혜택1"/></a>
+							</div>
+	-->
+
+	<!-- 다음 등급까지 횟수 -->							
+	<!-- 					
+							<div class="p-1"> 
+								<a href=""><img src="../resource/images/home/main_card2_bg.gif" alt="혜택2"/></a>
+							</div>
+	-->
+							<div class="p-1"> 
+								<a href=""><img src="../resource/images/home/main_card4-1.gif" alt="혜택1"/></a>
 							</div>
 							
-							<div class="p-1"> <!-- 보유쿠폰 개수 추가 --><% %>
-								<a href="#"><img src="../resource/images/home/main_card1_bg.png" alt="혜택1"/></a>
-							</div>
-							
-							<div class="p-1"> <!-- 다음 등급까지 몇번 남았는지 표시 --><% %>
-								<a href="#"><img src="../resource/images/home/main_card2_bg.gif" alt="혜택2"/></a>
+							<div class="p-1"> 
+								<a href=""><img src="../resource/images/home/main_card6.png" alt="혜택2"/></a>
 							</div>
 						<%	
-							// else 닫고
+							// if 닫고
+							// else문으로 비로그인 확인, 비로그인 상태면 로그인 버튼 표시
+							} else {
+							// 비로그인 시
+							// 아래 3 div로 교체
 						%>
-						
-							<!-- 아래 2개는 비로/로 공통 사용 -->
-							
-							<div class="p-1"> <!-- 도미노 혜택 (추가기능) -->
-								<a href="#"><img src="../resource/images/home/main_card3.png" alt="혜택3"/></a>
+							<div class="p-4">
+							<p>　</p>
+								<div class="text-secondary">도미노 피자의</div>
+								<div class="text-primary"><strong>특별한 매니아 혜택</strong>을</div>
+								<div class="text-secondary">더 알고싶다면?</div>
+								<div>　</div>
+								<a href="../user/loginform.jsp"><button type="button" class="btn btn-dark">로그인</button></a>
 							</div>
 							
-							<div class="p-1"> <!-- 도미노 모멘트 (추가기능) -->
+<!-- 회원가입 즉시 20% 이라는 글자 추가 -->
+<!-- 							
+							<div class="p-1">
+								<img src="../resource/images/home/main_card1_bg.png" alt="혜택1"/>
+								<div id=""><a href=""></a></div>
+							</div>
+ -->
+ 
+<!-- 홈 화면 맨 위로 이동,, 로그인 폼으로 이동시켜도 될듯? -->
+<!-- 
+							<div class="p-1"> 
+								<a href="#"><img src="../resource/images/home/main_card2_bg.gif" alt="혜택2"/></a>
+							</div>
+ -->							
+
+<!-- 기능상 아직 부족해서 급한대로 이거 추가, 나중에 위에꺼 되면 아래 2개 삭제 -->
+							<div class="p-1"> 
+								<a href=""><img src="../resource/images/home/main_card4-1.gif" alt="혜택1"/></a>
+							</div>
+							
+							<div class="p-1"> 
+								<a href=""><img src="../resource/images/home/main_card6.png" alt="혜택2"/></a>
+							</div>
+							
+						<%
+							// else문 닫고
+							}
+						%>	
+
+							<!-- 이 2개는 비로그인/로그인 공통 사용 -->
+							<!-- 도미노 혜택 (추가기능) -->
+							<div class="p-1"> 
+								<a href="#"><img src="../resource/images/home/main_card3.png" alt="혜택3"/></a>
+							</div>
+							<!-- 도미노 모멘트 (추가기능) -->
+							<div class="p-1"> 
 								<a href="#"><img src="../resource/images/home/main_card5.png" alt="혜택4"/></a>
 							</div>
 						</div>
-						
-						
 						
 					</div>
 					

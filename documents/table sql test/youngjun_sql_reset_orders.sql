@@ -32,7 +32,7 @@ VALUES
 INSERT INTO pizza_orders
 (pizza_order_no, pizza_no, pizza_size, dough_no, pizza_order_amount, pizza_order_price, pizza_discount_price, order_no)
 VALUES
-(pizza_order_no_seq.NEXTVAL, 102, 'M', 100, 3, 25000, 23000, 100);
+(pizza_order_no_seq.NEXTVAL, 102, 'M', 100, 3, 75000, 23000, 100);
 
 INSERT INTO topping_orders
 (topping_order_no, pizza_order_no, topping_no, topping_order_amount, topping_order_price)

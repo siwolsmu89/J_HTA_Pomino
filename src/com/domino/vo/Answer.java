@@ -6,7 +6,7 @@ public class Answer {
 
 	private int no;
 	private int questionNo;
-	private int content;
+	private String content;
 	private String deletedYn;
 	private Date regDate;
 
@@ -24,10 +24,10 @@ public class Answer {
 	public void setQuestionNo(int questionNo) {
 		this.questionNo = questionNo;
 	}
-	public int getContent() {
+	public String getContent() {
 		return content;
 	}
-	public void setContent(int content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
 	public String getDeletedYn() {

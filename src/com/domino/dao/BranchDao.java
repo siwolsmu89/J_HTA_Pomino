@@ -36,6 +36,7 @@ public class BranchDao {
 		branch.setComment(rs.getString("branch_comment"));
 		branch.setDiscountRate(rs.getDouble("branch_discount_rate"));
 		branch.setQuitYn(rs.getString("branch_quit_yn"));
+		branch.setImageSrc(rs.getString("branch_image_src"));
 		
 		return branch;
 	}
@@ -129,6 +130,24 @@ public class BranchDao {
 		pstmt.setString(7, branch.getCloseTime());
 		pstmt.setString(8, branch.getComment());
 		pstmt.setString(9, branch.getImageSrc());
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
+	
+	public void updateBranch(Branch branch) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("branch.updateBranch"));
+		pstmt.setString(1, branch.getAddrDetail());
+		pstmt.setString(2, branch.getTel());
+		pstmt.setString(3, branch.getParkingYn());
+		pstmt.setString(4, branch.getOpenTime());
+		pstmt.setString(5, branch.getCloseTime());
+		pstmt.setString(6, branch.getComment());
+		pstmt.setDouble(7, branch.getDiscountRate());;
+		pstmt.setString(8, branch.getImageSrc());
+		pstmt.setInt(9, branch.getNo());
 		pstmt.executeUpdate();
 		
 		pstmt.close();

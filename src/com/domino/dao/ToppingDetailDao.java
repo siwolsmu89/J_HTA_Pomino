@@ -37,19 +37,19 @@ public class ToppingDetailDao {
 	}
 	 
 	/**
-	 * 피자번호로 토핑주문상세정보를 조회하는 메소드
+	 * 피자 주문 번호로 토핑주문상세정보를 조회하는 메소드
 	 * 기타 토핑정보등을 추가하기위해서 ToppingOrderDto를 사용
-	 * @param pizzaNo 피자번호
+	 * @param pizzaNo 피자 주문 번호
 	 * @return ToppingOrderDto가 담긴 ArrayList
 	 * @throws SQLException
 	 * @author 영준
 	 */
-	public List<ToppingOrderDto> getToppingOrdersByPizzaNo(int pizzaNo) throws SQLException{
+	public List<ToppingOrderDto> getToppingOrdersByPizzaNo(int pizzaOrderNo) throws SQLException{
 		List<ToppingOrderDto> tol = new ArrayList<ToppingOrderDto>();
 		
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("toppingdetail.getToppingOrdersByPizzaNo"));
-		pstmt.setInt(1, pizzaNo);
+		pstmt.setInt(1, pizzaOrderNo);
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
@@ -65,7 +65,24 @@ public class ToppingDetailDao {
 		return tol;
 	}
 	
-
+	/**
+	 * 퀵오더 또는 재주문하기 실행 시 이전에 등록된 피자 주문 번호와 새롭게 등록된 주문 번호를 가져와서 토핑 주문을 생성한다.
+	 * @param prevNo 이전에 등록된 피자 주문 번호
+	 * @param thisNo 새롭게 등록된 피자 주문 번호
+	 * @throws SQLException
+	 */
+	public void insertReorderCart(int prevNo, int thisNo) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("toppingdetail.insertReorderCart"));
+		pstmt.setInt(1, thisNo);
+		pstmt.setInt(2, prevNo);
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
+	
 	/**
 	 * 토핑 주문 정보를 삭제하는 메소드
 	 * @param no 토핑 주문 번호

@@ -100,7 +100,9 @@
 							</div>
 							<!-- 사진등록 -->
 							<div class="form-group">
-								<label>첨부파일</label>
+								<label> 첨부파일(<%=side.getImageSrc()%>)
+								</label>
+								<p class="text-danger">이미지 이름 동일하게 해서 업데이트</p>
 								<div>
 									<input type="file" name="upfile" />
 								</div>

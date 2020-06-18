@@ -196,6 +196,7 @@ CREATE TABLE questions
 	answered_yn char DEFAULT 'N',
 	question_del_yn char DEFAULT 'N',
 	question_reg_date date DEFAULT sysdate,
+    branch_no number(3),
 	PRIMARY KEY (question_no)
 );
 
@@ -369,6 +370,10 @@ ALTER TABLE questions
 	REFERENCES users (user_no)
 ;
 
+ALTER TABLE questions
+    ADD FOREIGN KEY (branch_no)
+    REFERENCES branches (branch_no)
+;
 
 
 /* Comments */

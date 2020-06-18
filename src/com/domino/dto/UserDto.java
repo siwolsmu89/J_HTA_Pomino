@@ -20,8 +20,86 @@ public class UserDto {
 	private int orderCount;
 	private int quickOrderNo;
 	private int userTotalPrice;
+	private int questionWriter;
+	private int questionCount;
+	private String questionType;
+	private String questionTitle;
+	private String questionContent;
+	private String branchAddr;
+	private String branchName;
 	
 	public UserDto() {}
+
+	
+	public String getQuestionType() {
+		return questionType;
+	}
+
+
+	public void setQuestionType(String questionType) {
+		this.questionType = questionType;
+	}
+
+
+	public String getQuestionTitle() {
+		return questionTitle;
+	}
+
+
+	public void setQuestionTitle(String questionTitle) {
+		this.questionTitle = questionTitle;
+	}
+
+
+	public String getQuestionContent() {
+		return questionContent;
+	}
+
+
+	public void setQuestionContent(String questionContent) {
+		this.questionContent = questionContent;
+	}
+
+
+	public String getBranchAddr() {
+		return branchAddr;
+	}
+
+
+	public void setBranchAddr(String branchAddr) {
+		this.branchAddr = branchAddr;
+	}
+
+
+	public String getBranchName() {
+		return branchName;
+	}
+
+
+	public void setBranchName(String branchName) {
+		this.branchName = branchName;
+	}
+
+
+	public int getQuestionWriter() {
+		return questionWriter;
+	}
+
+
+	public void setQuestionWriter(int questionWriter) {
+		this.questionWriter = questionWriter;
+	}
+
+
+	public int getQuestionCount() {
+		return questionCount;
+	}
+
+
+	public void setQuestionCount(int questionCount) {
+		this.questionCount = questionCount;
+	}
+
 
 	public int getUserTotalPrice() {
 		return userTotalPrice;

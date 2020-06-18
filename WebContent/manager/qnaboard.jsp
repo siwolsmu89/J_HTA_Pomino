@@ -1,3 +1,7 @@
+<%@page import="com.domino.dto.QuestionDto"%>
+<%@page import="com.domino.vo.Question"%>
+<%@page import="java.util.List"%>
+<%@page import="com.domino.dao.QnaDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,9 +20,9 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<%
-	String position = "manager";
-%>
+	<%
+		String position = "manager";
+	%>
 	<%@ include file="../common/navbar.jsp"%>
 	<div class="container">
 		<div class="header">
@@ -105,6 +109,10 @@
 							<!-- 정렬기준 선택 끝  -->
 						</div>
 					</form>
+					<%
+						QnaDao qnaDao = new QnaDao();
+						List<QuestionDto> questions = qnaDao.getAllQuestion();
+					%>
 					<table class="table text-center">
 						<colgroup>
 							<col width="10%">
@@ -123,99 +131,126 @@
 							</tr>
 						</thead>
 						<tbody>
+							<%
+								for (QuestionDto questionDto : questions) {
+							%>
 							<tr>
-								<td>108</td>
-								<td>홍길동</td>
-								<td>서비스 불만</td>
-								<td>xxx매장 직원 불친절 신고</td>
+								<td><%=questionDto.getNo()%></td>
+								<td><%=questionDto.getUserName()%></td>
+								<td><%=questionDto.getTitle()%></td>
+								<td><%=questionDto.getRegDate()%></td>
 								<td>
-									<button type="button" class="btn btn-primary"
-										data-toggle="modal" data-target="#qnadetail">답변대기</button>
+									<%
+										if ("N".equals(questionDto.getAnsweredYn())) {
+									%>
+									<button type="button" class="btn btn-primary" 
+									data-toggle="modal" data-target="#a<%=questionDto.getNo()%>">
+										답변대기
+									</button>
+									<%
+									 	} else {
+									%>
+									<button type="button" class="btn btn-secondary" 
+									data-toggle="modal" data-target="#a<%=questionDto.getNo()%>">
+										답변완료</button> 
+									<%
+									 	}
+									%>
 								</td>
 							</tr>
+
+							<!-- Modal - qnadetail -->
 							<tr>
-								<td>105</td>
-								<td>홍길동</td>
-								<td>서비스 불만</td>
-								<td>xxx매장 직원 불친절 신고</td>
-								<td>
-									<button class="btn btn-secondary">답변완료</button>
+								<td class="modal fade" id="a<%=questionDto.getNo()%>"
+									tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel">1:1 문의</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+
+											<form method="post"
+												action="/domino/manager/answer.jsp?questionno=<%=questionDto.getNo()%>">
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-6">
+															<div class="form-group">
+																<label>이름</label> <input type="text"
+																	class="form-control" value="<%=questionDto.getUserName()%>"
+																	disabled />
+															</div>
+															<div class="form-group">
+																<label>아이디</label> <input type="text"
+																	class="form-control" value="<%=questionDto.getUserId()%>"
+																	disabled />
+															</div>
+														</div>
+														<div class="col-6">
+															<div class="form-group">
+																<label>이메일</label> <input type="text"
+																	class="form-control"
+																	value="<%=questionDto.getUserEmail()%>" disabled />
+															</div>
+															<div class="form-group">
+																<label>등록날짜</label> <input type="text"
+																	class="form-control"
+																	value="<%=questionDto.getRegDate()%>" name="addrdetail" disabled/>
+															</div>
+														</div>
+														<div class="col-12">
+															<div class="form-group">
+																<label>제목</label> <input type="text"
+																	class="form-control" value="<%=questionDto.getTitle()%> " disabled
+																	name="tel" />
+															</div>
+														</div>
+														<div class="col-12">
+															<div class="form-group">
+																<label>문의내용</label> 
+																<textarea type="text"
+																	class="form-control" disabled
+																	name="tel" ><%=questionDto.getContent()%></textarea>
+															</div>
+														</div>
+														<div class="col-12">
+
+															<div class="form-group">
+																<label for="desc-1">답변작성</label>
+																<textarea
+																	class="form-control" name="answercontent" id="desc-1">
+																</textarea>
+															</div>
+
+														</div>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">
+														다시 작성
+													</button>
+													<button type="submit" class="btn btn-primary">
+														답변등록
+													</button>
+												</div>
+											</form>
+
+										</div>
+									</div>
 								</td>
 							</tr>
+
+							<%
+								}
+							%>
 						</tbody>
 					</table>
 
-					<!-- Modal - qnadetail -->
-					<div class="modal fade" id="qnadetail" tabindex="-1" role="dialog"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">1:1 문의</h5>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									<div class="row">
-										<div class="col-12">
-											<table class="table table-borderless">
-												<tr>
-													<th>이름</th>
-													<td>홍길동</td>
-												</tr>
-												<tr>
-													<th>아이디</th>
-													<td>honggil</td>
-												</tr>
-												<tr>
-													<th>연락처</th>
-													<td>010-1111-2222</td>
 
-												</tr>
-												<tr>
-													<th>이메일</th>
-													<td>hong@gmail.com</td>
-												</tr>
-												<tr>
-													<th>매장</th>
-													<td>종로3가</td>
-												</tr>
-												<tr>
-													<th>제목</th>
-													<td>서비스가 개판이내</td>
-												</tr>
-												<tr>
-													<th>문의내용</th>
-													<td><textarea rows="7" cols="50">
-															피자를 발로 만드냐
-														</textarea></td>
-												</tr>
-											</table>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-12">
-											<div class="form">
-												<div class="form-group">
-													<label for="desc-1">답변작성</label>
-													<textarea class="form-control" rows="5" name="description"
-														id="desc-1"></textarea>
-												</div>
-											</div>
-										</div>
-
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-dismiss="modal">다시 작성</button>
-									<button type="button" class="btn btn-primary">답변 등록</button>
-								</div>
-							</div>
-						</div>
-					</div>
 
 					<!-- 페이지 처리 시작 -->
 					<ul class="pagination justify-content-center"

@@ -1,3 +1,6 @@
+<%@page import="com.domino.vo.Pizza"%>
+<%@page import="java.util.List"%>
+<%@page import="com.domino.dao.PizzaDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,6 +23,8 @@
 	%>
 	
 	<%@ include file="../common/navbar.jsp"%>
+	
+
 <div class="container">
 
 	<div> <!-- 빨강 -->
@@ -33,9 +38,9 @@
 			
 					<div class="col-3">
 						<ul class="breadcrumb">
-							<li class="breadcrumb-item"><a href="#">홈</a></li>
-							<li class="breadcrumb-item"><a href="#">메뉴</a></li>
-							<li class="breadcrumb-item"><a href="../pizza/pizzamenu.jsp"><strong>피자</strong></a></li>
+							<li class="breadcrumb-item"><a href="../common/home.jsp">홈</a></li>
+							<li class="breadcrumb-item"><a href="../pizza/pizzamenu.jsp">메뉴</a></li>
+							<li class="breadcrumb-item"><a><strong>피자</strong></a></li>
 						</ul>
 					</div>
 				</div>
@@ -49,21 +54,22 @@
 							<!-- 링크들 (메뉴 중앙정렬) -->
 							<ul class="navbar-nav">
 								<li class="nav-item  d-flex justify-content-between align-itens-center"><a class="nav-link" href="../pizza/pizzamenu.jsp">피자</a></li>
-								<li class="nav-item  d-flex justify-content-between align-itens-center"><a class="nav-link" href="">사이드디시</a></li>
-								<li class="nav-item  d-flex justify-content-between align-itens-center"><a class="nav-link" href="">음료/기타</a></li>
+								<li class="nav-item  d-flex justify-content-between align-itens-center"><a class="nav-link" href="#">사이드디시</a></li>
+								<li class="nav-item  d-flex justify-content-between align-itens-center"><a class="nav-link" href="#">음료/기타</a></li>
 							</ul>
 						</div>
 					</div>
 					
 					<div class="col-2"><!-- 더보기 -->
 						<div class="navbar navbar-expand-sm ">
-							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">맛있는핏자</a>	<!-- 1주일간 가장 많이 팔린 피자 받아와서 출력, 해당하는 링크로 이동 -->
+						<!-- 1주일간 가장 많이 팔린 피자 받아와서 출력, 해당하는 링크로 이동 -->
+							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">맛있는핏자</a>	
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="">짱</a>
-								<a class="dropdown-item" href="">맛있는</a>
-								<a class="dropdown-item" href="">피자</a>
-								<a class="dropdown-item" href="">리스트</a>
-								<a class="dropdown-item" href="">피자먹고싶다</a>
+								<a class="dropdown-item" href="">짱<% %></a>
+								<a class="dropdown-item" href="">맛있는<% %></a>
+								<a class="dropdown-item" href="">피자<% %></a>
+								<a class="dropdown-item" href="">리스트<% %></a>
+								<a class="dropdown-item" href="">피자먹고싶다<% %></a>
 							</div>
 						</div>
 					</div>
@@ -78,6 +84,9 @@
 							<div class="card-header d-flex justify-content-center">프리미엄</div>
 							<div class="card-body">
 								<div class="row">
+								
+								
+								
 									<!-- 상품 정보 시작 -->
 									<div class="col-3">
 										<!-- 상품정보를 포함하는 카드 시작 -->
@@ -121,32 +130,58 @@
 									</div>
 									<!-- 상품 정보 끝 -->
 									
-									<%//Dao 받아와서 for문 시작 %>
+									
+									<!-- Dao 먼저 받기 -->
+									<%
+										PizzaDao pizzaDao = new PizzaDao();
+										List<Pizza> pizzas = pizzaDao.getAllPizza();
+									%>
+									<!-- for문 시작 -->
+									<%
+										for(Pizza pizza : pizzas) {
+									%>
+									
+									<style type="text/css">
+										.jumbotron {
+											background-size: 100%;
+											width: 242px;
+											height: 242px;
+											padding: 0px 0px 0px 0px;
+										}
+									</style>								
+
 									<!-- 상품 정보 시작 -->
 									<div class="col-3">
 										<!-- 상품정보를 포함하는 카드 시작 -->
 										<div class="card">
 											<!-- 상품이미지 -->
 											<!-- 사진 위에 사진 올리기? -->
-											<div>
-												<a href="" ><img class="card-img-top" src="<% // 피자 사진 받아오기 %>"></a> <!-- 사진 클릭하면 해당 사진 주문하러 가짐 -->
-												<div class="card-img-overlay">
-													<a href="#"><img  src="../resource/images/home/detailsee.png" /></a>	<!-- ajax로 해당 피자 상세정보 화면에 출력 -->
-												</div>
+											<div class="jumbotron" style="background-image: url('<%=pizza.getImageSrc() %>'); ">
+												
+											<!-- 사진 클릭하면 해당 사진 주문하러 가짐 -->
+											<!-- 피자 더미데이터 소스 ../로 변경하기 -->
+											<!-- 피자 이미지 받아오기 -->
+													<p><a class="btn btn-primary-outline btn-block" style="position:absolute; height:242px" href="#"></a></p>
+													<a href="" style="position:absolute; left:210px; bottom:134px;"><img src="../resource/images/home/detailsee.png"/></a>	<!-- ajax로 해당 피자 상세정보 화면에 출력 -->
+
 											</div>
 											
 											<!-- 상품 컨텐츠정보 시작 -->
+											<!-- 피자 이름 받아오기 -->
 											<div class="card-body">
-												<p class="font-weight-bold mb-1"><% // 피자 이름 받아오기 %></p>
+												<p class="font-weight-bold mb-1"><%=pizza.getName() %></p>
 												<!-- 가격정보 시작 -->
 												<div class="mb-2">
-													<div>
-														<strong>L </strong> <del class="float-right"><% // 피자 가격 받아오기 %></del>
-														<strong class="text-danger">R </strong> <span class="float-right font-weight-bolder"><% // 할인된 가격 받아오기 %></span>
+													<div class="row">
+													<!-- 피자 L, M 가격 받기 -->
+														<div class="col-6" style="padding:5px"><strong class="text-danger float-left">L</strong><strong>　<%=pizza.getLprice() %>원~</strong></div>
+														<div class="col-6" style="padding:5px"><strong class="text-danger float-left">M</strong><strong>　<%=pizza.getMprice() %>원~</strong></div>
 													</div>
 												</div>
 												<!-- 가격정보 끝 -->
 												<div class="mt-3 mb-n3">
+												
+													
 													<span class="badge badge-success"><% // 태그도 디비로 받는건가? 아니면 그냥 하는건가? %></span>
 													<span class="badge badge-info"><% // 태그도 디비로 받는건가? 아니면 그냥 하는건가? %></span>
 												</div>
@@ -161,7 +196,9 @@
 										<!-- 상품정보를 포함하는 카드 끝 -->
 									</div>
 									<!-- 상품 정보 끝 -->
-									<%//for문 닫고 %>
+									<% //for문 닫고
+										}
+									%>
 									
 								</div>
 							</div>
@@ -199,7 +236,7 @@
 													<div class="mb-2">
 														<div>
 															<strong>L </strong> <del  class="float-right"><% // 피자 가격 받아오기 %></del>
-															<strong class="text-danger">R </strong> <span class="float-right font-weight-bolder"><% // 할인된 가격 받아오기 %></span>
+															<strong class="text-danger">M </strong> <span class="float-right font-weight-bolder"><% // 할인된 가격 받아오기 %></span>
 														</div>
 													</div>
 													<!-- 가격정보 끝 -->

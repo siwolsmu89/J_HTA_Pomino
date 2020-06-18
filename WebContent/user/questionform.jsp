@@ -1,3 +1,7 @@
+<%@page import="java.util.List"%>
+<%@page import="com.domino.vo.Question"%>
+<%@page import="com.domino.dao.QnaDao"%>
+<%@page import="com.domino.dto.UserDto"%>
 <%@page import="com.domino.vo.User"%>
 <%@page import="com.domino.dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -76,6 +80,7 @@
 		<%
 			UserDao userDao = new UserDao();
 			User user = userDao.getUserByNo(loginUserNo);
+			UserDto userDto = userDao.getCountQuestionUserByNo(loginUserNo);
 		%>
 		<div class="row">
 			<div class="col-12">
@@ -84,7 +89,7 @@
 						<div class="col12">
 						  <h2 class=""><%=loginUserName %>님께서 문의하신 내용입니다.</h2>
 						  <div style="background-color: #00B9FF; height: 4px; width: 100%;" class="my-3"></div>
-						  <p class="text-muted"><%=loginUserName %>님께서 문의하신 내용은 <strong class="text-white">총0건</strong>입니다.</p>
+						  <p class="text-muted"><%=loginUserName %>님께서 문의하신 내용은 <strong class="text-white">총<%=userDto.getQuestionCount()%>건</strong>입니다.</p>
 						</div>
 					</div>
 				</div>
@@ -92,6 +97,10 @@
 		</div>
 		
 		<div class="row">
+				<%
+					QnaDao qnaDao = new QnaDao();
+					List<Question> questions = qnaDao.getQuestionAllByUserNo(loginUserNo);
+				%>
 				<div class="col-12">
 					<table class="table text-center">
 						<colgroup>
@@ -110,22 +119,32 @@
 						</thead>
 						
 						<tbody>
+							<%
+								for(Question question : questions) {
+							%>
 							<tr>
-								<td>1</td>
-								<td>제품관련</td>
-								<td>2020-06-15</td>
+								<td><%=question.getNo() %></td>
+								<td><a href="detailquestion.jsp?questionno=<%=question.getNo() %>"><%=question.getTitle() %></a></td>
+								<td><%=question.getRegDate() %></td>
 								<td>
+							<%
+									if(!"Y".equals(question.getAnsweredYn())) {
+							%>
 									<button class="btn btn-primary" disabled>답변대기</button>
+							<%
+									} else {
+							%>
+									<button class="btn btn-secondary" disabled>답변완료</button>
+							<%			
+									}
+							%>
 								</td>
 							</tr>
-							<tr>
-								<td>2</td>
-								<td>칭찬</td>
-								<td>2020-06-20</td>
-								<td>
-									<button class="btn btn-primary" disabled>답변대기</button>
-								</td>
-							</tr>
+							
+							<%
+								}
+							%>
+							
 						</tbody>
 						
 					</table>
@@ -152,6 +171,7 @@
 								<form method="post" action="question.jsp">
 									<div class="modal-body">
 										<div class="row">
+										
 											<div class="col-12">
 												<div class="alert alert-danger">
 													<strong>오류!</strong> 제목 또는 내용을 입력하지 않았습니다.
@@ -165,80 +185,72 @@
 												<div class="form-group">
 													<label>아이디</label>
 													<input type="text" class="form-control"
-														name="userid" disabled />
+														name="userid" value=<%=user.getId() %>  disabled />
 												</div>
 												<div class="form-group">
 													<label>연락처</label> <input type="tel"
-														class="form-control" name="usertel" disabled/>
+														class="form-control" name="usertel" value=<%=user.getTel() %> disabled/>
 												</div>
 												<div class="form-group">
 													<label>이메일</label> <input type="email" class="form-control"
-														name="useremail" disabled/>
+														name="useremail" value=<%=user.getEmail() %> disabled/>
 												</div>
 												<div class="form-group">
 													<label>문의유형</label>
-											      	<select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+											      	<select class="custom-select mr-sm-2" name="questiontype" id="inlineFormCustomSelect">
 											        	<option selected>선택</option>
-											        	<option value="1">제품관련</option>
-											        	<option value="2">배달서비스 관련</option>
-											        	<option value="3">직원서비스 관련</option>
-											        	<option value="4">콜센터 관련</option>
-											        	<option value="5">칭찬</option>
-											        	<option value="6">제안</option>
-											        	<option value="7">단순문의</option>
-											        	<option value="8">기타</option>
+											        	<option value="제품관련">제품관련</option>
+											        	<option value="배달서비스 관련">배달서비스 관련</option>
+											        	<option value="직원서비스 관련">직원서비스 관련</option>
+											        	<option value="콜센터 관련">콜센터 관련</option>
+											        	<option value="칭찬">칭찬</option>
+											        	<option value="제안">제안</option>
+											        	<option value="단순문의">단순문의</option>
+											        	<option value="기타">기타</option>
 											      	</select>
 												</div>
 												<div class="form-group row">
 													<div class="col-6">
 														<label>매장선택</label> 
-														<select class="custom-select mr-sm-2">
-												        	<option selected>지역</option>
-												        	<option value="seoul">서울</option>
-												        	<option value="incheon">인천</option>
-												        	<option value="gyeonggi">경기</option>
-												        	<option value="gangwor">강원</option>
-												        	<option value="chungnam">충남</option>
-												        	<option value="chungbuk">충북</option>
-												        	<option value="daejeon">대전</option>
-												        	<option value="gyeongnam">경남</option>
-												        	<option value="gyeongbuk">경북</option>
-												        	<option value="daegu">대구</option>
-												        	<option value="jeonnam">전남</option>
-												        	<option value="jeonbuk">전북</option>
-												        	<option value="gwangju">광주</option>
-												        	<option value="ulsan">울산</option>
-												        	<option value="busan">부산</option>
-												        	<option value="jeju">제주</option>
-												        	<option value="sejong">세종특별자치시</option>
+														<select class="custom-select mr-sm-2" name="branchaddr" onchange="refreshBranches(event);">
+												        	<option value="" selected disabled>지역</option>
+												        	<option value="서울">서울</option>
+												        	<option value="인천">인천</option>
+												        	<option value="경기">경기</option>
+												        	<option value="강원">강원</option>
+												        	<option value="충남">충남</option>
+												        	<option value="충북">충북</option>
+												        	<option value="대전">대전</option>
+												        	<option value="경남">경남</option>
+												        	<option value="경북">경북</option>
+												        	<option value="대구">대구</option>
+												        	<option value="전남">전남</option>
+												        	<option value="전북">전북</option>
+												        	<option value="광주">광주</option>
+												        	<option value="울산">울산</option>
+												        	<option value="부산">부산</option>
+												        	<option value="제주">제주</option>
+												        	<option value="세종">세종</option>
 												      	</select>
 													</div>
 													<div class="col-6"> <!-- ajax 사용하고 디비에서 불러오기 -->
 														<label class="invisible">매장선택</label> 
-														<select class="custom-select mr-sm-2">
-												        	<option selected>매장 선택</option>
-												        	<option value="1">가락점</option>
-												        	<option value="2">가산점</option>
-												        	<option value="3">가좌점</option>
-												        	<option value="4">콜센터 관련</option>
-												        	<option value="5">칭찬</option>
-												        	<option value="6">제안</option>
-												        	<option value="7">단순문의</option>
-												        	<option value="8">기타</option>
+														<select class="custom-select mr-sm-2" name="branchname" id="branch-combobox">
+												        	<option value="" selected disabled>매장 선택</option>
 												      	</select>
 													
 													</div>
 												</div>
 												
 												<div class="form-group">
-													<label>제목</label> <input type="text" class="form-control"
-														name="questiontitle" />
+													<label>제목</label> 
+													<input type="text" class="form-control" name="questiontitle" />
 												</div>
 
 												<!-- 텍스트입력화면 예시 끝 -->
 												<div class="form-group">
 													<label for="questioncontent">문의내용</label>
-													<textarea class="form-control" rows="5" name="description"
+													<textarea class="form-control" rows="5" name="questioncontent"
 														id="questioncontent"></textarea>
 												</div>
 												<!-- 텍스트입력화면 예시 끝 -->
@@ -256,7 +268,7 @@
 								</div>
 								<div class="modal-footer">
 									<button type="reset" class="btn btn-secondary">다시 작성</button>
-									<button type="button" class="btn btn-info">답변 등록</button>
+									<button type="submit" class="btn btn-info">답변 등록</button>
 								</div>
 							</form>
 						</div>
@@ -281,4 +293,28 @@
 </div>
 <%@ include file="../common/footer.jsp" %>
 </body>
+<script type="text/javascript">
+	function refreshBranches(event) {
+		
+		var combobox = document.querySelector("#branch-combobox");
+		
+		//alert(event.target.value);
+		var comboboxValue = event.target.value;
+		
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				var branches = JSON.parse(xhr.responseText);
+				var options = "";
+				for (var i=0; i<branches.length; i++) {
+					var branch = branches[i]
+					options += '<option value="'+branch.no+'"> '+branch.name+'</option>';
+				}
+				combobox.innerHTML = options;
+			}
+		}
+		xhr.open("get", "json/branches.jsp?addr=" + comboboxValue);
+		xhr.send();
+	}
+</script>
 </html>
