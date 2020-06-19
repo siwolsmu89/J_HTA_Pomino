@@ -236,12 +236,11 @@
 						
 		var no = event.target.value;
 		
-		
 		var form = document.querySelector("#my-form");
 		
 		form.setAttribute("action", url + no);
 		form.submit();
-				
+
 	}
 
 </script>

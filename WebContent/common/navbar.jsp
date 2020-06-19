@@ -50,48 +50,48 @@
 							  </button>
 							  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 							    <a class="navbar-brand invisible" href="#">Domino</a>
-							    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+							    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 font-weight-bold">
 							    
-							      <li class="nav-item px-4 <%="pizzamenu".equals(position) ? "active font-weight-bold" : ""%>">
+							      <li class="nav-item pr-5 mr-3 <%="pizzamenu".equals(position) ? "active" : ""%>">
 							        <a class="nav-link" href="/domino/pizza/pizzamenu.jsp">메뉴</a>
 							      </li>
-							      <li class="nav-item px-4 <%="event".equals(position) ? "active font-weight-bold" : ""%>">
+							      <li class="nav-item pr-5 mr-3 <%="event".equals(position) ? "active" : ""%>">
 							        <a class="nav-link" href="#">이벤트/제휴</a>
 							      </li>
 							      <%
 								  	if("Yes".equals(loginYn)) {
 								  %>
-							      <li class="nav-item px-4 <%="order".equals(position) ? "active font-weight-bold" : ""%>">
+							      <li class="nav-item pr-5 mr-3 <%="order".equals(position) ? "active" : ""%>">
 							        <a class="nav-link" href="/domino/order/cart.jsp">주문</a>
 							      </li>
 							      <%
 								  	} else {
 							      %>
-							      <li class="nav-item px-4 <%="order".equals(position) ? "active font-weight-bold" : ""%>">
+							      <li class="nav-item pr-5 mr-3 <%="order".equals(position) ? "active" : ""%>">
 							        <a class="nav-link" href="/domino/user/loginform.jsp">주문</a>
 							      </li>
 							      <%
 								  	}
 							      %>
-							      <li class="nav-item px-4">
+							      <li class="nav-item pr-5 mr-3">
 							        <a class="nav-link" href="#">매장검색</a>
 							      </li>
 							      <%
 								  	if("Yes".equals(loginYn)) {
 								  %>
-							      <li class="nav-item px-4 <%="branch".equals(position) ? "active font-weight-bold" : ""%>">
+							      <li class="nav-item pr-5 mr-3 <%="branch".equals(position) ? "active font-weight-bold" : ""%>">
 							        <a class="nav-link" href="/domino/branch/info.jsp">가맹점</a>
 							      </li>
-							      <li class="nav-item px-4 <%="manager".equals(position) ? "active font-weight-bold" : ""%>">
+							      <li class="nav-item pr-5 mr-3 <%="manager".equals(position) ? "active font-weight-bold" : ""%>">
 							        <a class="nav-link" href="/domino/manager/info.jsp">관리자</a>
 							      </li>
 							      <%
 								  	} else {
 							      %>
-							      <li class="nav-item px-4 <%="branch".equals(position) ? "active font-weight-bold" : ""%>">
+							      <li class="nav-item pr-5 mr-3 <%="branch".equals(position) ? "active font-weight-bold" : ""%>">
 							        <a class="nav-link" href="/domino/user/loginform.jsp">가맹점</a>
 							      </li>
-							      <li class="nav-item px-4 <%="manager".equals(position) ? "active font-weight-bold" : ""%>">
+							      <li class="nav-item pr-5 mr-3 <%="manager".equals(position) ? "active font-weight-bold" : ""%>">
 							        <a class="nav-link" href="/domino/user/loginform.jsp">관리자</a>
 							      </li>
 							      <%

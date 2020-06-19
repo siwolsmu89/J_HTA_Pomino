@@ -1,3 +1,6 @@
+<%@page import="com.domino.vo.Event"%>
+<%@page import="java.util.List"%>
+<%@page import="com.domino.dao.EventDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -50,7 +53,7 @@
 								class="nav-link text-muted " href="info.jsp">메인</a></li>
 							<li
 								class="nav-item  d-flex justify-content-between align-itens-center small"><a
-								class="nav-link text-muted" href="orderlist.jsp">주문</a></li>
+								class="nav-link text-muted " href="orderlist.jsp">주문</a></li>
 							<li
 								class="nav-item  d-flex justify-content-between align-itens-center small"><a
 								class="nav-link text-muted" href="menulist.jsp">메뉴</a></li>
@@ -68,14 +71,15 @@
 				</div>
 			</div>
 		</div>
-
+		
 		<div class="body">
+			<%
+				EventDao eventDao = new EventDao();
+				List<Event> events = eventDao.getAllEvent();
+			%>
 			<div class="row">
 
 				<div class="col-12">
-					<!-- 검색조건, 정렬기준, 테이블, 페이지처리 내용을 포함하는 card 시작 -->
-
-					<!-- 검색조건, 정렬기준 입력 폼 시작 -->
 					<form>
 						<div class="row">
 							<!-- 검색조건 입력폼 시작 -->
@@ -126,41 +130,68 @@
 								<th>이벤트이름</th>
 								<th>시작일</th>
 								<th>종료일</th>
-								<th>활성화여부</th>
+								<th>단종여부</th>
 								<th>할인율</th>
-								<th></th>
-								<th></th>
+								<th colspan='2'><a class="btn btn-light"
+									href="eventform.jsp">신규 이벤트 등록</a></th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>129</td>
-								<td>피맥타임</td>
-								<td>2020-06-01</td>
-								<td>2020-09-30</td>
-								<td>Y</td>
-								<td>15%</td>
+						<%
+							for(Event event : events) {
+						%>
+							<tr
+								<%
+									if ("n".equalsIgnoreCase(event.getDisableYn())){ 
+								%>
+									class="font-weight-bold"
+								<%
+									} else {
+								%>
+									class="text-muted"
+								<%
+									}
+								%>
+							>
+								<td><%=event.getNo() %></td>
+								<td><%=event.getName() %></td>
+								<td><%=event.getStartDate() %></td>
+								<td><%=event.getEndDate() %></td>
+								<td><%=("N".equals(event.getDisableYn())) ? "아니오" : "예" %></td>
+								<td><%=(0 == event.getDiscountRate()*100) ? 0 : event.getDiscountRate()*100+"%" %></td>
+								<td><a class="btn btn-primary text-light"
+									href="eventmodifyform.jsp?yn=n&eventno=<%=event.getNo() %>">수정</a></td>
+								<%
+									if("N".equalsIgnoreCase(event.getDisableYn())){
+								%>
 								<td>
-									<button class="btn btn-primary">수정</button>
+									<form method="post" action="eventmodify.jsp" enctype="multipart/form-data">
+										<input type="hidden" name="yn" value="y">
+										<input type="hidden" name="eventno" value=<%=event.getNo() %>>
+										<button class="btn btn-secondary text-light" type="submit">
+											비활성
+										</button>
+									</form>
 								</td>
+								<%
+									} else {
+								%>
 								<td>
-									<button class="btn btn-danger">비활성</button>
+									<form method="post" action="eventmodify.jsp" enctype="multipart/form-data">
+										<input type="hidden" name="yn" value="yn">
+										<input type="hidden" name="eventno" value=<%=event.getNo() %>>
+										<button class="btn btn-danger text-light" type="submit">
+											활성
+										</button>
+									</form>
 								</td>
+								<%
+									}
+								%>
 							</tr>
-							<tr>
-								<td>50</td>
-								<td>도미노10주년</td>
-								<td>2019-01-01</td>
-								<td>2019-12-31</td>
-								<td>N</td>
-								<td>20%</td>
-								<td>
-									<button class="btn btn-primary">수정</button>
-								</td>
-								<td>
-									<button class="btn btn-success">활성</button>
-								</td>
-							</tr>
+						<%
+							}
+						%>
 						</tbody>
 					</table>
 					<!-- 페이지 처리 시작 -->

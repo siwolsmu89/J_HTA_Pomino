@@ -1,3 +1,5 @@
+<%@page import="com.domino.vo.Topping"%>
+<%@page import="com.domino.dao.ToppingDao"%>
 <%@page import="com.domino.vo.Side"%>
 <%@page import="com.domino.dao.SideDao"%>
 <%@page import="com.domino.vo.Dough"%>
@@ -131,8 +133,8 @@
 					</div> <!-- 하늘2 끝 -->
 					
 					<div> <!-- 하늘3 시작 -->
-						<div class="text-muted"><small>#주문시 사이드디시 반값</small></div>
-						<div class="text-muted"><small>#도미노 시리얼 제공</small></div>
+						<div class="text-muted"><small>#고소한 치즈가 듬뿍</small></div>
+						<div class="text-muted"><small>#도미노의 자신작</small></div>
 						<p>　</p>
 						<% // 얘네도 짧은 정보로 받아오는건가? %>
 					</div> <!-- 하늘3 끝 -->
@@ -177,7 +179,7 @@
 							%>
 								<div class="custom-control custom-radio">
 									<input type="radio" class="custom-control-input" name="dou" id="dou<%=dough.getNo() %>" value="dou" checked>
-									<label class="custom-control-label" for="dou<%=dough.getNo()%>"><strong><%= dough.getName()%>　　　　　　　　　　　　　　　　</strong><strong class="text-danger">+ <%=dough.getPrice()%>원</strong></label>
+									<label class="custom-control-label" for="dou<%=dough.getNo()%>"><strong><%= dough.getName()%></strong><strong class="text-danger">　　　　　　　　　　　　　　　　+ <%=dough.getPrice()%>원</strong></label>
 								</div>
 							<%
 								}
@@ -197,38 +199,78 @@
 							<p class="text-muted"><small> * 토핑추가는 피자 한판 당 5개까지 추가 가능</small></p>
 						</div> <!-- 하늘4 끝 -->
 						
+						
+							
 						<%
-							SideDao sideDao = new SideDao();
-							List<Side> sides = sideDao.getAllSide();
+							ToppingDao toppingDao = new ToppingDao();
+							List<Topping> mainToppings = toppingDao.getMainToppingList();
+							List<Topping> cheezeToppings = toppingDao.getCheezeToppingList();
+							List<Topping> afterToppings = toppingDao.getAfterToppingList();
 						%>
 						
-						<div> <!-- 하늘5 끝 -->
+
+						<div> <!-- 하늘5 시작 -->
+
+
 							<ul class="nav nav-tabs ">
-								<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#main-box">메인</a></li>
-								<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#cheeze-box">치즈</a></li>
-								<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#after-box">애프터</a></li>
+								<li class="nav-item"><a class="nav-link active" data-toggle="tab"  href="#topping1">메인</a></li>
+								<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#topping2">치즈</a></li>
+								<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#topping3">애프터</a></li>
 							</ul>
 							
-							<div class="tab-content" >
-								<div class="tab-pane container active" id="main-box">
+							<div class="tab-content ">
+							
+								<div class="tab-pane container active" id="topping1">
 									<div class="row">
 										<div class="col-sm-6">
 											<ul class="list-unstyled" >
+											<%
+												for (Topping topping : mainToppings) {
+											%>
 												<li>
-													<a><img alt="견본입니다" src="../resource/images/topping/RTP218.jpg"/></a>
+													<a><img src="<%=topping.getImageSrc()%>"/></a>
 													<div>
-														<div>오리엔탈 견본 4ea(54g)</div>
-														<div class=""><strong>3,500</strong></div>
+														<div><%=topping.getName() %></div>
+														<div class=""><strong><%=topping.getPrice() %></strong></div>
 													</div>
 												</li>
-												<li>
-													<a><img alt="" src=""></a>
-												</li>
+											<%
+												}
+											%>
 											</ul>
 										</div>
 										
 										<div class="col-sm-6">
-											<input type="number" name="side" onchange="modifyAmount(event,)"
+											<!-- <input type="number" name="side" onchange="modifyAmount(event,)" -->
+											<!-- 버튼 여기에? -->
+											<!-- 버튼 여기에? -->
+											<!-- 버튼 여기에? -->
+										</div>
+									</div>
+								</div>
+
+								<div class="tab-pane container" id="topping2">
+									<div class="row">
+										<div class="col-sm-6">
+											<ul class="list-unstyled" >
+												<%
+													for (Topping topping : cheezeToppings) {
+												%>
+													<li>
+														<a><img src="<%=topping.getImageSrc()%>"/></a>
+														<div>
+															<div><%=topping.getName() %></div>
+															<div class=""><strong><%=topping.getPrice() %></strong></div>
+														</div>
+													</li>
+												<%
+													}
+												%>
+											</ul>
+										</div>
+										
+										<div class="col-sm-6">
+											<!-- <input type="number" name="side" onchange="modifyAmount(event,)" -->
 											<!-- 버튼 여기에? -->
 											<!-- 버튼 여기에? -->
 											<!-- 버튼 여기에? -->
@@ -236,16 +278,58 @@
 									</div>
 								</div>
 								
-								<div class="tab-pane container fade" id="cheeze-box">
-									<h4>사용후기</h4>
-									<p>ㄴㅁㄹㅇㄴㄻㅇㅁㄹㄴㅇ</p>
+								<div class="tab-pane container" id="topping3">
+									<div class="row">
+										<div class="col-sm-6">
+											<ul class="list-unstyled" >	
+												<%
+													for (Topping topping : afterToppings) {
+												%>
+													<li>
+														<a><img src="<%=topping.getImageSrc()%>"/></a>
+														<div>
+															<div><%=topping.getName() %></div>
+															<div class=""><strong><%=topping.getPrice() %></strong></div>
+														</div>
+													</li>
+												<%
+													}
+												%>
+											</ul>
+										</div>
+
+										<div class="col-sm-6">
+											<!-- <input type="number" name="side" onchange="modifyAmount(event,)" -->
+											<!-- 버튼 여기에? -->
+											<!-- 버튼 여기에? -->
+											<!-- 버튼 여기에? -->
+										</div>
+									</div>
 								</div>
-								<div class="tab-pane container fade" id="after-box">
-									<h4>질문/답변</h4>
-									<p>ㅇㄴㅇㄴㄹㅇㄴㄹㅇㄴㄹㄴㅇㄹㄹ</p>
-								</div>
+			
 							</div>
+
 						</div> <!-- 하늘5 끝 -->
+	
+												
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						
 						
 						<div> <!-- 하늘6 끝 -->
 							<h4 class="float-left"><strong>수량선택</strong></h4>
@@ -254,52 +338,62 @@
 							<p>　</p>
 							<!-- 버튼 여기에? -->
 						</div> <!-- 하늘6 끝 -->
-						
+
+						<%
+							SideDao sideDao = new SideDao();
+							List<Side> sides = sideDao.getAllSide();
+						%>
+												
 						<div> <!-- 하늘7 시작 -->
-							<h4 class="float-left"><strong>사이드디시</strong></h4>
-							<h5 class="float-right"><a href="#" class="text-warning"><small>ⓘ 특가 사이드디시 유의사항</small></a></h5>
-							<p>　</p>
-						</div> <!-- 하늘7 끝 -->
-						
-						<div> <!-- 하늘8 시작 -->
 							<div> <!-- 보라1 시작 -->
-								<ul class="nav nav-tabs ">
-									<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#sale-box">특가</a></li>
-									<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#normal-box">일반</a></li>
-								</ul>
-								
-								<div class="tab-content" >
-									<div class="tab-pane container active" id="sale-box">
-										<div class="row">
-											<div class="col-sm-6">
-												<ul class="list-unstyled" >
-													<li>
-														<a><img src="../resource/images/topping/RTP218.jpg" alt="견본입니다"/></a>
-														<div>
-															<div>오리엔탈 견본 4ea(54g)</div>
-															<div class=""><strong>3,500</strong></div>
-														</div>
-													</li>
-												</ul>
+								<h4 class="float-left"><strong>사이드디시</strong></h4>
+								<p>　</p>
+							</div> <!-- 보라2 시작 -->
+							
+							<div> <!-- 하늘8 시작 -->
+								<div> <!-- 보라1 시작 -->
+									<div class="" >
+										<div class="" >
+											<div class="row">
+												<div class="col-sm-6">
+													<ul class="list-unstyled" >
+														<li>
+															<a><img src="../resource/images/topping/RTP218.jpg" alt="견본입니다"/></a>
+															<div>
+																<div>오리엔탈 견본 4ea(54g)</div>
+																<div class=""><strong>3,500</strong></div>
+															</div>
+														</li>
+													</ul>
+													
+													<ul class="list-unstyled" >
+														<%
+															for (Side side : sides) {
+														%>
+														<li>
+															<a><img alt="<%=side.getName() %>" src="<%=side.getImageSrc()%>" style="width:150px; height:150px;"></a>
+															<div>
+																<div><%=side.getName() %></div>
+																<div class=""><strong><%=side.getPrice() %></strong></div>
+															</div>
+														</li>
+														<%
+															}
+														%>		
+													</ul>													
+												</div>
+												<div class="col-sm-6">
+													<!-- 버튼 여기에? -->
+													<!-- 버튼 여기에? -->
+													<!-- 버튼 여기에? -->
+												</div>
 											</div>
-										
-											<div class="col-sm-6">
-											<!-- 버튼 여기에? -->
-											<!-- 버튼 여기에? -->
-											<!-- 버튼 여기에? -->
-											</div>
-											
 										</div>
 									</div>
-									
-									<div class="tab-pane container fade" id="normal-box">
-										<h4>사용후기</h4>
-										<p>ㄴㅁㄹㅇㄴㄻㅇㅁㄹㄴㅇ</p>
-									</div>
-								</div>
-							</div> <!-- 보라1 끝 -->
-						</div> <!-- 하늘8 끝 -->
-						
+								</div> <!-- 보라1 끝 -->
+							</div> <!-- 하늘8 끝 -->
+						</div> <!-- 하늘7 끝 -->						
+
 						<div> <!-- 하늘9 시작 -->
 							<div> <!-- 보라1 시작 -->
 								<h4 class="float-left"><strong>음료&기타</strong></h4>
@@ -366,5 +460,6 @@
 	</div> <!-- 주황2 끝 -->
 </div> <!-- 빨강1 끝 -->
 <%@ include file="../common/footer.jsp" %>
+
 </body>
 </html>

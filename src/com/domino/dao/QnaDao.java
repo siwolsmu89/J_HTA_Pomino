@@ -162,10 +162,11 @@ public class QnaDao {
 		
 		while(rs.next()) {
 			Question question = new Question();
-			question.setNo(rs.getInt("num"));
+			question.setNo(rs.getInt("question_no"));
 			question.setTitle(rs.getString("question_title"));
 			question.setRegDate(rs.getDate("question_reg_date"));
 			question.setAnsweredYn(rs.getString("answered_yn"));
+			question.setQuestionDelYn(rs.getString("question_del_yn"));
 			
 			questions.add(question);
 			
@@ -176,6 +177,46 @@ public class QnaDao {
 		connection.close();
 		
 		return questions;
+	}
+	
+	public QuestionDto getQuestionDetailUserQnaByNo(int questionWriter, int questionNo) throws SQLException {
+		QuestionDto questionDto = null;
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("qna.getQuestionDetailUserQnaByNo"));
+		pstmt.setInt(1, questionWriter);
+		pstmt.setInt(2, questionNo);
+		ResultSet rs = pstmt.executeQuery();
+		while(rs.next()) {
+			questionDto = new QuestionDto();
+			questionDto.setWriter(rs.getInt("question_writer"));
+			questionDto.setNo(rs.getInt("question_no"));
+			questionDto.setType(rs.getString("question_type"));
+			questionDto.setBranchAddrFirst(rs.getString("branch_addr_first"));
+			questionDto.setBranchName(rs.getString("branch_name"));
+			questionDto.setTitle(rs.getString("question_title"));
+			questionDto.setContent(rs.getString("question_content"));
+			questionDto.setAnswerContent(rs.getString("answer_content"));
+			
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		
+		return questionDto;
+	}
+	
+	public void deleteQuestion(int questionNo) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("qna.deleteQuestion"));
+		pstmt.setInt(1, questionNo);
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+		
 	}
 }
 

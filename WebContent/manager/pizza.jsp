@@ -14,7 +14,6 @@
 	String encoding = "utf-8";
 	
 	MultipartRequest mr = new MultipartRequest(request, saveDirectory, maxPostSize, encoding, new DefaultFileRenamePolicy());
-	System.out.println(mr.getParameter("upfile"));
 	
 	// 피자객체 넣을 값 준비
 	String name = mr.getParameter("name");

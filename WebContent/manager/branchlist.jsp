@@ -105,7 +105,7 @@
 						BranchDao branchDao = new BranchDao();
 						List<Branch> branchs = branchDao.getAllBranch();
 					%>
-					<table class="table text-center">
+					<table class="table text-center table-hover">
 						<colgroup>
 							<col width="10%">
 							<col width="15%">
@@ -129,7 +129,19 @@
 						<%
 							for(Branch branch : branchs) {
 						%>
-							<tr >
+							<tr data-toggle="modal" data-target="#<%=branch.getName() %>"
+								<%
+									if ("n".equalsIgnoreCase(branch.getQuitYn())){ 
+								%>
+									class="font-weight-bold"
+								<%
+									} else {
+								%>
+									class="text-muted"
+								<%
+									}
+								%>
+							>
 								<td><%=branch.getNo() %></td>
 								<td><%=branch.getName() %></td>
 								<td><%=branch.getAddrFirst() %></td>
@@ -140,11 +152,11 @@
 									String yn = branch.getQuitYn();
 									if("N".equals(yn)) {
 							%>					
-									<button type="button"  class="btn btn-success" data-toggle="modal" data-target="#<%=branch.getName() %>">영업중</button>
+									<button type="button"  class="btn btn-success">영업중</button>
 							<%
 									} else {
 							%>
-									<button type="button"  class="btn btn-dark" data-toggle="modal" data-target="#<%=branch.getName() %>">영업종료</button>
+									<button type="button"  class="btn btn-dark">영업종료</button>
 							<%
 									}
 							%>

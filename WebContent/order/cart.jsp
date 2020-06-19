@@ -36,43 +36,42 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<% String position = "order"; %>
+<%
+	String position = "order";
+%>
 <%@ include file="../common/navbar.jsp"%>
 <div class="container">
 	<div class="header">
-		<div class="row">	
+		<div class="row">
 			<div class="col-4">
 				<h4>장바구니</h4>
 			</div>
 			<div class="col-8">
 				<ul class="nav justify-content-end small text-muted">
-				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="../common/home.jsp">홈</a>
-				  </li>
-				  <li class="nav-item">
-				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
-				  </li>
-				  <li class="nav-item">
-				    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">장바구니</a>
-				  </li>
+					<li class="nav-item"><a
+						class="nav-link text-muted active pr-1" href="../common/home.jsp">홈</a>
+					</li>
+					<li class="nav-item"><a class="nav-link disabled pr-1"
+						href="#" tabindex="-1" aria-disabled="true">></a></li>
+					<li class="nav-item"><a
+						class="nav-link disabled text-dark font-weight-bold pr-1"
+						href="#" tabindex="-1" aria-disabled="true">장바구니</a></li>
 				</ul>
-				
 			</div>
 		</div>
 	</div>
 	<div class="body">
-		<%	
+		<%
 			OrderDao orderDao = new OrderDao();
 			Order order = orderDao.getCartByUserNo(loginUserNo);
-			
+
 			if (order != null) {
 				BranchDao branchDao = new BranchDao();
 				Branch branch = branchDao.getBranchByNo(order.getBranchNo());
-				
+
 				if (branch != null) {
 					PizzaDetailDao pizzaDetailDao = new PizzaDetailDao();
 					List<PizzaOrderDto> pizzaOrders = pizzaDetailDao.getPizzaOrdersByOrderNo(order.getNo());
-						
 		%>
 		<div style="background-color: black; height: 3px;" class="mt-2"></div>
 		<div class="row">
@@ -80,175 +79,213 @@
 				<div class="card-header">
 					<h5 class="mt-3 font-weight-bold">&emsp;배달주문</h5>
 				</div>
-				<div class="row">
-					<div class="col-9">
-						<p class="mt-4">&emsp;<%=branch.getAddrFirst() + branch.getAddrSecond() + branch.getAddrDetail() %></p>
-					</div>
-					<div class="col-2 text-right mt-4 ml-5">
-						<a href="selectlocation.jsp"><button class="btn  btn-outline-secondary btn-sm" style="border-radius: 14px;padding: 0 13px;height: 30px;">수정</button></a>
-					</div>
-				</div>
-				<div>
-					&emsp;<button class="btn btn-outline-secondary btn-sm" disabled><%=branch.getName() %></button>
-				<span><%=branch.getTel() %></span>
-				<div>
-					<div style="background-color: black; height: 3px; width: 100%" class="mt-3"></div>
-					<div class="card-header row">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-9">
+				<p class="mt-4">
+					&emsp;
+					<%=branch.getAddrFirst() + branch.getAddrSecond() + branch.getAddrDetail()%></p>
+				&emsp;
+				<button class="btn btn-outline-secondary btn-sm" disabled><%=branch.getName()%></button>
+				<span><%=branch.getTel()%></span>
+			</div>
+			<div class="col-2 text-right mt-4 ml-5">
+				<a href="selectlocation.jsp"><button
+						class="btn  btn-outline-secondary btn-sm"
+						style="border-radius: 14px; padding: 0 13px; height: 30px;">수정</button></a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div style="background-color: black; height: 3px; width: 100%"
+					class="mt-3"></div>
+				<div class="card-header">
+					<div class="row">
 						<div class="col-10">
 							<h5 class="mt-3 font-weight-bold">&emsp;주문내역</h5>
 						</div>
 						<div class="text-right col-2">
-							<button class="btn btn-link" style="color : gray;" name="all" onclick="allRemoveCheck()">전체삭제</button>
+							<button class="btn btn-link" style="color: gray;" name="all"
+								onclick="allRemoveCheck()">전체삭제</button>
 						</div>
 					</div>
-					<div>
-						<table class="table">
-							<colgroup>
-								<col width="40%">
-								<col width="40%">
-								<col width="4%">
-								<col width="9%">
-								<col width="7%">
-							</colgroup>
-							<thead>
-								<tr class="text-center">
-									<th>상품정보</th>
-									<th>추가토핑</th>
-									<th>수량</th>
-									<th>금액</th>
-									<th></th>
-								</tr>
-							</thead>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<table class="table">
+					<colgroup>
+						<col width="40%">
+						<col width="40%">
+						<col width="4%">
+						<col width="9%">
+						<col width="7%">
+					</colgroup>
+					<thead>
+						<tr class="text-center">
+							<th>상품정보</th>
+							<th>추가토핑</th>
+							<th>수량</th>
+							<th>금액</th>
+							<th></th>
+						</tr>
+					</thead>
 					<%
 						int totalPrice = 0;
 						for (PizzaOrderDto pizzaOrderDto : pizzaOrders) {
 					%>
-							<tbody>
-								<tr class="text-center">
-									<td class="text">
-									<p>
-									<img class="tm-5 rm-5 float-left" alt="시리얼 칠리크랩" width="90px;" src="../resource/images/pizza/20200602_0uirYrYy.jpg">
-									<%=pizzaOrderDto.getPizzaName() %><br/>
-									<small style="color: gray; font-size: 14px;"><%=pizzaOrderDto.getDoughName() %>/<%=pizzaOrderDto.getPizzaSize() %></small><br/>
-									<%=NumberUtil.numberWithComma(pizzaOrderDto.getPizzaPrice()) %>원
-									</p>
-									</td>
-									<td>
+					<tbody>
+						<tr class="text-center">
+							<td class="text">
+								<p>
+									<img class="tm-5 rm-5 float-left" alt="시리얼 칠리크랩" width="90px;"
+										src="../resource/images/pizza/20200602_0uirYrYy.jpg">
+									<%=pizzaOrderDto.getPizzaName()%><br /> <small
+										style="color: gray; font-size: 14px;"><%=pizzaOrderDto.getDoughName()%>/<%=pizzaOrderDto.getPizzaSize()%></small><br />
+									<%=NumberUtil.numberWithComma(pizzaOrderDto.getPizzaPrice())%>원
+								</p>
+							</td>
+							<td>
 					<%
 							int orderPrice = pizzaOrderDto.getOrderPrice();
 							ToppingDetailDao dao = new ToppingDetailDao();
 							List<ToppingOrderDto> toppingOrderDtos = dao.getToppingOrdersByPizzaNo(pizzaOrderDto.getNo());
 							for (ToppingOrderDto tol : toppingOrderDtos) {
-								orderPrice += tol.getOrderPrice() * pizzaOrderDto.getOrderAmount();
-					%>			
-									<div class="row justify-content-center">
-										<div class="col-7" style="font-size: 14px; col">
-											<%=tol.getName()%>(+<%=tol.getPrice()%>)x<%=tol.getOrderAmount() %>
-										</div>
-										<div class="col-1">
-											<button class="btn btn-sm" onclick="toppingRemoveCheck(<%=tol.getNo()%>)">x</button>
-										</div>
+							orderPrice += tol.getOrderPrice() * pizzaOrderDto.getOrderAmount();
+					%>
+								<div class="row justify-content-center">
+									<div class="col-7" style="font-size: 14px;">
+										<%=tol.getName()%>(+<%=tol.getPrice()%>)x<%=tol.getOrderAmount()%>
 									</div>
+									<div class="col-1">
+										<button class="btn btn-sm"
+											onclick="toppingRemoveCheck(<%=tol.getNo()%>)">x</button>
+									</div>
+								</div>
 					<%
 							}
-					%>			
-									</td>
-									<td>
-										<br/>
-										<div class="">
-											<input type="number" name="pizza" style="width: 60px; text-align: center; height: 30px;" onchange="modifyAmount(event, <%=pizzaOrderDto.getNo() %>)" value="<%=pizzaOrderDto.getOrderAmount() %>" min="1">
-										</div>
-									</td>
-									<td><br/><%=NumberUtil.numberWithComma(orderPrice) %> 원</td>
-									<td><br/><button class="btn btn-light" name="pizza" onclick="removeCheck(<%=pizzaOrderDto.getNo()%>)">X</button></td>
-								</tr>
-<%
-								totalPrice += orderPrice;
-						}
+					%>
+							</td>
+							<td><br />
+								<div class="">
+									<input type="number" name="pizza"
+										style="width: 60px; text-align: center; height: 30px;"
+										onchange="modifyAmount(event, <%=pizzaOrderDto.getNo()%>)"
+										value="<%=pizzaOrderDto.getOrderAmount()%>" min="1">
+								</div></td>
+							<td><br /><%=NumberUtil.numberWithComma(orderPrice)%> 원</td>
+							<td><br />
+								<button class="btn btn-light" name="pizza"
+									onclick="removeCheck(<%=pizzaOrderDto.getNo()%>)">X</button></td>
+						</tr>
+						<%
+							totalPrice += orderPrice;
+							}
 							SideDetailDao sideDetailDao = new SideDetailDao();
 							List<SideOrderDto> sdl = sideDetailDao.getSideOrdersByOrderNo(order.getNo());
 							for (SideOrderDto sod : sdl) {
-%>
-								<tr id="side" class="text-center">
-									<td>
-									<p>
-										<img class=" tm-5 rm-5 float-left" alt="시리얼 칠리크랩" width="90px;" style=";" src="../resource/images/sidemenu/20200429_zUBSp7rE.jpg">
-										<%=sod.getSideName() %><br/>
-										<%=sod.getSidePrice() %> 원
-									</p>
-									</td>
-									<td></td>
-									<td>
-										<br/>
-										<div class="">
-											<input type="number" name="side" style="width: 60px; text-align: center; height: 30px;" onchange="modifyAmount(event, <%=sod.getNo() %>)" value="<%=sod.getOrderAmount() %>" min="1">
-										</div>
-									</td>
-									<td><br/><%=NumberUtil.numberWithComma(sod.getOrderPrice()) %> 원</td>
-									<td><br/><button class="btn btn-light" name="side" onclick="removeCheck(<%=sod.getNo() %>)">X</button></td>
-								</tr>
+						%>
+						<tr id="side" class="text-center">
+							<td>
+								<p>
+									<img class=" tm-5 rm-5 float-left" alt="시리얼 칠리크랩"
+										width="90px;" style=""
+										src="../resource/images/sidemenu/20200429_zUBSp7rE.jpg">
+									<%=sod.getSideName()%><br />
+									<%=sod.getSidePrice()%>원
+								</p>
+							</td>
+							<td></td>
+							<td><br />
+								<div class="">
+									<input type="number" name="side"
+										style="width: 60px; text-align: center; height: 30px;"
+										onchange="modifyAmount(event, <%=sod.getNo()%>)"
+										value="<%=sod.getOrderAmount()%>" min="1">
+								</div></td>
+							<td><br /><%=NumberUtil.numberWithComma(sod.getOrderPrice())%>원</td>
+							<td><br /><button class="btn btn-light" name="side" onclick="removeCheck(<%=sod.getNo()%>)">X</button></td>
+						</tr>
 						<%
-								totalPrice += sod.getOrderPrice();
+							totalPrice += sod.getOrderPrice();
 							}
-							
+
 							EtcDetailDao etcDetailDao = new EtcDetailDao();
 							List<EtcOrderDto> edl = etcDetailDao.getEtcOrdersByOrderNo(order.getNo());
-							for (EtcOrderDto edd :edl) {
+							for (EtcOrderDto edd : edl) {
 						%>
-								<tr class="text-center">
-									<td>
-									<p>
-									<img class=" tm-5 rm-5 float-left" alt="시리얼 칠리크랩" width="90px;" style=";" src="../resource/images/etcmenu/20200309_J6k5xlTF.jpg">
-									<%=edd.getEtcName() %><br/>
-									<%=edd.getEtcPrice() %> 원
-									</p>
-									</td>
-									<td></td>
-									<td>
-										<div class="">
-										<br/>
-											<input type="number" style="width: 60px; text-align: center; height: 30px;" name="etc" onchange="modifyAmount(event, <%=edd.getNo() %>)" value="<%=edd.getOrderAmount() %>" min="1">
-										</div>
-									</td>
-									<td><br/><%=NumberUtil.numberWithComma(edd.getOrderPrice()) %> 원</td>
-									<td><br/><button class="btn btn-light" name="etc" onclick="removeCheck(<%=edd.getNo() %>)">X</button></td>
-								</tr>
+						<tr class="text-center">
+							<td>
+								<p>
+									<img class=" tm-5 rm-5 float-left" alt="시리얼 칠리크랩"
+										width="90px;" style=""
+										src="../resource/images/etcmenu/20200309_J6k5xlTF.jpg">
+									<%=edd.getEtcName()%><br />
+									<%=edd.getEtcPrice()%>원
+								</p>
+							</td>
+							<td></td>
+							<td>
+								<div class="">
+									<br /> <input type="number"
+										style="width: 60px; text-align: center; height: 30px;"
+										name="etc" onchange="modifyAmount(event, <%=edd.getNo()%>)"
+										value="<%=edd.getOrderAmount()%>" min="1">
+								</div>
+							</td>
+							<td><br /><%=NumberUtil.numberWithComma(edd.getOrderPrice())%>원</td>
+							<td><br />
+								<button class="btn btn-light" name="etc"
+									onclick="removeCheck(<%=edd.getNo()%>)">X</button></td>
+						</tr>
 						<%
-								totalPrice += edd.getOrderPrice(); 
+							totalPrice += edd.getOrderPrice();
 							}
-						%>		
-							</tbody>
-						</table>
-					</div>
-					</div>
-					<div style="background-color: black; height: 2px;" class="mb-3"></div>
-					<div class="row">
-						<div class="col-6 mb-5">
-							<br/><p><small>&ensp;&ensp;* 할인적용은 다음 단계에서 가능합니다.><br/>
-							&ensp;&ensp;* 피클&소스는 구매하셔야합니다.<br/>
-							&ensp;&ensp;- 메뉴>음료&기타 추가구매 가능</small></p>
-						</div>
-						<div class="col-6 text-right lm-5">
-							<p>총 금액 <strong>&ensp;<%=NumberUtil.numberWithComma(totalPrice) %>원</strong></p>
-						</div>
-					</div>
-				</div>
-				<div style="background-color: gray; height: 1px;" class="mb-5"></div>
-				<div class="text-center mb-5">
-					<a href="../pizza/pizzamenu.jsp"><button class="btn btn-outline-secondary" style="width: 200px; height: 65px; color: black;">+ 메뉴 추가하기</button></a>
-					<a href="payform.jsp"><button class="btn btn-danger" style="width: 200px; height: 65px;">주문하기</button></a>
-				</div>
+						%>
+					</tbody>
+				</table>
 			</div>
 		</div>
-		<%
-				}
-			} else {
-		%>
+		<div style="background-color: black; height: 2px;" class="mb-3"></div>
+		<div class="row">
+			<div class="col-6 mb-5">
+				<br />
+				<p>
+					<small>&ensp;&ensp;* 할인적용은 다음 단계에서 가능합니다.><br />
+						&ensp;&ensp;* 피클&소스는 구매하셔야합니다.<br /> &ensp;&ensp;- 메뉴>음료&기타 추가구매
+						가능
+					</small>
+				</p>
+			</div>
+			<div class="col-6 text-right lm-5">
+				<p>
+					총 금액 <strong>&ensp;<%=NumberUtil.numberWithComma(totalPrice)%>원
+					</strong>
+				</p>
+			</div>
+		</div>
+		<div style="background-color: gray; height: 1px;" class="mb-5"></div>
+		<div class="text-center mb-5 row">
+			<div class="col-12">
+				<a href="../pizza/pizzamenu.jsp"><button
+						class="btn btn-outline-secondary"
+						style="width: 200px; height: 65px; color: black;">+ 메뉴
+						추가하기</button></a> <a href="payform.jsp"><button class="btn btn-danger"
+						style="width: 200px; height: 65px;">주문하기</button></a>
+			</div>
+		</div>
+						<%
+								}
+							} else {
+						%>
 		<div class="row">
 			<div class="col-12">
-			<hr/>
+				<hr />
 				<div class="text-center mt-5">
-					<img alt="카트그림" width="200" src="../resource/images/order/cart.PNG">
+					<img alt="카트그림" width="200"
+						src="../resource/images/order/cart.PNG">
 				</div>
 				<div class="text-center mt-2">
 					<h4>장바구니가 비어 있습니다.</h4>
@@ -261,13 +298,13 @@
 				</div>
 			</div>
 		</div>
-		<%
-			}
-		%>
+						<%
+							}
+						%>
+		<hr />
 	</div>
-	<hr/>
 </div>
-<%@ include file="../common/footer.jsp" %>
+<%@ include file="../common/footer.jsp"%>
 <script type="text/javascript">
 	function modifyAmount(event, no) {
 		var type = event.target.name;

@@ -17,8 +17,64 @@ import java.util.Date;
 		private String userEmail;
 		private String userTel;
 		private String userId;
+		private String type;
+		private int branchNo;
+		private String answerContent;
+		private String branchAddrFirst;
+		private String branchName;
 		
 		public QuestionDto() {}
+
+		
+		public String getBranchAddrFirst() {
+			return branchAddrFirst;
+		}
+
+
+		public void setBranchAddrFirst(String branchAddrFirst) {
+			this.branchAddrFirst = branchAddrFirst;
+		}
+
+
+		public String getBranchName() {
+			return branchName;
+		}
+
+
+		public void setBranchName(String branchName) {
+			this.branchName = branchName;
+		}
+
+
+		public String getType() {
+			return type;
+		}
+
+
+		public void setType(String type) {
+			this.type = type;
+		}
+
+
+		public int getBranchNo() {
+			return branchNo;
+		}
+
+
+		public void setBranchNo(int branchNo) {
+			this.branchNo = branchNo;
+		}
+
+
+		public String getAnswerContent() {
+			return answerContent;
+		}
+
+
+		public void setAnswerContent(String answerContent) {
+			this.answerContent = answerContent;
+		}
+
 
 		public int getNo() {
 			return no;

@@ -1,9 +1,16 @@
 package com.domino.dao;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
+import java.util.List;
+import com.domino.util.ConnectionUtil;
+import com.domino.util.QueryUtil;
 import com.domino.vo.Event;
+import com.domino.vo.Pizza;
 
 public class EventDao {
 	
@@ -22,4 +29,102 @@ public class EventDao {
 		
 		return event;
 	}
+	
+	public List<Event> getAllEvent() throws SQLException {
+		List<Event> events = new ArrayList<Event>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("event.getAllEvent"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Event event = resultSetToEvent(rs);			
+			events.add(event);			
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return events;
+	}
+	
+	public Event getEventByNo(int eventNo) throws SQLException {
+		Event event = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("event.getEventByNo"));
+		pstmt.setInt(1, eventNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			event = resultSetToEvent(rs);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return event;
+	}
+	
+	public void insertEvent(Event event) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("event.insertEvent2"));
+		pstmt.setString(1, event.getName());
+		pstmt.setDate(2, new java.sql.Date(event.getStartDate().getTime()));
+		pstmt.setDate(3, new java.sql.Date(event.getEndDate().getTime()));
+		pstmt.setString(4, event.getImageSrc());
+		pstmt.setDouble(5, event.getDiscountRate());
+		pstmt.setInt(6, event.getPizzaNo());
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
+	
+	public void updateEvent(Event event) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("event.updateEvent"));
+		pstmt.setString(1, event.getName());
+		pstmt.setDate(2, new java.sql.Date(event.getStartDate().getTime()));
+		pstmt.setDate(3, new java.sql.Date(event.getEndDate().getTime()));
+		pstmt.setString(4, event.getImageSrc());
+		pstmt.setDouble(5, event.getDiscountRate());
+		pstmt.setString(6, event.getDisableYn());
+		pstmt.setInt(7, event.getPizzaNo());
+		pstmt.setInt(8, event.getNo());		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -21,10 +21,10 @@
 	Pizza oldPizza = pizzaDao.getPizzaByNo(pizzaNo);
 
 
-	if ("y".equals(yn)) {
+	if ("y".equalsIgnoreCase(yn)) {
 		oldPizza.setDisableYn("y");
 
-	} else if ("n".equals(yn)) {
+	} else if ("n".equalsIgnoreCase(yn)) {
 		// 피자객체 넣을 값 준비
 		String name = mr.getParameter("name");
 		String imageSrc = mr.getFilesystemName("upfile");

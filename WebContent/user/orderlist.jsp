@@ -252,7 +252,7 @@
 							</div>
 						</div>
 						<div class="card-body row">
-							<div class="col-2">
+							<div class="col-2 text-center">
 								<h4 class=""><%=statusString %></h4>
 								<p class="small text-muted"><%=branch.getName() %> <%=branch.getTel() %></p>
 							</div>

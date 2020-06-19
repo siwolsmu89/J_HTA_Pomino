@@ -91,4 +91,62 @@ public class ToppingDao {
 		pstmt.close();
 		connection.close();
 	}
+	
+	public List<Topping> getMainToppingList() throws SQLException {
+		List<Topping> toppings = new ArrayList<Topping>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("topping.getMainToppingList"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Topping topping = resultSetTopping(rs);
+			toppings.add(topping);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return toppings;
+	}
+	
+	public List<Topping> getCheezeToppingList() throws SQLException {
+		List<Topping> toppings = new ArrayList<Topping>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("topping.getCheezeToppingList"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Topping topping = resultSetTopping(rs);
+			toppings.add(topping);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return toppings;
+	}
+	
+	public List<Topping> getAfterToppingList() throws SQLException {
+		List<Topping> toppings = new ArrayList<Topping>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("topping.getAfterToppingList"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Topping topping = resultSetTopping(rs);
+			toppings.add(topping);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return toppings;
+	}	
+	
 }

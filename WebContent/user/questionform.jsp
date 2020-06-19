@@ -1,3 +1,4 @@
+<%@page import="com.domino.util.NumberUtil"%>
 <%@page import="java.util.List"%>
 <%@page import="com.domino.vo.Question"%>
 <%@page import="com.domino.dao.QnaDao"%>
@@ -98,11 +99,13 @@
 		
 		<div class="row">
 				<%
+					int pageNo = NumberUtil.stringToInt(request.getParameter("page"), 1);
+				
 					QnaDao qnaDao = new QnaDao();
 					List<Question> questions = qnaDao.getQuestionAllByUserNo(loginUserNo);
 				%>
 				<div class="col-12">
-					<table class="table text-center">
+					<table class="table text-center table-hover">
 						<colgroup>
 							<col width="10%">
 							<col width="40%">
@@ -119,31 +122,54 @@
 						</thead>
 						
 						<tbody>
+						
 							<%
-								for(Question question : questions) {
+								if (questions.isEmpty()) {
 							%>
-							<tr>
-								<td><%=question.getNo() %></td>
-								<td><a href="detailquestion.jsp?questionno=<%=question.getNo() %>"><%=question.getTitle() %></a></td>
-								<td><%=question.getRegDate() %></td>
-								<td>
+								<tr>
+									<td class="text-center" colspan="6">게시글이 없습니다.</td>
+								</tr>
 							<%
-									if(!"Y".equals(question.getAnsweredYn())) {
+								} else {
+									int index = (pageNo - 1) * 10 + 1;
+									for (Question question : questions) {
+										// 삭제처리된 글인 경우
+										if ("Y".equals(question.getQuestionDelYn())) {
+							%>		
+											<tr>
+												<td class="text-center"><%=index++ %></td>
+												<td colspan="5"><del>삭제된 글입니다.</del></td>
+											</tr>
+										
+							<%				
+										} else {
 							%>
-									<button class="btn btn-primary" disabled>답변대기</button>
-							<%
-									} else {
-							%>
-									<button class="btn btn-secondary" disabled>답변완료</button>
-							<%			
-									}
-							%>
-								</td>
-							</tr>
+										
+											<tr>
+												<td><%=index++ %></td>
+												<td><a href="questiondetail.jsp?questionno=<%=question.getNo() %>"><%=question.getTitle() %></a></td>
+												<td><%=question.getRegDate() %></td>
+												<td>
+											<%
+													if(!"Y".equals(question.getAnsweredYn())) {
+											%>
+													<button class="btn btn-primary" disabled>답변대기</button>
+											<%
+													} else {
+											%>
+													<button class="btn btn-secondary" disabled>답변완료</button>
+											<%			
+													}
+											%>
+												</td>
+											</tr>		
 							
 							<%
+										}
+									}
 								}
 							%>
+							
 							
 						</tbody>
 						
@@ -176,6 +202,7 @@
 										<div class="row">
 										
 											<div class="col-12">
+												
 												<%
 													if("empty".equals(error)) {
 												%>

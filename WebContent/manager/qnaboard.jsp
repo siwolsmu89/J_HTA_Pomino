@@ -113,7 +113,7 @@
 						QnaDao qnaDao = new QnaDao();
 						List<QuestionDto> questions = qnaDao.getAllQuestion();
 					%>
-					<table class="table text-center">
+					<table class="table text-center table-hover">
 						<colgroup>
 							<col width="10%">
 							<col width="20%">
@@ -134,7 +134,19 @@
 							<%
 								for (QuestionDto questionDto : questions) {
 							%>
-							<tr>
+							<tr data-toggle="modal" data-target="#a<%=questionDto.getNo()%>"
+								<%
+									if ("n".equalsIgnoreCase(questionDto.getAnsweredYn())){ 
+								%>
+									class="font-weight-bold"
+								<%
+									} else {
+								%>
+									class="text-muted"
+								<%
+									}
+								%>
+							>
 								<td><%=questionDto.getNo()%></td>
 								<td><%=questionDto.getUserName()%></td>
 								<td><%=questionDto.getTitle()%></td>
@@ -144,14 +156,14 @@
 										if ("N".equals(questionDto.getAnsweredYn())) {
 									%>
 									<button type="button" class="btn btn-primary" 
-									data-toggle="modal" data-target="#a<%=questionDto.getNo()%>">
+									 >
 										답변대기
 									</button>
 									<%
 									 	} else {
 									%>
 									<button type="button" class="btn btn-secondary" 
-									data-toggle="modal" data-target="#a<%=questionDto.getNo()%>">
+									>
 										답변완료</button> 
 									<%
 									 	}

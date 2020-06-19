@@ -1,3 +1,7 @@
+<%@page import="com.domino.vo.User"%>
+<%@page import="com.domino.dao.UserDao"%>
+<%@page import="com.domino.vo.Grade"%>
+<%@page import="com.domino.dao.GradeDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -68,18 +72,18 @@
 	<div class="container"> <!-- 몸체 시작 -->
 		<div>
 				
-	<!--	
-	 		<div>	 배달, 포장 주문 버튼 (추가기능)
+			<!-- 배달, 퀵 주문 버튼 -->
+	 		<div>	 
 				<div class="row">
 					<div class="col-12">
 						<div class="d-flex justify-content-center">
 							<div class=""><a href="#"><img src="../resource/images/home/deli_btn.png" /></a></div>
-							<div class=""><a href="#"><img src="../resource/images/home/pack_btn.png" /></a></div>
+							<div class=""><a href="#"><img src="../resource/images/home/quick_btn.png" /></a></div>
 						</div>
 					</div>
 				</div>
 			</div>
-	-->
+
 		 
 			<div><!-- 도미챗, 퀵오더, 드라이빙 픽업 주문 (추가기능) --></div>
 			
@@ -94,10 +98,16 @@
 							if ("Yes".equals(loginYn)) {
 						%>
 						
+						<%
+							GradeDao gradeDao = new GradeDao();
+							UserDao userDao = new UserDao();
+							User user = userDao.getUserByNo(loginUserNo);
+						%>
+						
 							<div class="p-4 ">
 								<p>　</p>
 								<p class=""><strong><%=loginUserName%></strong> 님의 현재 등급</p> <!-- 사용자 이름 -->
-								<p class="text-center"><strong><% %></strong><!-- 등급 -->등급 여기 나오면 지우자</p>
+								<p class="text-center"><strong><%=user.getGradeName() == null ? "regular" : user.getGradeName()  %></strong><!-- 등급 --></p>
 								<a href="#"><button type="button" class="btn btn-dark">혜택보기</button></a>
 								<a href="#"><button type="button" class="btn btn-dark">주문내역</button></a>
 							</div>
