@@ -13,7 +13,7 @@ import com.domino.vo.Topping;
 
 public class ToppingDao {
 	
-	private Topping resultSetTopping(ResultSet rs) throws SQLException {
+	private Topping resultSetToTopping(ResultSet rs) throws SQLException {
 		Topping topping = new Topping();
 		
 		topping.setNo(rs.getInt("topping_no"));
@@ -34,7 +34,7 @@ public class ToppingDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			Topping topping = resultSetTopping(rs);
+			Topping topping = resultSetToTopping(rs);
 			toppings.add(topping);
 		}
 		
@@ -54,7 +54,7 @@ public class ToppingDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		if(rs.next()) {
-			topping = resultSetTopping(rs);
+			topping = resultSetToTopping(rs);
 		}
 		
 		rs.close();
@@ -100,7 +100,7 @@ public class ToppingDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			Topping topping = resultSetTopping(rs);
+			Topping topping = resultSetToTopping(rs);
 			toppings.add(topping);
 		}
 		
@@ -119,7 +119,7 @@ public class ToppingDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			Topping topping = resultSetTopping(rs);
+			Topping topping = resultSetToTopping(rs);
 			toppings.add(topping);
 		}
 		
@@ -138,7 +138,7 @@ public class ToppingDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			Topping topping = resultSetTopping(rs);
+			Topping topping = resultSetToTopping(rs);
 			toppings.add(topping);
 		}
 		

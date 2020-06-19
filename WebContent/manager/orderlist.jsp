@@ -206,13 +206,13 @@
 								} else if (order.getOrderStatus() == 4) {
 					%>
 								<td>
-									<button class="btn btn-secondary">수령완료</button>
+									<button class="btn btn-dark">수령완료</button>
 								</td>
 					<%
 								} else {
 					%>
 								<td>
-									<button class="btn btn-dark">주문취소</button>
+									<button class="btn btn-danger">주문취소</button>
 								</td>
 					<%
 								}

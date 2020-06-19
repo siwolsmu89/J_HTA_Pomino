@@ -1,3 +1,5 @@
+<%@page import="com.domino.vo.User"%>
+<%@page import="com.domino.dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <div class="container mt-3"><!-- 내비 컨테이너 -->
@@ -20,6 +22,7 @@
 					</div>
 				</div>
 				<div class="col-4"><!-- 작은 버튼 로그인 로그아웃 등.. -->
+					
 					<div class="row small">
 					<%
 						if("Yes".equals(loginYn)) {

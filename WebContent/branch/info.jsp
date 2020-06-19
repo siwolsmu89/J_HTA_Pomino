@@ -1,3 +1,15 @@
+<%@page import="com.domino.dto.EtcOrderDto"%>
+<%@page import="com.domino.dao.EtcDetailDao"%>
+<%@page import="com.domino.dto.SideOrderDto"%>
+<%@page import="com.domino.dao.SideDetailDao"%>
+<%@page import="com.domino.dto.PizzaOrderDto"%>
+<%@page import="com.domino.dao.PizzaDetailDao"%>
+<%@page import="com.domino.vo.Branch"%>
+<%@page import="com.domino.dao.BranchDao"%>
+<%@page import="com.domino.util.NumberUtil"%>
+<%@page import="com.domino.vo.Order"%>
+<%@page import="java.util.List"%>
+<%@page import="com.domino.dao.OrderDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -44,19 +56,10 @@
 								class="nav-link text-dark font-weight-bold" href="info.jsp">메인</a></li>
 							<li
 								class="nav-item  d-flex justify-content-between align-itens-center small"><a
-								class="nav-link text-muted" href="orderlist.jsp">주문</a></li>
+								class="nav-link text-muted" href="orderlist.jsp">주문내역</a></li>
 							<li
 								class="nav-item  d-flex justify-content-between align-itens-center small"><a
-								class="nav-link text-muted" href="menulist.jsp">메뉴</a></li>
-							<li
-								class="nav-item  d-flex justify-content-between align-itens-center small"><a
-								class="nav-link text-muted" href="eventlist.jsp">이벤트</a></li>
-							<li
-								class="nav-item  d-flex justify-content-between align-itens-center small"><a
-								class="nav-link text-muted" href="qnaboard.jsp">1:1문의</a></li>
-							<li
-								class="nav-item  d-flex justify-content-between align-itens-center small"><a
-								class="nav-link text-muted" href="branchlist.jsp">가맹점</a></li>
+								class="nav-link text-muted" href="menulist.jsp">상세정보</a></li>
 						</ul>
 					</div>
 				</div>
@@ -67,24 +70,50 @@
 				<div class="col-12">
 					<div class="jumbotron bg-dark text-white mb-2">
 						<div class="row text-center">
+						<%
+							int branchUserNo = (int)session.getAttribute("사용자번호");
+							UserDao userDao = new UserDao();
+							User user = userDao.getUserByNo(branchUserNo);
+							int branchNo = Integer.parseInt(user.getId().substring(7));
+
+							OrderDao orderDao = new OrderDao();
+							List<Order> todayAllOrder = orderDao.getOrdersByBranchnoWithDate(branchNo);
+							
+							int todayAllOrderCount = 0;
+							int nowAllOrderCount = 0;
+							int todayTotalSales = 0;
+							// 오늘 전체주문 카운트
+							for(Order order : todayAllOrder){
+								todayAllOrderCount++;
+								// 오늘 전체 주문중 현재 진행중인 주문 카운트
+								if(3!=order.getOrderStatus() && 4!=order.getOrderStatus() && 5!=order.getOrderStatus()){
+									nowAllOrderCount++;
+								} else {
+									todayTotalSales += order.getDiscountPrice();
+								}
+							}
+							
+						%>
 							<div class="col-4">
 								<p>
 									<a class="" href="#">오늘 주문현황</a>
 								</p>
-								<p class="display-4 text-center font-weight-bold">10건</p>
+								<p class="display-4 text-center font-weight-bold"><%=todayAllOrderCount %>건</p>
 							</div>
 							<div class="col-4"
 								style="border-left: 1px solid white; border-right: 1px solid white;">
 								<p>
 									<a class="" href="#">현재 주문현황</a>
 								</p>
-								<p class="display-4 text-center font-weight-bold">3건</p>
+								<p class="display-4 text-center font-weight-bold"><%=nowAllOrderCount %>건</p>
 							</div>
 							<div class="col-4">
 								<p>
 									<a class="" href="#">오늘 총 매출</a>
 								</p>
-								<p class="display-4 text-center font-weight-bold">345,000원</p>
+								<p class="display-4 text-center font-weight-bold">
+									<%=NumberUtil.numberWithComma(todayTotalSales) %>원
+								</p>
 							</div>
 						</div>
 					</div>
@@ -103,35 +132,100 @@
 						</colgroup>
 						<thead class="thead thead-dark">
 							<tr>
-								<th colspan='5'>주문리스트</th>
+								<th colspan='7'>주문리스트</th>
 							</tr>
 							<tr>
-								<th>번호</th>
-								<th>카테고리</th>
-								<th>작성자</th>
-								<th>문의제목</th>
-								<th></th>
+								<th>주문번호</th>
+								<th>매장이름</th>
+								<th>주문한메뉴</th>
+								<th>총금액</th>
+								<th>배달요청시간</th>
+								<th>주문상태</th>
 							</tr>
 						</thead>
 						<tbody>
+							<%
+								List<Order> AllOrder = orderDao.getAllOrdersByBranchno(branchNo);
+								for (Order order : AllOrder) {
+									BranchDao branchDao = new BranchDao();
+									Branch branch = branchDao.getBranchByNo(order.getBranchNo());
+
+									// 피자 주문갯수 및 주문한 피자 디테일 정보 가져오기
+									PizzaDetailDao pizzaDetailDao = new PizzaDetailDao();
+									List<PizzaOrderDto> pod = pizzaDetailDao.getPizzaOrdersByOrderNo(order.getNo());
+
+									// 사이즈 메뉴 정보 가져오기
+									SideDetailDao sideDetailDao = new SideDetailDao();
+									List<SideOrderDto> sod = sideDetailDao.getSideOrdersByOrderNo(order.getNo());
+
+									// 기타 메뉴 정보 가져오기
+									EtcDetailDao etcDetailDao = new EtcDetailDao();
+									List<EtcOrderDto> eod = etcDetailDao.getEtcOrdersByOrderNo(order.getNo());
+
+									// 주문갯수세기
+									String simpleMenu = "";
+									int orderCount = pod.size() + sod.size() + eod.size();
+									if (!pod.isEmpty()) {
+										simpleMenu = pod.get(0).getPizzaName() + " " + pod.get(0).getDoughName() + " "
+												+ (orderCount > 1 ? "외 " + (orderCount - 1) + "건" : "");
+									} else if (!sod.isEmpty()) {
+										simpleMenu = sod.get(0).getSideName() + (orderCount > 1 ? "외" + (orderCount - 1) + "건" : "");
+									}
+							%>
 							<tr>
-								<td>108</td>
-								<td>서비스</td>
-								<td>홍길동</td>
-								<td>xxx매장 직원 불친절 신고</td>
+								<td><%=order.getNo()%></td>
+								<td><%=branch.getName()%></td>
+								<td><%=simpleMenu%></td>
+								<td><%=order.getDiscountPrice()%></td>
+								<td><%=order.getRequestTime()%></td>
+								<%
+									if (order.getOrderStatus() == 0) {
+								%>
 								<td>
-									<button class="btn btn-primary">답변대기</button>
+									<a class="btn btn-primary text-white" role="button"
+									href="orderStatus.jsp?orderno=<%=order.getNo() %>&statusno=0">접수완료</a>
 								</td>
-							</tr>
-							<tr>
-								<td>1021</td>
-								<td>품질</td>
-								<td>강감찬</td>
-								<td>피자맛 관련해서 xx매장 문의드렸는데 ...</td>
+								
+								<%
+									} else if (order.getOrderStatus() == 1) {
+								%>
 								<td>
-									<button class="btn btn-primary">답변대기</button>
+									<a class="btn btn-primary text-white" role="button"
+									href="orderStatus.jsp?orderno=<%=order.getNo() %>&statusno=1">요리중</a>
 								</td>
+								<%
+									} else if (order.getOrderStatus() == 2) {
+								%>
+								<td>
+									<a class="btn btn-primary text-white" role="button"
+									href="orderStatus.jsp?orderno=<%=order.getNo() %>&statusno=2">배달중</a>
+								</td>
+								<%
+									} else if (order.getOrderStatus() == 3) {
+								%>
+								<td>
+									<a class="btn btn-success text-white" role="button"
+									href="orderStatus.jsp?orderno=<%=order.getNo() %>&statusno=3">배달완료</a>
+								</td>
+								<%
+									} else if (order.getOrderStatus() == 4) {
+								%>
+								<td>
+									<a class="btn btn-dark text-white" role="button">수령완료</a>
+								</td>
+								<%
+									} else {
+								%>
+								<td>
+									<a class="btn btn-danger text-white" role="button">주문취소</a>
+								</td>
+								<%
+									}
+								%>
 							</tr>
+							<%
+								}
+							%>
 						</tbody>
 					</table>
 

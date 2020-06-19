@@ -20,10 +20,15 @@
 		return;
 	}
 	
-	session.setAttribute("사용자이름", user.getName());
-	session.setAttribute("사용자번호", user.getNo());
-	session.setAttribute("로그인여부", "Yes");
-	
-	
-	response.sendRedirect("/domino/common/home.jsp");
+	if("Y".equals(user.getQuitYn())) {
+		response.sendRedirect("signupform.jsp?error=fail");
+		return;
+	} else {
+		session.setAttribute("사용자이름", user.getName());
+		session.setAttribute("사용자번호", user.getNo());
+		session.setAttribute("로그인여부", "Yes");
+		
+		
+		response.sendRedirect("/domino/common/home.jsp");
+	}
 %>

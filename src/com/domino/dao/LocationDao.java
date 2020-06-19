@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.domino.util.ConnectionUtil;
 import com.domino.util.QueryUtil;
@@ -54,5 +56,32 @@ public class LocationDao {
 		connection.close();
 		
 		return location;
+	}
+	
+	/**
+	 * 유저번호로 지역 가져오기
+	 * @param userNo 유저번호
+	 * @return List<Location> 지역 리스트
+	 * @throws SQLException
+	 * @author 영준
+	 */
+	public List<Location> getLocationsByUserNo(int userNo) throws SQLException {
+		List<Location> locations = new ArrayList<Location>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("location.getLocationsByUserNo"));
+		pstmt.setInt(1, userNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while (rs.next()) {
+			Location location = resultSetToLocation(rs);
+			locations.add(location);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return locations;
 	}
 }

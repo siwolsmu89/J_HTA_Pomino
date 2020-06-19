@@ -1,7 +1,6 @@
 package com.domino.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +9,6 @@ import java.util.List;
 import com.domino.util.ConnectionUtil;
 import com.domino.util.QueryUtil;
 import com.domino.vo.Event;
-import com.domino.vo.Pizza;
 
 public class EventDao {
 	

@@ -175,7 +175,7 @@
 			                        		</div>
 			                       			 <div class="radio">
 			                            		<label>
-			                                		<input type="radio" id="memberInfoYn" name="memberInfoYn" value="N">
+			                                		<input type="radio" id="memberInfoYn" name="memberInfoYn" value="N" onclick="alertNot(event)">
 			                                		동의하지 않습니다.
 			                            		</label>
 			                        		</div>
@@ -264,6 +264,13 @@
 </div>
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">
+	function alertNot(event) {
+		if(confirm('동의합니다를 눌러주세요.')){
+			
+		} else {
+			event.preventDefault();
+		}
+	}
 	function checkField(event) {
 		
 		var nameField = document.querySelector("input[name=username]");

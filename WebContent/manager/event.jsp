@@ -23,7 +23,7 @@
 	Date startDate = StringUtil.stringToDate(mr.getParameter("startdate"));
 	Date endDate = StringUtil.stringToDate(mr.getParameter("enddate"));
 	Double discountRate = NumberUtil.stringToDouble(mr.getParameter("discountrate"));
-	int pizzaNo = NumberUtil.stringToInt(mr.getParameter("eventno"));
+	int pizzaNo = NumberUtil.stringToInt(mr.getParameter("pizzano"));
 	String imageSrc = mr.getFilesystemName("upfile");
 
 	// 이벤트객체에 값 넣기

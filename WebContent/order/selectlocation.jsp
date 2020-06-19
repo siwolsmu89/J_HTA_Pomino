@@ -1,3 +1,10 @@
+<%@page import="com.domino.vo.Branch"%>
+<%@page import="com.domino.dao.BranchDao"%>
+<%@page import="com.domino.vo.Location"%>
+<%@page import="java.util.List"%>
+<%@page import="com.domino.dao.LocationDao"%>
+<%@page import="com.domino.vo.Order"%>
+<%@page import="com.domino.dao.OrderDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -35,13 +42,125 @@
 			</div>
 		</div>
 	</div>
-		<div style="background-color: black; height: 3px;" class="mt-5"></div>
+	<div style="background-color: black; height: 3px;" class="mt-5"></div>
 	<div class="body">
 		<div class="row">
-		
+			<div class="col-12">
+				<div class="card">
+			
+				<div class="card-header">
+					<h5 class="ml-5">&emsp;배송지 리스트</h5>
+				</div>
+	<%
+		LocationDao ld = new LocationDao();
+		List<Location> ll = ld.getLocationsByUserNo(loginUserNo);
+		OrderDao orderDao = new OrderDao();
+		Order order = orderDao.getCartByUserNo(loginUserNo);
+		if (ll.isEmpty()) {
+	%>
+				<div class="card-body text-center">
+					<br/>
+					<br/>
+					<h4><img alt="주의" src="../resource/images/order/warning.PNG">배달 주소를 등록해 주세요.</h4>
+				</div>
+				<div class="card-body text-center">
+					<a href="location.jsp"><button class="btn btn-outline-secondary"
+							style="width: 200px; height: 65px; color: black;">+ 배달주소 등록</button></a>
+				</div>
+				<hr/>
+				<div class="card-body text-right">
+					<p style="color: #ff7f00">*배달주소는 최대 10개까지만 등록 가능합니다.</p>
+				</div>
+	<%
+		} else {
+	%>
+				<div class="card-body">
+	<%
+				int size = ll.size();
+				for (int i=0; i<size; i++) {
+					BranchDao branchDao = new BranchDao();
+					Branch branch = branchDao.getBranchByAddr(ll.get(i).getAddrFirst());
+					
+					if (i==0) { 
+	%>
+					<div class="row mb-2">
+						<div class="col-8 ml-5">
+							<div>
+								<input data-branch-no="<%=branch.getNo() %>" type="radio" value="<%=ll.get(i).getNo() %>" name="list" checked><label class="ml-3"><%=ll.get(i).getAddrFirst() + " " + ll.get(i).getAddrSecond() + " " + ll.get(i).getAddrDetail() %></label>
+							</div>
+							<div>
+								&emsp;
+								<button class="btn btn-outline-secondary btn-sm" disabled><%=branch.getName()%></button>
+								<span><%=branch.getTel()%></span>
+							</div>
+						</div>
+						<div class="col-3 text-right">
+							<button class="btn btn-light btn-sm" name="pizza">x</button>
+						</div>
+					</div>
+	<% 
+					} else {
+	%>
+					<div class="row mb-2 border border-right-0 border-bottom-0 border-left-0">			
+						<div class="col-8 ml-5  pt-3 ">
+							<div>
+								<input data-branch-no="<%=branch.getNo() %>" type="radio" value="<%=ll.get(i).getNo() %>" name="list"><label class="ml-3"><%=ll.get(i).getAddrFirst() + " " + ll.get(i).getAddrSecond() + " " + ll.get(i).getAddrDetail() %></label>
+							</div>
+							<div>
+								&emsp;
+								<button class="btn btn-outline-secondary btn-sm" disabled><%=branch.getName()%></button>
+								<span><%=branch.getTel()%></span>
+							</div>
+						</div>
+						<div class="col-3 text-right  pt-3">
+							<button class="btn btn-light btn-sm" name="pizza">x</button>
+						</div>
+					</div>
+	<%
+					}
+				}
+	%>			
+				</div>
+				<div class="card-footer">
+					<div class="row">
+						<div class="col-4">
+							<a href="location.jsp"><button class="btn btn-outline-secondary ml-5"
+									style="width: 200px; height: 65px; color: black;">+ 배달주소 등록</button></a>
+						</div>
+						<div class="col-7 text-right mr-4">
+							<br/>
+							<p style="color: #ff7f00">*배달주소는 최대 10개까지만 등록 가능합니다.</p>
+						</div>
+					</div>
+				</div>
+				<br/>
+				<div class="card-body text-right mr-5">
+					<p>해당 배달주소로 주문을 진행하시겠습니까? &ensp;<button onclick="next(event)" class="btn btn-danger" style="width: 200px; height: 65px;">선택</button></a></p>
+				</div>
+	<%
+		}
+	%>
+			</div>
+			<hr/>
+			</div>
 		</div>
 	</div>
 </div>
 <%@ include file="../common/footer.jsp" %>
+<script type="text/javascript">
+	function next(event) {
+		var radios = document.querySelectorAll("input[name=list]");
+		var locationNo, branchNo;
+		for (var i = 0; i<radios.length; i++) {
+			if (radios[i].checked) {
+				locationNo = radios[i].value;
+				branchNo = radios[i].getAttribute("data-branch-no")
+			}
+			
+		}
+		
+		location.href="savelocation.jsp?locationno=" + locationNo + "&branchno=" + branchNo;
+	}
+</script>
 </body>
 </html>

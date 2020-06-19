@@ -1,3 +1,6 @@
+<%@page import="com.domino.vo.Grade"%>
+<%@page import="java.util.List"%>
+<%@page import="com.domino.dao.GradeDao"%>
 <%@page import="com.domino.dto.UserDto"%>
 <%@page import="com.domino.vo.User"%>
 <%@page import="com.domino.dao.UserDao"%>
@@ -78,6 +81,20 @@
 			UserDao userDao = new UserDao();
 			User user = userDao.getUserByNo(loginUserNo);
 			UserDto userDto = userDao.getTotalPriceUserByNo(loginUserNo);
+			
+			GradeDao gradeDao = new GradeDao();
+			List<Grade> grades = gradeDao.getAllGrades();
+			String nextGrade = "";
+			int simpleCount = user.getOrderCount()/5 + 1;
+			for (Grade grade : grades) { 
+				int simpleStandard = grade.getOrderCount()/5;
+				if (simpleCount>=simpleStandard) {
+					nextGrade = grade.getName();
+					break;
+				}
+			}
+			Grade grade = gradeDao.getGradeByName(user.getGradeName());
+			
 		%>
 		<div class="row">
 			<div class="col-12">
@@ -108,37 +125,66 @@
 			<div class="col-12">
 				<div class="row">
 					<div class="col-5">
-						<h6 class="text-left">다음 등급으로 업그레이드 하려면?</h6>
+						<h5 class="text-left"><strong><%=nextGrade %></strong> 등급으로 업그레이드 하려면?</h5>
 					</div>
 					<div class="col-7">
 						<div class="text-right text-muted small">*1년간 완료된 주문에 대해서 주문건 수를 기준으로 1년된 1일에 매니아 등급에 반영됩니다.</div>
 					</div>
 				</div>
-				<div style="background-color: gray; height: 1px;" class="mb-2"></div>
+				<div class="mb-2" style="background-color: black; height: 2px;"></div>
 				</div>
 			</div>
 		</div>
 		
 		<div class="row">
-			<div class="col-12 p-5"  style="border: 1px solid gray;">	
+			<div class="col-12">	
 				<div class="row py-3 font-weight-bold">
 					<div class="col-6">
-						<div class="text-left px-5">주문건수</div>
+						<div class="text-left px-5">주문건수(<%=user.getOrderCount() %>)</div>
 					</div>
 					<div class="col-6">
-						<div class="text-right px-5">목표등급</div>
+						<div class="text-right px-5">목표등급 </div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-12">
-						<div class="progress">
-						  <div class="progress-bar w-75 py-3" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+				<div class="row justify-content-center " >
+					<div class="col-10 mt-2" >
+						<div class="progress ml-3" style="height: 2rem;" >
+							<div class="progress-bar" role="progressbar" aria-valuenow="<%=user.getOrderCount()%5 %>" aria-valuemin="0" aria-valuemax="100" style="width: <%="royal".equals(user.getGradeName()) ? 100 : user.getOrderCount()%5 * 20 %>%"></div>
+						</div>
+						<div>
+							<div class="text-right" style="width: <%="royal".equals(user.getGradeName()) ? 100 : user.getOrderCount()%5 * 20 %>%">
+								<span class="mt-2 badge badge-dark badge-pill"><%=5 - user.getOrderCount()%5 %>건 더 구매</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-2">
+						<div>
+							<p class="font-weight-bold text-center" style="font-size: 30px; color: blue;"><%=nextGrade %></p>
 						</div>
 					</div>
 				</div>
+				<div class="mb-5 mt-2" style="background-color: lightgray; height: 2px;"></div>
 			</div>
 		</div>
-	<div class="mb-3"></div>
+		
+		<div class="row">
+			<div class="col-12">
+				<div class="row">
+					<div class="col-12">
+						<h4 class="text-left">나의 등급 혜택</h4>
+					</div>
+				</div>
+				<div class="mb-2" style="background-color: black; height: 2px;"></div>
+				<div class="row">
+					<div class="col-12">
+						<p class="text-center mt-5 mb-5 font-weight-bold" style="font-size: 20px;">배달주문 <%=(grade.getDiscountRate() * 100) %>% 할인</p>
+					</div>
+				</div>
+				<div class="mb-5" style="background-color: black; height: 1px;"></div>
+			</div>
+		</div>
+		
+	<div class="mb-5"></div>
 </div>
 <%@ include file="../common/footer.jsp" %>
 </body>

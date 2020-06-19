@@ -164,7 +164,7 @@
 							<div class="row">
 								<div class="col-12">
 									<div class="progress">
-									  <div class="progress-bar" role="progressbar" aria-valuenow="<%=orderStatus %>" aria-valuemin="0" aria-valuemax="100" style="background-color: red; width: <%=((orderStatus + 1) * 2 - 1) * 12.5 %>%"></div>
+										<div class="progress-bar" role="progressbar" aria-valuenow="<%=orderStatus %>" aria-valuemin="0" aria-valuemax="100" style="background-color: red; width: <%=((orderStatus + 1) * 2 - 1) * 12.5 %>%"></div>
 									</div>
 								</div>
 							</div>

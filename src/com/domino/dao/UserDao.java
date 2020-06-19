@@ -41,6 +41,7 @@ public class UserDao {
 		user.setQuitYn(rs.getString("user_quit_yn"));
 		user.setQuitReason(rs.getString("user_quit_reason"));
 		user.setQuitDetail(rs.getString("user_quit_detail"));
+		user.setQuitYn(rs.getString("user_quit_yn"));
 		user.setOrderCount(rs.getInt("user_order_count"));
 		user.setQuickOrderNo(rs.getInt("quick_order_no"));
 		
@@ -268,5 +269,18 @@ public class UserDao {
 				return branch;
 			}
 		}, addr);
+	}
+	
+	public void deleteUser(User user) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("user.deleteUser"));
+		
+		pstmt.setString(1, user.getQuitReason());
+		pstmt.setString(2, user.getQuitDetail());
+		pstmt.setInt(3, user.getNo());
+		pstmt.executeUpdate();
+		
+		connection.close();
+		pstmt.close();
 	}
 }

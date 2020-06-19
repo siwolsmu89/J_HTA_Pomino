@@ -13,7 +13,7 @@ import com.domino.vo.Side;
 
 public class SideDao {
 	
-	private Side resultSetSide(ResultSet rs) throws SQLException {
+	private Side resultSetToSide(ResultSet rs) throws SQLException {
 		Side side = new Side();
 		
 		side.setNo(rs.getInt("side_no"));
@@ -33,7 +33,7 @@ public class SideDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			Side side = resultSetSide(rs);
+			Side side = resultSetToSide(rs);
 			sides.add(side);
 		}
 		
@@ -53,7 +53,7 @@ public class SideDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		if(rs.next()) {
-			side = resultSetSide(rs);
+			side = resultSetToSide(rs);
 		}
 		
 		rs.close();

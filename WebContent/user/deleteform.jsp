@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@include file="../common/logincheck.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -24,21 +25,22 @@
 				<h4>나의 정보</h4>
 			</div>
 			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
-				<ul class="nav justify-content-end">
+				<ul class="nav justify-content-end small text-muted">
 				  <li class="nav-item">
-				    <a class="nav-link active" href="#">홈</a>
+				    <a class="nav-link text-muted active pr-1" href="#">홈</a>	<!--text-muted pr-1  -->
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" aria-disabled="true">></a>
-				  </li>
-				 <li class="nav-item">
-				    <a class="nav-link" href="#">나의정보</a>
+				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">></a>
+				    <a class="nav-link text-muted active pr-1" href="#">나의정보</a><!--text-muted active pr-1  -->
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">정보수정</a>
+				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">정보수정</a>
+				  	<!--text-dark font-weight-bold pr-1  -->
 				  </li>
 				</ul>
 			</div>
@@ -94,43 +96,41 @@
 						<form method="post" action="delete.jsp">
 							<div class="form-group">
 								<label>탈퇴사유</label>
-								<div class="m-2">
-									<div class="custom-control custom-radio custom-control-inline mx-">
+								<div class="m-2 small">
+									<div class="custom-control custom-radio custom-control-inline ">
 										<input type="radio" class="custom-control-input" name="deletetitle" id="delete-1" value="답변불만" checked>
 										<label class="custom-control-label" for="delete-1">관리자 답변 불만</label>
 	  								</div>
 									<div class="custom-control custom-radio custom-control-inline mx-2">
 										<input type="radio" class="custom-control-input" name="deletetitle" id="delete-2" value="서비스불만">
-										<label class="custom-control-label" for="delete-2">회사 서비스에 대한 불만</label>
+										<label class="custom-control-label"  for="delete-2">회사 서비스에 대한 불만</label>
 	  								</div>
 	  								<div class="custom-control custom-radio custom-control-inline mx-2">
 										<input type="radio" class="custom-control-input" name="deletetitle" id="delete-3" value="성능불만">
-										<label class="custom-control-label" for="delete-3">시스템 성능 불만</label>
+										<label class="custom-control-label"  for="delete-3">시스템 성능 불만</label>
 	  								</div>
 	  								<div class="custom-control custom-radio custom-control-inline mx-2">
 										<input type="radio" class="custom-control-input" name="deletetitle" id="delete-4" value="정보미흡">
-										<label class="custom-control-label" for="delete-4">사이트 정보 미흡</label>
+										<label class="custom-control-label"  for="delete-4">사이트 정보 미흡</label>
 	  								</div>
 	  								<div class="custom-control custom-radio custom-control-inline mx-2">
 										<input type="radio" class="custom-control-input" name="deletetitle" id="delete-5" value="광고메일">
-										<label class="custom-control-label" for="delete-5">광고 메일 수신</label>
+										<label class="custom-control-label"  for="delete-5">광고 메일 수신</label>
 	  								</div>
 	  								<div class="custom-control custom-radio custom-control-inline mx-2">
 										<input type="radio" class="custom-control-input" name="deletetitle" id="delete-6" value="개인정보보호">
-										<label class="custom-control-label" for="delete-6">개인정보 보호</label>
+										<label class="custom-control-label"  for="delete-6">개인정보 보호</label>
 	  								</div>
 	  								<div class="custom-control custom-radio custom-control-inline mx-2">
 										<input type="radio" class="custom-control-input" name="deletetitle" id="delete-7" value="기타">
-										<label class="custom-control-label" for="delete-7">기타</label>
+										<label class="custom-control-label"  for="delete-7">기타</label>
 	  								</div>
 								</div>
 							</div>
 							<div class="form-group">
 								<label>내용</label>
 								<div>
-                        			<textarea class="form-control" rows="8" style="resize:none">
-										
-                        			</textarea>
+                        			<textarea class="form-control" rows="8" style="resize:none" onsubmit="alertdanger(event)" name="deletecontent"></textarea>
                         		</div>
 							</div>
 							<div class="text-center">

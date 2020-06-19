@@ -13,7 +13,7 @@ import com.domino.vo.Etc;
 
 public class EtcDao {
 	
-	private Etc resultSetEtc(ResultSet rs) throws SQLException {
+	private Etc resultSetToEtc(ResultSet rs) throws SQLException {
 		Etc etc = new Etc();
 		
 		etc.setNo(rs.getInt("etc_no"));
@@ -33,7 +33,7 @@ public class EtcDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			Etc etc = resultSetEtc(rs);
+			Etc etc = resultSetToEtc(rs);
 			etcs.add(etc);
 		}
 		
@@ -53,7 +53,7 @@ public class EtcDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		if(rs.next()) {
-			etc = resultSetEtc(rs);
+			etc = resultSetToEtc(rs);
 		}
 		
 		rs.close();

@@ -13,7 +13,7 @@ import com.domino.vo.Dough;
 
 public class DoughDao {
 	
-	private Dough resultSetDough(ResultSet rs) throws SQLException {
+	private Dough resultSetToDough(ResultSet rs) throws SQLException {
 		Dough dough = new Dough();
 		
 		dough.setNo(rs.getInt("dough_no"));
@@ -33,7 +33,7 @@ public class DoughDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			Dough dough = resultSetDough(rs);
+			Dough dough = resultSetToDough(rs);
 			doughs.add(dough);
 		}
 		
@@ -53,7 +53,7 @@ public class DoughDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		if(rs.next()) {
-			dough = resultSetDough(rs);
+			dough = resultSetToDough(rs);
 		}
 		
 		rs.close();

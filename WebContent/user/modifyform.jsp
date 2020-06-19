@@ -32,22 +32,23 @@
 				<h4>나의 정보</h4>
 			</div>
 			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
-				<ul class="nav justify-content-end">
-				  <li class="nav-item">
-				    <a class="nav-link active" href="#">홈</a>
-				  </li>
-				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" aria-disabled="true">></a>
-				  </li>
-				 <li class="nav-item">
-				    <a class="nav-link" href="#">나의정보</a>
-				  </li>
-				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">></a>
-				  </li>
-				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">정보수정</a>
-				  </li>
+				<ul class="nav justify-content-end small text-muted">
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="#">홈</a>	<!--text-muted pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="#">나의정보</a><!--text-muted active pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">정보수정</a>
+					  	<!--text-dark font-weight-bold pr-1  -->
+					  </li>
 				</ul>
 			</div>
 		</div>

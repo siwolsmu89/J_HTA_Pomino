@@ -1,3 +1,5 @@
+<%@page import="com.domino.vo.Location"%>
+<%@page import="com.domino.dao.LocationDao"%>
 <%@page import="com.domino.dto.EtcOrderDto"%>
 <%@page import="com.domino.dao.EtcDetailDao"%>
 <%@page import="com.domino.dto.SideOrderDto"%>
@@ -62,6 +64,9 @@
 	</div>
 	<div class="body">
 		<%
+			LocationDao ld = new LocationDao();
+			int locationNo = (int) session.getAttribute("savedLocationNo");
+			Location location = ld.getLocationByNo(locationNo);
 			OrderDao orderDao = new OrderDao();
 			Order order = orderDao.getCartByUserNo(loginUserNo);
 
@@ -85,7 +90,7 @@
 			<div class="col-9">
 				<p class="mt-4">
 					&emsp;
-					<%=branch.getAddrFirst() + branch.getAddrSecond() + branch.getAddrDetail()%></p>
+					<%=location.getAddrFirst() + " " + location.getAddrSecond() + " " + location.getAddrDetail()%></p>
 				&emsp;
 				<button class="btn btn-outline-secondary btn-sm" disabled><%=branch.getName()%></button>
 				<span><%=branch.getTel()%></span>
@@ -271,8 +276,8 @@
 			<div class="col-12">
 				<a href="../pizza/pizzamenu.jsp"><button
 						class="btn btn-outline-secondary"
-						style="width: 200px; height: 65px; color: black;">+ 메뉴
-						추가하기</button></a> <a href="payform.jsp"><button class="btn btn-danger"
+						style="width: 200px; height: 65px; color: black;">+ 메뉴 추가하기</button></a>
+				<a href="payform.jsp"><button class="btn btn-danger"
 						style="width: 200px; height: 65px;">주문하기</button></a>
 			</div>
 		</div>

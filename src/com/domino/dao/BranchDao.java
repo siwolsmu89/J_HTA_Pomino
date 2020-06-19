@@ -154,6 +154,24 @@ public class BranchDao {
 		connection.close();
 	}
 
+	public Branch getBranchByAddr(String first_addr) throws SQLException {
+		Branch branch = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("branch.getBranchByAddr"));
+		pstmt.setString(1, first_addr);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if (rs.next()) {
+			branch = resultSetToBranch(rs);
+		}
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return branch;
+	}
+	
 }
 
 

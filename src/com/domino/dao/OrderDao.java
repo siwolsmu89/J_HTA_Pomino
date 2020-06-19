@@ -233,6 +233,179 @@ public class OrderDao {
 		return orders;
 	}
 	
+	/**
+	 * 오늘날짜의 모든 주문을 반환하는 메소드
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Order> getOrdersByDate() throws SQLException{
+		List<Order> orders = new ArrayList<Order>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrdersByDate"));
+		pstmt.setInt(1, 0);
+		pstmt.setInt(2, 0);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Order order = new Order();
+			order = resultSetToOrder(rs);
+			
+			orders.add(order);
+		}
+		
+		return orders;
+	}
+	
+	/**
+	 * 특정날짜의 모든 주문을 반환하는 메소드
+	 * @param pastDate 오늘날짜 기준으로 몇일전 값
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Order> getOrdersByDate(int pastDate) throws SQLException{
+		List<Order> orders = new ArrayList<Order>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrdersByDate"));
+		pstmt.setInt(1, pastDate);
+		pstmt.setInt(2, pastDate);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Order order = new Order();
+			order = resultSetToOrder(rs);
+			
+			orders.add(order);
+		}
+		
+		return orders;
+	}
+	
+	/**
+	 * 특정날짜사이의 모든 주문을 반환하는 메소드
+	 * @param morePastDate 오늘날짜 기준으로 몇일전 값(pastDate보다 더 커야한다)
+	 * @param pastDate 오늘날짜 기준으로 몇일전 값
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Order> getOrdersByDate(int morePastDate, int pastDate) throws SQLException{
+		List<Order> orders = new ArrayList<Order>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrdersByDate"));
+		pstmt.setInt(1, morePastDate);
+		pstmt.setInt(2, pastDate);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Order order = new Order();
+			order = resultSetToOrder(rs);
+			
+			orders.add(order);
+		}
+		
+		return orders;
+	}
+	
+	
+	/**
+	 * 해당 가맹점의 오늘날짜에 해당하는 모든 주문을 반환하는 메소드
+	 * @param branchNo
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Order> getOrdersByBranchnoWithDate(int branchNo) throws SQLException{
+		List<Order> orders = new ArrayList<Order>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrdersByBranchNoWithDate"));
+		pstmt.setInt(1, 0);
+		pstmt.setInt(2, 0);
+		pstmt.setInt(3, branchNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Order order = new Order();
+			order = resultSetToOrder(rs);
+			
+			orders.add(order);
+		}
+		
+		return orders;
+	}
+	
+	/**
+	 * 해당 가맹점의 특정날짜에 해당하는 모든 주문을 반환하는 메소드
+	 * @param branchNo
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Order> getOrdersByBranchnoWithDate(int pastDate, int branchNo) throws SQLException{
+		List<Order> orders = new ArrayList<Order>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrdersByBranchNoWithDate"));
+		pstmt.setInt(1, pastDate);
+		pstmt.setInt(2, pastDate);
+		pstmt.setInt(3, branchNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Order order = new Order();
+			order = resultSetToOrder(rs);
+			
+			orders.add(order);
+		}
+		
+		return orders;
+	}
+	
+	/**
+	 * 해당 가맹점의 특정날짜사이에 해당하는 모든 주문을 반환하는 메소드
+	 * @param branchNo
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Order> getOrdersByBranchnoWithDate(int morePastDate, int pastDate, int branchNo) throws SQLException{
+		List<Order> orders = new ArrayList<Order>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrdersByBranchNoWithDate"));
+		pstmt.setInt(1, morePastDate);
+		pstmt.setInt(2, pastDate);
+		pstmt.setInt(3, branchNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Order order = new Order();
+			order = resultSetToOrder(rs);
+			
+			orders.add(order);
+		}
+		
+		return orders;
+	}
+	
+	
+	public List<Order> getAllOrdersByBranchno(int branchNo) throws SQLException{
+		List<Order> orders = new ArrayList<Order>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getAllOrdersByBranchno"));
+		pstmt.setInt(1, branchNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Order order = new Order();
+			order = resultSetToOrder(rs);
+			
+			orders.add(order);
+		}
+		
+		return orders;
+	}
+	
 }
 
 

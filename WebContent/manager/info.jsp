@@ -1,3 +1,10 @@
+<%@page import="com.domino.dto.QuestionDto"%>
+<%@page import="com.domino.dao.QnaDao"%>
+<%@page import="com.domino.util.NumberUtil"%>
+<%@page import="java.util.Currency"%>
+<%@page import="com.domino.vo.Order"%>
+<%@page import="java.util.List"%>
+<%@page import="com.domino.dao.OrderDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -74,24 +81,43 @@
 				<div class="col-12">
 					<div class="jumbotron bg-dark text-white mb-1">
 						<div class="row text-center">
+						<%
+							OrderDao orderDao = new OrderDao();
+							List<Order> todayAllOrder = orderDao.getOrdersByDate();
+							int todayAllOrderCount = 0;
+							int nowAllOrderCount = 0;
+							int todayTotalSales = 0;
+							// 오늘 전체주문 카운트
+							for(Order order : todayAllOrder){
+								todayAllOrderCount++;
+								// 오늘 전체 주문중 현재 진행중인 주문 카운트
+								if(3!=order.getOrderStatus() && 4!=order.getOrderStatus()){
+									nowAllOrderCount++;
+								} else {
+									todayTotalSales += order.getDiscountPrice();
+								}
+							}
+						%>
 							<div class="col-4">
 								<p>
 									<a class="" href="#">오늘 주문현황</a>
 								</p>
-								<p class="display-4 text-center font-weight-bold">160건</p>
+								<p class="display-4 text-center font-weight-bold"><%=todayAllOrderCount %>건</p>
 							</div>
 							<div class="col-4"
 								style="border-left: 1px solid white; border-right: 1px solid white;">
 								<p>
 									<a class="" href="#">현재 주문현황</a>
 								</p>
-								<p class="display-4 text-center font-weight-bold">30건</p>
+								<p class="display-4 text-center font-weight-bold"><%=nowAllOrderCount %>건</p>
 							</div>
 							<div class="col-4">
 								<p>
 									<a class="" href="#">오늘 총 매출</a>
 								</p>
-								<p class="display-4 text-center font-weight-bold">9,745,000원</p>
+								<p class="display-4 text-center font-weight-bold">
+									<%=NumberUtil.numberWithComma(todayTotalSales) %>원
+								</p>
 							</div>
 						</div>
 					</div>
@@ -144,6 +170,10 @@
 
 			<div class="row">
 				<div class="col-12">
+					<%
+						QnaDao qnaDao = new QnaDao();
+						List<QuestionDto> questions = qnaDao.getAllQuestion();
+					%>
 					<table class="table text-center">
 						<colgroup>
 							<col width="10%">
@@ -162,24 +192,23 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>108</td>
-								<td>서비스</td>
-								<td>홍길동</td>
-								<td>xxx매장 직원 불친절 신고</td>
-								<td>
-									<button class="btn btn-primary">답변대기</button>
-								</td>
-							</tr>
-							<tr>
-								<td>1021</td>
-								<td>품질</td>
-								<td>강감찬</td>
-								<td>피자맛 관련해서 xx매장 문의드렸는데 ...</td>
-								<td>
-									<button class="btn btn-primary">답변대기</button>
-								</td>
-							</tr>
+						<%
+							for(QuestionDto questionDto : questions) {
+								if("N".equalsIgnoreCase(questionDto.getAnsweredYn())){
+						%>
+								<tr>
+									<td><%=questionDto.getNo() %></td>
+									<td>카테고리</td>
+									<td><%=questionDto.getUserName() %></td>
+									<td><%=questionDto.getTitle() %></td>
+									<td>
+										<a class="btn btn-primary" role="button" href="qnaboard.jsp?qnano=<%=questionDto.getNo() %>">답변대기</a>
+									</td>
+								</tr>
+						<%
+								}
+							}
+						%>
 						</tbody>
 					</table>
 

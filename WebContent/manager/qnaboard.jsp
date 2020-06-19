@@ -1,3 +1,4 @@
+<%@page import="com.domino.util.NumberUtil"%>
 <%@page import="com.domino.dto.QuestionDto"%>
 <%@page import="com.domino.vo.Question"%>
 <%@page import="java.util.List"%>
@@ -122,7 +123,7 @@
 							<col width="15%">
 						</colgroup>
 						<thead class="thead thead-dark">
-							<tr>
+							<tr style="border: 2px solid black;">
 								<th>번호</th>
 								<th>작성자</th>
 								<th>제목</th>
@@ -132,6 +133,7 @@
 						</thead>
 						<tbody>
 							<%
+								int fromMainNo = NumberUtil.stringToInt(request.getParameter("qnano"));
 								for (QuestionDto questionDto : questions) {
 							%>
 							<tr data-toggle="modal" data-target="#a<%=questionDto.getNo()%>"
@@ -143,6 +145,13 @@
 									} else {
 								%>
 									class="text-muted"
+								<%
+									}
+								%>
+								<%
+									if(questionDto.getNo() == fromMainNo) {
+								%>
+									style="border: 2px solid red;"
 								<%
 									}
 								%>

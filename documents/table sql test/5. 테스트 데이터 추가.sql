@@ -72,9 +72,9 @@ VALUES
 INSERT INTO pizza_orders
 (pizza_order_no, pizza_no, pizza_size, dough_no, pizza_order_amount, pizza_order_price, pizza_discount_price, order_no)
 VALUES
-(pizza_order_no_seq.NEXTVAL, 101, 'L', 100, 1, 35000, 33000, 100);
+(pizza_order_no_seq.NEXTVAL, 101, 'L', 100, 1, 35000, 33000, 107);
 
 INSERT INTO pizza_orders
 (pizza_order_no, pizza_no, pizza_size, dough_no, pizza_order_amount, pizza_order_price, pizza_discount_price, order_no)
 VALUES
-(pizza_order_no_seq.NEXTVAL, 102, 'M', 100, 3, 25000, 23000, 100);
+(pizza_order_no_seq.NEXTVAL, 102, 'M', 100, 3, 25000, 23000, 107);
