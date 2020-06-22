@@ -36,13 +36,17 @@
 		<div class="header">
 			<div class="row">
 				<div class="col-4">
-					<h4></h4>
+					<h4>가맹점</h4>
 				</div>
 				<div class="col-8">
 					<ul class="nav justify-content-end">
 						<li class="nav-item"><a class="nav-link active" href="#">홈</a></li>
 						<li class="nav-item"><a class="nav-link disabled" href="#"
 							tabindex="-1" aria-disabled="true">></a></li>
+						<li class="nav-item"><a class="nav-link active" href="#">가맹점</a></li>
+						<li class="nav-item"><a class="nav-link disabled" href="#"
+							tabindex="-1" aria-disabled="true">></a></li>
+						<li class="nav-item"><a class="nav-link disabled" href="#">메인</a></li>
 					</ul>
 				</div>
 			</div>

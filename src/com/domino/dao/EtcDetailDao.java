@@ -30,6 +30,7 @@ public class EtcDetailDao {
 		eo.setOrderNo(rs.getInt("order_no"));
 		eo.setEtcName(rs.getString("etc_name"));
 		eo.setEtcPrice(rs.getInt("etc_price"));
+		eo.setImageSrc(rs.getString("etc_image_src"));
 		
 		return eo;
 	}
@@ -115,6 +116,13 @@ public class EtcDetailDao {
 		connection.close();
 	}
 	
+	/**
+	 * 기타 주문 을 기타 주문번호로 가져오는 메소드
+	 * @param no 기타주문번호
+	 * @return EtcOrderDto 기타 주문 Dto
+	 * @throws SQLException
+	 * @author 영준
+	 */
 	public EtcOrderDto getEtcOrderByNo(int no) throws SQLException {
 		EtcOrderDto eod = null;
 		

@@ -74,11 +74,19 @@
 	<%
 				int userNo = loginUserNo;
 			// location도 세션에 있을 것
-			//  int locationNo = savedLocationNo;
-				int locationNo = 100;
+				if (session.getAttribute("savedLocationNo") == null) {
+					response.sendRedirect("selectlocation.jsp");
+					return;
+				}
+				int locationNo = (int) session.getAttribute("savedLocationNo");
 				
 				OrderDao orderDao = new OrderDao();
 				Order cart = orderDao.getCartByUserNo(userNo);
+				
+				if (cart == null) {
+					response.sendRedirect("cart.jsp");
+					return;
+				}
 				
 				LocationDao locationDao = new LocationDao();
 				Location location = locationDao.getLocationByNo(cart.getLocationNo());
@@ -235,12 +243,13 @@
 											price += to.getOrderPrice() * to.getOrderAmount();
 											discountPrice += to.getOrderPrice() * to.getOrderAmount();
 										}
-										allTotalPrice += price;
+										allTotalPrice += po.getOrderPrice();
 										allTotalDiscountPrice += discountPrice;
 							%>
 										<p><%=pizzaName %> <%=size %> x <%=po.getOrderAmount() %> / <%=NumberUtil.numberWithComma(price) %>원 </p>
 							<%
 										for (ToppingOrderDto to : tol) {
+											allTotalPrice += to.getOrderPrice() * po.getOrderAmount();
 							%>			
 										<p class="text-muted">+ <%=to.getName() %> (<%=to.getOrderAmount() %> x 피자 1)</p>
 							<%		

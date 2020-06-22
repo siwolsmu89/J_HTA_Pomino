@@ -25,6 +25,11 @@ public class DoughDao {
 		return dough;
 	}
 	
+	/**
+	 * 모든 도우를 조회하는 메소드
+	 * @return 모든 도우
+	 * @throws SQLException
+	 */
 	public List<Dough> getAllDough() throws SQLException {
 		List<Dough> doughs = new ArrayList<Dough>();
 		
@@ -42,6 +47,52 @@ public class DoughDao {
 		connection.close();
 		
 		return doughs;
+	}
+	
+	/**
+	 * 특정범위 사이의 도우를 조회하는 메소드
+	 * @param beginNumber
+	 * @param endNumber
+	 * @return 특정범위 사이의 도우
+	 * @throws SQLException
+	 */
+	public List<Dough> getAllDough(int beginNumber, int endNumber) throws SQLException {
+		List<Dough> doughs = new ArrayList<Dough>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("dough.getDoughsByRange"));
+		pstmt.setInt(1, beginNumber);
+		pstmt.setInt(2, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Dough dough = resultSetToDough(rs);
+			doughs.add(dough);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return doughs;
+	}
+	
+	public int getDoughsCount() throws SQLException {
+		int count = 0;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("dough.getDoughsCount"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			count = rs.getInt("cnt");
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return count;
 	}
 	
 	public Dough getDoughByNo(int doughNo) throws SQLException {

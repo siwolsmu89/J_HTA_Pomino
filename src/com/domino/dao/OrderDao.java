@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.domino.dto.OrderDto;
 import com.domino.util.ConnectionUtil;
 import com.domino.util.QueryUtil;
 import com.domino.vo.Order;
@@ -213,6 +214,11 @@ public class OrderDao {
 		return order;
 	}
 	
+	/**
+	 * 모든 주문을 반환하는 메소드
+	 * @return 모든주문반환
+	 * @throws SQLException
+	 */
 	public List<Order> getAllOrders() throws SQLException {
 		List<Order> orders = new ArrayList<Order>();
 		
@@ -231,6 +237,46 @@ public class OrderDao {
 		connection.close();
 		
 		return orders;
+	}
+	
+	public List<Order> getAllOrders(int beginNumber, int endNumber) throws SQLException {
+		List<Order> orders = new ArrayList<Order>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrdersByRange"));
+		pstmt.setInt(1, beginNumber);
+		pstmt.setInt(2, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Order order = new Order();
+			order = resultSetToOrder(rs);
+			orders.add(order);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return orders;
+	}
+	
+	public int getOrdersCount() throws SQLException {
+		int count = 0;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrdersCount"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			count = rs.getInt("cnt");
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return count;
 	}
 	
 	/**
@@ -307,7 +353,6 @@ public class OrderDao {
 		
 		return orders;
 	}
-	
 	
 	/**
 	 * 해당 가맹점의 오늘날짜에 해당하는 모든 주문을 반환하는 메소드
@@ -387,7 +432,13 @@ public class OrderDao {
 		return orders;
 	}
 	
-	
+	/**
+	 * 지점번호로 모든 주문을 가져오는 메소드
+	 * @param branchNo 지점번호
+	 * @return Order리스트
+	 * @throws SQLException
+	 * @author 영준
+	 */
 	public List<Order> getAllOrdersByBranchno(int branchNo) throws SQLException{
 		List<Order> orders = new ArrayList<Order>();
 		
@@ -406,21 +457,80 @@ public class OrderDao {
 		return orders;
 	}
 	
+	
+	public List<Order> getAllOrdersByBranchname(String branchName) throws SQLException{
+		List<Order> orders = new ArrayList<Order>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getAllOrdersByBranchname"));
+		pstmt.setString(1, branchName);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Order order = new Order();
+			order = resultSetToOrder(rs);
+			
+			orders.add(order);
+		}
+		
+		return orders;
+	}
+	
+	public List<Order> getAllOrdersByStatus(int status) throws SQLException{
+		List<Order> orders = new ArrayList<Order>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getAllOrdersByStatus"));
+		pstmt.setInt(1, status);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Order order = new Order();
+			order = resultSetToOrder(rs);
+			
+			orders.add(order);
+		}
+		
+		return orders;
+	}
+	
+	/**
+	 * 주문번호로 간단한 상품목록을 조회하는 메소드
+	 * 아마 될거같은데 안되면 저한테 문의하세요
+	 * @param orderNo 주문번호
+	 * @return OrderDto 객체가 담긴 ArrayList (OrderDto는 간단한 주문 정보와 하위 상품명, 해당 상품의 주문 수량 등이 담긴 객체)
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	public List<OrderDto> getAllSimpleOrderInfos() throws SQLException {
+		List<OrderDto> orderInfos = new ArrayList<OrderDto>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getAllSimpleOrderInfos"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			OrderDto orderDto = new OrderDto();
+			
+			orderDto.setOrderNo(rs.getInt("order_no"));
+			orderDto.setBranchNo(rs.getInt("branch_no"));
+			orderDto.setBranchName(rs.getString("branch_name"));
+			orderDto.setTotalDiscountPrice(rs.getInt("order_discount_price"));
+			orderDto.setRequestTime(rs.getDate("order_request_time"));
+			orderDto.setOrderStatus(rs.getInt("order_status"));
+			orderDto.setTotalAmount(rs.getInt("total_count"));
+			orderDto.setPizzaName(rs.getString("pizza_name"));
+			orderDto.setSideName(rs.getString("side_name"));
+			orderDto.setEtcName(rs.getString("etc_name"));
+			
+			orderInfos.add(orderDto);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return orderInfos;
+	}
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

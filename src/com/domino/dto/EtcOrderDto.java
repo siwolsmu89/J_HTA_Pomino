@@ -21,6 +21,7 @@ public class EtcOrderDto {
 	 * 개별 메뉴의 가격
 	 */
 	private int etcPrice;
+	private String imageSrc;
 	
 	public EtcOrderDto() {
 		
@@ -80,6 +81,14 @@ public class EtcOrderDto {
 
 	public void setEtcPrice(int etcPrice) {
 		this.etcPrice = etcPrice;
+	}
+
+	public String getImageSrc() {
+		return imageSrc;
+	}
+
+	public void setImageSrc(String imageSrc) {
+		this.imageSrc = imageSrc;
 	}
 	
 }

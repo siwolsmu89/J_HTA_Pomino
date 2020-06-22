@@ -61,6 +61,46 @@ public class BranchDao {
 		return branchs;
 	}
 	
+	public List<Branch> getAllBranch(int beginNumber, int endNumber) throws SQLException {
+		List<Branch> branchs = new ArrayList<Branch>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("branch.getBranchByRange"));
+		pstmt.setInt(1, beginNumber);
+		pstmt.setInt(2, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Branch branch = new Branch();
+			branch = resultSetToBranch(rs);
+			branchs.add(branch);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return branchs;
+	}
+	
+	public int getBranchsCount() throws SQLException {
+		int count = 0;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("branch.getBranchCount"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			count = rs.getInt("cnt");
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return count;
+	}
+	
 	/**
 	 * 매장번호로 매장정보를 조회하는 메소드
 	 * @param branchNo 매장번호

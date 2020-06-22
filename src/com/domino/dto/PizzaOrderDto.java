@@ -25,6 +25,8 @@ public class PizzaOrderDto {
 	private String pizzaName;
 	private String doughName;
 	private int doughPrice;
+	private String imageSrc;
+
 	/**
 	 * pizzaPrice : 할인되지 않은 피자 가격(1판)
 	 * Dao에서 size를 확인한 후, L이면 L가격을, M이면 M가격을 담아야 함
@@ -129,4 +131,11 @@ public class PizzaOrderDto {
 		this.doughPrice = doughPrice;
 	}
 	
+	public String getImageSrc() {
+		return imageSrc;
+	}
+	
+	public void setImageSrc(String imageSrc) {
+		this.imageSrc = imageSrc;
+	}
 }

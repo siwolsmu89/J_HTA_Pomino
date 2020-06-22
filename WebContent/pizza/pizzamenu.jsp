@@ -1,3 +1,5 @@
+<%@page import="com.domino.vo.Event"%>
+<%@page import="com.domino.dao.EventDao"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -66,23 +68,32 @@
 						<div class="navbar navbar-expand-sm ">
 							<!-- 링크들 (메뉴 중앙정렬) -->
 							<ul class="navbar-nav">
-								<li class="nav-item  d-flex justify-content-between align-itens-center"><a class="nav-link" href="../pizza/pizzamenu.jsp">피자</a></li>
-								<li class="nav-item  d-flex justify-content-between align-itens-center"><a class="nav-link" href="#">사이드디시</a></li>
-								<li class="nav-item  d-flex justify-content-between align-itens-center"><a class="nav-link" href="#">음료/기타</a></li>
+								<li class="nav-item d-flex justify-content-between align-items-center"><a class="nav-link" href="../pizza/pizzamenu.jsp">피자</a></li>
+								<li class="nav-item d-flex justify-content-between align-items-center"><a class="nav-link" href="#">사이드디시</a></li>
+								<li class="nav-item d-flex justify-content-between align-items-center"><a class="nav-link" href="#">음료/기타</a></li>
 							</ul>
 						</div>
 					</div>
+					
+					<!-- Dao 먼저 받기 -->					
+					<%
+						PizzaDao pizzaDao = new PizzaDao();
+						List<Pizza> pizzas = pizzaDao.getAllPizza();
+						// EventDao eventDao = new EventDao(); 이벤트 번호와 피자 번호를 연결해주는 것이 필요할 것 같은데..
+					%>
 					
 					<div class="col-2"><!-- 더보기 -->
 						<div class="navbar navbar-expand-sm ">
 						<!-- 1주일간 가장 많이 팔린 피자 받아와서 출력, 해당하는 링크로 이동 -->
 							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">맛있는핏자</a>	
 							<div class="dropdown-menu">
-								<a class="dropdown-item" href="">짱<% %></a>
-								<a class="dropdown-item" href="">맛있는<% %></a>
-								<a class="dropdown-item" href="">피자<% %></a>
-								<a class="dropdown-item" href="">리스트<% %></a>
-								<a class="dropdown-item" href="">피자먹고싶다<% %></a>
+							<%
+								for (Pizza pizzaList : pizzas) {
+							%>
+								<a class="dropdown-item" href="../pizza/detail.jsp?no=<%=pizzaList.getNo() %>"><%=pizzaList.getName() %></a>
+							<%
+								}
+							%>
 							</div>
 						</div>
 					</div>
@@ -97,14 +108,10 @@
 							<div class="card-header d-flex justify-content-center">당신의 완벽한 한끼를 위해 도미노 피자는 언제나 노력하겠습니다 :)</div>
 							<div class="card-body">
 								<div class="row">
-									<!-- Dao 먼저 받기 -->
-									<%
-										PizzaDao pizzaDao = new PizzaDao();
-										List<Pizza> pizzas = pizzaDao.getAllPizza();
-									%>
 									<!-- for문 시작 -->
 									<%
 										for (Pizza pizza : pizzas) {
+											
 									%>
 
 									<!-- 상품 정보 시작 -->
@@ -119,9 +126,152 @@
 											<!-- 피자 더미데이터 소스 ../로 변경하기 -->
 											<!-- 피자 이미지 받아오기 -->
 												
-												<button type="button" class="btn btn-primary-outline btn-block" value="<%=pizza.getNo() %>" style="position:absolute; height:242px" onclick="pizzaDetail(event)"></button>
+												<button type="button" class="btn btn-primary-outline btn-block" 
+														id="<%=pizza.getNo() %>" value="<% %>" style="position:absolute; height:242px"
+														onclick="pizzaDetail(event)"></button>
 												<!-- response.sendRedirect("loginform.jsp?error=fail"); -->
-												<a href="#" style="position:absolute; left:210px; bottom:198px;"><img src="../resource/images/home/detailsee.png"/></a>	<!-- ajax로 해당 피자 상세정보 화면에 출력 -->
+
+												<button type="button" 
+													   data-toggle="modal"
+													   data-target=".pizza-<%=pizza.getNo() %>"
+													   style="position:absolute; left:210px; bottom:198px; border:0; padding:0">
+													   <img src="../resource/images/home/detailsee.png">
+												</button>
+												
+												<div class="modal fade pizza-<%=pizza.getNo() %>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+												  <div class="modal-dialog modal-lg">
+												    <div class="modal-content">
+												    
+												      <div class="modal-header ">
+												        <h5 class="modal-title text-center col-12" id="exampleModalLabel" ><%=pizza.getName() %></h5>
+												      </div> <!-- col-12 빼면 가운데 정렬 안됨 -->
+												        
+											          <div class="modal-body">
+												        <div> <!-- (모달1 머리)주황 몸통 -->
+												        
+												        	<div> <!-- (모달1 몸통)노랑1 시작 -->
+												        		<div class="row">
+												        			<div class="col-6"><img id="src" src="<%=pizza.getImageSrc() %>" style="weight:45%; height:45%">
+												        				<p class="text-muted"><small> * 모든 사진은 이미지컷으로 실제 제품과 다를 수 있습니다.</small></p><!--  -->
+												        				
+												        				<!-- 모달2 버튼 -->
+												        				<button type="button" 
+																		   data-toggle="modal"
+																		   data-target=".pizza-big-pic-<%=pizza.getNo() %>"
+																		   style="position:absolute; left:336px; bottom:434px; border:0; padding:0">
+																		   <img src="../resource/images/home/pic_enlargement.png">
+																		</button>
+																		
+																		<!-- 모달2 내용 -->
+																		<!-- 큰일났다 사진 하나밖에 못가져온다ㅋㅋ -->
+																		<div class="modal fade pizza-big-pic-<%=pizza.getNo() %>" style="padding:0 33px 0 0" tabindex="-1" role="dialog" aria-labelledby="myAllergyModal" aria-hidden="true">
+																			<div class="modal-dialog modal-lg">
+																				<div class="modal-content">
+																					<div class="modal-header">
+																						<h5 class="modal-title text-center col-12" id="exampleBigModal" >확대</h5>
+																					</div>
+																					
+																					<div class="modal-body">
+																						<div>
+																							<div>
+																								<div class="row ">
+																									<img class="col-12" src="<%=pizza.getImageSrc() %>">
+																								</div>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<!-- 모달2 내용 끝 -->
+																		
+												        			</div>
+												        			<div class="col-6">
+													        			<div style="border-bottom: 1px solid black; padding-bottom:10px">
+													        				<span><strong>메인 토핑</strong></span>
+													        			</div>
+												        				<p class="text-muted" style="">모짜렐라, 페터크림 치즈, 갈릭크림 소스, 로스트 포테이토, 파인애플, 양파, 뭐 등등</p>
+												        				
+												        				<div style="border-bottom: 1px solid black; padding-bottom:10px">
+													        				<span><strong>원산지</strong></span>
+													        			</div>
+												        				<p class="text-muted">오리지널, 나폴리 도우(밀):미국산+캐나다산</p>
+												        				
+												        				<p class="text-center">
+												        					<button type="button" data-toggle="modal" data-target=".pizza-nut-allergy" class="btn btn-outline-secondary btn-sm" role="button">영양성분 및 알레르기 유발성분</button>
+												        					<!-- 각 피자마다 적어야되는데... 너무 이건;;
+												        					&nbsp;&nbsp;&nbsp;
+												        					<button class="btn btn-outline-secondary btn-sm" role="button">피자스토리</button>
+												        					 -->
+												        				</p>
+												        				
+											        					<div class="modal fade pizza-nut-allergy" style="padding:0 33px 0 0" tabindex="-1" role="dialog" aria-labelledby="myAllergyModal" aria-hidden="true">
+											        						<div class="modal-dialog modal-lg">
+																				<div class="modal-content">
+																					<div class="modal-header">
+																						<h5 class="modal-title text-center col-12" id="exampleAllerhyModal" >영양성분 및 알레르기 유발성분</h5>
+																					</div>
+																					
+																					<div class="modal-body">
+																						<div class="row ">
+																							<div class="col-12">
+																								<ul class="nav nav-tabs nav-justified">
+																								
+																									<li class="nav-item dropdown">
+																										<a class="nav-link active dropdown-toggle" data-toggle="dropdown" href="#nutrient" role="button" aria-haspopup="true" aria-expanded="false">영양성분</a>
+																										<div class="dropdown-menu w-100">
+																									      <a class="dropdown-item text-center" href="#pizza-nut">피자</a>
+																									      <a class="dropdown-item text-center" href="#side-nut">사이드</a>
+																								      </div>
+																									</li>
+
+																									<li class="nav-item dropdown">
+																										<a class="nav-link active dropdown-toggle" data-toggle="dropdown" href="#allergy" role="button" aria-haspopup="true" aria-expanded="false">알레르기</a>
+																										<div class="dropdown-menu w-100">
+																									      <a class="dropdown-item text-center" href="#pizza-allergy">피자</a>
+																									      <a class="dropdown-item text-center" href="#side-allergy">사이드</a>
+																								      </div>
+																									</li>
+																									
+																								</ul>
+																								
+																								<div class="dropdown-content">
+																									<div class="dropdown-pane container active" id="pizza-nut">
+																										<div class="row">
+																											<div class='col-12'>
+																												<p>하하하하하하하</p>
+																											</div>
+																										</div>
+																									</div>
+																									<div class="tab-pane container active" id="side-nut">
+																										<div class="row">
+																											<div class='col-12'>
+																												<p>이히히히히히힣</p>
+																											</div>
+																										</div>
+																									</div>																									
+																								</div>
+																								
+																								
+																								
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+											        					</div>
+												        					
+												        			</div>
+												        		</div>
+												        	</div> <!-- (모달1 몸통)노랑1 끝 -->
+												        
+												        </div> <!-- (모달1 머리)주황 몸통 끝 -->
+												      </div>
+
+												    </div>
+												  </div>
+												</div> <!-- 모달1 끝 -->
+
 											</div>
 											
 											<!-- 상품 컨텐츠정보 시작 -->
@@ -233,16 +383,22 @@
 		//location.href="detail.jsp?no=" + no
 				
 		var url = 'detail.jsp?no=';
-						
-		var no = event.target.value;
+		// var url2 = '&discountrate=';
 		
+		var no = event.target.id;
+		// var dis = event.target.value;
 		var form = document.querySelector("#my-form");
 		
 		form.setAttribute("action", url + no);
+//		form.setAttribute("action", url + no + url2 + dis);
 		form.submit();
 
 	}
 
+	function push() {
+		
+		alert("dsksk");
+	}
 </script>
 </body>
 </html>

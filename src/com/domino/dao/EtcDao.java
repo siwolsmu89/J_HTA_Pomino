@@ -25,6 +25,11 @@ public class EtcDao {
 		return etc;
 	}
 	
+	/**
+	 * 모든 기타메뉴를 조회하는 메소드
+	 * @return 모든 기타메뉴
+	 * @throws SQLException
+	 */
 	public List<Etc> getAllEtc() throws SQLException {
 		List<Etc> etcs = new ArrayList<Etc>();
 		
@@ -42,6 +47,52 @@ public class EtcDao {
 		connection.close();
 		
 		return etcs;
+	}
+	
+	/**
+	 * 특정범위 사이의 기타메뉴를 조회하는 메소드
+	 * @param beginNumber
+	 * @param endNumber
+	 * @return 특정범위 사이의 기타메뉴
+	 * @throws SQLException
+	 */
+	public List<Etc> getAllEtc(int beginNumber, int endNumber) throws SQLException {
+		List<Etc> etcs = new ArrayList<Etc>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("etc.getEtcByRange"));
+		pstmt.setInt(1, beginNumber);
+		pstmt.setInt(2, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Etc etc = resultSetToEtc(rs);
+			etcs.add(etc);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return etcs;
+	}
+	
+	public int getEtcsCount() throws SQLException {
+		int count = 0;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("etc.getEtcsCount"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			count = rs.getInt("cnt");
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return count;
 	}
 	
 	public Etc getEtcByNo(int etcNo) throws SQLException {

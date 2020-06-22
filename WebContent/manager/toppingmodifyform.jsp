@@ -88,7 +88,7 @@
 							Topping topping = toppingDao.getToppingByNo(toppingNo);
 						%>
 							<form method="post" action="toppingmodify.jsp" enctype="multipart/form-data">
-								<input type="hidden" name="sideno" value="<%=toppingNo%>">
+								<input type="hidden" name="toppingno" value="<%=toppingNo%>">
 								<input type="hidden" name="yn" value="<%=yn%>">
 								<div class="form-group">
 									<label>토핑 이름</label> 

@@ -8,7 +8,6 @@
 
 	<jsp-config>
 		<jsp-property-group>
-
 			<url-pattern>/common/home.jsp</url-pattern>
 			<url-pattern>/user/*</url-pattern>
 			<url-pattern>/order/*</url-pattern>
@@ -18,6 +17,7 @@
 			<url-pattern>/pizza/*</url-pattern>
 			<url-pattern>/etc/*</url-pattern>
 			<url-pattern>/side/*</url-pattern>
+			<url-pattern>/map/*</url-pattern>
 			<include-prelude>/common/session.jsp</include-prelude>
 		</jsp-property-group>
 	</jsp-config>

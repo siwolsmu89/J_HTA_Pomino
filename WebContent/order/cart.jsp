@@ -29,7 +29,7 @@
 	}
 </style>
 <head>
-  <title>도미노피자 - 당신의 인생에 완벽한 한끼! Life Food,Domino's</title>
+  <title>포미노피자 - 당신의 인생에 완벽한 한끼! Life Food,Pomino's</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -64,9 +64,6 @@
 	</div>
 	<div class="body">
 		<%
-			LocationDao ld = new LocationDao();
-			int locationNo = (int) session.getAttribute("savedLocationNo");
-			Location location = ld.getLocationByNo(locationNo);
 			OrderDao orderDao = new OrderDao();
 			Order order = orderDao.getCartByUserNo(loginUserNo);
 
@@ -74,6 +71,16 @@
 				BranchDao branchDao = new BranchDao();
 				Branch branch = branchDao.getBranchByNo(order.getBranchNo());
 
+				if (session.getAttribute("savedLocationNo") == null) {
+					response.sendRedirect("selectlocation.jsp");
+					return;
+				}	
+				
+				LocationDao ld = new LocationDao();
+				int locationNo = (int) session.getAttribute("savedLocationNo");
+				
+				Location location = ld.getLocationByNo(locationNo);
+		
 				if (branch != null) {
 					PizzaDetailDao pizzaDetailDao = new PizzaDetailDao();
 					List<PizzaOrderDto> pizzaOrders = pizzaDetailDao.getPizzaOrdersByOrderNo(order.getNo());
@@ -139,26 +146,26 @@
 					</thead>
 					<%
 						int totalPrice = 0;
-						for (PizzaOrderDto pizzaOrderDto : pizzaOrders) {
+						for (PizzaOrderDto pizzaOrderDao : pizzaOrders) {
 					%>
 					<tbody>
 						<tr class="text-center">
 							<td class="text">
 								<p>
-									<img class="tm-5 rm-5 float-left" alt="시리얼 칠리크랩" width="90px;"
-										src="../resource/images/pizza/20200602_0uirYrYy.jpg">
-									<%=pizzaOrderDto.getPizzaName()%><br /> <small
-										style="color: gray; font-size: 14px;"><%=pizzaOrderDto.getDoughName()%>/<%=pizzaOrderDto.getPizzaSize()%></small><br />
-									<%=NumberUtil.numberWithComma(pizzaOrderDto.getPizzaPrice())%>원
+									<img class="tm-5 rm-5 float-left" alt="<%=pizzaOrderDao.getPizzaName() %>" width="90px;"
+										src="../resource/<%=pizzaOrderDao.getImageSrc() %>">
+									<%=pizzaOrderDao.getPizzaName()%><br /> <small
+										style="color: gray; font-size: 14px;"><%=pizzaOrderDao.getPizzaSize()%></small><br />
+									<%=NumberUtil.numberWithComma(pizzaOrderDao.getPizzaPrice())%>원
 								</p>
 							</td>
 							<td>
 					<%
-							int orderPrice = pizzaOrderDto.getOrderPrice();
+							int orderPrice = pizzaOrderDao.getOrderPrice();
 							ToppingDetailDao dao = new ToppingDetailDao();
-							List<ToppingOrderDto> toppingOrderDtos = dao.getToppingOrdersByPizzaNo(pizzaOrderDto.getNo());
+							List<ToppingOrderDto> toppingOrderDtos = dao.getToppingOrdersByPizzaNo(pizzaOrderDao.getNo());
 							for (ToppingOrderDto tol : toppingOrderDtos) {
-							orderPrice += tol.getOrderPrice() * pizzaOrderDto.getOrderAmount();
+							orderPrice += tol.getOrderPrice() * pizzaOrderDao.getOrderAmount();
 					%>
 								<div class="row justify-content-center">
 									<div class="col-7" style="font-size: 14px;">
@@ -177,13 +184,13 @@
 								<div class="">
 									<input type="number" name="pizza"
 										style="width: 60px; text-align: center; height: 30px;"
-										onchange="modifyAmount(event, <%=pizzaOrderDto.getNo()%>)"
-										value="<%=pizzaOrderDto.getOrderAmount()%>" min="1">
+										onchange="modifyAmount(event, <%=pizzaOrderDao.getNo()%>)"
+										value="<%=pizzaOrderDao.getOrderAmount()%>" min="1">
 								</div></td>
 							<td><br /><%=NumberUtil.numberWithComma(orderPrice)%> 원</td>
 							<td><br />
 								<button class="btn btn-light" name="pizza"
-									onclick="removeCheck(<%=pizzaOrderDto.getNo()%>)">X</button></td>
+									onclick="removeCheck(<%=pizzaOrderDao.getNo()%>)">X</button></td>
 						</tr>
 						<%
 							totalPrice += orderPrice;
@@ -195,9 +202,9 @@
 						<tr id="side" class="text-center">
 							<td>
 								<p>
-									<img class=" tm-5 rm-5 float-left" alt="시리얼 칠리크랩"
+									<img class=" tm-5 rm-5 float-left" alt="<%=sod.getSideName() %>"
 										width="90px;" style=""
-										src="../resource/images/sidemenu/20200429_zUBSp7rE.jpg">
+										src="../resource/<%=sod.getImageSrc() %>">
 									<%=sod.getSideName()%><br />
 									<%=sod.getSidePrice()%>원
 								</p>
@@ -224,9 +231,8 @@
 						<tr class="text-center">
 							<td>
 								<p>
-									<img class=" tm-5 rm-5 float-left" alt="시리얼 칠리크랩"
-										width="90px;" style=""
-										src="../resource/images/etcmenu/20200309_J6k5xlTF.jpg">
+									<img class=" tm-5 rm-5 float-left" alt="<%=edd.getEtcName() %>"
+										width="90px;" src="../resource/<%=edd.getImageSrc() %>">
 									<%=edd.getEtcName()%><br />
 									<%=edd.getEtcPrice()%>원
 								</p>

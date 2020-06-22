@@ -99,10 +99,14 @@
 		
 		<div class="row">
 				<%
+					int rowsPerPage = 10;
 					int pageNo = NumberUtil.stringToInt(request.getParameter("page"), 1);
-				
+					int beginRowNumber = (pageNo - 1)*rowsPerPage + 1;
+					int endRowNumber = pageNo*rowsPerPage;
+					
 					QnaDao qnaDao = new QnaDao();
-					List<Question> questions = qnaDao.getQuestionAllByUserNo(loginUserNo);
+					//List<Question> questions = qnaDao.getQuestionAllByUserNo(loginUserNo);
+					List<Question> questions = qnaDao.getQuestionAllRangeByUserNo(loginUserNo, beginRowNumber, endRowNumber);
 				%>
 				<div class="col-12">
 					<table class="table text-center table-hover">
@@ -147,7 +151,7 @@
 										
 											<tr>
 												<td><%=index++ %></td>
-												<td><a href="questiondetail.jsp?questionno=<%=question.getNo() %>"><%=question.getTitle() %></a></td>
+												<td><a href="questiondetail.jsp?questionno=<%=question.getNo() %>&page=<%=pageNo%>"><%=question.getTitle() %></a></td>
 												<td><%=question.getRegDate() %></td>
 												<td>
 											<%
@@ -304,19 +308,48 @@
 						</div>
 					</div>
 				</div>
-				<!-- 페이지 처리 시작 -->
-				<ul class="pagination justify-content-center"
-					style="margin: 20px 0">
-					<li class="page-item "><a class="page-link" href="#">이전</a></li>
-					<li class="page-item active"><a class="page-link" href="#">1</a></li>
-					<li class="page-item "><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">4</a></li>
-					<li class="page-item"><a class="page-link" href="#">5</a></li>
-					<li class="page-item"><a class="page-link" href="#">다음</a></li>
-				</ul>
-				<!-- 페이지 처리 끝 -->
-
+				<%
+				int pagesPerBlock = 5;
+				int rows = qnaDao.getQnasCount();
+				int totalPages = (int) Math.ceil((double)rows/rowsPerPage);
+				int totalBlock = (int) Math.ceil((double) totalPages/pagesPerBlock);
+				int currentBlock = (int) Math.ceil((double) pageNo/pagesPerBlock);
+				int beginPageNo = (currentBlock-1)*pagesPerBlock+1;
+				int endPageNo = currentBlock*pagesPerBlock;
+				if(currentBlock == totalBlock) {
+					endPageNo = totalPages;
+				}
+				%>
+				<div class="row">
+					<div class="col-12 text-center">
+						<!-- 페이지 처리 시작 -->
+						<ul class="pagination justify-content-center"
+							style="margin: 20px 0;">
+				<%
+						if(pageNo > 1) {
+				%>
+							<li class="page-item "><a class="page-link" href="questionform.jsp?page=<%=pageNo - 1%>">이전</a></li>
+				<%
+						}
+				%>
+				<%
+						for(int num=beginPageNo; num <=endPageNo; num++) {
+				%>
+							<li class="page-item <%=pageNo == num ? "active" : ""%> "><a class="page-link" href="questionform.jsp?page=<%=num%>"><%=num%></a></li>
+				<%
+						}
+				%>
+				<%
+						if(pageNo < totalPages) {
+				%>
+							<li class="page-item"><a class="page-link" href="questionform.jsp?page=<%=pageNo + 1%>">다음</a></li>
+				<%
+						}
+				%>
+						</ul>
+						<!-- 페이지 처리 끝 -->
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

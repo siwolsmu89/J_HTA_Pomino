@@ -185,6 +185,7 @@
 					
 					BranchDao branchDao = new BranchDao();
 					Branch branch = branchDao.getBranchByNo(order.getBranchNo());
+					
 					PizzaDetailDao pizzaDetailDao = new PizzaDetailDao();
 					List<PizzaOrderDto> pol = pizzaDetailDao.getPizzaOrdersByOrderNo(orderNo);
 					
@@ -197,7 +198,7 @@
 					int totalCount = pol.size() + sol.size() + eol.size();
 					String simpleOrderTitle = "";
 					if (!pol.isEmpty()) {
-						simpleOrderTitle = pol.get(0).getPizzaName() + pol.get(0).getDoughName() + (totalCount > 1 ? " 외 " + (totalCount - 1) + "건" : "");
+						simpleOrderTitle = pol.get(0).getPizzaName() + " (" + pol.get(0).getDoughName() + ")" + (totalCount > 1 ? " 외 " + (totalCount - 1) + "건" : "");
 					} else if(!eol.isEmpty()) {
 						simpleOrderTitle = sol.get(0).getSideName() + (totalCount > 1 ? "외 " + (totalCount - 1) + "건" : "");
 					}

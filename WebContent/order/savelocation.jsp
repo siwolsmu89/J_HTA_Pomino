@@ -11,9 +11,16 @@
 	OrderDao orderDao = new OrderDao();
 	Order order = orderDao.getCartByUserNo(loginUserNo);
 	
+	if (order == null) {
+		response.sendRedirect("/domino/order/cart.jsp");
+		return;
+	}
+
+		
 	order.setLocationNo(selectedLocationNo);
 	order.setBranchNo(branchNo);
 	orderDao.updateOrder(order);
+	
 
 	session.setAttribute("savedLocationNo", selectedLocationNo);
 	response.sendRedirect("cart.jsp");

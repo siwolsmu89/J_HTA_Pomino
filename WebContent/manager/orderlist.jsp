@@ -1,3 +1,4 @@
+<%@page import="com.domino.util.NumberUtil"%>
 <%@page import="com.domino.dto.EtcOrderDto"%>
 <%@page import="com.domino.dto.SideOrderDto"%>
 <%@page import="com.domino.dto.PizzaOrderDto"%>
@@ -81,32 +82,47 @@
 		</div>
 
 		<div class="body">
+			<%
+				//<!-- 페이지네이션  -->
+				// 1. 한 화면에 표시할 행의 갯수
+				int rowsPerPage = 10;
+
+				// 2. 클라이언트가 요청한 페이지 번호 조회하기
+				int pageNo = NumberUtil.stringToInt(request.getParameter("page"), 1);
+
+				// 3. 조회할 목록의 시작번호와 끝번호를 조회한다.
+				int beginNumber = (pageNo - 1) * rowsPerPage + 1;
+				int endNumber = pageNo * rowsPerPage;
+
+				int rowCount = 0;
+				//<!-- 페이지네이션  -->
+			%>
 			<div class="row">
 				<div class="col-12">
 					<!-- 검색조건, 정렬기준, 테이블, 페이지처리 내용을 포함하는 card 시작 -->
 					<!-- 검색조건, 정렬기준 입력 폼 시작 -->
-					<form>
-						<div class="row">
-							<!-- 검색조건 입력폼 시작 -->
-							<div class="col-6">
+
+					<div class="row">
+						<div class="col-6">
+							<form action="">
 								<div class="input-group mb-3">
 									<div class="input-group-prepend">
-										<select class="form-control" name="searchOption">
-											<option value="title">주문번호</option>
-											<option value="writer">매장이름</option>
-											<option value="content">메뉴</option>
+										<select class="form-control" name="searchoption">
+											<option value="orderno">주문번호</option>
+											<option value="branchname">매장이름</option>
+											<option value="orderstatus">주문상태</option>
 										</select>
 									</div>
-									<input type="text" class="form-control"
-										placeholder="검색어를 입력하세요">
+									<input id="searchValue" type="text" class="form-control" name="searchvalue" placeholder="검색어를 입력하세요">
 									<div class="input-group-append">
-										<button class="btn btn-outline-secondary" type="button">조회</button>
+										<button class="btn btn-outline-secondary" type="button" onclick="#">조회</button>
 									</div>
 								</div>
-							</div>
-							<!-- 검색조건 입력폼 끝 -->
-							<!-- 정렬기준 선택 시작  -->
-							<div class="col-2 offset-4">
+							</form>
+																								
+						</div>
+						<div class="col-2 offset-4">
+							<form action="">
 								<div class="input-group mb-3">
 									<select class="form-control" name="sort">
 										<option value="title">전체보기</option>
@@ -114,14 +130,23 @@
 										<option value="content">진행중인 주문</option>
 									</select>
 								</div>
-							</div>
-							<!-- 정렬기준 선택 끝  -->
+							</form>
 						</div>
-					</form>
+					</div>
+
+
+
+
+
+
+
+
+
 					<!-- 검색조건, 정렬기준 입력 폼 끝 -->
 					<%
 						OrderDao orderDao = new OrderDao();
-						List<Order> orders = orderDao.getAllOrders();
+						List<Order> orders = orderDao.getAllOrders(beginNumber, endNumber);
+						rowCount = orderDao.getOrdersCount();
 					%>
 					<table class="table text-center">
 						<colgroup>
@@ -142,7 +167,7 @@
 								<th>주문상태</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="datas-body">
 					<%
 						for(Order order : orders) {
 							// 주문한 매장 정보 가져오기
@@ -226,16 +251,46 @@
 					<!-- 페이지 처리 시작 -->
 					<ul class="pagination justify-content-center"
 						style="margin: 20px 0">
-						<li class="page-item"><a class="page-link" href="#">이전</a></li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item active"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#">4</a></li>
-						<li class="page-item"><a class="page-link" href="#">5</a></li>
-						<li class="page-item"><a class="page-link" href="#">다음</a></li>
+						<%
+							// 0. 한 화면당 표시할 페이지번호 갯수
+							int pagesPerBlock = 5;
+
+							// 1. 전체 행의 갯수를 조회한다.
+							int rows = rowCount;
+
+							// 2. 전체 페이지수를 계산한다.
+							int totalPages = (int) Math.ceil((double) rows / rowsPerPage);
+
+							// 3. 전체 페이지블록 갯수 계산하기
+							int totalBlocks = (int) Math.ceil((double) totalPages / pagesPerBlock);
+
+							// 4. 요청한 페이지가 어느 페이지 블록에 속하는지 계산하기
+							int currentBlock = (int) Math.ceil((double) pageNo / pagesPerBlock);
+
+							// 5. 요청한 페에지가 속한 블록의 시작페이지번호와 끝페이지번호 계산하기
+							int beginPageNo = (currentBlock - 1) * pagesPerBlock + 1;
+							int endPageNo = currentBlock * pagesPerBlock;
+							if (currentBlock == totalBlocks) {
+								endPageNo = totalPages;
+							}
+						%>
+						<li class="page-item "><a class="page-link"
+							href="orderlist.jsp?page=<%=pageNo - 1%>"> 이전 </a></li>
+						<%
+							for (int num = beginPageNo; num <= endPageNo; num++) {
+						%>
+						<li class="page-item active"><a class="page-link"
+							href="orderlist.jsp?page=<%=num%>"
+							style="<%=pageNo == num ? "background-color: #4caf50;" : ""%>">
+								<%=num%>
+						</a></li>
+						<%
+							}
+						%>
+						<li class="page-item"><a class="page-link"
+							href="orderlist.jsp?page=<%=pageNo + 1%>"> 다음 </a></li>
 					</ul>
 					<!-- 페이지 처리 끝 -->
-					<!-- 검색조건, 정렬기준, 테이블, 페이지처리 내용을 포함하는 card 끝 -->
 				</div>
 
 			</div>
@@ -244,5 +299,63 @@
 
 	</div>
 	<%@ include file="../common/footer.jsp"%>
+	
+	<script type="text/javascript">
+		function searchByValue() {
+			// 검색 옵션
+			var searchOption = document.querySelector("select[name=searchoption]").value;
+			// 검색 값
+			var searchValue = document.querySelector("#searchValue").value;
+			
+			var xhr = new XMLHttpRequest();
+			
+			
+			xhr.onreadystatechange = function() {
+				
+				if(xhr.readyState == 4 && xhr.status == 200) {
+					var text = xhr.responseText;
+					var datas = JSON.parse(text);
+					
+					var rows = "";
+					for(var i=0; i<datas.length; i++){
+						var data = datas[i];
+						
+						alert(data);
+						
+					}
+					
+					document.getElementById("").innerHTML = rows;
+				}
+			}
+			
+			xhr.open("GET", "/JSON/orderlistdata.jsp?searchopt="+searchOption+"&&searchValue="+searchValue);
+			
+			xhr.send();
+		}
+	</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

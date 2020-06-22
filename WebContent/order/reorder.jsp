@@ -1,3 +1,5 @@
+<%@page import="com.domino.vo.User"%>
+<%@page import="com.domino.dao.UserDao"%>
 <%@page import="com.domino.dto.PizzaOrderDto"%>
 <%@page import="com.domino.dto.SideOrderDto"%>
 <%@page import="com.domino.dto.EtcOrderDto"%>
@@ -15,7 +17,22 @@
 	request.setCharacterEncoding("UTF-8");
 
 	int userNo = loginUserNo;
-	int orderNo = NumberUtil.stringToInt(request.getParameter("orderno"));
+	
+	UserDao userDao = new UserDao();
+	User user = userDao.getUserByNo(userNo);
+	
+	int orderNo;
+	if ("quick".equals(request.getParameter("type"))) {
+		orderNo = user.getQuickOrderNo();
+		out.write(orderNo);
+	} else {
+		orderNo = NumberUtil.stringToInt(request.getParameter("orderno"));
+	}
+	
+	if (orderNo==0) {
+		response.sendRedirect("/domino/common/home.jsp?error=quicknull");
+		return;
+	}
 	
 	OrderDao orderDao = new OrderDao();
 	EtcDetailDao etcDetailDao = new EtcDetailDao();

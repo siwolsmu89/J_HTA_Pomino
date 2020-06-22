@@ -100,6 +100,12 @@ public class ToppingDetailDao {
 		connection.close();
 	}
 	
+	/**
+	 * 토핑주문을 피자주문번호로 가져오는 메소드
+	 * @param pizzaOrderNo 피자주문번호
+	 * @throws SQLException
+	 * @author 영준
+	 */
 	public void deleteToppingOrdersByPizzaOrderNo(int pizzaOrderNo) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("toppingdetail.deleteToppingOrdersByPizzaOrderNo"));

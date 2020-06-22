@@ -25,6 +25,11 @@ public class SideDao {
 		return side;
 	}
 	
+	/**
+	 * 모든 사이드메뉴를 조회하는 메소드
+	 * @return 모든 사이드메뉴
+	 * @throws SQLException
+	 */
 	public List<Side> getAllSide() throws SQLException {
 		List<Side> sides = new ArrayList<Side>();
 		
@@ -42,6 +47,52 @@ public class SideDao {
 		connection.close();
 		
 		return sides;
+	}
+	
+	/**
+	 * 특정범위 사이의 사이드메뉴를 조회하는 메소드
+	 * @param beginNumber
+	 * @param endNumber
+	 * @return 특정범위 사이의 사이드메뉴
+	 * @throws SQLException
+	 */
+	public List<Side> getAllSide(int beginNumber, int endNumber) throws SQLException {
+		List<Side> sides = new ArrayList<Side>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("side.getSidesByRange"));
+		pstmt.setInt(1, beginNumber);
+		pstmt.setInt(2, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Side side = resultSetToSide(rs);
+			sides.add(side);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return sides;
+	}
+	
+	public int getSidesCount() throws SQLException {
+		int count = 0;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("side.getSidesCount"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			count = rs.getInt("cnt");
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return count;
 	}
 	
 	public Side getSideByNo(int sideNo) throws SQLException {

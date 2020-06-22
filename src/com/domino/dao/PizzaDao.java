@@ -33,6 +33,11 @@ public class PizzaDao {
 		return pizza;
 	}
 	
+	/**
+	 * 모든 피자를 조회하는 메소드
+	 * @return 모든 피자
+	 * @throws SQLException
+	 */
 	public List<Pizza> getAllPizza() throws SQLException {
 		List<Pizza> pizzas = new ArrayList<Pizza>();
 		
@@ -50,6 +55,52 @@ public class PizzaDao {
 		connection.close();
 		
 		return pizzas;
+	}
+	
+	/**
+	 * 특정범위 사이의 피자를 조회하는 메소드
+	 * @param beginNumber
+	 * @param endNumber
+	 * @return 특정범위 사이의 피자
+	 * @throws SQLException
+	 */
+	public List<Pizza> getAllPizza(int beginNumber, int endNumber) throws SQLException {
+		List<Pizza> pizzas = new ArrayList<Pizza>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("pizza.getPizzasByRange"));
+		pstmt.setInt(1, beginNumber);
+		pstmt.setInt(2, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Pizza pizza = resultSetToPizza(rs);			
+			pizzas.add(pizza);			
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return pizzas;
+	}
+	
+	public int getPizzasCount() throws SQLException {
+		int count = 0;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("pizza.getPizzasCount"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			count = rs.getInt("cnt");
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return count;
 	}
 	
 	public Pizza getPizzaByNo(int pizzaNo) throws SQLException {

@@ -1,3 +1,4 @@
+<%@page import="com.domino.util.NumberUtil"%>
 <%@page import="com.domino.vo.Branch"%>
 <%@page import="java.util.List"%>
 <%@page import="com.domino.dao.BranchDao"%>
@@ -74,6 +75,21 @@
 		</div>
 
 		<div class="body">
+			<%
+				//<!-- 페이지네이션  -->
+				// 1. 한 화면에 표시할 행의 갯수
+				int rowsPerPage = 10;
+
+				// 2. 클라이언트가 요청한 페이지 번호 조회하기
+				int pageNo = NumberUtil.stringToInt(request.getParameter("page"), 1);
+
+				// 3. 조회할 목록의 시작번호와 끝번호를 조회한다.
+				int beginNumber = (pageNo - 1) * rowsPerPage + 1;
+				int endNumber = pageNo * rowsPerPage;
+
+				int rowCount = 0;
+				//<!-- 페이지네이션  -->
+			%>
 			<div class="row">
 				<div class="col-12">
 					<!-- 검색조건, 정렬기준, 테이블, 페이지처리 내용을 포함하는 card 시작 -->
@@ -103,7 +119,8 @@
 					<!-- 검색조건, 정렬기준 입력 폼 끝 -->
 					<%
 						BranchDao branchDao = new BranchDao();
-						List<Branch> branchs = branchDao.getAllBranch();
+						List<Branch> branchs = branchDao.getAllBranch(beginNumber, endNumber);
+						rowCount = branchDao.getBranchsCount();
 					%>
 					<table class="table text-center table-hover">
 						<colgroup>
@@ -246,7 +263,7 @@
 															</div>
 															<div class="form-group">
 																<label>할인율</label> <input type="text"
-																	class="form-control" value="<%=branch.getDiscountRate() %>" name="discount"/>
+																	class="form-control" value="<%=branch.getDiscountRate()*100 %>%" name="discount"/>
 															</div>
 														</div>
 													</div>
@@ -270,18 +287,48 @@
 					<!-- 페이지 처리 시작 -->
 					<ul class="pagination justify-content-center"
 						style="margin: 20px 0">
-						<li class="page-item"><a class="page-link" href="#">이전</a></li>
-						<li class="page-item active"><a class="page-link" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#">4</a></li>
-						<li class="page-item"><a class="page-link" href="#">5</a></li>
-						<li class="page-item"><a class="page-link" href="#">다음</a></li>
+						<%
+							// 0. 한 화면당 표시할 페이지번호 갯수
+							int pagesPerBlock = 5;
+
+							// 1. 전체 행의 갯수를 조회한다.
+							int rows = rowCount;
+
+							// 2. 전체 페이지수를 계산한다.
+							int totalPages = (int) Math.ceil((double) rows / rowsPerPage);
+
+							// 3. 전체 페이지블록 갯수 계산하기
+							int totalBlocks = (int) Math.ceil((double) totalPages / pagesPerBlock);
+
+							// 4. 요청한 페이지가 어느 페이지 블록에 속하는지 계산하기
+							int currentBlock = (int) Math.ceil((double) pageNo / pagesPerBlock);
+
+							// 5. 요청한 페에지가 속한 블록의 시작페이지번호와 끝페이지번호 계산하기
+							int beginPageNo = (currentBlock - 1) * pagesPerBlock + 1;
+							int endPageNo = currentBlock * pagesPerBlock;
+							if (currentBlock == totalBlocks) {
+								endPageNo = totalPages;
+							}
+						%>
+						<li class="page-item "><a class="page-link"
+							href="branchlist.jsp?page=<%=pageNo - 1%>"> 이전 </a></li>
+						<%
+							for (int num = beginPageNo; num <= endPageNo; num++) {
+						%>
+						<li class="page-item active"><a class="page-link"
+							href="branchlist.jsp?page=<%=num%>"
+							style="<%=pageNo == num ? "background-color: #4caf50;" : ""%>">
+								<%=num%>
+						</a></li>
+						<%
+							}
+						%>
+						<li class="page-item"><a class="page-link"
+							href="branchlist.jsp?page=<%=pageNo + 1%>"> 다음 </a></li>
 					</ul>
 					<!-- 페이지 처리 끝 -->
-					<!-- 검색조건, 정렬기준, 테이블, 페이지처리 내용을 포함하는 card 끝 -->
-					
-					
+
+
 				</div>
 			</div>
 		</div>

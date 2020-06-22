@@ -77,8 +77,8 @@
 				<div class="row">
 					<div class="col-12">
 						<div class="d-flex justify-content-center">
-							<div class=""><a href="#"><img src="../resource/images/home/deli_btn.png" /></a></div>
-							<div class=""><a href="#"><img src="../resource/images/home/quick_btn.png" /></a></div>
+							<div class=""><a href="../order/cart.jsp"><img src="../resource/images/home/deli_btn.png" /></a></div>
+							<div class=""><a href="../order/reorder.jsp?type=quick" ><img src="../resource/images/home/quick_btn.png" /></a></div>
 						</div>
 					</div>
 				</div>
@@ -108,8 +108,8 @@
 								<p>　</p>
 								<p class=""><strong><%=loginUserName%></strong> 님의 현재 등급</p> <!-- 사용자 이름 -->
 								<p class="text-center"><strong><%=user.getGradeName() == null ? "regular" : user.getGradeName()  %></strong><!-- 등급 --></p>
-								<a href="#"><button type="button" class="btn btn-dark">혜택보기</button></a>
-								<a href="#"><button type="button" class="btn btn-dark">주문내역</button></a>
+								<a href="../user/detailform.jsp"><button type="button" class="btn btn-dark">혜택보기</button></a>
+								<a href="../user/orderlist.jsp"><button type="button" class="btn btn-dark">주문내역</button></a>
 							</div>
 							
 	<!--					

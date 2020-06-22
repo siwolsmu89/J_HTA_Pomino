@@ -26,6 +26,11 @@ public class ToppingDao {
 		return topping;
 	}
 	
+	/**
+	 * 모든 토핑을 조회하는 메소드
+	 * @return 모든 토핑
+	 * @throws SQLException
+	 */
 	public List<Topping> getAllTopping() throws SQLException {
 		List<Topping> toppings = new ArrayList<Topping>();
 		
@@ -43,6 +48,52 @@ public class ToppingDao {
 		connection.close();
 		
 		return toppings;
+	}
+	
+	/**
+	 * 특정범위 사이의 토핑을 조회하는 메소드
+	 * @param beginNumber 범위 시작 값
+	 * @param endNumber 범위 끝 값
+	 * @return 특정범위 사이의 토핑
+	 * @throws SQLException
+	 */
+	public List<Topping> getAllTopping(int beginNumber, int endNumber) throws SQLException {
+		List<Topping> toppings = new ArrayList<Topping>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("topping.getToppingsByRange"));
+		pstmt.setInt(1, beginNumber);
+		pstmt.setInt(2, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Topping topping = resultSetToTopping(rs);
+			toppings.add(topping);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return toppings;
+	}
+	
+	public int getToppingsCount() throws SQLException {
+		int count = 0;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("topping.getToppingsCount"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			count = rs.getInt("cnt");
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return count;
 	}
 	
 	public Topping getToppingByNo(int toppingNo) throws SQLException {

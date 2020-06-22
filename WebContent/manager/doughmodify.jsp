@@ -42,5 +42,5 @@
 
 	doughDao.updateDough(oldDough);
 
-	response.sendRedirect("/domino/manager/menulist.jsp");
+	response.sendRedirect("/domino/manager/menulist.jsp?searchOption=dough");
 %>

@@ -21,6 +21,7 @@ public class SideOrderDto {
 	 * 개별 메뉴 가격
 	 */
 	private int sidePrice;
+	private String imageSrc;
 	
 	public SideOrderDto() {
 		
@@ -80,6 +81,14 @@ public class SideOrderDto {
 
 	public void setSidePrice(int sidePrice) {
 		this.sidePrice = sidePrice;
+	}
+
+	public String getImageSrc() {
+		return imageSrc;
+	}
+
+	public void setImageSrc(String imageSrc) {
+		this.imageSrc = imageSrc;
 	}
 	
 }

@@ -2,6 +2,14 @@
 <%@page import="com.domino.dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <script>
+	document.title = "포미노 피자 - 당신의 인생에 완벽한 한 끼! Life Food, Pomino's";
+	var link = document.createElement("link");
+	link.type = "image/x-icon";
+	link.rel = "shortcut icon";
+	link.href = "/domino/resource/images/logo/nomido.png";
+	document.getElementsByTagName('head')[0].appendChild(link);
+</script>
 <div class="container mt-3"><!-- 내비 컨테이너 -->
 	<div class="row">
 		<div class="col-12">
@@ -59,7 +67,7 @@
 							        <a class="nav-link" href="/domino/pizza/pizzamenu.jsp">메뉴</a>
 							      </li>
 							      <li class="nav-item pr-5 mr-3 <%="event".equals(position) ? "active" : ""%>">
-							        <a class="nav-link" href="#">이벤트/제휴</a>
+							        <a class="nav-link" href="/domino/event/eventlist.jsp">이벤트/제휴</a>
 							      </li>
 							      <%
 								  	if("Yes".equals(loginYn)) {
@@ -76,8 +84,8 @@
 							      <%
 								  	}
 							      %>
-							      <li class="nav-item pr-5 mr-3">
-							        <a class="nav-link" href="#">매장검색</a>
+							      <li class="nav-item pr-5 mr-3 <%="map".equals(position) ? "active" : ""%>">
+							        <a class="nav-link" href="/domino/map/detail.jsp">매장검색</a>
 							      </li>
 							      <%
 								  	if("Yes".equals(loginYn)) {
@@ -105,24 +113,40 @@
 							</nav>
 
 						</div>
+						
 						<div class="col-2"><!-- 더보기 -->
 							  <nav class="navbar navbar-light bg-white">
 							    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
 							      <span class="navbar-toggler-icon"></span>
 							    </button>
 							  </nav>
-							 <div class="collapse" id="navbarToggleExternalContent">
-							    <div class="bg-light p-4">
-							      <h5 class="text-dark h4">Collapsed content</h5>
-							      <span class="text-muted">Toggleable via the navbar brand.</span>
-							    </div>
-							  </div>
 						
 						</div>
-				
 					 
 				  </div>
-				
+				  <div class="row">
+					<div class="col-12">
+						<div class="collapse" id="navbarToggleExternalContent">
+							<div class="row">
+								<div class="col-12">
+									<div class="bg-light p-4 row">
+										<div class="col-6">
+										      <h5 class="text-dark h4 font-weight-bold">도미노서비스</h5>
+										      <p class="pt-2 pl-5"><a href="/domino/user/detailform.jsp" class="text-muted">▶ 매니아혜택</a></p>
+										      <p class="pl-5"><a href="/domino/order/reorder.jsp?type=quick" class="text-muted">▶ 퀵오더</a></p>
+										</div>
+										<div class="col-6">
+											    
+											      <h5 class="text-dark h4 font-weight-bold">고객센터</h5>
+											      <p class="pt-2 pl-5"><a href="/domino/user/questionform.jsp" class="text-muted">▶ 1:1문의</a></p>
+											    
+										</div>
+									</div>	
+								</div>
+						  	</div>
+						</div>
+					 </div>
+				  </div>
 				</div>
 			</div>
 		</div>

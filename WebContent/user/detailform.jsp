@@ -94,6 +94,16 @@
 				}
 			}
 			Grade grade = gradeDao.getGradeByName(user.getGradeName());
+			if (grade == null) {
+				grade = new Grade();
+				grade.setName("regular");
+				grade.setDiscountRate(0.0);
+			}
+			String counterDisplay = "";
+			if ("royal".equals(user.getGradeName())) {
+				counterDisplay = "none";
+			}
+			
 			
 		%>
 		<div class="row">
@@ -107,13 +117,13 @@
 						</div>
 						<div class="col-3" style="border-left: 1px solid white; border-right: 1px solid white;">
 							<p class="text-muted"><small>주문</small></p>
-							<p class="text-muted pb-0 mb-0"><small>(<%=user.getGradeDate() %>)</small></p>
+							<p class="text-muted pb-0 mb-0"><small>마지막 주문일자 : <%=user.getGradeDate() %></small></p>
 							<p class="text-muted pt-0 mt-0"><small>(해당 일자로부터 1년 유효기간입니다.)</small></p>
 							<p class="display-4 text-center font-weight-bold"><%=user.getOrderCount() %></p>
 						</div>
 						<div class="col-3">
 							<p class="text-muted"><small>총 주문금액</small></p>
-							<p class="text-muted pb-0 mb-0"><small>(<%=user.getGradeDate() %>)</small></p>
+							<p class="text-muted pb-0 mb-0"><small>등급 갱신일자 : <%=user.getGradeDate() %></small></p>
 							<p class="text-muted pt-0 mt-0"><small>(해당 일자로부터 1년 유효기간입니다.)</small></p>
 							<p class="display-4 text-center font-weight-bold"><%=userDto.getUserTotalPrice() %></p>
 						</div>
@@ -125,7 +135,7 @@
 			<div class="col-12">
 				<div class="row">
 					<div class="col-5">
-						<h5 class="text-left"><strong><%=nextGrade %></strong> 등급으로 업그레이드 하려면?</h5>
+						<h5 class="text-left">다음 등급<strong style="font-size: 14px; color: red;"><%="royal".equals(user.getGradeName()) ? "(현재 최고 등급)" : "(" + nextGrade +")" %></strong>으로 업그레이드 하려면?</h5>
 					</div>
 					<div class="col-7">
 						<div class="text-right text-muted small">*1년간 완료된 주문에 대해서 주문건 수를 기준으로 1년된 1일에 매니아 등급에 반영됩니다.</div>
@@ -153,13 +163,13 @@
 						</div>
 						<div>
 							<div class="text-right" style="width: <%="royal".equals(user.getGradeName()) ? 100 : user.getOrderCount()%5 * 20 %>%">
-								<span class="mt-2 badge badge-dark badge-pill"><%=5 - user.getOrderCount()%5 %>건 더 구매</span>
+								<span id="order-counter" class="mt-2 badge badge-dark badge-pill" style="display: <%=counterDisplay %>"><%=5 - user.getOrderCount()%5 %>건 더 구매</span>
 							</div>
 						</div>
 					</div>
 					<div class="col-2">
 						<div>
-							<p class="font-weight-bold text-center" style="font-size: 30px; color: blue;"><%=nextGrade %></p>
+							<p class="font-weight-bold text-center" style="font-size: 30px; color: blue;"><%="royal".equals(user.getGradeName()) ? "" : nextGrade %></p>
 						</div>
 					</div>
 				</div>
@@ -177,7 +187,9 @@
 				<div class="mb-2" style="background-color: black; height: 2px;"></div>
 				<div class="row">
 					<div class="col-12">
-						<p class="text-center mt-5 mb-5 font-weight-bold" style="font-size: 20px;">배달주문 <%=(grade.getDiscountRate() * 100) %>% 할인</p>
+						<p class="text-center mt-5 font-weight-bold" style="font-size: 20px;">배달주문 <strong style="color: red"><%=(grade.getDiscountRate() * 100) %>%</strong> 할인</p>
+						<p class="text-center text-muted" style="font-size: 16px;">할인율은 주문 시 매장 할인율과 등급 할인율 중 더 높은 혜택 하나만 적용됩니다.</p>
+						<p class="text-center mb-5 text-muted" style="font-size: 16px;">단, 피자 이벤트로 발생한 가격 할인은 매장/등급 할인과 중복 적용이 가능합니다.</p>
 					</div>
 				</div>
 				<div class="mb-5" style="background-color: black; height: 1px;"></div>

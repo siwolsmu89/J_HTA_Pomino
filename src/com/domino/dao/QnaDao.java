@@ -17,6 +17,13 @@ import com.domino.vo.Question;
 
 public class QnaDao {
 	
+	/**
+	 * ResultSet에서 가져온 정보들을 QuestionDto에 담는 메소드. 다른 메소드 안에서만 사용할 것이므로 private 제한자를 지정
+	 * @param ResultSet rs
+	 * @return 정보가 채워진 QuestionDto 객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	private QuestionDto resultSetToQuestion(ResultSet rs) throws SQLException {
 		QuestionDto questionDto = new QuestionDto();
 		
@@ -36,8 +43,8 @@ public class QnaDao {
 	}
 	
 	/**
-	 * 모든 문의게시물을 불러오는 메소드
-	 * @return 모든 문의 리스트
+	 * 모든 문의게시물 리스트를 불러오는 메소드
+	 * @return 문의 정보와 사용자 정보 데이터를 questionDto에 담아 모든 문의 리스트를 반환
 	 * @throws SQLException
 	 * @author 연성
 	 */
@@ -64,10 +71,67 @@ public class QnaDao {
 	}
 	
 	/**
-	 * 유저번호와 일치하는 문의게시물을 불러오는 메소드
-	 * @param userNo 유저번호
-	 * @return 문의게시물 리스트
+	 * pagination을 사용한 모든 문의게시물 리스트를 불러오는 메소드
+	 * @param beginNumber 시작순번
+	 * @param endNumber 종료순번
+	 * @return 문의 정보와 사용자 정보를 담은 모든 문의 리스트(QuestionDto)
 	 * @throws SQLException
+	 * @author 연성
+	 */
+	public List<QuestionDto> getAllQuestion(int beginNumber, int endNumber) throws SQLException {
+		List<QuestionDto> questionDtos = new ArrayList<QuestionDto>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("qna.getQuestionByRange"));
+		pstmt.setInt(1, beginNumber);
+		pstmt.setInt(2, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			QuestionDto questionDto = new QuestionDto();
+			
+			questionDto = resultSetToQuestion(rs);
+			
+			questionDtos.add(questionDto);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return questionDtos;
+	}
+	
+	/**
+	 * 총 문의 갯수를 반환하는 메소드.pagination 할 때 사용 
+	 * @return 총 문의 갯수
+	 * @throws SQLException
+	 * @author 연성
+	 */
+	public int getQnasCount() throws SQLException {
+		int count = 0;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("qna.getQuestionsCount"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			count = rs.getInt("cnt");
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return count;
+	}
+	
+	/**
+	 * 해당하는 사용자 번호와 일치하는 문의게시물을 불러오는 메소드
+	 * @param userNo 사용자번호
+	 * @return 사용자번호에 해당되는 문의게시물 리스트
+	 * @throws SQLException
+	 * @author 연성
 	 */
 	public List<QuestionDto> getQuestionByUserno(int userNo) throws SQLException {
 		List<QuestionDto> questionDtoList = JdbcHelper.selectList(QueryUtil.getSQL("qna.getQuestionByUserno"), 
@@ -94,6 +158,13 @@ public class QnaDao {
 		return questionDtoList;
 	}
 	
+	/**
+	 * 해당되는 문의번호에 대한 문의 정보를 불러오는 메소드
+	 * @param questionNo 문의번호
+	 * @return 문의정보를 담은 QuestionDto객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public QuestionDto getQuestionByNo(int questionNo) throws SQLException {
 		QuestionDto questionDto = null;
 		
@@ -113,6 +184,12 @@ public class QnaDao {
 		return questionDto;
 	}
 	
+	/**
+	 * 답변을 등록하는 메소드
+	 * @param answer 문의 번호에 해당하는 답변 내용을 저장하는 answer객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public void insertAnswer(Answer answer) throws SQLException {		
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("qna.insertAnswer"));
@@ -124,6 +201,12 @@ public class QnaDao {
 		connection.close();
 	}
 	
+	/**
+	 * 문의한 내용에 답변여부와 삭제여부를 수정하는 메소드
+	 * @param question 답변여부와 삭제여부를 저장하는 question객체
+	 * @throws SQLException
+	 * @author 하영
+	 */
 	public void updateQuestion(Question question) throws SQLException {		
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("qna.updateQuestion"));
@@ -138,6 +221,12 @@ public class QnaDao {
 		connection.close();
 	}
 	
+	/**
+	 * 문의를 등록하는 메소드
+	 * @param question 해당하는 사용자번호가 문의 내용을 저장
+	 * @throws SQLException
+	 * @author 하영
+	 */
 	public void insertQuestion(Question question) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("qna.insertQuestion"));
@@ -151,7 +240,13 @@ public class QnaDao {
 		pstmt.close();
 		connection.close();
 	}
-	
+	/**
+	 * 해당하는 사용자번호에 모든 문의리스트를 불러오는 메소드
+	 * @param questionWriter 사용자번호
+	 * @return 해당하는 사용자번호의 문의정보를 담은 문의 리스트(Question)
+	 * @throws SQLException
+	 * @author 하영
+	 */
 	public List<Question> getQuestionAllByUserNo(int questionWriter) throws SQLException {
 		List<Question> questions = new ArrayList<Question>();
 		
@@ -179,6 +274,51 @@ public class QnaDao {
 		return questions;
 	}
 	
+	/**
+	 * pagination을 사용한 해당하는 사용자번호에 모든 문의리스트를 불러오는 메소드
+	 * @param questionWriter 사용자번호
+	 * @param beginNumber 시작순번
+	 * @param endNumber 종료순번
+	 * @return 해당하는 사용자번호의 문의정보를 담은 문의 리스트(Question)
+	 * @throws SQLException
+	 * @author 하영
+	 */
+	public List<Question> getQuestionAllRangeByUserNo(int questionWriter, int beginNumber, int endNumber) throws SQLException {
+		List<Question> questions = new ArrayList<Question>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("qna.getQuestionAllRangeByUserNo"));
+		pstmt.setInt(1,questionWriter);
+		pstmt.setInt(2,beginNumber);
+		pstmt.setInt(3,endNumber);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Question question = new Question();
+			question.setNo(rs.getInt("question_no"));
+			question.setTitle(rs.getString("question_title"));
+			question.setRegDate(rs.getDate("question_reg_date"));
+			question.setAnsweredYn(rs.getString("answered_yn"));
+			question.setQuestionDelYn(rs.getString("question_del_yn"));
+			
+			questions.add(question);
+			
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return questions;
+	}
+	/**
+	 * 해당하는 사용자번호가 문의한 문의상세정보를 불러오는 메소드
+	 * @param questionWriter 사용자번호
+	 * @param questionNo 문의번호
+	 * @return 문의상세정보가 담긴 QuestionDto
+	 * @throws SQLException
+	 * @author 하영
+	 */
 	public QuestionDto getQuestionDetailUserQnaByNo(int questionWriter, int questionNo) throws SQLException {
 		QuestionDto questionDto = null;
 		Connection connection = ConnectionUtil.getConnection();
@@ -207,6 +347,11 @@ public class QnaDao {
 		return questionDto;
 	}
 	
+	/**
+	 * 해당하는 사용자
+	 * @param questionNo
+	 * @throws SQLException
+	 */
 	public void deleteQuestion(int questionNo) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("qna.deleteQuestion"));

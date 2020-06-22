@@ -28,7 +28,6 @@
 		// 피자객체 넣을 값 준비
 		String name = mr.getParameter("name");
 		String imageSrc = mr.getFilesystemName("upfile");
-		
 		int lPrice = NumberUtil.stringToInt(mr.getParameter("lprice"));
 		int mPrice = NumberUtil.stringToInt(mr.getParameter("mprice"));
 
@@ -46,5 +45,5 @@
 
 	pizzaDao.updatePizza(oldPizza);
 
-	response.sendRedirect("/domino/manager/menulist.jsp");
+	response.sendRedirect("/domino/manager/menulist.jsp?searchOption=pizza");
 %>

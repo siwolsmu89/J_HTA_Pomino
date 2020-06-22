@@ -84,4 +84,43 @@ public class LocationDao {
 		
 		return locations;
 	}
+	/**
+	 * 배달지 정보를 입력받아 상세정보가 같은 배달지 객체를 생성한다.
+	 * @param location 배달지정보 객체
+	 * @throws SQLException
+	 * @author 영준
+	 */
+	public void insertLocation(Location location) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("location.insertLocation"));
+		
+		pstmt.setString(1, location.getAddrFirst());
+		pstmt.setString(2, location.getAddrSecond());
+		pstmt.setString(3, location.getAddrDetail());
+		pstmt.setInt(4, location.getUserNo());
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
+	
+	/**
+	 * 선택된 배달지 정보의 locationNo를 받아와 그 객체를 삭제한다.
+	 * @param locationNo 배달지역번호
+	 * @throws SQLException
+	 * @author 영준
+	 */
+	public void deleteLocation(int locationNo) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("location.deleteLocation"));
+		
+		pstmt.setInt(1,locationNo);
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
+	
 }

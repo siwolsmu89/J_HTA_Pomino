@@ -43,5 +43,5 @@
 
 	toppingDao.updateTopping(oldTopping);
 
-	response.sendRedirect("/domino/manager/menulist.jsp");
+	response.sendRedirect("/domino/manager/menulist.jsp?searchOption=topping");
 %>

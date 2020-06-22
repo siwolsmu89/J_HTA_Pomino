@@ -35,6 +35,7 @@ public class PizzaDetailDao {
 		po.setPizzaName(rs.getString("pizza_name"));
 		po.setDoughName(rs.getString("dough_name"));
 		po.setDoughPrice(rs.getInt("dough_price"));
+		po.setImageSrc(rs.getString("pizza_image_src"));
 		if ("L".equalsIgnoreCase(pizzaSize)) {
 			po.setPizzaPrice(rs.getInt("pizza_L_price"));
 		} else {
@@ -129,6 +130,13 @@ public class PizzaDetailDao {
 		connection.close();
 	}
 	
+	/**
+	 * 피자 주문 을 피자 주문번호로 가져오는 메소드
+	 * @param no 피자주문번호
+	 * @return PizzaOrderDto 피자주문Dto
+	 * @throws SQLException
+	 * @author 영준
+	 */
 	public PizzaOrderDto getPizzaOrderByNo(int no) throws SQLException {
 		PizzaOrderDto pod = null;
 		

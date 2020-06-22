@@ -50,9 +50,89 @@ INSERT INTO grades
 VALUES
 ('regular', 2, 50000, 0.1);
 
-SELECT grade_name, grade_order_count, grade_order_price, grade_discount_rate 
-				   FROM grades 
-				   ORDER BY grade_order_count DESC;
-                   
-                   SELECT order_no_seq.NEXTVAL
-                   FROM dual;
+SELECT O.order_no, O.user_no, O.order_total_price, O.order_discount_price, O.order_status, 
+       PI.pizza_name || PI.pizza_size || '(' || PI.dough_name || ')' AS menu_name,
+       PI.pizza_order_amount AS menu_order_amount, 'pizza' AS menu_type
+FROM orders O, 
+    (SELECT PO.pizza_order_no, PO.pizza_no, PO.pizza_size, PO.pizza_order_amount,
+            P.pizza_name, D.dough_name
+     FROM orders O, pizza_orders PO, pizzas P, doughs D
+     WHERE O.order_no = 144
+     AND (PO.order_no = O.order_no
+     AND P.pizza_no = PO.pizza_no
+     AND PO.dough_no = D.dough_no)
+     ORDER BY pizza_order_no) PI
+WHERE order_no = 144
+
+UNION
+
+SELECT O.order_no, O.user_no, O.order_total_price, O.order_discount_price, O.order_status, S.side_name, SO.side_order_amount, 'side' AS menu_type
+FROM orders O, side_orders SO, sides S
+WHERE O.order_no = 144
+
+UNION
+
+SELECT O.order_no, O.user_no, O.order_total_price, O.order_discount_price, O.order_status, E.etc_name, EO.etc_order_amount, 'etc' AS menu_type
+FROM orders O, etc_orders EO, etcs E
+WHERE O.order_no=144
+
+ORDER BY menu_type
+;
+
+SELECT O.order_no, PI.pizza_name || PI.pizza_size || '(' || PI.dough_name || ')' AS menu_name,
+       PI.pizza_order_amount AS menu_order_amount
+						  FROM orders O, 
+    						   (SELECT PO.pizza_order_no, PO.pizza_no, PO.pizza_size, PO.pizza_order_amount, 
+          							   P.pizza_name, D.dough_name
+    							FROM orders O, pizza_orders PO, pizzas P, doughs D
+    							WHERE O.order_no = 144 
+    							AND PO.order_no = O.order_no 
+     							AND P.pizza_no = PO.pizza_no 
+     							AND PO.dough_no = D.dough_no
+     							ORDER BY pizza_order_no) PI 
+						  WHERE order_no = 144
+
+						  UNION 
+ 
+						  SELECT O.order_no, S.side_name, SO.side_order_amount 
+						  FROM orders O, side_orders SO, sides S 
+						  WHERE O.order_no = 144 
+                          AND SO.order_no = O.order_no
+                          AND SO.side_no = S.side_no
+
+						  UNION 
+                          
+						  SELECT O.order_no, E.etc_name, EO.etc_order_amount 
+						  FROM orders O, etc_orders EO, etcs E
+						  WHERE O.order_no = 144
+                          AND EO.order_no = O.order_no
+                          AND EO.etc_no = E.etc_no;
+                        
+                        
+                        
+SELECT O.order_no, O.branch_no, B.branch_name, O.order_discount_price, O.order_request_time, O.order_status,
+     ((SELECT COUNT(order_no) FROM pizza_orders PO WHERE PO.order_no = O.order_no) 
+     + (SELECT COUNT(order_no) FROM side_orders SO WHERE SO.order_no = O.order_no)
+     + (SELECT COUNT(order_no) FROM etc_orders EO WHERE EO.order_no = O.order_no)) AS total_count,
+    (SELECT PI.pizza_name || PI.pizza_size || '(' || PI.dough_name || ')'
+	 FROM orders O, (SELECT PO.pizza_size, PO.pizza_order_amount, P.pizza_name, D.dough_name
+    				 FROM orders O, pizza_orders PO, pizzas P, doughs D
+    				 WHERE O.order_no = 100
+    				 AND PO.order_no = O.order_no 
+     				 AND P.pizza_no = PO.pizza_no 
+     				 AND PO.dough_no = D.dough_no) PI 
+     WHERE order_no = 100 AND rownum = 1) AS pizza_name, 
+    (SELECT S.side_name FROM orders O, side_orders SO, sides S WHERE O.order_no = 100 AND SO.order_no = O.order_no AND SO.side_no = S.side_no AND rownum = 1) AS side_name,
+    (SELECT E.etc_name FROM orders O, etc_orders EO, etcs E WHERE O.order_no = 100 AND EO.order_no = O.order_no AND EO.etc_no = E.etc_no AND rownum = 1) AS etc_name
+FROM orders O, branches B
+WHERE O.branch_no = B.branch_no ;
+
+
+
+
+
+
+
+
+
+

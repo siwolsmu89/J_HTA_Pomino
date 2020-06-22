@@ -47,12 +47,89 @@ public class EventDao {
 		return events;
 	}
 	
+	public List<Event> getListEvent() throws SQLException {
+		List<Event> events = new ArrayList<Event>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("event.getListEvent"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Event event = resultSetToEvent(rs);			
+			events.add(event);			
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return events;
+	}
+	
+	public List<Event> getAllEvent(int beginNumber, int endNumber) throws SQLException {
+		List<Event> events = new ArrayList<Event>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("event.getEventByRange"));
+		pstmt.setInt(1, beginNumber);
+		pstmt.setInt(2, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Event event = resultSetToEvent(rs);			
+			events.add(event);			
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return events;
+	}
+	
+	public int getEventsCount() throws SQLException {
+		int count = 0;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("event.getEventsCount"));
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			count = rs.getInt("cnt");
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return count;
+	}
+	
 	public Event getEventByNo(int eventNo) throws SQLException {
 		Event event = null;
 		
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("event.getEventByNo"));
 		pstmt.setInt(1, eventNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			event = resultSetToEvent(rs);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return event;
+	}
+	
+	public Event getEventByName(String eventName) throws SQLException {
+		Event event = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("event.getEventByName"));
+		pstmt.setString(1, eventName);
 		ResultSet rs = pstmt.executeQuery();
 		
 		if(rs.next()) {

@@ -41,5 +41,5 @@
 
 	etcDao.updateEtc(oldEtc);
 
-	response.sendRedirect("/domino/manager/menulist.jsp");
+	response.sendRedirect("/domino/manager/menulist.jsp?searchOption=etc");
 %>

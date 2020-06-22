@@ -32,6 +32,7 @@ public class SideDetailDao {
 		so.setOrderPrice(rs.getInt("side_order_price"));
 		so.setSideName(rs.getString("side_name"));
 		so.setSidePrice(rs.getInt("side_price"));
+		so.setImageSrc(rs.getString("side_image_src"));
 		
 		return so;
 	}
@@ -118,6 +119,13 @@ public class SideDetailDao {
 		connection.close();
 	}
 	
+	/**
+	 * 사이드 주문을 사이드주문번호로 가져오는 메소드
+	 * @param no 사이드주문번호
+	 * @return SideOrderDto 사이드 주문 Dto
+	 * @throws SQLException
+	 * @author 영준
+	 */
 	public SideOrderDto getSideOrderByNo(int no) throws SQLException {
 		SideOrderDto sod = null;
 		

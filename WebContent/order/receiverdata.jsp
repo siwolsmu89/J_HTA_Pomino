@@ -21,5 +21,4 @@
 	String jsonText = gson.toJson(userMap);
 	
 	out.write(jsonText);
-	
 %>

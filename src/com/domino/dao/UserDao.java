@@ -182,8 +182,9 @@ public class UserDao {
 	/**
 	 * user번호에 해당되는 order의 order_total_price를 전부 더하여 User의 정보를 조회하는 메소드
 	 * @param userNo 사용자 번호
-	 * @return 조회에 성공하면 정보가 들어 있는 UserDto 객체가 반환됨
+	 * @return 조회에 성공하면 정보가 들어 있는 UserDto 객체가 반환
 	 * @throws SQLException
+	 * @author 하영
 	 */
 	public UserDto getTotalPriceUserByNo(int userNo) throws SQLException {
 		UserDto userDto = null;
@@ -208,10 +209,11 @@ public class UserDao {
 	}
 	
 	/**
-	 * 
-	 * @param userNo
-	 * @return
+	 * 해당하는 사용자번호가 1:1문의에 문의사항을 올린 질문 갯수를 구하는 메소드
+	 * @param userNo 사용자 번호
+	 * @return 사용자번호와 해당하는 사용자번호가 올린 질문을 count한 값
 	 * @throws SQLException
+	 * @author 하영
 	 */
 	public UserDto getCountQuestionUserByNo(int userNo) throws SQLException {
 		UserDto userDto = null;
@@ -271,6 +273,12 @@ public class UserDao {
 		}, addr);
 	}
 	
+	/**
+	 * 탈퇴제목과 탈퇴내용을 입력받고 탈퇴여부를 Y로 변경하는(delete문을 사용하지 않음) 메소드 
+	 * @param user user객체에 저장되는 탈퇴제목, 탈퇴내용
+	 * @throws SQLException
+	 * @author 하영
+	 */
 	public void deleteUser(User user) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("user.deleteUser"));
