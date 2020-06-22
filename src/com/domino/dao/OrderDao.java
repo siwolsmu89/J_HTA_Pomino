@@ -40,6 +40,31 @@ public class OrderDao {
 		
 		return order;
 	}
+	
+	/**
+	 * ResultSet에서 가져온 정보들을 Order 객체에 담는 메소드. 다른 메소드 안에서만 사용할 것이므로 private 제한자를 지정
+	 * 생각보다 OrderDto도 만들 일이 많아서 만들었습니다.
+	 * @param ResultSet rs
+	 * @return 정보가 채워진 Order 객체
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	private OrderDto resultSetToOrderDto(ResultSet rs) throws SQLException {
+		OrderDto orderDto = new OrderDto();
+		
+		orderDto.setOrderNo(rs.getInt("order_no"));
+		orderDto.setBranchNo(rs.getInt("branch_no"));
+		orderDto.setBranchName(rs.getString("branch_name"));
+		orderDto.setTotalDiscountPrice(rs.getInt("order_discount_price"));
+		orderDto.setRequestTime(rs.getDate("order_request_time"));
+		orderDto.setOrderStatus(rs.getInt("order_status"));
+		orderDto.setTotalAmount(rs.getInt("total_count"));
+		orderDto.setPizzaName(rs.getString("pizza_name"));
+		orderDto.setSideName(rs.getString("side_name"));
+		orderDto.setEtcName(rs.getString("etc_name"));
+		
+		return orderDto;
+	}
 
 	/**
 	 * 사용자 번호와 일치하는 장바구니 정보를 조회하는 메소드
@@ -437,10 +462,11 @@ public class OrderDao {
 	 * @param branchNo 지점번호
 	 * @return Order리스트
 	 * @throws SQLException
-	 * @author 영준
+	 * @author 영준 
+	 * orderDto로 하고 싶어서 이거 조금 수정합니다. / 민석
 	 */
-	public List<Order> getAllOrdersByBranchno(int branchNo) throws SQLException{
-		List<Order> orders = new ArrayList<Order>();
+	public List<OrderDto> getAllOrdersByBranchNo(int branchNo) throws SQLException{
+		List<OrderDto> orders = new ArrayList<OrderDto>();
 		
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getAllOrdersByBranchno"));
@@ -448,15 +474,37 @@ public class OrderDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			Order order = new Order();
-			order = resultSetToOrder(rs);
-			
+			OrderDto order = resultSetToOrderDto(rs);
 			orders.add(order);
 		}
 		
 		return orders;
 	}
 	
+	/**
+	 * 매장번호와 범위를 가지고 모든 주문정보를 조회하는 메소드
+	 * @param branchName
+	 * @return
+	 * @throws SQLException
+	 * @author 민석 (만드는중)
+	 */
+	public List<OrderDto> getAllOrdersByBranchNoWithRange(int branchNo, int beginNumber, int endNumber) throws SQLException{
+		List<OrderDto> orders = new ArrayList<OrderDto>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getAllOrdersByBranchNoWithRange"));
+		pstmt.setInt(1, branchNo);
+		pstmt.setInt(2, beginNumber);
+		pstmt.setInt(3, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			OrderDto order = resultSetToOrderDto(rs);
+			orders.add(order);
+		}
+		
+		return orders;
+	}
 	
 	public List<Order> getAllOrdersByBranchname(String branchName) throws SQLException{
 		List<Order> orders = new ArrayList<Order>();
@@ -467,8 +515,7 @@ public class OrderDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			Order order = new Order();
-			order = resultSetToOrder(rs);
+			Order order = resultSetToOrder(rs);
 			
 			orders.add(order);
 		}
@@ -485,8 +532,7 @@ public class OrderDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			Order order = new Order();
-			order = resultSetToOrder(rs);
+			Order order = resultSetToOrder(rs);
 			
 			orders.add(order);
 		}
@@ -510,19 +556,7 @@ public class OrderDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			OrderDto orderDto = new OrderDto();
-			
-			orderDto.setOrderNo(rs.getInt("order_no"));
-			orderDto.setBranchNo(rs.getInt("branch_no"));
-			orderDto.setBranchName(rs.getString("branch_name"));
-			orderDto.setTotalDiscountPrice(rs.getInt("order_discount_price"));
-			orderDto.setRequestTime(rs.getDate("order_request_time"));
-			orderDto.setOrderStatus(rs.getInt("order_status"));
-			orderDto.setTotalAmount(rs.getInt("total_count"));
-			orderDto.setPizzaName(rs.getString("pizza_name"));
-			orderDto.setSideName(rs.getString("side_name"));
-			orderDto.setEtcName(rs.getString("etc_name"));
-			
+			OrderDto orderDto = resultSetToOrderDto(rs);
 			orderInfos.add(orderDto);
 		}
 		
