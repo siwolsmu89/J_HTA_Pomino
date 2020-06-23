@@ -104,7 +104,6 @@
 				counterDisplay = "none";
 			}
 			
-			
 		%>
 		<div class="row">
 			<div class="col-12">

@@ -127,10 +127,11 @@ public class BranchDao {
 		return branch;
 	}
 	
+	
 	/**
-	 * 
-	 * @param branchNo
-	 * @return
+	 * 해당 가맹점명과 일치하는 가맹점
+	 * @param branchName 가맹점명
+	 * @return 가맹점명와 일치하는 가맹점
 	 * @throws SQLException
 	 */
 	public Branch getBranchByName(String branchName) throws SQLException {
@@ -150,6 +151,36 @@ public class BranchDao {
 		connection.close();
 		
 		return branch;
+	}
+	
+	/**
+	 * 해당 가맹점명과 일치하는 가맹점 중에서 페이징처리 범위에 속하는 값을 반환한다.
+	 * @param branchName 가맹점명
+	 * @param beginNumber 시작순번
+	 * @param endNumber 끝순번
+	 * @return 가맹점명 일치, 페이징처리 범위안의 가맹점
+	 * @throws SQLException
+	 */
+	public List<Branch> getBranchByName(String branchName, int beginNumber, int endNumber) throws SQLException {
+		List<Branch> branchs = new ArrayList<Branch>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("branch.getBranchByNameWithRange"));
+		pstmt.setString(1, branchName);
+		pstmt.setInt(2, beginNumber);
+		pstmt.setInt(3, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while (rs.next()) {
+			Branch branch = resultSetToBranch(rs);
+			branchs.add(branch);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return branchs;
 	}
 	
 	/**
@@ -193,7 +224,13 @@ public class BranchDao {
 		pstmt.close();
 		connection.close();
 	}
-
+	
+	/**
+	 * 주소(대분류)에 해당하는 가맹점 값을 반환한다.
+	 * @param first_addr 주소(대분류)
+	 * @return 주소에 해당되는 가맹점
+	 * @throws SQLException
+	 */
 	public Branch getBranchByAddr(String first_addr) throws SQLException {
 		Branch branch = null;
 		
@@ -211,6 +248,36 @@ public class BranchDao {
 		
 		return branch;
 	}
+	
+	/**
+	 * 주소(대분류)에 해당하는 가맹점 중에서 페이징처리 범위에 속하는 값을 반환한다.
+	 * @param first_addr 주소(대분류)
+	 * @param beginNumber 시작순번
+	 * @param endNumber 끝순번
+	 * @return 주소에 해당되고, 페이징처리 범위안에 포함되는 가맹점
+	 * @throws SQLException
+	 */
+	public List<Branch> getBranchByAddr(String first_addr, int beginNumber, int endNumber) throws SQLException {
+		List<Branch> branchs = new ArrayList<Branch>();
+			
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("branch.getBranchByAddrWithRange"));
+		pstmt.setString(1, first_addr);
+		pstmt.setInt(2, beginNumber);
+		pstmt.setInt(3, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while (rs.next()) {
+			Branch branch = resultSetToBranch(rs);
+			branchs.add(branch);
+		}
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return branchs;
+	}
+	
 	
 }
 

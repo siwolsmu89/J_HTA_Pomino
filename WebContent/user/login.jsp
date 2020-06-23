@@ -28,6 +28,16 @@
 		session.setAttribute("사용자번호", user.getNo());
 		session.setAttribute("로그인여부", "Yes");
 		
+		if ("admin".equals(id)) {
+			session.setAttribute("관리자여부", "Yes");
+		}
+		
+		if (id.length()>7) {
+			if ("branch".equals(id.substring(0, 6))) {
+				session.setAttribute("매니저여부", "Yes");
+				session.setAttribute("매장번호", id.substring(7));
+			}
+		}
 		
 		response.sendRedirect("/domino/common/home.jsp");
 	}

@@ -94,28 +94,29 @@
 				<div class="col-12">
 					<!-- 검색조건, 정렬기준, 테이블, 페이지처리 내용을 포함하는 card 시작 -->
 					<!-- 검색조건, 정렬기준 입력 폼 시작 -->
-					<form>
-						<div class="row">
-							<!-- 검색조건 입력폼 시작 -->
-							<div class="col-6">
+					<div class="row">
+						<!-- 검색조건 입력폼 시작 -->
+						<div class="col-6">
+							<form action="">
 								<div class="input-group mb-3">
 									<div class="input-group-prepend">
-										<select class="form-control" name="searchOption">
-											<option value="title">가맹점번호</option>
-											<option value="writer">가맹점명</option>
-											<option value="content">지역(대분류)</option>
-											<option value="content">지역(소분류)</option>
+										<select class="form-control" name="searchoption">
+											<option value="branchno">가맹점번호</option>
+											<option value="branchname">가맹점명</option>
+											<option value="branchaddr">지역(대분류)</option>
 										</select>
 									</div>
-									<input type="text" class="form-control"
+									<input id="searchValue" type="text" class="form-control"
 										placeholder="검색어를 입력하세요">
 									<div class="input-group-append">
-										<button class="btn btn-outline-secondary" type="button">조회</button>
+										<button class="btn btn-outline-secondary" type="button"
+											onclick="branchListData(event)"> 조회</button>
 									</div>
 								</div>
-							</div>
+							</form>
+
 						</div>
-					</form>
+					</div>
 					<!-- 검색조건, 정렬기준 입력 폼 끝 -->
 					<%
 						BranchDao branchDao = new BranchDao();
@@ -142,7 +143,7 @@
 									href="branchform.jsp">가맹점 등록</a></th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="branch-body">
 						<%
 							for(Branch branch : branchs) {
 						%>
@@ -179,6 +180,7 @@
 							%>
 								</td>
 							</tr>
+							
 							<tr>
 								<!-- Modal - qnadetail -->
 								<td class="modal fade" id="<%=branch.getName() %>" tabindex="-1"
@@ -336,7 +338,64 @@
 	<%@ include file="../common/footer.jsp"%>
 	
 	<script type="text/javascript">
-		
+		function branchListData(event) {
+			var beginNumber = "<%=beginNumber%>";
+			var endNumber = "<%=endNumber%>";
+			// 검색 옵션
+			var searchOption = document.querySelector("select[name=searchoption]").value;
+			
+			// 검색 값
+			var searchValue = document.querySelector("#searchValue").value;
+			
+			var xhr = new XMLHttpRequest();
+
+			xhr.onreadystatechange = function() {
+
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					var text = xhr.responseText;
+					var branchs = JSON.parse(text);
+					
+					
+					
+					var rows = "";
+					
+					for(var i=0; i<branchs.length; i++) {
+						var branch = branchs[i];
+						
+						if (!branch) {
+							alert('입력한 값과 일치하는 가맹점이 존재하지 않습니다.');
+							return;
+						}
+						rows += "";
+						
+						if('N' == branch.quitYn){
+							rows += "<tr data-toggle='modal' data-target='#"+branch.name+"' class='font-weight-bold'>";
+						} else {
+							rows += "<tr data-toggle='modal' data-target='#"+branch.name+"' class='text-muted'>";
+						}
+						rows += "<td>"+branch.no+"</td>";
+						rows += "<td>"+branch.name+"</td>";
+						rows += "<td>"+branch.addrFirst+"</td>";
+						rows += "<td>"+branch.addrSecond+"</td>";
+						rows += "<td>"+branch.tel+"</td>";
+						
+						if('N' == branch.quitYn){
+							rows += "<td><button type='button'  class='btn btn-success'>영업중</button></td>";
+						} else {
+							rows += "<td><button type='button'  class='btn btn-dark'>영업종료</button></td>";
+						}
+										
+						rows += "</tr>";					
+						
+					}					
+					// 브라우저 출력
+					document.getElementById("branch-body").innerHTML = rows;
+				}
+			}
+			xhr.open("GET", "/domino/manager/JSON/branchlistdata.jsp?searchOpt="+searchOption+"&&searchValue="+searchValue+"&&beginNumber="+beginNumber+"&&endNumber="+endNumber);
+
+			xhr.send();
+		}
 	</script>
 </body>
 </html>

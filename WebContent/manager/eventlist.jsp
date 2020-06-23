@@ -20,9 +20,9 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<%
-	String position = "manager";
-%>
+	<%
+		String position = "manager";
+	%>
 	<%@ include file="../common/navbar.jsp"%>
 	<div class="container">
 		<div class="header">
@@ -72,7 +72,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="body">
 			<%
 				//<!-- 페이지네이션  -->
@@ -88,7 +88,7 @@
 
 				int rowCount = 0;
 				//<!-- 페이지네이션  -->
-				
+
 				EventDao eventDao = new EventDao();
 				List<Event> events = eventDao.getAllEvent(beginNumber, endNumber);
 				rowCount = eventDao.getEventsCount();
@@ -96,38 +96,41 @@
 			<div class="row">
 
 				<div class="col-12">
-					<form>
-						<div class="row">
-							<!-- 검색조건 입력폼 시작 -->
-							<div class="col-6">
+
+					<div class="row">
+
+						<div class="col-6">
+							<form action="">
 								<div class="input-group mb-3">
 									<div class="input-group-prepend">
-										<select class="form-control" name="searchOption">
+										<select class="form-control" name="searchoption">
 											<option value="eventno">이벤트번호</option>
-											<option value="writer">이벤트이름</option>
+											<option value="eventname">이벤트명</option>
 										</select>
 									</div>
-									<input type="text" class="form-control"
+									<input id="searchValue" type="text" class="form-control"
 										placeholder="검색어를 입력하세요">
 									<div class="input-group-append">
-										<button class="btn btn-outline-secondary" type="button" onclick="">조회</button>
+										<button class="btn btn-outline-secondary" type="button"
+											onclick="eventListData()">조회</button>
 									</div>
 								</div>
-							</div>
-							<!-- 검색조건 입력폼 끝 -->
-							<!-- 정렬기준 선택 시작  -->
-							<div class="col-2 offset-4">
+							</form>
+
+						</div>
+						<!-- <div class="col-2 offset-4">
+							<form action="">
 								<div class="input-group mb-3">
-									<select class="form-control" name="sort">
-										<option value="title">전체보기</option>
-										<option value="writer">완료된 이벤트</option>
-										<option value="content">진행중인 이벤트</option>
+									<select class="form-control" name="searchgroup" onchange="showevent(event)">
+										<option value="all">전체보기</option>
+										<option value="done">완료된 이벤트</option>
+										<option value="ing">진행중인 이벤트</option>
 									</select>
 								</div>
-							</div>
-							<!-- 정렬기준 선택 끝  -->
-						</div>
-					</form>
+							</form>
+						</div> -->
+					</div>
+
 					
 					<!-- 검색조건, 정렬기준 입력 폼 끝 -->
 					<table class="table text-center">
@@ -153,62 +156,62 @@
 									href="eventform.jsp">신규 이벤트 등록</a></th>
 							</tr>
 						</thead>
-						<tbody>
-						<%
-							for(Event event : events) {
-						%>
+						<tbody id="event-body">
+							<%
+								for (Event event : events) {
+							%>
 							<tr
 								<%
-									if ("n".equalsIgnoreCase(event.getDisableYn())){ 
+									if ("n".equalsIgnoreCase(event.getDisableYn())) {
 								%>
-									class="font-weight-bold"
+										class="font-weight-bold" 
 								<%
 									} else {
 								%>
-									class="text-muted"
+										class="text-muted" 
 								<%
 									}
 								%>
 							>
-								<td><%=event.getNo() %></td>
-								<td><%=event.getName() %></td>
-								<td><%=event.getStartDate() %></td>
-								<td><%=event.getEndDate() %></td>
-								<td><%=("N".equals(event.getDisableYn())) ? "아니오" : "예" %></td>
-								<td><%=(0 == event.getDiscountRate()*100) ? 0 : event.getDiscountRate()*100+"%" %></td>
+								<td><%=event.getNo()%></td>
+								<td><%=event.getName()%></td>
+								<td><%=event.getStartDate()%></td>
+								<td><%=event.getEndDate()%></td>
+								<td><%=("N".equals(event.getDisableYn())) ? "아니오" : "예"%></td>
+								<td><%=(0 == event.getDiscountRate() * 100) ? 0 : event.getDiscountRate() * 100 + "%"%></td>
 								<td><a class="btn btn-primary text-light"
-									href="eventmodifyform.jsp?yn=n&eventno=<%=event.getNo() %>">수정</a></td>
+									href="eventmodifyform.jsp?yn=n&eventno=<%=event.getNo()%>">수정</a></td>
 								<%
-									if("N".equalsIgnoreCase(event.getDisableYn())){
+									if ("N".equalsIgnoreCase(event.getDisableYn())) {
 								%>
 								<td>
-									<form method="post" action="eventmodify.jsp" enctype="multipart/form-data">
-										<input type="hidden" name="yn" value="y">
-										<input type="hidden" name="eventno" value=<%=event.getNo() %>>
+									<form method="post" action="eventmodify.jsp"
+										enctype="multipart/form-data">
+										<input type="hidden" name="yn" value="y"> <input
+											type="hidden" name="eventno" value=<%=event.getNo()%>>
 										<button class="btn btn-secondary text-light" type="submit">
-											비활성
-										</button>
+											비활성</button>
 									</form>
 								</td>
 								<%
 									} else {
 								%>
 								<td>
-									<form method="post" action="eventmodify.jsp" enctype="multipart/form-data">
-										<input type="hidden" name="yn" value="yn">
-										<input type="hidden" name="eventno" value=<%=event.getNo() %>>
+									<form method="post" action="eventmodify.jsp"
+										enctype="multipart/form-data">
+										<input type="hidden" name="yn" value="yn"> <input
+											type="hidden" name="eventno" value=<%=event.getNo()%>>
 										<button class="btn btn-danger text-light" type="submit">
-											활성
-										</button>
+											활성</button>
 									</form>
 								</td>
 								<%
 									}
 								%>
 							</tr>
-						<%
-							}
-						%>
+							<%
+								}
+							%>
 						</tbody>
 					</table>
 					<!-- 페이지 처리 시작 -->
@@ -262,5 +265,98 @@
 
 	</div>
 	<%@ include file="../common/footer.jsp"%>
+
+	<script type="text/javascript">
+		// 조건 - 개별검색 
+		function eventListData() {
+			// 검색 옵션
+			var searchOption = document.querySelector("select[name=searchoption]").value;
+			// 검색 값
+			var searchValue = document.querySelector("#searchValue").value;
+			var xhr = new XMLHttpRequest();
+
+			xhr.onreadystatechange = function() {
+
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					var text = xhr.responseText;
+					var event = JSON.parse(text);
+					
+					if(!event){
+						alert('입력한 값과 일치하는 이벤트가 존재하지 않습니다.');
+						return;
+					}
+					
+					var rows = "";
+					
+					// 출력문 작성
+					if('N'== event.disableYn){
+						rows += "<tr class='font-weight-bold'>";
+					} else {
+						rows += "<tr class='text-muted'>";
+					}
+					rows += "<td>"+event.no+"</td>";
+					rows += "<td>"+event.name+"</td>";
+					rows += "<td>"+event.startDate+"</td>";
+					rows += "<td>"+event.endDate+"</td>";
+					if('N' == event.disableYn){
+						rows += "<td>아니오</td>";
+					} else {
+						rows += "<td>예</td>";
+					}
+					if(0 == event.discountRate * 100){
+						rows += "<td>0</td>";
+					} else {
+						rows += "<td>"+event.discountRate*100+"</td>";
+					}
+					rows += "<td><a class='btn btn-primary text-light' href='eventmodifyform.jsp?yn=n&eventno="+event.no+"'>수정</a></td>";										
+					if('N' == event.disableYn){
+						rows += "<td><form method='post' action='eventmodify.jsp' enctype='multipart/form-data'>";
+						rows += "<input type='hidden' name='yn' value='y'> <input type='hidden' name='eventno' value="+event.no+">";
+						rows += "<button class='btn btn-secondary text-light' type='submit'>비활성</button></form></td>";
+					} else {
+						rows += "<td><form method='post' action='eventmodify.jsp' enctype='multipart/form-data'>"
+						rows += "<input type='hidden' name='yn' value='yn'> <input type='hidden' name='eventno' value="+event.no+">";
+						rows += "<button class='btn btn-danger text-light' type='submit'>활성</button></form></td>";
+					}					
+					rows += "</tr>";
+					
+					// 브라우저 출력
+					document.getElementById("event-body").innerHTML = rows;
+				}
+			}
+
+			xhr.open("GET", "/domino/manager/JSON/eventlistdata.jsp?searchOpt="
+					+ searchOption + "&&searchValue=" + searchValue);
+
+			xhr.send();
+		}
+	</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

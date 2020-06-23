@@ -92,39 +92,28 @@
 			%>
 			<div class="row">
 				<div class="col-12">
-					<form>
-						<div class="row">
-							<!-- 검색조건 입력폼 시작 -->
-							<div class="col-6">
+					<div class="row">
+						<div class="col-6">
+							<form>
 								<div class="input-group mb-3">
 									<div class="input-group-prepend">
-										<select class="form-control" name="searchOption">
+										<select class="form-control" name="searchoption">
 											<option value="qnano">문의번호</option>
-											<option value="qnawriter">작성자</option>
-											<option value="qnadate">등록일</option>
+											<option value="qnawriter">문의작성자</option>
+											<option value="qnatitle">문의제목</option>
 										</select>
 									</div>
-									<input type="text" class="form-control"
+									<input id="searchValue" type="text" class="form-control"
 										placeholder="검색어를 입력하세요">
 									<div class="input-group-append">
-										<button class="btn btn-outline-secondary" type="button">조회</button>
+										<button class="btn btn-outline-secondary" type="button"
+											onclick="qnaListData(event)">조회</button>
 									</div>
 								</div>
-							</div>
-							<!-- 검색조건 입력폼 끝 -->
-							<!-- 정렬기준 선택 시작  -->
-							<div class="col-2 offset-4">
-								<div class="input-group mb-3">
-									<select class="form-control" name="sort">
-										<option value="total">전체보기</option>
-										<option value="complete">완료된 글</option>
-										<option value="wait">답변대기 글</option>
-									</select>
-								</div>
-							</div>
-							<!-- 정렬기준 선택 끝  -->
+							</form>
 						</div>
-					</form>
+					</div>
+
 					<%
 						QnaDao qnaDao = new QnaDao();
 						List<QuestionDto> questions = qnaDao.getAllQuestion(beginNumber, endNumber);
@@ -147,7 +136,7 @@
 								<th>처리상태</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="qna-body">
 							<%
 								int fromMainNo = NumberUtil.stringToInt(request.getParameter("qnano"));
 								for (QuestionDto questionDto : questions) {
@@ -156,22 +145,18 @@
 								<%
 									if ("n".equalsIgnoreCase(questionDto.getAnsweredYn())){ 
 								%>
-									class="font-weight-bold"
-								<%
+								class="font-weight-bold" <%
 									} else {
 								%>
-									class="text-muted"
-								<%
+								class="text-muted" <%
 									}
 								%>
 								<%
 									if(questionDto.getNo() == fromMainNo) {
 								%>
-									style="border: 2px solid red;"
-								<%
+								style="border: 2px solid red;" <%
 									}
-								%>
-							>
+								%>>
 								<td><%=questionDto.getNo()%></td>
 								<td><%=questionDto.getUserName()%></td>
 								<td><%=questionDto.getTitle()%></td>
@@ -180,17 +165,12 @@
 									<%
 										if ("N".equals(questionDto.getAnsweredYn())) {
 									%>
-									<button type="button" class="btn btn-primary" 
-									 >
-										답변대기
-									</button>
-									<%
+									<button type="button" class="btn btn-primary">
+										답변대기</button> <%
 									 	} else {
 									%>
-									<button type="button" class="btn btn-secondary" 
-									>
-										답변완료</button> 
-									<%
+									<button type="button" class="btn btn-secondary">
+										답변완료</button> <%
 									 	}
 									%>
 								</td>
@@ -218,13 +198,13 @@
 														<div class="col-6">
 															<div class="form-group">
 																<label>이름</label> <input type="text"
-																	class="form-control" value="<%=questionDto.getUserName()%>"
-																	disabled />
+																	class="form-control"
+																	value="<%=questionDto.getUserName()%>" disabled />
 															</div>
 															<div class="form-group">
 																<label>아이디</label> <input type="text"
-																	class="form-control" value="<%=questionDto.getUserId()%>"
-																	disabled />
+																	class="form-control"
+																	value="<%=questionDto.getUserId()%>" disabled />
 															</div>
 														</div>
 														<div class="col-6">
@@ -236,41 +216,41 @@
 															<div class="form-group">
 																<label>등록날짜</label> <input type="text"
 																	class="form-control"
-																	value="<%=questionDto.getRegDate()%>" name="addrdetail" disabled/>
+																	value="<%=questionDto.getRegDate()%>" name="addrdetail"
+																	disabled />
 															</div>
 														</div>
 														<div class="col-12">
 															<div class="form-group">
 																<label>제목</label> <input type="text"
-																	class="form-control" value="<%=questionDto.getTitle()%> " disabled
+																	class="form-control"
+																	value="<%=questionDto.getTitle()%> " disabled
 																	name="tel" />
 															</div>
 														</div>
 														<div class="col-12">
 															<div class="form-group">
-																<label>문의내용</label> 
-																<textarea type="text"
-																	class="form-control" disabled
-																	name="tel" ><%=questionDto.getContent()%></textarea>
+																<label>문의내용</label>
+																<textarea type="text" class="form-control" disabled
+																	name="tel"><%=questionDto.getContent()%></textarea>
 															</div>
 														</div>
 														<div class="col-12">
 
 															<div class="form-group">
 																<label for="desc-1">답변작성</label>
-																<textarea class="form-control" name="answercontent" id="desc-1"></textarea>
+																<textarea class="form-control" name="answercontent"
+																	id="desc-1"></textarea>
 															</div>
 
 														</div>
 													</div>
 												</div>
 												<div class="modal-footer">
-													<button type="button" class="btn btn-secondary" data-dismiss="modal">
-														다시 작성
-													</button>
+													<button type="button" class="btn btn-secondary"
+														data-dismiss="modal">다시 작성</button>
 													<button type="submit" class="btn btn-primary">
-														답변등록
-													</button>
+														답변등록</button>
 												</div>
 											</form>
 
@@ -337,5 +317,60 @@
 
 	</div>
 	<%@ include file="../common/footer.jsp"%>
+	<script type="text/javascript">
+		function qnaListData(event) {
+			var beginNumber = "<%=beginNumber%>";
+			var endNumber = "<%=endNumber%>";
+			// 검색 옵션
+			var searchOption = document
+					.querySelector("select[name=searchoption]").value;
+			// 검색 값
+			var searchValue = document.querySelector("#searchValue").value;
+			var xhr = new XMLHttpRequest();
+
+			xhr.onreadystatechange = function() {
+
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					var text = xhr.responseText;
+					var questions = JSON.parse(text);
+					
+					
+					
+					var rows = "";
+					
+					for(var i=0; i<questions.length; i++) {
+						var question = questions[i];
+						if (!question) {
+							alert('입력한 값과 일치하는 문의가 존재하지 않습니다.');
+							return;
+						}
+						
+						rows += "";
+						if('N' == question.answeredYn){
+							rows += "<tr data-toggle='modal' data-target='#a"+question.no+"' class='font-weight-bold'>";
+						} else {
+							rows += "<tr data-toggle='modal' data-target='#a"+question.no+"' class='text-muted'>";
+						}				
+						rows += "<td>"+question.no+"</td>";
+						rows += "<td>"+question.userName+"</td>";
+						rows += "<td>"+question.title+"</td>";
+						rows += "<td>"+question.regDate+"</td>";
+						
+						if('N' == question.answeredYn){
+							rows += "<td><button type='button' class='btn btn-primary'>답변대기</td>";
+						} else {
+							rows += "<td><button type='button' class='btn btn-secondary'>딥뱐완료</td>";
+						}
+						rows += "</tr>";
+					}					
+					// 브라우저 출력
+					document.getElementById("qna-body").innerHTML = rows;
+				}
+			}
+			xhr.open("GET", "/domino/manager/JSON/qnalistdata.jsp?searchOpt="+searchOption+"&&searchValue="+searchValue+"&&beginNumber="+beginNumber+"&&endNumber="+endNumber);
+
+			xhr.send();
+		}
+	</script>
 </body>
 </html>

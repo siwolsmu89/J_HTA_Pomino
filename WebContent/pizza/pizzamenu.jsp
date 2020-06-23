@@ -44,18 +44,40 @@
 
 	<div> <!-- 빨강 -->
 		<div> <!-- 주황1 -->
-			<div>
+			<div class="header">
 				<!-- 화면의 현재위치를 나타내는 부분 시작 -->
 				<div class="row">
-					<div class="col-9">
-						<a class="display-4"><small>메뉴</small></a>
+					<div class="col-4">
+						<h4>메뉴</h4>
 					</div>
 			
-					<div class="col-3">
-						<ul class="breadcrumb">
-							<li class="breadcrumb-item"><a href="../common/home.jsp">홈</a></li>
-							<li class="breadcrumb-item"><a href="../pizza/pizzamenu.jsp">메뉴</a></li>
-							<li class="breadcrumb-item"><a><strong>피자</strong></a></li>
+					<div class="col-8">
+						<ul class="nav justify-content-end small text-muted">
+							<li class="nav-item">
+								<a class="nav-link text-muted active pr-1"
+									href="../common/home.jsp">홈
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link disabled pr-1" 
+									href="#" tabindex="-1" aria-disabled="true">>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-muted active pr-1"
+									href="../pizza/pizzamenu.jsp">메뉴
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link disabled pr-1"
+									href="#" tabindex="-1" aria-disabled="true">>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link disabled text-dark font-weight-bold pr-1"
+									href="#" tabindex="-1" aria-disabled="true">피자
+								</a>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -85,7 +107,7 @@
 					<div class="col-2"><!-- 더보기 -->
 						<div class="navbar navbar-expand-sm ">
 						<!-- 1주일간 가장 많이 팔린 피자 받아와서 출력, 해당하는 링크로 이동 -->
-							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">맛있는핏자</a>	
+							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">피자 목록</a>	
 							<div class="dropdown-menu">
 							<%
 								for (Pizza pizzaList : pizzas) {
@@ -110,6 +132,7 @@
 								<div class="row">
 									<!-- for문 시작 -->
 									<%
+										
 										for (Pizza pizza : pizzas) {
 											
 									%>
@@ -215,44 +238,164 @@
 																					<div class="modal-body">
 																						<div class="row ">
 																							<div class="col-12">
-																								<ul class="nav nav-tabs nav-justified">
-																								
-																									<li class="nav-item dropdown">
-																										<a class="nav-link active dropdown-toggle" data-toggle="dropdown" href="#nutrient" role="button" aria-haspopup="true" aria-expanded="false">영양성분</a>
-																										<div class="dropdown-menu w-100">
-																									      <a class="dropdown-item text-center" href="#pizza-nut">피자</a>
-																									      <a class="dropdown-item text-center" href="#side-nut">사이드</a>
-																								      </div>
+																								<!-- 탭 리스트 시작 -->
+																								<ul class="nav nav-tabs nav-justified" role="tablist">
+																					  				<li class="nav-item" role="presentation">
+																					    				<a class="nav-link active" id="pizza-tab" data-toggle="tab" href="#pizza" role="tab" aria-controls="pizza" aria-selected="true">피자</a>
 																									</li>
-
-																									<li class="nav-item dropdown">
-																										<a class="nav-link active dropdown-toggle" data-toggle="dropdown" href="#allergy" role="button" aria-haspopup="true" aria-expanded="false">알레르기</a>
-																										<div class="dropdown-menu w-100">
-																									      <a class="dropdown-item text-center" href="#pizza-allergy">피자</a>
-																									      <a class="dropdown-item text-center" href="#side-allergy">사이드</a>
-																								      </div>
+																									<li class="nav-item" role="presentation">
+																					    				<a class="nav-link" id="side-tab" data-toggle="tab" href="#side" role="tab" aria-controls="side" aria-selected="true">사이드</a>
 																									</li>
-																									
 																								</ul>
-																								
-																								<div class="dropdown-content">
-																									<div class="dropdown-pane container active" id="pizza-nut">
-																										<div class="row">
-																											<div class='col-12'>
-																												<p>하하하하하하하</p>
+																								<!-- 탭 리스트 끝 -->
+																								<!-- 탭 컨텐츠 시작 -->
+																								<div class="tab-content">
+																									<!-- 새 상품 탭과 연관된 새 상품 컨텐츠 시작 -->
+																									<div class="tab-pane fade show active" id="pizza" role="tabpanel" aria-labelledby="pizza-tab">
+																										<div class="row mt-3">
+																											<div class="col-12">
+																												<div class="card">
+																													<div class="card-header">피자에 대한 정보를 확인해보세요</div>
+																													<div class="card-body">
+																														<div class="row">
+																															<!-- 상품 정보 시작 -->
+																															<div class="col-3">
+																																<!-- 상품정보를 포함하는 카드 시작 -->
+																																<div class="card">
+																																	<!-- 상품이미지 -->
+																																	<img class="card-img-top" src="../resources/images/goods/goods1.jpg">
+																																	<!-- 상품 컨텐츠정보 시작 -->
+																																	<div class="card-body">
+																																		<p class="font-weight-bold mb-1">시티 자전거</p>
+																																		<!-- 가격정보 시작 -->
+																																		<div class="mb-2">
+																																			<div>
+																																				<strong>소비자 가격: </strong> <del  class="float-right">150,000원</del>
+																																			<div>
+																																			</div>
+																																				<strong class="text-danger">할인가격 가격: </strong> <span class="float-right font-weight-bolder">150,000원</span>
+																																			</div>
+																																		</div>
+																																		<!-- 가격정보 끝 -->
+																																		<div class="text-right">
+																																			<a href="#" class="btn btn-secondary btn-sm">장바구니</a>
+																																			<a href="#" class="btn btn-primary btn-sm">구매하기</a>
+																																		</div>
+																																		<div class="mt-3 mb-n3">
+																																			<span class="badge badge-success">배송비무료</span>
+																																			<span class="badge badge-info">New</span>
+																																		</div>
+																																	</div>
+																																	<!-- 상품 컨텐츠정보 끝 -->
+																																</div>
+																																<!-- 상품정보를 포함하는 카드 끝 -->
+																															</div>
+																															<!-- 상품 정보 끝 -->
+																															<div class="col-3">
+																																<div class="card">
+																																	<img class="card-img-top" src="../resources/images/goods/goods1.jpg">
+																																	<div class="card-body">
+																																		<p class="font-weight-bold mb-1">시티 자전거</p>
+																																		<div class="mb-2">
+																																			<div>
+																																				<strong>소비자 가격: </strong> <del  class="float-right">150,000원</del>
+																																			<div>
+																																			</div>
+																																				<strong class="text-danger">할인가격 가격: </strong> <span class="float-right font-weight-bolder">150,000원</span>
+																																			</div>
+																																		</div>
+																																		<div class="text-right">
+																																			<a href="#" class="btn btn-secondary btn-sm">장바구니</a>
+																																			<a href="#" class="btn btn-primary btn-sm">구매하기</a>
+																																		</div>
+																																		<div class="mt-3 mb-n3">
+																																			<span class="badge badge-success">배송비무료</span>
+																																			<span class="badge badge-info">New</span>
+																																		</div>
+																																	</div>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																												</div>
 																											</div>
 																										</div>
 																									</div>
-																									<div class="tab-pane container active" id="side-nut">
-																										<div class="row">
-																											<div class='col-12'>
-																												<p>이히히히히히힣</p>
+																									<!-- 새 상품 탭과 연관된 새 상품 컨텐츠 끝 -->
+																									<!-- 베스트 상품 탭과 연관된 베스트 상품 컨텐츠 시작 -->
+																									<div class="tab-pane fade" id="side" role="tabpanel" aria-labelledby="side-tab">
+																										<div class="row mt-3">
+																											<div class="col-12">
+																												<div class="card">
+																													<div class="card-header">사이드메뉴에 대한 정보를 확인해보세요.</div>
+																													<div class="card-body">
+																														<div class="row">
+																															<!-- 상품 정보 시작 -->
+																															<div class="col-3">
+																																<!-- 상품정보를 포함하는 카드 시작 -->
+																																<div class="card">
+																																	<!-- 상품이미지 -->
+																																	<img class="card-img-top" src="../resources/images/goods/goods1.jpg">
+																																	<!-- 상품 컨텐츠정보 시작 -->
+																																	<div class="card-body">
+																																		<p class="font-weight-bold mb-1">시티 자전거</p>
+																																		<!-- 가격정보 시작 -->
+																																		<div class="mb-2">
+																																			<div>
+																																				<strong>소비자 가격: </strong> <del  class="float-right">150,000원</del>
+																																			<div>
+																																			</div>
+																																				<strong class="text-danger">할인가격 가격: </strong> <span class="float-right font-weight-bolder">150,000원</span>
+																																			</div>
+																																		</div>
+																																		<!-- 가격정보 끝 -->
+																																		<div class="text-right">
+																																			<a href="#" class="btn btn-secondary btn-sm">장바구니</a>
+																																			<a href="#" class="btn btn-primary btn-sm">구매하기</a>
+																																		</div>
+																																		<div class="mt-3 mb-n3">
+																																			<span class="badge badge-success">배송비무료</span>
+																																			<span class="badge badge-info">New</span>
+																																		</div>
+																																	</div>
+																																	<!-- 상품 컨텐츠정보 끝 -->
+																																</div>
+																																<!-- 상품정보를 포함하는 카드 끝 -->
+																															</div>
+																															<!-- 상품 정보 끝 -->
+																															<div class="col-3">
+																																<div class="card">
+																																	<img class="card-img-top" src="../resources/images/goods/goods1.jpg">
+																																	<div class="card-body">
+																																		<p class="font-weight-bold mb-1">시티 자전거</p>
+																																		<div class="mb-2">
+																																			<div>
+																																				<strong>소비자 가격: </strong> <del  class="float-right">150,000원</del>
+																																			<div>
+																																			</div>
+																																				<strong class="text-danger">할인가격 가격: </strong> <span class="float-right font-weight-bolder">150,000원</span>
+																																			</div>
+																																		</div>
+																																		<div class="text-right">
+																																			<a href="#" class="btn btn-secondary btn-sm">장바구니</a>
+																																			<a href="#" class="btn btn-primary btn-sm">구매하기</a>
+																																		</div>
+																																		<div class="mt-3 mb-n3">
+																																			<span class="badge badge-success">배송비무료</span>
+																																			<span class="badge badge-info">New</span>
+																																		</div>
+																																	</div>
+																																</div>
+																															</div>
+																														</div>
+																													</div>
+																												</div>
 																											</div>
 																										</div>
-																									</div>																									
+																									</div>
+																									<!-- 베스트 상품 탭과 연관된 베스트 상품 컨텐츠 끝 -->
 																								</div>
-																								
-																								
+																								<!-- 탭 컨텐츠 끝 -->
 																								
 																							</div>
 																						</div>

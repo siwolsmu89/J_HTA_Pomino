@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="com.domino.dto.OrderDto"%>
 <%@page import="com.domino.dto.EtcOrderDto"%>
 <%@page import="com.domino.dao.EtcDetailDao"%>
 <%@page import="com.domino.dto.SideOrderDto"%>
@@ -126,6 +128,10 @@
 
 			<div class="row">
 				<div class="col-12">
+					<%
+						
+						List<OrderDto> AllOrder = orderDao.getAllOrdersByBranchNo(branchNo);
+					%>
 					<table class="jumbotron table text-center">
 						<colgroup>
 							<col width="10%">
@@ -149,85 +155,64 @@
 						</thead>
 						<tbody>
 							<%
-								List<Order> AllOrder = orderDao.getAllOrdersByBranchno(branchNo);
-								for (Order order : AllOrder) {
-									BranchDao branchDao = new BranchDao();
-									Branch branch = branchDao.getBranchByNo(order.getBranchNo());
-
-									// 피자 주문갯수 및 주문한 피자 디테일 정보 가져오기
-									PizzaDetailDao pizzaDetailDao = new PizzaDetailDao();
-									List<PizzaOrderDto> pod = pizzaDetailDao.getPizzaOrdersByOrderNo(order.getNo());
-
-									// 사이즈 메뉴 정보 가져오기
-									SideDetailDao sideDetailDao = new SideDetailDao();
-									List<SideOrderDto> sod = sideDetailDao.getSideOrdersByOrderNo(order.getNo());
-
-									// 기타 메뉴 정보 가져오기
-									EtcDetailDao etcDetailDao = new EtcDetailDao();
-									List<EtcOrderDto> eod = etcDetailDao.getEtcOrdersByOrderNo(order.getNo());
-
+								if (AllOrder.isEmpty()) {
+							%>
+								<tr><td colspan="6">주문정보가 없습니다.</td></tr>
+							<%
+								} else {
+								for (OrderDto order : AllOrder) {
+									int orderNo = order.getOrderNo();
+									String branchName = order.getBranchName();
+									int totalAmount = order.getTotalAmount();
+									int totalPrice = order.getTotalDiscountPrice();
+		
+									String menuName = "";
+									if (order.getPizzaName() != null) {
+										menuName = order.getPizzaName();
+									} else if (order.getSideName() != null) {
+										menuName = order.getSideName();
+									} else {
+										menuName = order.getEtcName(); 
+									}
+									
+									int os = order.getOrderStatus();
+									String statusStr = "";
+									if (os == 0) {
+										statusStr = "<button class='btn btn-primary'>접수완료</button>";
+									} else if (os == 1) {
+										statusStr = "<button class='btn btn-primary'>요리중</button>";
+									} else if (os == 2) {
+										statusStr = "<button class='btn btn-sucess'>배달중</button>";
+									} else if (os == 3) {
+										statusStr = "<button class='btn btn-success'>배달완료</button>";
+									} else if (os == 4) {
+										statusStr = "<button class='btn btn-dark'>수령완료</button>";
+									} else {
+										statusStr = "<button class='btn btn-danger'>주문취소</button>";
+									}
+									
+									Date reqTime = order.getRequestTime();
+									String requestTime = reqTime.toString();
+									
 									// 주문갯수세기
 									String simpleMenu = "";
-									int orderCount = pod.size() + sod.size() + eod.size();
-									if (!pod.isEmpty()) {
-										simpleMenu = pod.get(0).getPizzaName() + " " + pod.get(0).getDoughName() + " "
-												+ (orderCount > 1 ? "외 " + (orderCount - 1) + "건" : "");
-									} else if (!sod.isEmpty()) {
-										simpleMenu = sod.get(0).getSideName() + (orderCount > 1 ? "외" + (orderCount - 1) + "건" : "");
+									int orderCount = order.getTotalAmount();
+									if(!order.getPizzaName().isEmpty()){
+										simpleMenu = order.getPizzaName() + " " + (orderCount > 1 ? "외 " + (orderCount - 1) + "건" : "");
+									} else if(!order.getSideName().isEmpty()){
+										simpleMenu = order.getSideName() + (orderCount > 1 ? "외" + (orderCount - 1) + "건" : "");
 									}
 							%>
 							<tr>
-								<td><%=order.getNo()%></td>
-								<td><%=branch.getName()%></td>
+								<td><%=orderNo %></td>
+								<td><%=branchName %></td>
 								<td><%=simpleMenu%></td>
-								<td><%=order.getDiscountPrice()%></td>
-								<td><%=order.getRequestTime()%></td>
-								<%
-									if (order.getOrderStatus() == 0) {
-								%>
-								<td>
-									<a class="btn btn-primary text-white" role="button"
-									href="orderStatus.jsp?orderno=<%=order.getNo() %>&statusno=0">접수완료</a>
-								</td>
-								
-								<%
-									} else if (order.getOrderStatus() == 1) {
-								%>
-								<td>
-									<a class="btn btn-primary text-white" role="button"
-									href="orderStatus.jsp?orderno=<%=order.getNo() %>&statusno=1">요리중</a>
-								</td>
-								<%
-									} else if (order.getOrderStatus() == 2) {
-								%>
-								<td>
-									<a class="btn btn-primary text-white" role="button"
-									href="orderStatus.jsp?orderno=<%=order.getNo() %>&statusno=2">배달중</a>
-								</td>
-								<%
-									} else if (order.getOrderStatus() == 3) {
-								%>
-								<td>
-									<a class="btn btn-success text-white" role="button"
-									href="orderStatus.jsp?orderno=<%=order.getNo() %>&statusno=3">배달완료</a>
-								</td>
-								<%
-									} else if (order.getOrderStatus() == 4) {
-								%>
-								<td>
-									<a class="btn btn-dark text-white" role="button">수령완료</a>
-								</td>
-								<%
-									} else {
-								%>
-								<td>
-									<a class="btn btn-danger text-white" role="button">주문취소</a>
-								</td>
-								<%
-									}
-								%>
+								<td><%=totalPrice %></td>
+								<td><%=requestTime %></td>
+								<td><%=statusStr %></td>
 							</tr>
 							<%
+									}
 								}
 							%>
 						</tbody>

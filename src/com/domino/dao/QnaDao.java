@@ -185,6 +185,73 @@ public class QnaDao {
 	}
 	
 	/**
+	 * 해당되는 작성자의 문의글에서 pagination 범위안의 글을 반환하는 메소드
+	 * @param questionWriter 작성자 이름
+	 * @param beginNumber 시작순번
+	 * @param endNumber 종료순번
+	 * @return 작성자의 글 중 페이지네이션 범위안의 글
+	 * @throws SQLException
+	 */
+	public List<QuestionDto> getQuestionByWriter(String questionWriter, int beginNumber, int endNumber) throws SQLException {
+		List<QuestionDto> questionDtos = new ArrayList<QuestionDto>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("qna.getQuestionByWriter"));
+		pstmt.setString(1, questionWriter);
+		pstmt.setInt(2, beginNumber);
+		pstmt.setInt(3, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+			QuestionDto questionDto = new QuestionDto();
+
+			questionDto = resultSetToQuestion(rs);
+
+			questionDtos.add(questionDto);
+		}
+
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return questionDtos;
+	}
+	
+	/**
+	 * 해당되는 문의제목 글 중에서 pagination 범위안의 글을 반환하는 메소드
+	 * @param questionWriter 작성자 이름
+	 * @param beginNumber 시작순번
+	 * @param endNumber 종료순번
+	 * @return 특정 문의제목 글 중에서 페이지네이션 범위안의 글
+	 * @throws SQLException
+	 */
+	public List<QuestionDto> getQuestionByTitle(String questionTitle, int beginNumber, int endNumber) throws SQLException {
+		List<QuestionDto> questionDtos = new ArrayList<QuestionDto>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("qna.getQuestionByTitle"));
+		pstmt.setString(1, questionTitle);
+		pstmt.setInt(2, beginNumber);
+		pstmt.setInt(3, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+			QuestionDto questionDto = new QuestionDto();
+
+			questionDto = resultSetToQuestion(rs);
+
+			questionDtos.add(questionDto);
+		}
+
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return questionDtos;
+	}
+	
+	
+	/**
 	 * 답변을 등록하는 메소드
 	 * @param answer 문의 번호에 해당하는 답변 내용을 저장하는 answer객체
 	 * @throws SQLException

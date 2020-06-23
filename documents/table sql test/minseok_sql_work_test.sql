@@ -108,9 +108,8 @@ SELECT O.order_no, PI.pizza_name || PI.pizza_size || '(' || PI.dough_name || ')'
                           AND EO.order_no = O.order_no
                           AND EO.etc_no = E.etc_no;
                         
-                        
-                        
-SELECT O.order_no, O.branch_no, B.branch_name, O.order_discount_price, O.order_request_time, O.order_status,
+CREATE VIEW simple_order_info
+AS SELECT ROW_NUMBER() OVER(ORDER BY O.order_no) AS RN, O.order_no, O.branch_no, B.branch_name, O.order_discount_price, O.order_request_time, O.order_status,
      ((SELECT COUNT(order_no) FROM pizza_orders PO WHERE PO.order_no = O.order_no) 
      + (SELECT COUNT(order_no) FROM side_orders SO WHERE SO.order_no = O.order_no)
      + (SELECT COUNT(order_no) FROM etc_orders EO WHERE EO.order_no = O.order_no)) AS total_count,
@@ -125,14 +124,8 @@ SELECT O.order_no, O.branch_no, B.branch_name, O.order_discount_price, O.order_r
     (SELECT S.side_name FROM orders O, side_orders SO, sides S WHERE O.order_no = 100 AND SO.order_no = O.order_no AND SO.side_no = S.side_no AND rownum = 1) AS side_name,
     (SELECT E.etc_name FROM orders O, etc_orders EO, etcs E WHERE O.order_no = 100 AND EO.order_no = O.order_no AND EO.etc_no = E.etc_no AND rownum = 1) AS etc_name
 FROM orders O, branches B
-WHERE O.branch_no = B.branch_no ;
-
-
-
-
-
-
-
-
-
-
+WHERE O.branch_no = B.branch_no;
+                        
+                        
+                        
+                        

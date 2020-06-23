@@ -214,7 +214,7 @@ public class OrderDao {
 	}
 	
 	/**
-	 * 주문번호로 주문 정보를 조회하는 메소드
+	 * 주문번호로 Order 객체를 조회하는 메소드
 	 * @param orderNo 주문번호
 	 * @return 조회 성공시 입력받은 주문번호에 해당하는 주문 정보를 담은 Order 객체를 반환하고 실패시 null을 반환
 	 * @throws SQLException
@@ -237,6 +237,31 @@ public class OrderDao {
 		connection.close();
 		
 		return order;
+	}
+	
+	/**
+	 * 주문번호로 OrderDto 객체를 조회하는 메소드
+	 * @param orderNo 주문번호
+	 * @return 조회 성공시 입력받은 주문번호에 해당하는 정보를 담은 OrderDto 객체를 반환하고 실패시 null반환
+	 * @throws SQLException
+	 */
+	public OrderDto getOrderDtoByNo(int orderNo) throws SQLException {
+		OrderDto orderDto = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrderDtoByNo"));
+		pstmt.setInt(1, orderNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if (rs.next()) {
+			orderDto = resultSetToOrderDto(rs);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return orderDto;
 	}
 	
 	/**
@@ -469,7 +494,7 @@ public class OrderDao {
 		List<OrderDto> orders = new ArrayList<OrderDto>();
 		
 		Connection connection = ConnectionUtil.getConnection();
-		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getAllOrdersByBranchno"));
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getAllOrdersByBranchNo"));
 		pstmt.setInt(1, branchNo);
 		ResultSet rs = pstmt.executeQuery();
 		
@@ -486,7 +511,7 @@ public class OrderDao {
 	 * @param branchName
 	 * @return
 	 * @throws SQLException
-	 * @author 민석 (만드는중)
+	 * @author 민석
 	 */
 	public List<OrderDto> getAllOrdersByBranchNoWithRange(int branchNo, int beginNumber, int endNumber) throws SQLException{
 		List<OrderDto> orders = new ArrayList<OrderDto>();
@@ -496,6 +521,23 @@ public class OrderDao {
 		pstmt.setInt(1, branchNo);
 		pstmt.setInt(2, beginNumber);
 		pstmt.setInt(3, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			OrderDto order = resultSetToOrderDto(rs);
+			orders.add(order);
+		}
+		
+		return orders;
+	}
+	
+	public List<OrderDto> getAllOrdersWithRange(int beginNumber, int endNumber) throws SQLException{
+		List<OrderDto> orders = new ArrayList<OrderDto>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getAllOrdersWithRange"));
+		pstmt.setInt(1, beginNumber);
+		pstmt.setInt(2, endNumber);
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
@@ -567,4 +609,55 @@ public class OrderDao {
 		return orderInfos;
 	}
 	
+	/**
+	 * 가맹점명에 해당하고 페이지네이션 범위안의 주문을 조회하는 메소드
+	 * @param beginNumber 시작순번
+	 * @param endNumber 끝순번
+	 * @param branchName 가맹점명
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<OrderDto> getOrderByBranchNameWithRange(int beginNumber, int endNumber, String branchName) throws SQLException {
+		List<OrderDto> orderInfos = new ArrayList<OrderDto>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrdersByBranchNameWithRange"));
+		pstmt.setInt(1, beginNumber);
+		pstmt.setInt(2, endNumber);
+		pstmt.setString(3, branchName);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			OrderDto orderDto = resultSetToOrderDto(rs);
+			orderInfos.add(orderDto);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return orderInfos;
+	}
+	
+	public List<OrderDto> getOrdersByStatusWithRange(int beginNumber, int endNumber, int orderStatus) throws SQLException {
+		List<OrderDto> orderInfos = new ArrayList<OrderDto>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrdersByStatusWithRange"));
+		pstmt.setInt(1, beginNumber);
+		pstmt.setInt(2, endNumber);
+		pstmt.setInt(3, orderStatus);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			OrderDto orderDto = resultSetToOrderDto(rs);
+			orderInfos.add(orderDto);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return orderInfos;
+	}
 }
