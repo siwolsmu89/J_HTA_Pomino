@@ -10,6 +10,7 @@ import java.util.List;
 import com.domino.dto.ToppingOrderDto;
 import com.domino.util.ConnectionUtil;
 import com.domino.util.QueryUtil;
+import com.domino.vo.ToppingOrder;
 
 public class ToppingDetailDao {
 	
@@ -63,6 +64,26 @@ public class ToppingDetailDao {
 		connection.close();
 		
 		return tol;
+	}
+	
+	/**
+	 * 새로운 토핑 주문 정보를 db에 저장하는 메소드
+	 * @param ToppingOrder tpo 토핑 주문 정보를 담고 있는 객체
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	public void insertNewToppingOrder(ToppingOrder tpo) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("toppingdetail.insertNewToppingOrder"));
+		pstmt.setInt(1, tpo.getPizzaOrderNo());
+		pstmt.setInt(2, tpo.getToppigNo());
+		pstmt.setInt(3, tpo.getOrderAmount());
+		pstmt.setInt(4, tpo.getOrderPrice());
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
 	}
 	
 	/**

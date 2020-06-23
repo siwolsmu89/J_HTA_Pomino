@@ -90,22 +90,41 @@
 							      <%
 								  	if("Yes".equals(loginYn)) {
 								  %>
+								  <%
+								  		if(("Yes").equals(session.getAttribute("매니저여부"))){
+								  %>
 							      <li class="nav-item pr-5 mr-3 <%="branch".equals(position) ? "active font-weight-bold" : ""%>">
 							        <a class="nav-link" href="/domino/branch/info.jsp">가맹점</a>
 							      </li>
+							      <%
+								  		}
+							      %>
+							      <%
+								  		if(("Yes").equals(session.getAttribute("관리자여부"))){
+								  %>
 							      <li class="nav-item pr-5 mr-3 <%="manager".equals(position) ? "active font-weight-bold" : ""%>">
 							        <a class="nav-link" href="/domino/manager/info.jsp">관리자</a>
 							      </li>
-							      <%
+							      <%	 }
 								  	} else {
 							      %>
+							      <%
+								  		if(("Yes").equals(session.getAttribute("매니저여부"))){
+								  %>
 							      <li class="nav-item pr-5 mr-3 <%="branch".equals(position) ? "active font-weight-bold" : ""%>">
 							        <a class="nav-link" href="/domino/user/loginform.jsp">가맹점</a>
 							      </li>
+							       <%
+								  		}
+							      %>
+							      <%
+							      		if(("Yes").equals(session.getAttribute("관리자여부"))){
+							      %>
 							      <li class="nav-item pr-5 mr-3 <%="manager".equals(position) ? "active font-weight-bold" : ""%>">
 							        <a class="nav-link" href="/domino/user/loginform.jsp">관리자</a>
 							      </li>
 							      <%
+							      		}
 								  	}
 							      %>
 							    </ul>

@@ -10,8 +10,7 @@ import java.util.List;
 import com.domino.dto.SideOrderDto;
 import com.domino.util.ConnectionUtil;
 import com.domino.util.QueryUtil;
-
-import oracle.net.aso.s;
+import com.domino.vo.SideOrder;
 
 public class SideDetailDao {
 
@@ -74,6 +73,26 @@ public class SideDetailDao {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("sidedetail.deleteSideOrderByNo"));
 		pstmt.setInt(1, no);
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
+	
+	/**
+	 * 새로운 사이드 주문 정보를 db에 저장하는 메소드
+	 * @param SideOrder so 사이드 주문 정보를 담고 있는 객체
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	public void insertNewSideOrder(SideOrder so) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("sidedetail.insertNewSideOrder"));
+		pstmt.setInt(1, so.getSideNo());
+		pstmt.setInt(2, so.getOrderAmount());
+		pstmt.setInt(3, so.getOrderPrice());
+		pstmt.setInt(4, so.getOrderNo());
 		
 		pstmt.executeUpdate();
 		

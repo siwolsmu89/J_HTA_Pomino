@@ -116,7 +116,7 @@
 										</select>
 									</div>
 									<input id="searchValue" type="text" class="form-control"
-										placeholder="검색어를 입력하세요">
+										placeholder="검색어를 입력하세요" onkeyup="orderListData()">
 									<div class="input-group-append">
 										<button class="btn btn-outline-secondary" type="button" 
 											onclick="orderListData()">조회</button>

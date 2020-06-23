@@ -1,5 +1,6 @@
 package com.domino.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import java.util.List;
 import com.domino.dto.PizzaOrderDto;
 import com.domino.util.ConnectionUtil;
 import com.domino.util.QueryUtil;
+import com.domino.vo.PizzaOrder;
 
 public class PizzaDetailDao {
 	
@@ -73,6 +75,34 @@ public class PizzaDetailDao {
 		return pol;
 	}
 
+	/**
+	 * 새로운 피자주문 객체를 db에 저장하는 메소드
+	 * @param PizzaOrder po 피자주문 정보가 담긴 객체
+	 * @return int pizzaOrderNo 새로 등록된 피자 주문 번호
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	public int insertNewPizzaOrder(PizzaOrder po) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		CallableStatement cstmt = connection.prepareCall(QueryUtil.getSQL("pizzadetail.insertNewPizzaOrder"));
+		cstmt.setInt(1, po.getPizzaNo());
+		cstmt.setString(2, po.getPizzaSize());
+		cstmt.setInt(3, po.getDoughNo());
+		cstmt.setInt(4, po.getOrderAmount());
+		cstmt.setInt(5, po.getOrderPrice());
+		cstmt.setInt(6, po.getDiscountPrice());
+		cstmt.setInt(7, po.getOrderNo());
+		cstmt.registerOutParameter(8, java.sql.Types.INTEGER);
+		cstmt.execute();
+		int pizzaOrderNo = cstmt.getInt(8);
+		
+		cstmt.close();
+		connection.close();
+		
+		return pizzaOrderNo;
+	}
+	
+	
 	/**
 	 * 피자 메뉴 주문 정보를 삭제하는 메소드
 	 * @param no 피자 메뉴 주문 번호

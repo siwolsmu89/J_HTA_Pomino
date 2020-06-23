@@ -107,10 +107,10 @@
 										</select>
 									</div>
 									<input id="searchValue" type="text" class="form-control"
-										placeholder="검색어를 입력하세요">
+										placeholder="검색어를 입력하세요" onkeyup="branchListData(event)">
 									<div class="input-group-append">
 										<button class="btn btn-outline-secondary" type="button"
-											onclick="branchListData(event)"> 조회</button>
+										onclick="branchListData(event)">조회</button>
 									</div>
 								</div>
 							</form>
@@ -140,7 +140,7 @@
 								<th>주소(second)</th>
 								<th>전화번호</th>
 								<th colspan='2'><a class="btn btn-light"
-									href="branchform.jsp">가맹점 등록</a></th>
+									href="branchform.jsp" onclick="alertcompleteToInsertForm(event)">가맹점 등록</a></th>
 							</tr>
 						</thead>
 						<tbody id="branch-body">
@@ -362,10 +362,7 @@
 					for(var i=0; i<branchs.length; i++) {
 						var branch = branchs[i];
 						
-						if (!branch) {
-							alert('입력한 값과 일치하는 가맹점이 존재하지 않습니다.');
-							return;
-						}
+						
 						rows += "";
 						
 						if('N' == branch.quitYn){
@@ -385,7 +382,9 @@
 							rows += "<td><button type='button'  class='btn btn-dark'>영업종료</button></td>";
 						}
 										
-						rows += "</tr>";					
+						rows += "</tr>";
+						
+						
 						
 					}					
 					// 브라우저 출력
@@ -395,6 +394,14 @@
 			xhr.open("GET", "/domino/manager/JSON/branchlistdata.jsp?searchOpt="+searchOption+"&&searchValue="+searchValue+"&&beginNumber="+beginNumber+"&&endNumber="+endNumber);
 
 			xhr.send();
+		}
+		
+		function alertcompleteToInsertForm(event) {
+			if(confirm('신규 가맹점을 등록하시겠습니까?')){
+				
+			} else {
+				event.preventDefault();			
+			}
 		}
 	</script>
 </body>

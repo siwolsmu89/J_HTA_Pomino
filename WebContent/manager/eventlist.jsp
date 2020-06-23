@@ -109,7 +109,7 @@
 										</select>
 									</div>
 									<input id="searchValue" type="text" class="form-control"
-										placeholder="검색어를 입력하세요">
+										placeholder="검색어를 입력하세요" onkeyup="eventListData()">
 									<div class="input-group-append">
 										<button class="btn btn-outline-secondary" type="button"
 											onclick="eventListData()">조회</button>
@@ -152,8 +152,8 @@
 								<th>종료일</th>
 								<th>단종여부</th>
 								<th>할인율</th>
-								<th colspan='2'><a class="btn btn-light"
-									href="eventform.jsp">신규 이벤트 등록</a></th>
+								<th colspan='2'><a class="btn btn-light" href="eventform.jsp"
+									onclick="alertcompleteToInsertForm(event)">신규 이벤트 등록</a></th>
 							</tr>
 						</thead>
 						<tbody id="event-body">
@@ -180,7 +180,7 @@
 								<td><%=("N".equals(event.getDisableYn())) ? "아니오" : "예"%></td>
 								<td><%=(0 == event.getDiscountRate() * 100) ? 0 : event.getDiscountRate() * 100 + "%"%></td>
 								<td><a class="btn btn-primary text-light"
-									href="eventmodifyform.jsp?yn=n&eventno=<%=event.getNo()%>">수정</a></td>
+									href="eventmodifyform.jsp?yn=n&eventno=<%=event.getNo()%> " onclick="alertcompleteToModifyForm(event)">수정</a></td>
 								<%
 									if ("N".equalsIgnoreCase(event.getDisableYn())) {
 								%>
@@ -189,7 +189,7 @@
 										enctype="multipart/form-data">
 										<input type="hidden" name="yn" value="y"> <input
 											type="hidden" name="eventno" value=<%=event.getNo()%>>
-										<button class="btn btn-secondary text-light" type="submit">
+										<button class="btn btn-secondary text-light" type="submit" onclick="alertcompleteToModify(event)">
 											비활성</button>
 									</form>
 								</td>
@@ -201,7 +201,7 @@
 										enctype="multipart/form-data">
 										<input type="hidden" name="yn" value="yn"> <input
 											type="hidden" name="eventno" value=<%=event.getNo()%>>
-										<button class="btn btn-danger text-light" type="submit">
+										<button class="btn btn-danger text-light" type="submit" onclick="alertcompleteToModify(event)">
 											활성</button>
 									</form>
 								</td>
@@ -269,56 +269,60 @@
 	<script type="text/javascript">
 		// 조건 - 개별검색 
 		function eventListData() {
+			var beginNumber = "<%=beginNumber%>";
+			var endNumber = "<%=endNumber%>";
 			// 검색 옵션
 			var searchOption = document.querySelector("select[name=searchoption]").value;
 			// 검색 값
 			var searchValue = document.querySelector("#searchValue").value;
+			
 			var xhr = new XMLHttpRequest();
 
 			xhr.onreadystatechange = function() {
 
 				if (xhr.readyState == 4 && xhr.status == 200) {
 					var text = xhr.responseText;
-					var event = JSON.parse(text);
-					
-					if(!event){
-						alert('입력한 값과 일치하는 이벤트가 존재하지 않습니다.');
-						return;
-					}
+					var events = JSON.parse(text);
+
 					
 					var rows = "";
 					
-					// 출력문 작성
-					if('N'== event.disableYn){
-						rows += "<tr class='font-weight-bold'>";
-					} else {
-						rows += "<tr class='text-muted'>";
+					for(var i=0; i<events.length; i++){
+						var event = events[i];
+						
+						// 출력문 작성
+						if('N'== event.disableYn){
+							rows += "<tr class='font-weight-bold'>";
+						} else {
+							rows += "<tr class='text-muted'>";
+						}
+						rows += "<td>"+event.no+"</td>";
+						rows += "<td>"+event.name+"</td>";
+						rows += "<td>"+event.startDate+"</td>";
+						rows += "<td>"+event.endDate+"</td>";
+						if('N' == event.disableYn){
+							rows += "<td>아니오</td>";
+						} else {
+							rows += "<td>예</td>";
+						}
+						if(0 == event.discountRate * 100){
+							rows += "<td>0</td>";
+						} else {
+							rows += "<td>"+event.discountRate*100+"</td>";
+						}
+						rows += "<td><a class='btn btn-primary text-light' href='eventmodifyform.jsp?yn=n&eventno="+event.no+"'>수정</a></td>";										
+						if('N' == event.disableYn){
+							rows += "<td><form method='post' action='eventmodify.jsp' enctype='multipart/form-data'>";
+							rows += "<input type='hidden' name='yn' value='y'> <input type='hidden' name='eventno' value="+event.no+">";
+							rows += "<button class='btn btn-secondary text-light' type='submit'>비활성</button></form></td>";
+						} else {
+							rows += "<td><form method='post' action='eventmodify.jsp' enctype='multipart/form-data'>"
+							rows += "<input type='hidden' name='yn' value='yn'> <input type='hidden' name='eventno' value="+event.no+">";
+							rows += "<button class='btn btn-danger text-light' type='submit'>활성</button></form></td>";
+						}					
+						rows += "</tr>";
 					}
-					rows += "<td>"+event.no+"</td>";
-					rows += "<td>"+event.name+"</td>";
-					rows += "<td>"+event.startDate+"</td>";
-					rows += "<td>"+event.endDate+"</td>";
-					if('N' == event.disableYn){
-						rows += "<td>아니오</td>";
-					} else {
-						rows += "<td>예</td>";
-					}
-					if(0 == event.discountRate * 100){
-						rows += "<td>0</td>";
-					} else {
-						rows += "<td>"+event.discountRate*100+"</td>";
-					}
-					rows += "<td><a class='btn btn-primary text-light' href='eventmodifyform.jsp?yn=n&eventno="+event.no+"'>수정</a></td>";										
-					if('N' == event.disableYn){
-						rows += "<td><form method='post' action='eventmodify.jsp' enctype='multipart/form-data'>";
-						rows += "<input type='hidden' name='yn' value='y'> <input type='hidden' name='eventno' value="+event.no+">";
-						rows += "<button class='btn btn-secondary text-light' type='submit'>비활성</button></form></td>";
-					} else {
-						rows += "<td><form method='post' action='eventmodify.jsp' enctype='multipart/form-data'>"
-						rows += "<input type='hidden' name='yn' value='yn'> <input type='hidden' name='eventno' value="+event.no+">";
-						rows += "<button class='btn btn-danger text-light' type='submit'>활성</button></form></td>";
-					}					
-					rows += "</tr>";
+					
 					
 					// 브라우저 출력
 					document.getElementById("event-body").innerHTML = rows;
@@ -326,9 +330,36 @@
 			}
 
 			xhr.open("GET", "/domino/manager/JSON/eventlistdata.jsp?searchOpt="
-					+ searchOption + "&&searchValue=" + searchValue);
+					+ searchOption + "&&searchValue=" + searchValue+"&&beginNumber="+beginNumber+"&&endNumber="+endNumber);
 
 			xhr.send();
+		}
+		
+		function alertcompleteToModify(event) {
+			
+			if(confirm('상태를 바꾸시겠습니까?')){
+			
+			} else {
+				event.preventDefault();			
+			}
+		}
+		
+		
+		function alertcompleteToModifyForm(event) {
+			
+			if(confirm('수정하시겠습니까?')){
+			
+			} else {
+				event.preventDefault();			
+			}
+		}
+		
+		function alertcompleteToInsertForm(event) {
+			if(confirm('신규 이벤트를 등록하시겠습니까?')){
+				
+			} else {
+				event.preventDefault();			
+			}
 		}
 	</script>
 </body>

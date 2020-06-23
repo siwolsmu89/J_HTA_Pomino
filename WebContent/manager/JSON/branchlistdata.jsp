@@ -17,8 +17,12 @@
 	List<Branch> branchs = new ArrayList<Branch>();
 	
 	if("branchno".equals(searchOpt)){
-		branch = branchDao.getBranchByNo(NumberUtil.stringToInt(searchValue));
-		branchs.add(branch);
+		if(searchValue.isEmpty()){
+			branchs = branchDao.getAllBranch(beginNumber, endNumber);
+		} else {
+			branch = branchDao.getBranchByNo(NumberUtil.stringToInt(searchValue));
+			branchs.add(branch);			
+		}
 	} else if("branchname".equals(searchOpt)){
 		branchs = branchDao.getBranchByName(searchValue, beginNumber, endNumber);
 	} else if("branchaddr".equals(searchOpt)){

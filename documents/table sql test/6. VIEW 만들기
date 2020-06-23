@@ -21,3 +21,5 @@ AS SELECT ROW_NUMBER() OVER(ORDER BY O.order_no) AS RN, O.order_no, O.branch_no,
     (SELECT E.etc_name FROM orders O, etc_orders EO, etcs E WHERE O.order_no = 100 AND EO.order_no = O.order_no AND EO.etc_no = E.etc_no AND rownum = 1) AS etc_name
 FROM orders O, branches B
 WHERE O.branch_no = B.branch_no;
+
+commit;

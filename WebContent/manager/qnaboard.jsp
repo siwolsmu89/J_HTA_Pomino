@@ -104,7 +104,7 @@
 										</select>
 									</div>
 									<input id="searchValue" type="text" class="form-control"
-										placeholder="검색어를 입력하세요">
+										placeholder="검색어를 입력하세요" onkeyup="qnaListData(event)">
 									<div class="input-group-append">
 										<button class="btn btn-outline-secondary" type="button"
 											onclick="qnaListData(event)">조회</button>
@@ -165,100 +165,16 @@
 									<%
 										if ("N".equals(questionDto.getAnsweredYn())) {
 									%>
-									<button type="button" class="btn btn-primary">
-										답변대기</button> <%
+										<a type="button" class="btn btn-primary text-light" href="qnamodifyform.jsp?questionno=<%=questionDto.getNo()%>">답변대기</a>
+								 	<%
 									 	} else {
 									%>
-									<button type="button" class="btn btn-secondary">
-										답변완료</button> <%
-									 	}
+										<a type="button" class="btn btn-secondary text-light">답변완료</a> 	
+									<%
+										}
 									%>
 								</td>
 							</tr>
-
-							<!-- Modal - qnadetail -->
-							<tr>
-								<td class="modal fade" id="a<%=questionDto.getNo()%>"
-									tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-									aria-hidden="true">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title" id="exampleModalLabel">1:1 문의</h5>
-												<button type="button" class="close" data-dismiss="modal"
-													aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-
-											<form method="post"
-												action="/domino/manager/answer.jsp?questionno=<%=questionDto.getNo()%>">
-												<div class="modal-body">
-													<div class="row">
-														<div class="col-6">
-															<div class="form-group">
-																<label>이름</label> <input type="text"
-																	class="form-control"
-																	value="<%=questionDto.getUserName()%>" disabled />
-															</div>
-															<div class="form-group">
-																<label>아이디</label> <input type="text"
-																	class="form-control"
-																	value="<%=questionDto.getUserId()%>" disabled />
-															</div>
-														</div>
-														<div class="col-6">
-															<div class="form-group">
-																<label>이메일</label> <input type="text"
-																	class="form-control"
-																	value="<%=questionDto.getUserEmail()%>" disabled />
-															</div>
-															<div class="form-group">
-																<label>등록날짜</label> <input type="text"
-																	class="form-control"
-																	value="<%=questionDto.getRegDate()%>" name="addrdetail"
-																	disabled />
-															</div>
-														</div>
-														<div class="col-12">
-															<div class="form-group">
-																<label>제목</label> <input type="text"
-																	class="form-control"
-																	value="<%=questionDto.getTitle()%> " disabled
-																	name="tel" />
-															</div>
-														</div>
-														<div class="col-12">
-															<div class="form-group">
-																<label>문의내용</label>
-																<textarea type="text" class="form-control" disabled
-																	name="tel"><%=questionDto.getContent()%></textarea>
-															</div>
-														</div>
-														<div class="col-12">
-
-															<div class="form-group">
-																<label for="desc-1">답변작성</label>
-																<textarea class="form-control" name="answercontent"
-																	id="desc-1"></textarea>
-															</div>
-
-														</div>
-													</div>
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-secondary"
-														data-dismiss="modal">다시 작성</button>
-													<button type="submit" class="btn btn-primary">
-														답변등록</button>
-												</div>
-											</form>
-
-										</div>
-									</div>
-								</td>
-							</tr>
-
 							<%
 								}
 							%>
@@ -340,10 +256,7 @@
 					
 					for(var i=0; i<questions.length; i++) {
 						var question = questions[i];
-						if (!question) {
-							alert('입력한 값과 일치하는 문의가 존재하지 않습니다.');
-							return;
-						}
+						
 						
 						rows += "";
 						if('N' == question.answeredYn){
@@ -357,9 +270,9 @@
 						rows += "<td>"+question.regDate+"</td>";
 						
 						if('N' == question.answeredYn){
-							rows += "<td><button type='button' class='btn btn-primary'>답변대기</td>";
+							rows += "<td><a type='button' class='btn btn-primary text-light' href='qnamodifyform.jsp?questionno="+question.no+"''>답변대기</a></td>";
 						} else {
-							rows += "<td><button type='button' class='btn btn-secondary'>딥뱐완료</td>";
+							rows += "<td><a type='button' class='btn btn-secondary text-light'>딥뱐완료</a></td>";
 						}
 						rows += "</tr>";
 					}					
@@ -371,6 +284,8 @@
 
 			xhr.send();
 		}
+		
+		
 	</script>
 </body>
 </html>

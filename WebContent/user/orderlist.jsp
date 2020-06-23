@@ -322,7 +322,6 @@
 					alert("주문번호 [" + orderNo + "] 주문이 회원님의 퀵 오더로 등록되었습니다.");
 				}
 			}
-			
 			xhr.open("GET", "../order/registerqo.jsp?orderno=" + orderNo);
 			
 			xhr.send();

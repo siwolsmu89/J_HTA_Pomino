@@ -9,18 +9,26 @@
 <%
 	String searchOpt = request.getParameter("searchOpt");
 	String searchValue = request.getParameter("searchValue");
+	int beginNumber = NumberUtil.stringToInt(request.getParameter("beginNumber"));
+	int endNumber = NumberUtil.stringToInt(request.getParameter("endNumber"));
 	
 	EventDao eventDao = new EventDao();
+	List<Event> events = new ArrayList<Event>();
 	Event event = new Event();
 	
 	if("eventno".equals(searchOpt)){
-		event = eventDao.getEventByNo(NumberUtil.stringToInt(searchValue));
+		if(searchValue.isEmpty()){
+			events = eventDao.getAllEvent(beginNumber, endNumber);
+		} else {
+			event = eventDao.getEventByNo(NumberUtil.stringToInt(searchValue));
+			events.add(event);			
+		}
 	} else if("eventname".equals(searchOpt)){
-		event = eventDao.getEventByName(searchValue);
+		events = eventDao.getEventsByNameWithRange(searchValue, beginNumber, endNumber);
 	}
 	
 	Gson gson = new Gson();
-	String jsonContent = gson.toJson(event);
+	String jsonContent = gson.toJson(events);
 	
 	out.write(jsonContent);
 %>

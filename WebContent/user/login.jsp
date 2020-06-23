@@ -27,6 +27,7 @@
 		session.setAttribute("사용자이름", user.getName());
 		session.setAttribute("사용자번호", user.getNo());
 		session.setAttribute("로그인여부", "Yes");
+	// orderDao 에 있는 getcart
 		
 		if ("admin".equals(id)) {
 			session.setAttribute("관리자여부", "Yes");

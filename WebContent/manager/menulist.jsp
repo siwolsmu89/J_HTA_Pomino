@@ -137,7 +137,7 @@
 								<th>단종여부</th>
 								<th>이벤트</th>
 								<th colspan='2'><a class="btn-sm btn-light"
-									href="pizzaform.jsp">신규 피자 등록</a></th>
+									href="pizzaform.jsp" onclick="alertcompleteToInsertForm(event)">신규 피자 등록</a></th>
 
 							</tr>
 						</thead>
@@ -157,12 +157,14 @@
 								<td><%=("n".equalsIgnoreCase(pizza.getDisableYn())) ? "아니오":"예" %></td>
 								<td>여름방학시즌(피자테이블 + 이벤트테이블 조인)</td>
 								<td><a class="btn btn-primary text-light"
-									href="pizzamodifyform.jsp?yn=n&pizzano=<%=pizza.getNo() %>">수정</a></td>
+									href="pizzamodifyform.jsp?yn=n&pizzano=<%=pizza.getNo() %>" 
+									onclick="alertcompleteToModifyForm(event)">수정</a></td>
 								<td>
 									<form method="post" action="pizzamodify.jsp" enctype="multipart/form-data">
 										<input type="hidden" name="yn" value="y">
 										<input type="hidden" name="pizzano" value=<%=pizza.getNo() %>>
-										<button class="btn btn-secondary text-light" type="submit">
+										<button class="btn btn-secondary text-light" type="submit"
+														onclick="alertcompleteToModify(event)">
 											비활성
 										</button>
 									</form>
@@ -179,12 +181,14 @@
 								<td ><%=("n".equalsIgnoreCase(pizza.getDisableYn())) ? "아니오":"예" %></td>
 								<td>-</td>
 								<td><a class="btn btn-primary text-light"
-									href="pizzamodifyform.jsp?yn=n&pizzano=<%=pizza.getNo() %>">수정</a></td>
+									href="pizzamodifyform.jsp?yn=n&pizzano=<%=pizza.getNo() %>"
+									onclick="alertcompleteToModifyForm(event)">수정</a></td>
 								<td>
 									<form method="post" action="pizzamodify.jsp" enctype="multipart/form-data">
 										<input type="hidden" name="yn" value="yn">
 										<input type="hidden" name="pizzano" value=<%=pizza.getNo() %>>
-										<button class="btn btn-danger text-light" type="submit">
+										<button class="btn btn-danger text-light" type="submit"
+														onclick="alertcompleteToModify(event)">
 											활성
 										</button>
 									</form>
@@ -230,13 +234,15 @@
 								<td><%=side.getPrice() %></td>
 								<td><%=("n".equalsIgnoreCase(side.getDisableYn())) ? "아니오":"예" %></td>
 								<td><a class="btn btn-primary text-light"
-									href="sidemenumodifyform.jsp?yn=n&sideno=<%=side.getNo() %>">수정</a>
+									href="sidemenumodifyform.jsp?yn=n&sideno=<%=side.getNo() %>"
+									onclick="alertcompleteToModifyForm(event)">수정</a>
 								</td>
 								<td>
 									<form method="post" action="sidemenumodify.jsp" enctype="multipart/form-data">
 										<input type="hidden" name="yn" value="y">
 										<input type="hidden" name="sideno" value=<%=side.getNo() %>>
-										<button class="btn btn-secondary text-light" type="submit">
+										<button class="btn btn-secondary text-light" type="submit"
+										onclick="alertcompleteToModify(event)">
 											비활성
 										</button>
 									</form>
@@ -251,12 +257,14 @@
 								<td><%=side.getPrice() %></td>
 								<td><%=("n".equalsIgnoreCase(side.getDisableYn())) ? "아니오":"예" %></td>
 								<td><a class="btn btn-primary text-light"
-									href="sidemenumodifyform.jsp?yn=n&sideno=<%=side.getNo() %>">수정</a></td>
+									href="sidemenumodifyform.jsp?yn=n&sideno=<%=side.getNo() %>"
+									onclick="alertcompleteToModifyForm(event)">수정</a></td>
 								<td>
 									<form method="post" action="sidemenumodify.jsp" enctype="multipart/form-data">
 										<input type="hidden" name="yn" value="yn">
 										<input type="hidden" name="sideno" value=<%=side.getNo() %>>
-										<button class="btn btn-danger text-light" type="submit">
+										<button class="btn btn-danger text-light" type="submit"
+										onclick="alertcompleteToModify(event)">
 											활성
 										</button>
 									</form>
@@ -303,12 +311,14 @@
 								<td><%=dough.getPrice() %></td>
 								<td><%=("N".equalsIgnoreCase(dough.getDisableYn())) ? "아니오":"예" %></td>								
 								<td><a class="btn btn-primary text-light"
-									href="doughmodifyform.jsp?yn=n&doughno=<%=dough.getNo() %>">수정</a></td>
+									href="doughmodifyform.jsp?yn=n&doughno=<%=dough.getNo() %>"
+									onclick="alertcompleteToModifyForm(event)">수정</a></td>
 								<td>
 									<form method="post" action="doughmodify.jsp" enctype="multipart/form-data">
 										<input type="hidden" name="yn" value="y">
 										<input type="hidden" name="doughno" value=<%=dough.getNo() %>>
-										<button class="btn btn-secondary text-light" type="submit">
+										<button class="btn btn-secondary text-light" type="submit"
+										onclick="alertcompleteToModify(event)">
 											비활성
 										</button>
 									</form>
@@ -323,12 +333,14 @@
 								<td><%=dough.getPrice() %></td>
 								<td><%=("N".equalsIgnoreCase(dough.getDisableYn())) ? "아니오":"예" %></td>								
 								<td><a class="btn btn-primary text-light"
-									href="doughmodifyform.jsp?yn=n&doughno=<%=dough.getNo() %>">수정</a></td>
+									href="doughmodifyform.jsp?yn=n&doughno=<%=dough.getNo() %>"
+									onclick="alertcompleteToModifyForm(event)">수정</a></td>
 								<td>
 									<form method="post" action="doughmodify.jsp" enctype="multipart/form-data">
 										<input type="hidden" name="yn" value="yn">
 										<input type="hidden" name="doughno" value=<%=dough.getNo() %>>
-										<button class="btn btn-danger text-light" type="submit">
+										<button class="btn btn-danger text-light" type="submit"
+										onclick="alertcompleteToModify(event)">
 											활성
 										</button>
 									</form>
@@ -377,12 +389,14 @@
 								<td><%=topping.getPrice() %></td>
 								<td><%=("N".equalsIgnoreCase(topping.getDisableYn())) ? "아니오":"예" %></td>								
 								<td><a class="btn btn-primary text-light"
-									href="toppingmodifyform.jsp?yn=n&toppingno=<%=topping.getNo() %>">수정</a></td>
+									href="toppingmodifyform.jsp?yn=n&toppingno=<%=topping.getNo() %>"
+									onclick="alertcompleteToModifyForm(event)">수정</a></td>
 								<td>
 									<form method="post" action="toppingmodify.jsp" enctype="multipart/form-data">
 										<input type="hidden" name="yn" value="y">
 										<input type="hidden" name="toppingno" value=<%=topping.getNo() %>>
-										<button class="btn btn-secondary text-light" type="submit">
+										<button class="btn btn-secondary text-light" type="submit"
+										onclick="alertcompleteToModify(event)">
 											비활성
 										</button>
 									</form>
@@ -398,12 +412,14 @@
 								<td><%=topping.getPrice() %></td>
 								<td><%=("N".equalsIgnoreCase(topping.getDisableYn())) ? "아니오":"예" %></td>								
 								<td><a class="btn btn-primary text-light"
-									href="toppingmodifyform.jsp?yn=n&toppingno=<%=topping.getNo() %>">수정</a></td>
+									href="toppingmodifyform.jsp?yn=n&toppingno=<%=topping.getNo() %>"
+									onclick="alertcompleteToModifyForm(event)">수정</a></td>
 								<td>
 									<form method="post" action="toppingmodify.jsp" enctype="multipart/form-data">
 										<input type="hidden" name="yn" value="yn">
 										<input type="hidden" name="toppingno" value=<%=topping.getNo() %>>
-										<button class="btn btn-danger text-light" type="submit">
+										<button class="btn btn-danger text-light" type="submit"
+										onclick="alertcompleteToModify(event)">
 											활성
 										</button>
 									</form>
@@ -449,12 +465,14 @@
 								<td><%=etc.getPrice() %></td>
 								<td><%=("N".equalsIgnoreCase(etc.getDisableYn())) ? "아니오":"예" %></td>
 								<td><a class="btn btn-primary text-light"
-									href="etcmenumodifyform.jsp?yn=n&etcno=<%=etc.getNo() %>">수정</a></td>
+									href="etcmenumodifyform.jsp?yn=n&etcno=<%=etc.getNo() %>"
+									onclick="alertcompleteToModifyForm(event)">수정</a></td>
 								<td>
 									<form method="post" action="etcmenumodify.jsp" enctype="multipart/form-data">
 										<input type="hidden" name="yn" value="y">
 										<input type="hidden" name="etcno" value=<%=etc.getNo() %>>
-										<button class="btn btn-secondary text-light" type="submit">
+										<button class="btn btn-secondary text-light" type="submit"
+										onclick="alertcompleteToModify(event)">
 											비활성
 										</button>
 									</form>
@@ -469,12 +487,14 @@
 								<td><%=etc.getPrice() %></td>
 								<td><%=("N".equalsIgnoreCase(etc.getDisableYn())) ? "아니오":"예" %></td>
 								<td><a class="btn btn-primary text-light"
-									href="etcmenumodifyform.jsp?yn=n&etcno=<%=etc.getNo() %>">수정</a></td>
+									href="etcmenumodifyform.jsp?yn=n&etcno=<%=etc.getNo() %>"
+									onclick="alertcompleteToModifyForm(event)">수정</a></td>
 								<td>
 									<form method="post" action="etcmenumodify.jsp" enctype="multipart/form-data">
 										<input type="hidden" name="yn" value="yn">
 										<input type="hidden" name="etcno" value=<%=etc.getNo() %>>
-										<button class="btn btn-danger text-light" type="submit">
+										<button class="btn btn-danger text-light" type="submit"
+										onclick="alertcompleteToModify(event)">
 											활성
 										</button>
 									</form>
@@ -549,6 +569,32 @@
 			}
 		}
 		
+		function alertcompleteToModify(event) {
+			
+			if(confirm('상태를 바꾸시겠습니까?')){
+			
+			} else {
+				event.preventDefault();			
+			}
+		}
+		
+		
+		function alertcompleteToModifyForm(event) {
+			
+			if(confirm('수정하시겠습니까?')){
+			
+			} else {
+				event.preventDefault();			
+			}
+		}
+		
+		function alertcompleteToInsertForm(event) {
+			if(confirm('신규 피자를 등록하시겠습니까?')){
+				
+			} else {
+				event.preventDefault();			
+			}
+		}
 	</script>
 </body>
 </html>

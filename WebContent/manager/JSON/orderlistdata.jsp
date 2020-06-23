@@ -18,9 +18,13 @@
 
 	List<OrderDto> orders = new ArrayList<OrderDto>();
 	if ("orderno".equals(searchOpt)) {
-		OrderDto orderDto = new OrderDto();
-		orderDto = orderDao.getOrderDtoByNo(NumberUtil.stringToInt(searchValue));
-		orders.add(orderDto);
+		if(searchValue.isEmpty()){
+			orders = orderDao.getAllOrdersWithRange(beginNumber, endNumber);
+		} else {
+			OrderDto orderDto = new OrderDto();
+			orderDto = orderDao.getOrderDtoByNo(NumberUtil.stringToInt(searchValue));
+			orders.add(orderDto);
+		}
 		// 오더넘버 + 범위 
 	} else if ("branchname".equals(searchOpt)) {
 		orders = orderDao.getOrderByBranchNameWithRange(beginNumber, endNumber, searchValue);
@@ -39,6 +43,8 @@
 			orders = orderDao.getOrdersByStatusWithRange(beginNumber, endNumber, 4);
 		} else if ("주문취소".equals(searchValue)) {
 			orders = orderDao.getOrdersByStatusWithRange(beginNumber, endNumber, 5);
+		} else {
+			orders = orderDao.getAllOrdersWithRange(beginNumber, endNumber);
 		}
 	}
 

@@ -143,6 +143,28 @@ public class EventDao {
 		return event;
 	}
 	
+	public List<Event> getEventsByNameWithRange(String eventName, int beginNumber, int endNumber) throws SQLException {
+		List<Event> events = new ArrayList<Event>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("event.getEventsByNameWithRange"));
+		pstmt.setString(1, eventName);
+		pstmt.setInt(2, beginNumber);
+		pstmt.setInt(3, endNumber);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Event event = resultSetToEvent(rs);
+			events.add(event);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return events;
+	}
+	
 	public void insertEvent(Event event) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("event.insertEvent2"));

@@ -1,5 +1,6 @@
 package com.domino.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -166,6 +167,29 @@ public class OrderDao {
 		
 		pstmt.close();
 		connection.close();
+	}
+	
+	/**
+	 * 새 장바구니를 만드는 메소드
+	 *  이렇게 써도되는지 모르겠넹ㅋ
+	 * @param cart 최소한의 장바구니 정보가 담긴 Order 객체
+	 * @return int cartNo 새로 만들어진 장바구니 번호
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	public int insertNewCart(Order cart) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		CallableStatement cstmt = connection.prepareCall(QueryUtil.getSQL("order.insertNewCart"));
+		cstmt.setInt(1, cart.getUserNo());
+		cstmt.setInt(2, cart.getBranchNo());
+		cstmt.registerOutParameter(3, java.sql.Types.INTEGER);
+		cstmt.execute();
+		int cartNo = cstmt.getInt(3);
+		
+		cstmt.close();
+		connection.close();
+		
+		return cartNo;
 	}
 	
 	/**

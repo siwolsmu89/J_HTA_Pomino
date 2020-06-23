@@ -18,8 +18,12 @@
 	List<QuestionDto> questionDtos = new ArrayList<QuestionDto>();
 	
 	if("qnano".equals(searchOpt)){
-		questionDto = qnaDao.getQuestionByNo(NumberUtil.stringToInt(searchValue));
-		questionDtos.add(questionDto);
+		if(searchValue.isEmpty()){
+			questionDtos = qnaDao.getAllQuestion(beginNumber, endNumber);					
+		} else {
+			questionDto = qnaDao.getQuestionByNo(NumberUtil.stringToInt(searchValue));
+			questionDtos.add(questionDto);			
+		}
 	} else if("qnawriter".equals(searchOpt)){
 		
 		questionDtos = qnaDao.getQuestionByWriter(searchValue, beginNumber, endNumber);

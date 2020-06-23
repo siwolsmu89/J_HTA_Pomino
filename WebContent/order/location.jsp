@@ -11,6 +11,11 @@
 	String addr2 = request.getParameter("addr2");
 	String addrDetail = request.getParameter("addr_detail");
 	
+	if(addr1.isEmpty() || addr2.isEmpty() || addrDetail.isEmpty()){
+		response.sendRedirect("selectlocation.jsp?error=empty");
+		return;
+	}
+	
 	Location location = new Location();
 	location.setAddrFirst(addr1);
 	location.setAddrSecond(addr2);
