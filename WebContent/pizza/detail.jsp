@@ -1,3 +1,5 @@
+<%@page import="com.domino.dao.EtcDao"%>
+<%@page import="com.domino.vo.Etc"%>
 <%@page import="com.domino.vo.Topping"%>
 <%@page import="com.domino.dao.ToppingDao"%>
 <%@page import="com.domino.vo.Side"%>
@@ -169,49 +171,36 @@
 					</div> <!-- 하늘4 끝 -->
 				</div> <!-- 파랑1 끝 -->
 				
+				<br style="padding-bottom : 10px"/>
+				<br style="padding-bottom : 10px"/>
+				
 				<div> <!-- 파랑2 시작 -->
 					<form id="my-form" method="post" action="../order/cart.jsp"> <!-- 주문 정보는 pizzaOrderDto로 보내야되는거같은데 -->
-						<div class="form-group"  style="border-bottom: 3px solid black; padding-bottom : 20px"> <!-- 하늘1 시작 -->
+						<div class="form-group" style="border-bottom: 3px solid black; padding-bottom : 20px"> <!-- 하늘1 시작 -->
 							<h4><strong>사이즈 선택</strong></h4>
 							<%
 								discountRate = 0.1;	// 더미데이터
-								if(discountRate != 0.0) {
+								
 							%>
 							
 							
 							<div class="checks">
 								<div class="custom-control custom-radio custom-control-inline">
-									<input type="radio" class="custom-control-input" name="size" id="size-L" value="<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>" onchange="pizza_chk()" checked>
+									<input type="radio" class="custom-control-input" name="size" id="size-L" value="<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>" onchange="changePizza()" checked >
 									<label class="custom-control-label" for="size-L"><strong class="text-danger">L</strong><strong>　<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>원</strong></label>
 								</div>
 								
 								<div class="custom-control custom-radio custom-control-inline">
-									<input type="radio" class="custom-control-input" name="size" id="size-M" value="<%=(int)(pizza.getMprice() - (pizza.getMprice() * discountRate)) %>" onchange="pizza_chk()">
+									<input type="radio" class="custom-control-input" name="size" id="size-M" value="<%=(int)(pizza.getMprice() - (pizza.getMprice() * discountRate)) %>" onchange="changePizza()">
 									<label class="custom-control-label" for="size-M"><strong class="text-danger">M</strong><strong>　<%=(int)(pizza.getMprice() - (pizza.getMprice() * discountRate)) %>원</strong></label>
 								</div>									
 							</div>
-							<%
-								} else {
-							%>
-							<div class="checks">
-								<div class="custom-control custom-radio custom-control-inline">
-									<input type="radio" class="custom-control-input" name="size" id="size-L" value="<%=pizza.getLprice()%>" onchange="pizza_chk()" checked>
-									<label class="custom-control-label" for="size-L"><strong class="text-danger">L</strong><strong>　<%=pizza.getLprice()%>원</strong></label>
-								</div>
-								
-								<div class="custom-control custom-radio custom-control-inline">
-									<input type="radio" class="custom-control-input" name="size" id="size-M" value="<%=pizza.getMprice()%>" onchange="pizza_chk()">
-									<label class="custom-control-label" for="size-M"><strong class="text-danger">M</strong><strong>　<%=pizza.getMprice() %>원</strong></label>
-								</div>									
-							</div>
-							<%
-								}
-							%>
+							
 							<br style="padding-bottom : 10px"/>
 							<br style="padding-bottom : 10px"/>
 						</div> <!-- 하늘1 끝 -->
 
-						<div class="form-group"> <!-- 하늘2 시작 -->
+						<div class="form-group" style="border-bottom: 3px solid black; padding-bottom : 20px"> <!-- 하늘2 시작 -->
 							<div><!-- float-left : 좌측정렬 , right는 우측정렬 -->
 								<h4 class="float-left"><strong>도우 선택</strong></h4>
 								<!-- 그냥 뺄까 -->
@@ -221,30 +210,35 @@
 							<div class="checks">
 							<p>　</p> <!-- 생략하면 라디오버튼 배열 이상해짐 -->
 							<%
+								int i = 0;
 								for (Dough dough : doughs) {
 							%>
 								<div class="custom-control custom-radio checks">
-									<input type="radio" class="custom-control-input" name="dou" id="dou<%=dough.getNo() %>" value="<%=dough.getPrice() %>" onchange="dou_chk()" checked>
+									
+									<input type="radio" <%=i==0 ? "checked" : "" %> class="custom-control-input" name="dou" id="dou<%=dough.getNo() %>" value="<%=dough.getPrice() %>" onchange="changePizza()">
 									<label class="custom-control-label" for="dou<%=dough.getNo()%>"><strong><%= dough.getName()%></strong>
-										<strong class="text-danger">　　　　　　　　　　　　　　　　　　　　　　+ <%=dough.getPrice()%>원</strong>
+										+ <strong class="text-danger"><%=dough.getPrice()%></strong>원 
 									</label>
 								</div>
 							<%
+									i++;
 								}
+								
 							%>
 							</div>
+							<br style="padding-bottom : 10px"/>
+							<br style="padding-bottom : 10px"/>
 						</div> <!-- 하늘2 끝 -->
-						
-						<p>　</p>
-						
-						<div> <!-- 하늘3 시작 -->
+
+						<div > <!-- 하늘3 시작 -->
 							<h4 class="float-left"><strong>토핑추가</strong></h4>
 							<h5 class="float-right"><a href="#" class="text-warning"><small>ⓘ 토핑 알레르기 유발성분</small></a></h5>
 						</div> <!-- 하늘3 끝 -->
 						
 						<div> <!-- 하늘4 끝 -->
-							<p>　</p>
-							<p class="text-muted"><small> * 토핑추가는 피자 한판 당 5개까지 추가 가능</small></p>
+							<br style="padding-bottom : 10px"/>
+							<br style="padding-bottom : 10px"/>
+							<p class="text-danger"><small> * 토핑추가는 피자 한판 당 5개까지 추가 가능</small></p>
 						</div> <!-- 하늘4 끝 -->
 						
 						<%
@@ -254,7 +248,7 @@
 							List<Topping> afterToppings = toppingDao.getAfterToppingList();
 						%>
 
-						<div> <!-- 하늘5 시작 -->
+						<div style="border-bottom: 3px solid black; padding-bottom : 20px"> <!-- 하늘5 시작 -->
 							<ul class="nav nav-tabs ">
 								<li class="nav-item"><a class="nav-link active" data-toggle="tab"  href="#topping1">메인</a></li>
 								<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#topping2">치즈</a></li>
@@ -273,13 +267,13 @@
 												<li class="" style="list-style-type:none; float:left; padding:3px">
 													<img src="<%=topping.getImageSrc()%>"/>
 													<div>
-														<div class="text-center" style="width:150px" id="name-<%=topping.getNo() %>"><%=topping.getName() %></div>
-														<div class="text-center" style="width:150px" ><p id="price-main-<%=topping.getNo() %>"><%=topping.getPrice() %></p></div>
+														<div class="text-center" style="width:150px" id="topping-no-1-<%=topping.getNo() %>"><%=topping.getName() %></div>
+														<div class="text-center" style="width:150px" ><strong id="topping-price-1-<%=topping.getNo() %>"><%=topping.getPrice() %></strong></div>
 														<div style="width:100px; float:right">
 															<!-- 버튼 -->
 															<input  type="number" name="topping" class="w-50 text-right" 
-																	id="amount-<%=topping.getNo() %>" style="align:right" value="0" min="0" max="5"
- 																	onchange="changeAmount(1, <%=topping.getNo() %>, <%=topping.getPrice() %>, event)" >
+																	id="topping-amount-1-<%=topping.getNo() %>" style="align:right" value="0" min="0" max="5"
+ 																	onchange="changePizza()" >
 														</div>
 													</div>
 												</li>
@@ -301,13 +295,13 @@
 												<li class="" style="list-style-type:none; float:left; padding:3px">
 													<img src="<%=topping.getImageSrc()%>"/>
 													<div>
-														<div class="text-center" style="width:150px" id="name-<%=topping.getNo() %>"><%=topping.getName() %></div>
-														<div class="text-center" style="width:150px" ><p  id="price-cheeze-<%=topping.getNo() %>"><strong><%=topping.getPrice() %></strong></p></div>
+														<div class="text-center" style="width:150px" id="topping-no-2-<%=topping.getNo() %>"><%=topping.getName() %></div>
+														<div class="text-center" style="width:150px" ><strong  id="topping-price-2-<%=topping.getNo() %>"><%=topping.getPrice() %></strong></div>
 														<div style="width:100px; float:right">
 															<!-- 버튼 -->
 															<input  type="number" name="topping" class="w-50 text-right" 
-																	id="amount-<%=topping.getNo() %>" style="align:right" value="0" min="0" 
-																	onchange="changeAmount(2, <%=topping.getNo() %>, <%=topping.getPrice() %>, event)" >
+																	id="topping-amount-2-<%=topping.getNo() %>" style="align:right" value="0" min="0" max="5"
+																	onchange="changePizza()" >
 														</div>
 													</div>
 												</li>
@@ -329,13 +323,14 @@
 												<li class="" style="list-style-type:none; float:left; padding:3px">
 													<img src="<%=topping.getImageSrc()%>"/>
 													<div>
-														<div class="text-center" style="width:150px" id="name-<%=topping.getNo() %>"><%=topping.getName() %></div>
-														<div class="text-center" style="width:150px" ><p  id="price-after-<%=topping.getNo() %>"><strong><%=topping.getPrice() %></strong></p></div>
+														<div class="text-center" style="width:150px" id="topping-no-3-<%=topping.getNo() %>"><%=topping.getName() %></div>
+														<div class="text-center" style="width:150px" ><strong  id="topping-price-3-<%=topping.getNo() %>"><%=topping.getPrice() %></strong></p></div>
 														<div style="width:100px; float:right">
 															<!-- 버튼 -->
 															<input  type="number" name="topping" class="w-50 text-right" 
-																	id="amount-<%=topping.getNo() %>" style="align:right" value="0" min="0" 
-																	onchange="changeAmount(3, <%=topping.getNo() %>, <%=topping.getPrice() %>, event)" >
+																	id="topping-amount-3-<%=topping.getNo() %>" style="align:right" value="0" min="0" 
+																	onchange="changePizza()" >
+														
 														</div>
 													</div>
 												</li>
@@ -348,63 +343,58 @@
 								</div>
 			
 							</div>
-
+							<br style="padding-bottom : 10px"/>
+							<br style="padding-bottom : 10px"/>
 						</div> <!-- 하늘5 끝 -->
 	
-												
-
-
-
-
-
 						<!-- for문 -->
 						
-						<div> <!-- 하늘6 끝 -->
+						<div style="border-bottom: 3px solid black; padding-bottom : 20px"> <!-- 하늘6 끝 -->
 							<br style="padding-bottom : 10px"/>
 							<h4 class="float-left"><strong>수량선택</strong></h4>
 							<br style="padding-bottom : 10px"/>
 							<input  type="number" name="" class="w-100 text-right" 
-									id="amount-pizza-<%=pizza.getNo() %>" style="align:right" value="1" min="1" 
-									onchange="changePizzaCnt(event)">
+									style="align:right" value="1" min="1" id="pizza-order-amount"
+									onchange="changePizza()">
 						</div> <!-- 하늘6 끝 -->
 
+						<br style="padding-bottom : 10px"/>
+					
 						<%
 							SideDao sideDao = new SideDao();
 							List<Side> sides = sideDao.getAllSide();
 						%>
-						<br style="padding-bottom : 10px"/>
-												
+					
 						<div> <!-- 하늘7 시작 -->
 							<div> <!-- 보라1 시작 -->
 								<h4 class="float-left"><strong>사이드디시</strong></h4>
-								<p>　</p>
+								
+								<br style="padding-bottom : 10px"/>
+								<br style="padding-bottom : 10px"/>
+							
 							</div> <!-- 보라2 시작 -->
 							
-							<div> <!-- 하늘8 시작 -->
+							<div style="border-bottom: 3px solid black; padding-bottom : 20px"> <!-- 하늘8 시작 -->
 								<div> <!-- 보라1 시작 -->
 									<div class="" >
 										<div class="" >
 											<div class="row">
-												<div class="col-sm-6">
-													<ul class="list-unstyled" >
-														<li>
-															<a><img src="../resource/images/topping/RTP218.jpg" alt="견본입니다"/></a>
-															<div>
-																<div>오리엔탈 견본 4ea(54g)</div>
-																<div class=""><strong>3,500</strong></div>
-															</div>
-														</li>
-													</ul>
-													
-													<ul class="list-unstyled" >
+												<div class="col-sm-12">
+													<ul class="" >
 														<%
 															for (Side side : sides) {
 														%>
-														<li>
-															<a><img alt="<%=side.getName() %>" src="<%=side.getImageSrc()%>" style="width:150px; height:150px;"></a>
+														<li class="" style="list-style-type:none; float:left; padding:3px">
+															<img src="<%=side.getImageSrc()%>"/>
 															<div>
-																<div><%=side.getName() %></div>
-																<div class=""><strong><%=side.getPrice() %></strong></div>
+																<div class="text-center" style="width:150px" id="side-no-<%=side.getNo() %>"><%=side.getName() %></div>
+																<div class="text-center" style="width:150px" ><strong  id="side-price-<%=side.getNo() %>"><%=side.getPrice() %></strong></div>
+																<div style="width:100px; float:right">
+																	<!-- 버튼 -->
+																	<input  type="number" name="topping" class="w-50 text-right" 
+																			id="side-amount-<%=side.getNo() %>" style="align:right" value="0" min="0" 
+																			onchange="changeSide()" >
+																</div>
 															</div>
 														</li>
 														<%
@@ -412,47 +402,60 @@
 														%>
 													</ul>													
 												</div>
-												<div class="col-sm-6">
-													<!-- 버튼 여기에? -->
-													<!-- 버튼 여기에? -->
-													<!-- 버튼 여기에? -->
-												</div>
 											</div>
 										</div>
 									</div>
 								</div> <!-- 보라1 끝 -->
 							</div> <!-- 하늘8 끝 -->
-						</div> <!-- 하늘7 끝 -->						
+						</div> <!-- 하늘7 끝 -->				
+								
+						<br style="padding-bottom : 10px"/>
+						
+						<%
+							EtcDao ectDao = new EtcDao();
+							List<Etc> etcs = ectDao.getAllEtc();
+						%>
 
 						<div> <!-- 하늘9 시작 -->
 							<div> <!-- 보라1 시작 -->
 								<h4 class="float-left"><strong>음료&기타</strong></h4>
-								<p>　</p>
+								
+								<br style="padding-bottom : 10px"/>
+								<br style="padding-bottom : 10px"/>
+
 							</div> <!-- 보라2 시작 -->
 							
 							<div> <!-- 하늘8 시작 -->
 								<div> <!-- 보라1 시작 -->
 									<div class="" >
 										<div class="" >
+										
 											<div class="row">
-												<div class="col-sm-6">
-													<ul class="list-unstyled" >
-														<li>
-															<a><img src="../resource/images/topping/RTP218.jpg" alt="견본입니다"/></a>
+												<div class="col-sm-12">
+													<ul class="" >
+														<%
+															for (Etc etc : etcs) {
+														%>
+														<li class="" style="list-style-type:none; float:left; padding:3px">
+															<img src="<%=etc.getImageSrc()%>"/>
 															<div>
-																<div>오리엔탈 견본 4ea(54g)</div>
-																<div class=""><strong>3,500</strong></div>
+																<div class="text-center" style="width:150px" id="etc-no-<%=etc.getNo() %>"><%=etc.getName() %></div>
+																<div class="text-center" style="width:150px" ><strong id="etc-price-<%=etc.getNo() %>"><%=etc.getPrice() %></strong></div>
+																<div style="width:100px; float:right">
+																	<!-- 버튼 -->
+																	<input  type="number" name="topping" class="w-50 text-right" 
+																			id="etc-amount-<%=etc.getNo() %>" style="align:right" value="0" min="0" 
+																			onchange="changeEtc()" >
+																</div>
 															</div>
 														</li>
-													</ul>
-												</div>
-											
-												<div class="col-sm-6">
-												<!-- 버튼 여기에? -->
-												<!-- 버튼 여기에? -->
-												<!-- 버튼 여기에? -->
+														<%
+															}
+														%>
+													</ul>													
 												</div>
 											</div>
+											
 										</div>
 									</div>
 								</div> <!-- 보라1 끝 -->
@@ -484,8 +487,8 @@
 
 										<!-- 사이드 제한 없음 -->
 										<!-- 체크된 게 더 있으면 사이드이름 라인이 하나씩 추가되야 되는데... -->
-											<td class="text">
-												<p><small>사이드이름<% // 버튼이 카운트된 사이드디시 이름%>x<%//사이드디시에 버튼 누를때마다 카운트 증가 %></small></p>
+											<td class="text" id="ordered-side">
+												
 											</td>
 
 
@@ -497,7 +500,10 @@
 											</td>
 
 											<td class="text">
-												<p><strong id="order-price" >0원 <% // 할인적용 안된 총 가격 %></strong></p>
+												 피자 <input type="number" id="pizza-total-order-price" value="<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>"  min="0"><br />
+												사이드 <input type="number" id="side-order-price" value="0" min="0"><br />
+												기타 <input type="number" id="etc-order-price" value="0" min="0"><br />
+												<p><strong id="order-price" ><%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %></strong>원</p>
 												<a href="../order/cart.jsp">주문하기</a>
 											</td>
 										</tr>
@@ -517,32 +523,6 @@
 <%@ include file="../common/footer.jsp" %>
 
 <script type="text/javascript">
-
-	// 총 결재금액을 계산하는 함수다.
-	// 장바구니의 상품들 중에서 체크박스가 체크된 상품들의 구매가격만 조회해서 총결재금액을 계산한다.
-	function refreshTotalOrderPrice() {
-		// 모든 상품의 체크박스를 전부 조회한다.(input[id^=product-checkbox]는 input태그 중에서 id가 product-checkbox로 시작하는 엘리먼트를 전부 나타낸다.)
-		var checkboxes = document.querySelectorAll('input[id^=product-checkbox]');
-		
-		// 총 결재금액을 저장할 변수를 선언한다.
-		var totalOrderPrice = 0;
-		for (var i=0; i<checkboxes.length; i++) {
-			var checkbox = checkboxes[i];
-			// 각 상품 체크박스의 체크여부를 조회한다.
-			if (checkbox.checked) {
-				// 체크된 체크박스의 값(상품번호)을 조회한다.( <input type="checkbox" id="product-checkbox-10006" value="10006" /> 에서 value값을 조회하면 해당 상품의 번호를 획득할 수 있다.)
-				var productNo = checkbox.value;
-				// 해당 상품의 구매가격을 조회한다. ( <strong id="order-price-10006">300,000</strong> 구매가격은 id가 "order-price-상품번호"에 해당하는 엘리먼트의 컨텐츠다.)
-				var currencyText = document.getElementById("order-price-" + productNo).textContent
-				// 구매가격을 숫자로 변환한다.("300,000"을 300000 으로 변환한다.)
-				var orderPrice = currencyToNumber(currencyText);
-				// 구매가격을 총 결재금액에 더한다.
-				totalOrderPrice += orderPrice;
-			}
-		}
-		// 계산된 총 결재금액을 가격표시로 변환한 다음, 총구매가격 태그의 컨텐츠로 대입한다.
-		document.getElementById("total-order-price").textContent = numberToCurrency(totalOrderPrice)
-	}
 	
 // 숫자를 가격텍스트로 변환한다. (1300000 ---> "1,300,000")
 	function numberToCurrency(number) {
@@ -554,98 +534,91 @@
 		return parseInt(currency.replace(/,/g, ''));
 	}
 	
-	
-
-	var toppingPrice = 0;
-	var pizzaPrice = 0;
-	var douPrice = 0;
-
-	var orderPriceMain = 0;
-	var orderPriceCheeze = 0;
-	var orderPriceAfter = 0;
-
-	
-	function pizza_chk() {
-		var pizzaPrice = parseInt(document.querySelector("input[name='size']:checked").value);
-		alert(pizzaPrice);
-		
-		this.pizzaPrice = pizzaPrice;
-		calculatePrice();
-    }
-	
-	function changePizzaCnt(event) {
-		var amount = event.target.value;
-		document.querySelector('#order-price').textContent = amount*(this.pizzaPrice + this.douPrice + this.toppingPrice);
-		
-	}
-	
-	// 도우 체크 하나 생성
-	function dou_chk() {
-		var douPrice = parseInt(document.querySelector("input[name='dou']:checked").value);
-		alert(douPrice);
-		
-		this.douPrice = douPrice;
-		calculatePrice();
-	}
-
-	function calculatePrice() {
-		document.querySelector('#order-price').textContent = this.pizzaPrice + this.douPrice + this.toppingPrice + "원";
-	}
-
-
-	// 구매수량을 변경할 때 실행되는 함수
-	// 구매수량이 변경될 때마다 구매수량이 변경된 상품의 번호를 전달받는다.
-		function changeAmount(type, productNo, productPrice, event) {
-		
-			var amount = event.target.value;
-			var calculated =  productPrice * amount;
-			// 해당 상품의 가격을 조회한다.
-			if (type == 1) {
-				this.orderPriceMain = calculated;
-				
-				var targetId = event.target.id;
-				var menus = document.querySelectorAll("#topping1 input");
-				for (var i = 0; i<menus.length; i++) {
-					if (menus[i].id != targetId) {
-						menus[i].value = 0;
-					}
-				}
-			} else if (type == 2) {
-				this.orderPriceCheeze = calculated;
-				
-				var targetId = event.target.id;
-				var menus = document.querySelectorAll("#topping2 input");
-				for (var i = 0; i<menus.length; i++) {
-					if (menus[i].id != targetId) {
-						menus[i].value = 0;
-					}
-				}
-			} else if (type == 3) {
-				this.orderPriceAfter = calculated;
-				
-				var targetId = event.target.id;
-				var menus = document.querySelectorAll("#topping3 input");
-				for (var i = 0; i<menus.length; i++) {
-					if (menus[i].id != targetId) {
-						menus[i].value = 0;
-					}
-				}
-			}
-			
-			this.toppingPrice = this.orderPriceMain + this.orderPriceCheeze + this.orderPriceAfter;
-			calculatePrice();
-			// 총 결재금액을 계산하는 함수를 실행한다.
-			//refreshTotalOrderPrice();
+	function strToNumber(str) {
+		try {
+			return parseInt(str);
+		} catch (e) {
+			return 0;
 		}
+	}
 	
+	// 피자, 도우, 토핑이 변경될 때 마다 실행되는 함수다.
+	function changePizza() {
+		// 주문수량을 조회한다.
+		var amount = document.getElementById("pizza-order-amount").value;
+		
+		// 피자와 도우의 가격을 조회하고, 선택된 수량을 곱해서 각각의 가격을 계산한다.
+		var pizzaOrderPrice = document.querySelector("input[name=size]:checked").value * amount;
+		var doughOrderPrice = document.querySelector("input[name=dou]:checked").value * amount;
+		
+		// 모든 토핑의 가격을 계산한다.
+		var priceList = document.querySelectorAll("[id^=topping-price]");
+		var amountList = document.querySelectorAll("[id^=topping-amount]");
+		var toppingOrderPrice = 0;
+		for (var i=0; i<priceList.length; i++) {
+			var toppingPrice = parseInt(priceList[i].textContent);
+			var toppingAmount = parseInt(amountList[i].value);
+			
+			toppingOrderPrice += toppingPrice*toppingAmount;
+		}
+		// 계산된 모든 토핑의 가격에 주문수량을 곱해서 총 토핑가격을 계산한다.		
+		toppingOrderPrice = toppingOrderPrice*amount;
+		
+		// 피자, 도우, 토핑에 대한 가격을 모두 더해서 히든 필드에 저장한다.
+		document.getElementById("pizza-total-order-price").value = pizzaOrderPrice + doughOrderPrice + toppingOrderPrice;
+		
+		// 총구매가격을 갱신시킨다.
+		refreshTotalOrderPrice();
+	}
 	
+	// 사이드 메뉴의 수량이 변경될 때 마다 실행되는 함수다.
+	function changeSide() {
+		// 모든 사이드 메뉴의 가격을 계산한다.
+		var priceList = document.querySelectorAll("[id^=side-price]");
+		var amountList = document.querySelectorAll("[id^=side-amount]");
+		
+		var orderPrice = 0;
+		for (var i=0; i<priceList.length; i++) {
+			var price = parseInt(priceList[i].textContent);
+			var amount = parseInt(amountList[i].value);
+			
+			orderPrice += price*amount;
+		}
+		// 계산된 총 사이드메뉴 가격을 히든 필드에 저장한다.
+		document.getElementById("side-order-price").value = orderPrice;
+		
+		// 총구매가격을 갱신시킨다.
+		refreshTotalOrderPrice();
+	}
 	
+	// 기타 메뉴의 수량이 변경될 때마다 실행되는 함수다.
+	function changeEtc() {
+		// 모든 기타 메뉴의 가격을 계산한다.
+		var priceList = document.querySelectorAll("[id^=etc-price]");
+		var amountList = document.querySelectorAll("[id^=etc-amount]");
+		
+		var orderPrice = 0;
+		for (var i=0; i<priceList.length; i++) {
+			var price = parseInt(priceList[i].textContent);
+			var amount = parseInt(amountList[i].value);
+			
+			orderPrice += price*amount;
+		}
+		// 계산된 총 기타메뉴 가격을 히든 필드에 저장한다.
+		document.getElementById("etc-order-price").value = orderPrice;
+		
+		// 총구매가격을 갱신시킨다.
+		refreshTotalOrderPrice();
+	}
 	
-	
-
-
-
-	
+	// 총구매가격을 갱신한다.
+	function refreshTotalOrderPrice() {
+		var pizzaPrice = document.getElementById("pizza-total-order-price").value;
+		var sidePrice = document.getElementById("side-order-price").value;
+		var etcPrice = document.getElementById("etc-order-price").value;
+		
+		document.getElementById("order-price").textContent = numberToCurrency(parseInt(pizzaPrice) + parseInt(sidePrice) + parseInt(etcPrice));
+	}
 </script>
 
 </body>

@@ -44,25 +44,16 @@
 			<div class="col-12">
 				<div class="navbar navbar-expand-sm ">
 					<ul class="navbar-nav">
-						<li	class="nav-item  d-flex justify-content-between align-itens-center small">
-							<a class="nav-link text-muted " href="info.jsp">메인</a>
-						</li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small">
-							<a class="nav-link text-dark font-weight-bold" href="orderlist.jsp">주문</a>
-						</li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small">
-							<a class="nav-link text-muted" href="menulist.jsp">메뉴</a>
-						</li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small">
-							<a class="nav-link text-muted" href="eventlist.jsp">이벤트</a>
-						</li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small">
-							<a class="nav-link text-muted" href="qnaboard.jsp">1:1문의</a>
-						</li>
-						<li class="nav-item  d-flex justify-content-between align-itens-center small">
-							<a class="nav-link text-muted" href="branchlist.jsp">가맹점</a>
-						</li>
-					</ul>
+							<li
+								class="nav-item  d-flex justify-content-between align-itens-center small"><a
+								class="nav-link text-muted" href="info.jsp">메인</a></li>
+							<li
+								class="nav-item  d-flex justify-content-between align-itens-center small"><a
+								class="nav-link text-dark font-weight-bold" href="orderlist.jsp">주문내역</a></li>
+							<li
+								class="nav-item  d-flex justify-content-between align-itens-center small"><a
+								class="nav-link text-muted" href="branchdetail.jsp">상세정보</a></li>
+						</ul>
 				</div>
 			</div>
 		</div>
@@ -169,29 +160,50 @@
 								int os = order.getOrderStatus();
 								String statusStr = "";
 								if (os == 0) {
-									statusStr = "접수완료";
+									statusStr = "<button class='btn btn-primary'>접수완료</button>";
 								} else if (os == 1) {
-									statusStr = "요리중";
+									statusStr = "<button class='btn btn-primary'>요리중</button>";
 								} else if (os == 2) {
-									statusStr = "배달중";
+									statusStr = "<button class='btn btn-sucess'>배달중</button>";
 								} else if (os == 3) {
-									statusStr = "배달완료";
+									statusStr = "<button class='btn btn-success'>배달완료</button>";
 								} else if (os == 4) {
-									statusStr = "수령완료";
+									statusStr = "<button class='btn btn-dark'>수령완료</button>";
 								} else {
-									statusStr = "주문취소";
+									statusStr = "<button class='btn btn-danger'>주문취소</button>";
 								}
 								
 								Date reqTime = order.getRequestTime();
 								String requestTime = reqTime.toString();
+								
+								// 주문갯수세기
+								String simpleMenu = "";
+								int orderCount = order.getTotalAmount();
+								if(!order.getPizzaName().isEmpty()){
+									simpleMenu = order.getPizzaName() + " " + (orderCount > 1 ? "외 " + (orderCount - 1) + "건" : "");
+								} else if(!order.getSideName().isEmpty()){
+									simpleMenu = order.getSideName() + (orderCount > 1 ? "외" + (orderCount - 1) + "건" : "");
+								}
 					%>
-							<tr>
+							<tr
+								<%
+									if (os == 4 || os == 5) {
+								%>
+									class="text-muted" 
+								<%
+									} else {
+								%>
+									class="font-weight-bold"
+								<%
+									}
+								%>
+							>
 								<td><%=orderNo %></td>
 								<td><%=branchName %></td>
 								<td><%=menuName %></td>
 								<td><%=totalPrice %></td>
 								<td><%=requestTime %></td>
-								<td><button class="btn btn-dark"><%=statusStr %></button></td>
+								<td><%=statusStr %></td>
 							</tr>
 					<%
 							}
