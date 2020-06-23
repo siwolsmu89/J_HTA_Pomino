@@ -10,6 +10,7 @@ import java.util.List;
 import com.domino.dto.EtcOrderDto;
 import com.domino.util.ConnectionUtil;
 import com.domino.util.QueryUtil;
+import com.domino.vo.EtcOrder;
 
 public class EtcDetailDao {
 	
@@ -74,6 +75,25 @@ public class EtcDetailDao {
 		
 		pstmt.executeUpdate();
 		
+		pstmt.close();
+		connection.close();
+	}
+	
+	/**
+	 * 새로 기타 메뉴 주문 정보를 db에 저장하는 메소드 
+	 * @param EtcOrder eo 기타 메뉴 주문 정보가 담긴 객체
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	public void insertNewEtcOrder(EtcOrder eo) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("etcdetail.insertNewEtcOrder"));
+		pstmt.setInt(1, eo.getEtcNo());
+		pstmt.setInt(2, eo.getOrderAmount());
+		pstmt.setInt(3, eo.getOrderPrice());
+		pstmt.setInt(4, eo.getOrderNo());
+		
+		pstmt.executeUpdate();
 		pstmt.close();
 		connection.close();
 	}

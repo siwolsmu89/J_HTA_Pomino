@@ -14,6 +14,10 @@
 	.field-error {
 		border: 1px solid red;
 	}
+	
+	html {
+  		overflow-y: scroll;
+	}
 </style>
 </head>
 <body>

@@ -1,3 +1,5 @@
+<%@page import="com.domino.util.StringUtil"%>
+<%@page import="com.domino.util.NumberUtil"%>
 <%@page import="com.domino.vo.Branch"%>
 <%@page import="com.domino.dao.LocationDao"%>
 <%@page import="com.domino.vo.Location"%>
@@ -17,7 +19,12 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	int userNo = loginUserNo;
-
+	int locationNo = NumberUtil.stringToInt((String) session.getAttribute("locationNo"));
+	if (locationNo == 0) {
+		response.sendRedirect("/domino/order/selectlocation.jsp?err=deny");
+		return;
+	}
+	
 	OrderDao orderDao = new OrderDao();
 	// 장바구니가 있는지 확인하고 있으면 해당 장바구니를사용한다.
 	Order cart = orderDao.getCartByUserNo(userNo);
@@ -28,8 +35,7 @@
 		cart = new Order();
 		
 		LocationDao locationDao = new LocationDao();
-		Location location = locationDao.getLocationByNo(savedLocationNo);
-		
+		Location location = locationDao.getLocationByNo(locationNo);
 		BranchDao branchDao = new BranchDao();
 		Branch branch = branchDao.getBranchByAddr(location.getAddrFirst());
 		
@@ -43,52 +49,96 @@
 		cartNo = cart.getNo();
 	}
 	
-	
 	// 이하 각 주문 정보에 따른 수행문들은 if문으로 해당 주문 정보가 있는지 확인하고 있을 때만 실행하도록 만들어둘 것.
-	
+
 	// request.getParameter 해서 받은 값에 피자 주문 정보가 있을 경우
-	PizzaOrder po = new PizzaOrder();
+	int pizzaNo = NumberUtil.stringToInt(request.getParameter("pizzano"));
+	if (pizzaNo != 0) {
+		String pizzaSize = StringUtil.nullToBlank(request.getParameter("pizzasize"));
+		int doughNo = NumberUtil.stringToInt(request.getParameter("doughno"));
+		int doughPrice = NumberUtil.stringToInt(request.getParameter("doughprice"));
+		int orderAmount = NumberUtil.stringToInt(request.getParameter("orderamount"));
+		int pizzaPrice = NumberUtil.stringToInt(request.getParameter("pizzaprice"));
+		int pizzaDCPrice = NumberUtil.stringToInt(request.getParameter("pizzadcprice"), pizzaPrice);
+		
+		PizzaOrder po = new PizzaOrder();
+		// 각각의 주문정보에 장바구니의 주문 번호를 포함해 상세정보를 저장한다. (피자주문정보로 예시를 든 것. 나머지도 똑같이 해야함)
+		po.setOrderNo(cartNo);
+		po.setPizzaNo(pizzaNo);
+		po.setPizzaSize(pizzaSize);
+		po.setDoughNo(doughNo);
+		po.setOrderAmount(orderAmount);
+		// 할인전 주문가격도 계산해주세요(pizza 사이즈에 따른 원래 가격 + 도우 가격에 주문수량 곱하기 해서 넣어주기 !! 토핑은 계산 x)
+		po.setOrderPrice((pizzaPrice + doughPrice) * orderAmount);
+		// 할인된 주문가격 (pizza 사이즈에 따른 할인가격 + 도우 가격에 주문수량 곱하기 계산해서 넣어주기 !! 토핑은 계산 x)
+		po.setDiscountPrice((pizzaDCPrice + doughPrice) * orderAmount);
+		// 주문정보가 저장되었으면 주문정보객체를 DB에 저장한다.
+		// 여기서도 저장된 피자주문번호를 바로 갖다 써야되기 때문에 return값으로 해당 피자주문번호를 반환해준다.
+		PizzaDetailDao pizzaDetailDao = new PizzaDetailDao();
+		int pizzaOrderNo = pizzaDetailDao.insertNewPizzaOrder(po);
+		// 토핑주문정보가 있다면 토핑주문정보를 저장한다.
+		ToppingOrder tpo = new ToppingOrder();
+		ToppingDetailDao toppingDetailDao = new ToppingDetailDao();
+		
+		// 토핑 주문 정보들은 배열로 올 것.
+		String[] toppingOrderInfos = request.getParameterValues("toppinginfo");
+		for (String toi : toppingOrderInfos) {
+			String[] infos = toi.split("+");
+			
+			int toppingNo = NumberUtil.stringToInt(infos[0]);
+			int toppingOrderAmount = NumberUtil.stringToInt(infos[1]);
+			int toppingPrice = NumberUtil.stringToInt(infos[2]);
+			
+			tpo.setToppigNo(toppingNo);
+			tpo.setOrderAmount(toppingOrderAmount);
+			tpo.setOrderPrice(toppingPrice * toppingOrderAmount);
+			// 토핑주문객체에 피자주문번호를 저장한다.
+			tpo.setPizzaOrderNo(pizzaOrderNo);
+			// 토핑주문정보를 db에 저장한다.
+			toppingDetailDao.insertNewToppingOrder(tpo);
+		}
+	}
+
+	// 사이드, etc도 마찬가지로 처리해준다.
+	// 사이드, etc 주문 정보들은 배열로 올 것.
 	// request.getParameter 해서 받은 값에 사이드 주문 정보가 있을 경우
 	SideOrder so = new SideOrder();
+	SideDetailDao sideDetailDao = new SideDetailDao();
+	String[] sideOrderInfos = request.getParameterValues("sideinfo");
+	for (String soi : sideOrderInfos) {
+		String[] infos = soi.split("+");
+		
+		int sideNo = NumberUtil.stringToInt(infos[0]);
+		int sideOrderAmount = NumberUtil.stringToInt(infos[1]);
+		int sidePrice = NumberUtil.stringToInt(infos[2]);
+		
+		so.setSideNo(sideNo);
+		so.setOrderAmount(sideOrderAmount);
+		so.setOrderPrice(sidePrice * sideOrderAmount);
+		// 토핑주문객체에 피자주문번호를 저장한다.
+		so.setOrderNo(cartNo);
+		// 토핑주문정보를 db에 저장한다.
+		sideDetailDao.insertNewSideOrder(so);
+	}
 	// request.getParameter 해서 받은 값에 기타 주문 정보가 있을 경우	
 	EtcOrder eo = new EtcOrder();
-
-	// 각각의 주문정보에 장바구니의 주문 번호를 포함해 상세정보를 저장한다. (피자주문정보로 예시를 든 것. 나머지도 똑같이 해야함)
-	po.setOrderNo(cartNo);
-	po.setPizzaNo(pizzaNo);
-	po.setPizzaSize(pizzaSize);
-	po.setDoughNo(doughNo);
-	po.setOrderAmount(orderAmount);
-	// 할인전 주문가격도 계산해주세요(pizza 사이즈에 따른 원래 가격 + 도우 가격에 주문수량 곱하기 해서 넣어주기 !! 토핑은 계산 x)
-	po.setOrderPrice(orderPrice);
-	// 할인된 주문가격 (pizza 사이즈에 따른 할인가격 + 도우 가격에 주문수량 곱하기 계산해서 넣어주기 !! 토핑은 계산 x)
-	po.setDiscountPrice(discountPrice);
-	
-	// 주문정보가 저장되었으면 주문정보객체를 DB에 저장한다.
-	// 여기서도 저장된 피자주문번호를 바로 갖다 써야되기 때문에 return값으로 해당 피자주문번호를 반환해준다.
-	PizzaDetailDao pizzaDetailDao = new PizzaDetailDao();
-	int pizzaOrderNo = pizzaDetailDao.insertNewPizzaOrder(po);
-	// 토핑주문정보가 있다면 토핑주문정보를 저장한다.
-	ToppingOrder tpo = new ToppingOrder();
-	// 토핑주문객체에 피자주문번호를 저장한다.
-	tpo.setPizzaOrderNo(pizzaOrderNo);
-	// 이하 나머지 정보들도 저장해준다.
-	
-	// 토핑주문정보를 db에 저장한다.
-	ToppingDetailDao toppingDetailDao = new ToppingDetailDao();
-	toppingDetailDao.insertNewToppingOrder(tpo);
-	
-	// 사이드, etc도 마찬가지로 처리해준다.
-	so.setOrderNo(cartNo);
-	eo.setOrderNo(cartNo);
-	
-	// 중간생략
-	
-	// 얘네들은 주문번호를 받아오지 않아도 되므로 일반적인 메소드를 사용한다.
-	SideDetailDao sideDetailDao = new SideDetailDao();
-	sideDetailDao.insertNewSideOrder(so);
 	EtcDetailDao etcDetailDao = new EtcDetailDao();
-	etcDetailDao.insertNewEtcOrder(eo);
+	String[] etcOrderInfos = request.getParameterValues("etcinfo");
+	for (String eoi : etcOrderInfos) {
+		String[] infos = eoi.split("+");
+		
+		int etcNo = NumberUtil.stringToInt(infos[0]);
+		int etcOrderAmount = NumberUtil.stringToInt(infos[1]);
+		int etcPrice = NumberUtil.stringToInt(infos[2]);
+		
+		eo.setEtcNo(etcNo);
+		eo.setOrderAmount(etcOrderAmount);
+		eo.setOrderPrice(etcPrice * etcOrderAmount);
+		// 토핑주문객체에 피자주문번호를 저장한다.
+		eo.setOrderNo(cartNo);
+		// 토핑주문정보를 db에 저장한다.
+		etcDetailDao.insertNewEtcOrder(eo);
+	}
 	
 	// 모든 작업이 끝나면 cart로 보내준다.
 	response.sendRedirect("/domino/order/cart.jsp");

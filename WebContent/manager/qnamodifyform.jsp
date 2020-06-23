@@ -113,7 +113,7 @@
 
 								<div class="form-group">
 									<label>문의내용</label>
-									<textarea type="text" class="form-control" disabled name="tel"><%=questionDto.getContent()%></textarea>
+									<textarea class="form-control" disabled name="tel"><%=questionDto.getContent()%></textarea>
 								</div>
 
 
