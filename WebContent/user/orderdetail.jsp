@@ -33,6 +33,7 @@
   		table td {
   			color: gray;
   		}
+  		
   </style>
 </head>
 <body>
@@ -50,13 +51,13 @@
 			<div class="col-8">
 				<ul class="nav justify-content-end small text-muted">
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="#">홈</a>
+				    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="#">나의정보</a>
+				    <a class="nav-link text-muted active pr-1" href="/domino/user/detailform.jsp">나의정보</a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
@@ -67,6 +68,7 @@
 				</ul>
 			</div>
 		</div>
+		<div class="mb-2" style="background-color: black; height: 2px;"></div>
 		<div id="userinfo-navbar" class="row">
 			<div class="col-12">
 				<div class="navbar navbar-expand-sm ">
@@ -128,7 +130,7 @@
 		
 	%>
 	<div class="body">
-		<div class="mb-2" style="background-color: black; height: 2px;"></div>
+		<div class="mb-3 mt-2" style="background-color: lightgray; height: 1.5px;"></div>
 		<div id="order-status">
 			<div class="row">
 				<div class="col-12">
@@ -144,7 +146,7 @@
 						</div>
 					</div>
 					<div class="mb-4" style="background-color: lightgray; height: 0.5px;"></div>
-					<h3 class="font-weight-bolder"><%=statusString %></h3>
+					<h3 class="font-weight-bolder pl-3"><%=statusString %></h3>
 					<div class="row">
 						<div class="col-12 p-5">	
 							<div class="row py-3 font-weight-bold">

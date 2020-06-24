@@ -20,29 +20,37 @@
 %>
 <%@ include file="../common/navbar.jsp"%>
 <div class="container">
+<!-- container 시작 -->
+
 	<div class="header">
-		<div class="row">	
-			<div class="col-4"><!-- 페이지명 바꿔서 사용하기 -->
+	<!-- header 시작 / 서브메뉴바 -->
+		<div class="row">
+		<!-- row 시작 -->	
+			<div class="col-4">
 				<h4>회원가입</h4>
 			</div>
-			
-			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
-				<ul class="nav justify-content-end">
-				  <li class="nav-item">
-				    <a class="nav-link active" href="#">홈</a>
-				  </li>
-				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">></a>
-				  </li>
-				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">회원가입</a>
-				  </li>
-				</ul>
+			<div class="col-8">
+				<ul class="nav justify-content-end small text-muted">
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">회원가입</a>
+					  </li>
+				</ul>				
 			</div>
+		<!-- row 종료 -->	
 		</div>
+	<!-- header 종료 / 서브메뉴바 -->
 	</div>
+	
 	<div style="background-color: black; height: 2px;" class="mb-2"></div>
+	
 	<div class="body">
+	<!-- body 시작 -->
 		<%	
 			// 가맹점등록 페이지로부터 받은 쿼리스트링 값 저장
 			String status = request.getParameter("status");
@@ -65,8 +73,9 @@
 						</ul>
 					</div>
 				</div>
-					<div class="row">
-						<div class="col-12 mt-2">
+				
+				<div class="row">
+					<div class="col-12 mt-2">
 						<!-- 회원가입시 표시할 오류내용 시작  -->
 							<%
 								if("dup".equals(error)){
@@ -80,7 +89,7 @@
 							<!-- 회원가입시 표시할 오류내용 끝  -->
 							<!-- 회원가입폼을 포함하고 있는 card 컴포넌트 시작 -->
 							<div class="card ">
-							<div class="card-body">
+								<div class="card-body">
 								<!-- 회원가입 입력 폼 시작  -->
 							<%
 								// 가맹점등록페이지(branch.jsp)에서 접근했는지 검사
@@ -385,11 +394,13 @@
 						<!-- 회원가입폼을 포함하고 있는 card 컴포넌트 시작 -->
 					</div>
 				</div>
-		<!-- 오류알림과 입력폼을 포함하는 row 끝 -->
+			<!-- 오류알림과 입력폼을 포함하는 row 끝 -->
 			</div>
 		</div>
+	<!-- body 종료 -->
 	</div>
 	<div class="mb-3"></div>
+<!-- container 종료 -->
 </div>
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">

@@ -207,6 +207,12 @@ public class BranchDao {
 		connection.close();
 	}
 	
+	/**
+	 * 가맹점 정보를 수정하는 메소드
+	 * @param branch 가맹점 정보
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public void updateBranch(Branch branch) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("branch.updateBranch"));
@@ -224,6 +230,24 @@ public class BranchDao {
 		pstmt.close();
 		connection.close();
 	}
+	
+	/**
+	 * 가맹점 영업시작/종료 정보를 업데이트하는 메소드
+	 * @param branch 영업시작/종료, 가맹점번호 값을 갖고있는 가맹점 객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
+	public void updateBranchQuitYn(Branch branch) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("branch.updateBranchQuitYn"));
+		pstmt.setString(1, branch.getQuitYn());
+		pstmt.setInt(2, branch.getNo());
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		connection.close();
+	}
+	
 	
 	/**
 	 * 주소(대분류)에 해당하는 가맹점 값을 반환한다.

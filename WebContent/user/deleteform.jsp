@@ -27,13 +27,13 @@
 			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
 				<ul class="nav justify-content-end small text-muted">
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="#">홈</a>	<!--text-muted pr-1  -->
+				    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	<!--text-muted pr-1  -->
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="#">나의정보</a><!--text-muted active pr-1  -->
+				    <a class="nav-link text-muted active pr-1" href="/domino/user/detailform.jsp">나의정보</a><!--text-muted active pr-1  -->
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
@@ -134,8 +134,8 @@
                         		</div>
 							</div>
 							<div class="text-center">
-								<a class="btn btn-light btn-lg" href="modifyform.jsp">탈퇴 취소</a>
-								<button type="submit" class="btn btn-info btn-lg">탈퇴하기</button>
+								<a class="btn btn-secondary btn-lg" href="modifyform.jsp">탈퇴 취소</a>
+								<button type="submit" class="btn btn-primary btn-lg">탈퇴하기</button>
 							</div>
 						</form>
 					</div>

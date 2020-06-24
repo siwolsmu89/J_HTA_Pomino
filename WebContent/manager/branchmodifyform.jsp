@@ -78,6 +78,9 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="card">
+						<div class="card-header">
+							<strong>가맹점 상세정보 및 수정</strong>
+						</div>
 						<div class="card-body">
 							<%
 								int branchNo = NumberUtil.stringToInt(request.getParameter("branchno"));
@@ -164,7 +167,9 @@
 				</div>
 			</div>
 		</div>
+		<div class="mb-2"></div>
 	</div>
+	
 	<%@ include file="../common/footer.jsp"%>
 </body>
 </html>

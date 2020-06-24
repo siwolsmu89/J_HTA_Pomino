@@ -34,13 +34,13 @@
 			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
 				<ul class="nav justify-content-end small text-muted">
 					  <li class="nav-item">
-					    <a class="nav-link text-muted active pr-1" href="#">홈</a>	<!--text-muted pr-1  -->
+					    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	<!--text-muted pr-1  -->
 					  </li>
 					  <li class="nav-item">
 					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
 					  </li>
 					  <li class="nav-item">
-					    <a class="nav-link text-muted active pr-1" href="#">나의정보</a><!--text-muted active pr-1  -->
+					    <a class="nav-link text-muted active pr-1" href="/domino/user/detailform.jsp">나의정보</a><!--text-muted active pr-1  -->
 					  </li>
 					  <li class="nav-item">
 					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
@@ -126,8 +126,8 @@
 							</div>
                 
 							<div class="text-center">
-								<button type="reset" class="btn btn-light btn-lg">초기화</button>
-								<button type="submit" class="btn btn-info btn-lg" onclick="alertcomplete(event)">수정하기</button>
+								<button type="reset" class="btn btn-secondary btn-lg">초기화</button>
+								<button type="submit" class="btn btn-primary btn-lg" onclick="alertcomplete(event)">수정하기</button>
 								<div class="small text-muted m-2">도미노피자를 더 이상 이용하지 않는다면 <a href="deleteform.jsp" class="text-dark font-weight-bold">회원탈퇴 바로가기 ></a></div>
 							</div>
 						</form>

@@ -1,3 +1,5 @@
+<%@page import="com.domino.vo.Location"%>
+<%@page import="com.domino.dao.LocationDao"%>
 <%@page import="com.domino.vo.User"%>
 <%@page import="com.domino.dao.UserDao"%>
 <%@page import="com.domino.dto.PizzaOrderDto"%>
@@ -13,6 +15,7 @@
 <%@page import="com.domino.util.NumberUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="../common/logincheck.jsp" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 
@@ -24,7 +27,6 @@
 	int orderNo;
 	if ("quick".equals(request.getParameter("type"))) {
 		orderNo = user.getQuickOrderNo();
-		out.write(orderNo);
 	} else {
 		orderNo = NumberUtil.stringToInt(request.getParameter("orderno"));
 	}
@@ -72,6 +74,18 @@
 	
 	orderDao.insertReorderCart(orderNo);
 	cart = orderDao.getCartByUserNo(userNo);
+
+	LocationDao locationDao = new LocationDao();
+	Location prevLocation = locationDao.getLocationByNo(cart.getLocationNo());
+	if (prevLocation == null) {
+		if (session.getAttribute("savedLocationNo") == null) {
+			response.sendRedirect("selectlocation.jsp");
+			return;
+		} else {
+			cart.setLocationNo((int) session.getAttribute("savedLocationNo"));
+		}
+	}
+	
 	int cartNo = cart.getNo();
 	
 	pizzaDetailDao.insertReorderCart(orderNo, cartNo);

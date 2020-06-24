@@ -684,4 +684,45 @@ public class OrderDao {
 		
 		return orderInfos;
 	}
+
+	public List<Order> getOrderCountByDateRange(int date) throws SQLException {
+		List<Order> orders = new ArrayList<Order>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrderCountByDateRange"));
+		pstmt.setInt(1, date);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			Order order = new Order();
+			order.setRegDate(rs.getDate("order_reg_date"));
+			order.setDiscountPrice(rs.getInt("price"));
+			
+			orders.add(order);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return orders;
+	}
+
+	/**
+	 * 로그인이 되었을 때 해당하는 사용자번호와 order_type이 'C'인 (카트)데이터를 삭제
+	 * @param userNo 사용자번호
+	 * @throws SQLException
+	 * @author 하영
+	 */
+	public void deleteCartByUserNo(int userNo) throws SQLException {
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getdeleteCartByUserNo"));
+		
+		pstmt.setInt(1, userNo);
+		pstmt.executeUpdate();
+		
+		connection.close();
+		pstmt.close();
+		
+	}
 }

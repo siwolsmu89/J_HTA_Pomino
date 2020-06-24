@@ -116,8 +116,8 @@ public class UserDao {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("user.updateModifyUser"));
 		
-		pstmt.setString(1, user.getId());
-		pstmt.setString(2, user.getName());
+		pstmt.setString(1, user.getName());
+		pstmt.setString(2, user.getId());
 		pstmt.setString(3, user.getPassword());
 		pstmt.setString(4, user.getTel());
 		pstmt.setString(5, user.getEmail());

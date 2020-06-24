@@ -11,6 +11,8 @@
 	OrderDao orderDao = new OrderDao();
 	Order order = orderDao.getCartByUserNo(loginUserNo);
 	
+	session.setAttribute("savedLocationNo", selectedLocationNo);
+
 	if (order == null) {
 		response.sendRedirect("/domino/order/cart.jsp");
 		return;
@@ -22,6 +24,5 @@
 	orderDao.updateOrder(order);
 	
 
-	session.setAttribute("savedLocationNo", selectedLocationNo);
-	response.sendRedirect("cart.jsp");
+	response.sendRedirect("cart.jsp?test="+selectedLocationNo);
 %>

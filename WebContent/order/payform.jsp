@@ -51,13 +51,13 @@
 			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
 				<ul class="nav justify-content-end small text-muted">
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="../common/home.jsp">홈</a>	
+				    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="cart.jsp">장바구니</a>
+				    <a class="nav-link text-muted active pr-1" href="/domino/order/cart.jsp">장바구니</a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
@@ -68,7 +68,7 @@
 				</ul>
 			</div>
 		</div>
-		<div style="background-color: black; height: 2px;" class="mb-2"></div>
+		<div style="background-color: black; height: 2px;"></div>
 	</div>
 	
 	<%
@@ -89,7 +89,7 @@
 				}
 				
 				LocationDao locationDao = new LocationDao();
-				Location location = locationDao.getLocationByNo(cart.getLocationNo());
+				Location location = locationDao.getLocationByNo(locationNo);
 				
 				BranchDao branchDao = new BranchDao();
 				Branch branch = branchDao.getBranchByNo(cart.getBranchNo());
@@ -117,7 +117,7 @@
 		<div class="col-12">
 			<form id="payform-form" method="post" action='pay.jsp'>
 				<div>
-					<div class="card">
+					<div class="card mt-0">
 						<div class="card-header" id="info-title" >
 							<h5 class="font-weight-bold">수령인 정보</h5>
 						</div>
@@ -135,7 +135,7 @@
 									</div>
 								</div>
 							</div>
-						<hr/>
+						<hr class="mb-0"/>
 						</div>
 						<div class="card-body">
 							<div class="form-group">
@@ -240,13 +240,13 @@
 										ToppingDetailDao toppingDetailDao = new ToppingDetailDao();
 										List<ToppingOrderDto> tol = toppingDetailDao.getToppingOrdersByPizzaNo(po.getNo());
 										for (ToppingOrderDto to : tol) {
-											price += to.getOrderPrice() * to.getOrderAmount();
-											discountPrice += to.getOrderPrice() * to.getOrderAmount();
+											price += to.getOrderPrice();
+											discountPrice += to.getOrderPrice();
 										}
 										allTotalPrice += po.getOrderPrice();
 										allTotalDiscountPrice += discountPrice;
 							%>
-										<p><%=pizzaName %> <%=size %> x <%=po.getOrderAmount() %> / <%=NumberUtil.numberWithComma(price) %>원 </p>
+										<p class="small font-weight-bold"><%=pizzaName %> <%=size %> x <%=po.getOrderAmount() %> / <%=NumberUtil.numberWithComma(price) %>원 </p>
 							<%
 										for (ToppingOrderDto to : tol) {
 											allTotalPrice += to.getOrderPrice() * po.getOrderAmount();
@@ -288,9 +288,9 @@
 						<div class="card-header">
 							<h5 class="font-weight-bold">최종결제금액</h5>
 						</div>
-						<div class="row justify-content-center">
+						<div class="row justify-content-center mt-2">
 							<div class="col-2 text-center">
-								<label class="small">총 상품금액</label>
+								<label class="small font-weight-bold">총 상품금액</label>
 								<p><strong><%=NumberUtil.numberWithComma(allTotalPrice) %>원</strong></p>
 							</div>
 							<div class="col-2 text-center">
@@ -298,7 +298,7 @@
 								<p><strong>-</strong></p>
 							</div>
 							<div class="col-2 text-center">
-								<label class="small">총 할인금액</label>
+								<label class="small font-weight-bold">총 할인금액</label>
 								<p><strong style="color: red"><%=NumberUtil.numberWithComma(allTotalPrice - allTotalDiscountPrice) %>원</strong></p>
 							</div>
 							<div class="col-2 text-center">
@@ -306,20 +306,21 @@
 								<p><strong>=</strong></p>
 							</div>
 							<div class="col-2 text-center">
-								<label class="small">총 결제금액</label>
+								<label class="small font-weight-bold">총 결제금액</label>
 								<p><strong><%=NumberUtil.numberWithComma(allTotalDiscountPrice) %>원</strong></p>
 							</div>
 						</div>	
 					</div>
 					<div class="mt-5 mb-5">
 						<div class="text-center">
-							<button type="button" class="btn btn-danger btn-lg" onclick="checkFormsAndSubmit()">결제하기</button>
+							<button type="button" class="btn btn-danger btn-lg" onclick="checkFormsAndSubmit()" style="width: 200px; height: 65px;">결제하기</button>
 						</div>			
 					</div>
 			</div>
 			</form>
 		</div>
 	</div>
+	<div class="mb-3"></div>
 </div>
 <%@ include file="../common/footer.jsp" %>
 

@@ -30,7 +30,7 @@
 			<div class="col-8">
 				<ul class="nav justify-content-end small text-muted">
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="#">홈</a>
+				    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
@@ -42,14 +42,14 @@
 			</div>
 		</div>
 	</div>
-	<div style="background-color: black; height: 3px;" class="mt-5"></div>
+	<div style="background-color: black; height: 3px;" class="mt-2"></div>
 	<div class="body">
 		<div class="row">
 			<div class="col-12">
-				<div class="card">
+				<div class="card mt-4">
 			
 				<div class="card-header">
-					<h5 class="ml-5">&emsp;배송지 리스트</h5>
+					<h5 class="ml-2 font-weight-bold mt-2">배송지 리스트</h5>
 				</div>
 	<%
 		LocationDao ld = new LocationDao();
@@ -64,8 +64,8 @@
 					<h4><img alt="주의" src="../resource/images/order/warning.PNG">배달 주소를 등록해 주세요.</h4>
 				</div>
 				<div class="card-body text-center">
-					<button type="button"  class="btn btn-outline-secondary"
-									data-toggle="modal" data-target="#locationbutton" style="width: 200px; height: 65px; color: black;">+ 배달주소 등록
+					<button type="button"  class="btn btn-outline-secondary btn-lg"
+									data-toggle="modal" data-target="#locationbutton" style="width: 200px; height: 65px;">+ 배달주소 등록
 					</button>
 				</div>
 				<hr/>
@@ -138,15 +138,14 @@
 				}
 	%>			
 				</div>
-				<div class="card-footer">
+				<div class="card-footer" style="border-bottom: 1px solid lightgray;">
 					<div class="row">
 						<div class="col-4">
-							<button type="button"  class="btn btn-outline-secondary ml-5"
-									data-toggle="modal" data-target="#locationbutton" style="width: 200px; height: 65px; color: black;">+ 배달주소 등록
+							<button type="button"  class="btn btn-outline-secondary btn-lg"
+									data-toggle="modal" data-target="#locationbutton" style="width: 200px; height: 65px;">+ 배달주소 등록
 							</button>
 						</div>
-						
-						<div class="col-7 text-right mr-4">
+						<div class="col-8 text-right">
 							<br/>
 							<p style="color: #ff7f00">*배달주소는 최대 10개까지만 등록 가능합니다.</p>
 						</div>
@@ -154,7 +153,7 @@
 				</div>
 				<br/>
 				<div class="card-body text-right mr-5">
-					<p>해당 배달주소로 주문을 진행하시겠습니까? &ensp;<button onclick="next(event)" class="btn btn-danger" style="width: 200px; height: 65px;">선택</button></a></p>
+					<p>해당 배달주소로 주문을 진행하시겠습니까? &ensp;<button onclick="next(event)" class="btn btn-primary btn-lg" style="width: 200px; height: 65px;">선 택</button></p>
 				</div>
 	<%
 		}
@@ -215,7 +214,7 @@
 									</div>
 									<div class="modal-footer">
 										<button type="reset" class="btn btn-secondary">다시 작성</button>
-										<button type="submit" class="btn btn-info" onclick="alertcomplete(event)">등록</button>
+										<button type="submit" class="btn btn-primary" onclick="alertcomplete(event)">&nbsp&nbsp등 록&nbsp&nbsp</button>
 									</div>
 								</form>
 							</div>
@@ -226,6 +225,7 @@
 			</div>
 		</div>
 	</div>
+	<div class="mb-3"></div>
 </div>
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">

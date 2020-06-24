@@ -35,13 +35,13 @@
 			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
 				<ul class="nav justify-content-end small text-muted">
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="#">홈</a>	<!--text-muted pr-1  -->
+				    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	<!--text-muted pr-1  -->
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="#">나의정보</a><!--text-muted active pr-1  -->
+				    <a class="nav-link text-muted active pr-1" href="/domino/user/detailform.jsp">나의정보</a><!--text-muted active pr-1  -->
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
@@ -161,7 +161,7 @@
 				<div class="row">
 					<div class="col-12 text-center">
 						<a href="/domino/user/questiondelete.jsp?questionno=<%=questionNo %>&page=<%=pageNo %>" class="btn btn-secondary btn-lg" onclick="alertcomplete(event)">&nbsp&nbsp삭  제&nbsp&nbsp</a>
-						<a href="/domino/user/questionform.jsp?page=<%=pageNo %>" class="btn btn-info btn-lg">&nbsp&nbsp목  록&nbsp&nbsp</a>
+						<a href="/domino/user/questionform.jsp?page=<%=pageNo %>" class="btn btn-primary btn-lg">&nbsp&nbsp목  록&nbsp&nbsp</a>
 					</div>
 				</div>
 				
@@ -169,6 +169,7 @@
 		</div>
 		
 	</div>
+	<div class="mb-3"></div>
 </div>
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">

@@ -19,11 +19,11 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	int userNo = loginUserNo;
-	int locationNo = NumberUtil.stringToInt((String) session.getAttribute("locationNo"));
-	if (locationNo == 0) {
+	if (session.getAttribute("savedLocationNo") == null) {
 		response.sendRedirect("/domino/order/selectlocation.jsp?err=deny");
 		return;
 	}
+	int locationNo = (int) session.getAttribute("savedLocationNo");
 	
 	OrderDao orderDao = new OrderDao();
 	// 장바구니가 있는지 확인하고 있으면 해당 장바구니를사용한다.
@@ -52,14 +52,16 @@
 	// 이하 각 주문 정보에 따른 수행문들은 if문으로 해당 주문 정보가 있는지 확인하고 있을 때만 실행하도록 만들어둘 것.
 
 	// request.getParameter 해서 받은 값에 피자 주문 정보가 있을 경우
-	int pizzaNo = NumberUtil.stringToInt(request.getParameter("pizzano"));
-	if (pizzaNo != 0) {
-		String pizzaSize = StringUtil.nullToBlank(request.getParameter("pizzasize"));
-		int doughNo = NumberUtil.stringToInt(request.getParameter("doughno"));
-		int doughPrice = NumberUtil.stringToInt(request.getParameter("doughprice"));
-		int orderAmount = NumberUtil.stringToInt(request.getParameter("orderamount"));
-		int pizzaPrice = NumberUtil.stringToInt(request.getParameter("pizzaprice"));
-		int pizzaDCPrice = NumberUtil.stringToInt(request.getParameter("pizzadcprice"), pizzaPrice);
+	if (request.getParameter("pizzainfo") != null) {
+		String pizzaInfo = request.getParameter("pizzainfo");
+		String[] pizInfos = pizzaInfo.split("\\+"); 
+		int pizzaNo = NumberUtil.stringToInt(pizInfos[0]);
+		String pizzaSize = pizInfos[1];
+		int doughNo = NumberUtil.stringToInt(pizInfos[2]);
+		int doughPrice = NumberUtil.stringToInt(pizInfos[3]);
+		int orderAmount = NumberUtil.stringToInt(pizInfos[4]);
+		int pizzaPrice = NumberUtil.stringToInt(pizInfos[5]);
+		int pizzaDCPrice = NumberUtil.stringToInt(pizInfos[6]);
 		
 		PizzaOrder po = new PizzaOrder();
 		// 각각의 주문정보에 장바구니의 주문 번호를 포함해 상세정보를 저장한다. (피자주문정보로 예시를 든 것. 나머지도 똑같이 해야함)
@@ -77,25 +79,27 @@
 		PizzaDetailDao pizzaDetailDao = new PizzaDetailDao();
 		int pizzaOrderNo = pizzaDetailDao.insertNewPizzaOrder(po);
 		// 토핑주문정보가 있다면 토핑주문정보를 저장한다.
-		ToppingOrder tpo = new ToppingOrder();
-		ToppingDetailDao toppingDetailDao = new ToppingDetailDao();
 		
 		// 토핑 주문 정보들은 배열로 올 것.
-		String[] toppingOrderInfos = request.getParameterValues("toppinginfo");
-		for (String toi : toppingOrderInfos) {
-			String[] infos = toi.split("+");
-			
-			int toppingNo = NumberUtil.stringToInt(infos[0]);
-			int toppingOrderAmount = NumberUtil.stringToInt(infos[1]);
-			int toppingPrice = NumberUtil.stringToInt(infos[2]);
-			
-			tpo.setToppigNo(toppingNo);
-			tpo.setOrderAmount(toppingOrderAmount);
-			tpo.setOrderPrice(toppingPrice * toppingOrderAmount);
-			// 토핑주문객체에 피자주문번호를 저장한다.
-			tpo.setPizzaOrderNo(pizzaOrderNo);
-			// 토핑주문정보를 db에 저장한다.
-			toppingDetailDao.insertNewToppingOrder(tpo);
+		if (request.getParameterValues("toppinginfo") != null) {
+			ToppingOrder tpo = new ToppingOrder();
+			ToppingDetailDao toppingDetailDao = new ToppingDetailDao();
+			String[] toppingOrderInfos = request.getParameterValues("toppinginfo");
+			for (String toi : toppingOrderInfos) {
+				String[] infos = toi.split("\\+");
+				
+				int toppingNo = NumberUtil.stringToInt(infos[0]);
+				int toppingOrderAmount = NumberUtil.stringToInt(infos[1]);
+				int toppingPrice = NumberUtil.stringToInt(infos[2]);
+				
+				tpo.setToppigNo(toppingNo);
+				tpo.setOrderAmount(toppingOrderAmount);
+				tpo.setOrderPrice(toppingPrice * toppingOrderAmount);
+				// 토핑주문객체에 피자주문번호를 저장한다.
+				tpo.setPizzaOrderNo(pizzaOrderNo);
+				// 토핑주문정보를 db에 저장한다.
+				toppingDetailDao.insertNewToppingOrder(tpo);
+			}
 		}
 	}
 
@@ -104,40 +108,44 @@
 	// request.getParameter 해서 받은 값에 사이드 주문 정보가 있을 경우
 	SideOrder so = new SideOrder();
 	SideDetailDao sideDetailDao = new SideDetailDao();
-	String[] sideOrderInfos = request.getParameterValues("sideinfo");
-	for (String soi : sideOrderInfos) {
-		String[] infos = soi.split("+");
-		
-		int sideNo = NumberUtil.stringToInt(infos[0]);
-		int sideOrderAmount = NumberUtil.stringToInt(infos[1]);
-		int sidePrice = NumberUtil.stringToInt(infos[2]);
-		
-		so.setSideNo(sideNo);
-		so.setOrderAmount(sideOrderAmount);
-		so.setOrderPrice(sidePrice * sideOrderAmount);
-		// 토핑주문객체에 피자주문번호를 저장한다.
-		so.setOrderNo(cartNo);
-		// 토핑주문정보를 db에 저장한다.
-		sideDetailDao.insertNewSideOrder(so);
+	if (request.getParameterValues("sideinfo") != null) {
+		String[] sideOrderInfos = request.getParameterValues("sideinfo");
+		for (String soi : sideOrderInfos) {
+			String[] infos = soi.split("\\+");
+			
+			int sideNo = NumberUtil.stringToInt(infos[0]);
+			int sideOrderAmount = NumberUtil.stringToInt(infos[1]);
+			int sidePrice = NumberUtil.stringToInt(infos[2]);
+			
+			so.setSideNo(sideNo);
+			so.setOrderAmount(sideOrderAmount);
+			so.setOrderPrice(sidePrice * sideOrderAmount);
+			// 토핑주문객체에 피자주문번호를 저장한다.
+			so.setOrderNo(cartNo);
+			// 토핑주문정보를 db에 저장한다.
+			sideDetailDao.insertNewSideOrder(so);
+		}
 	}
 	// request.getParameter 해서 받은 값에 기타 주문 정보가 있을 경우	
 	EtcOrder eo = new EtcOrder();
 	EtcDetailDao etcDetailDao = new EtcDetailDao();
-	String[] etcOrderInfos = request.getParameterValues("etcinfo");
-	for (String eoi : etcOrderInfos) {
-		String[] infos = eoi.split("+");
-		
-		int etcNo = NumberUtil.stringToInt(infos[0]);
-		int etcOrderAmount = NumberUtil.stringToInt(infos[1]);
-		int etcPrice = NumberUtil.stringToInt(infos[2]);
-		
-		eo.setEtcNo(etcNo);
-		eo.setOrderAmount(etcOrderAmount);
-		eo.setOrderPrice(etcPrice * etcOrderAmount);
-		// 토핑주문객체에 피자주문번호를 저장한다.
-		eo.setOrderNo(cartNo);
-		// 토핑주문정보를 db에 저장한다.
-		etcDetailDao.insertNewEtcOrder(eo);
+	if (request.getParameterValues("etcinfo") != null) {
+		String[] etcOrderInfos = request.getParameterValues("etcinfo");
+		for (String eoi : etcOrderInfos) {
+			String[] infos = eoi.split("\\+");
+			
+			int etcNo = NumberUtil.stringToInt(infos[0]);
+			int etcOrderAmount = NumberUtil.stringToInt(infos[1]);
+			int etcPrice = NumberUtil.stringToInt(infos[2]);
+			
+			eo.setEtcNo(etcNo);
+			eo.setOrderAmount(etcOrderAmount);
+			eo.setOrderPrice(etcPrice * etcOrderAmount);
+			// 토핑주문객체에 피자주문번호를 저장한다.
+			eo.setOrderNo(cartNo);
+			// 토핑주문정보를 db에 저장한다.
+			etcDetailDao.insertNewEtcOrder(eo);
+		}
 	}
 	
 	// 모든 작업이 끝나면 cart로 보내준다.

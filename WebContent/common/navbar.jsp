@@ -10,6 +10,13 @@
 	link.href = "/domino/resource/images/logo/nomido.png";
 	document.getElementsByTagName('head')[0].appendChild(link);
 </script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+<style>
+	body {
+		font-family: 'Noto Sans KR', sans-serif;
+	}
+	
+</style>
 <div class="container mt-3"><!-- 내비 컨테이너 -->
 	<div class="row">
 		<div class="col-12">

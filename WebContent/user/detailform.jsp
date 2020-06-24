@@ -34,13 +34,13 @@
 			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
 				<ul class="nav justify-content-end small text-muted">
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="#">홈</a>	<!--text-muted pr-1  -->
+				    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	<!--text-muted pr-1  -->
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="#">나의정보</a><!--text-muted active pr-1  -->
+				    <a class="nav-link text-muted active pr-1" href="/domino/user/detailform.jsp">나의정보</a><!--text-muted active pr-1  -->
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
@@ -109,10 +109,9 @@
 			<div class="col-12">
 				<div class="jumbotron bg-dark text-white">
 					<div class="row">
-						<div class="col-6">
-						  <h4 class=""><%=loginUserName %>님</h4>
+						<div class="col-5">
+						  <h4><%=loginUserName %>님</h4>
 						  <p class="display-4 font-weight-bold"><%=user.getGradeName() == null ? "regular" : user.getGradeName()%></p><!-- 등급불러오기 -->
-<!-- 등급별 혜택보기 만들기 -->	  <p><a class="text-muted" href="#"><small>등급별 혜택 보기 ></small></a></p>
 						</div>
 						<div class="col-3" style="border-left: 1px solid white; border-right: 1px solid white;">
 							<p class="text-muted"><small>주문</small></p>
@@ -120,7 +119,7 @@
 							<p class="text-muted pt-0 mt-0"><small>(해당 일자로부터 1년 유효기간입니다.)</small></p>
 							<p class="display-4 text-center font-weight-bold"><%=user.getOrderCount() %></p>
 						</div>
-						<div class="col-3">
+						<div class="col-4">
 							<p class="text-muted"><small>총 주문금액</small></p>
 							<p class="text-muted pb-0 mb-0"><small>등급 갱신일자 : <%=user.getGradeDate() %></small></p>
 							<p class="text-muted pt-0 mt-0"><small>(해당 일자로부터 1년 유효기간입니다.)</small></p>
@@ -141,7 +140,6 @@
 					</div>
 				</div>
 				<div class="mb-2" style="background-color: black; height: 2px;"></div>
-				</div>
 			</div>
 		</div>
 		
@@ -195,7 +193,8 @@
 			</div>
 		</div>
 		
-	<div class="mb-5"></div>
+	</div>
+	<div class="mb-3"></div>
 </div>
 <%@ include file="../common/footer.jsp" %>
 </body>

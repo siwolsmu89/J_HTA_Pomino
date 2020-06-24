@@ -26,27 +26,31 @@
 %>
 <%@ include file="../common/navbar.jsp"%>
 <div class="container">
+
 	<div class="header">
 		<div class="row">	
-			<div class="col-4"><!-- 페이지명 바꿔서 사용하기 -->
+			<div class="col-4">
 				<h4>로그인</h4>
 			</div>
-			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
-				<ul class="nav justify-content-end">
-				  <li class="nav-item">
-				    <a class="nav-link active" href="#">홈</a>
-				  </li>
-				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">></a>
-				  </li>
-				  <li class="nav-item">
-				    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">로그인</a>
-				  </li>
+			<div class="col-8">
+				<ul class="nav justify-content-end small text-muted">
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	<!--text-muted pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">로그인</a>
+					  	<!--text-dark font-weight-bold pr-1  -->
+					  </li>
 				</ul>
 			</div>
 		</div>
 	</div>
+	
 	<div style="background-color: black; height: 2px;" class="mb-2"></div>
+	
 	<div class="body">
 		<%
 			String error = request.getParameter("error");
@@ -89,7 +93,7 @@
 								<input type="password" class="form-control" name="userpwd" id="user-pwd"/>
 							</div>
 							<div class="text-right">
-								<button type="submit" class="btn btn-dark btn-lg btn-block">로그인</button>
+								<button type="submit" class="btn btn-primary btn-lg btn-block">로그인</button>
 								<a class="btn btn-light btn-lg btn-block" href="signupform.jsp">회원가입</a>
 							</div>
 						</form>

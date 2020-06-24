@@ -30,9 +30,9 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<%
-	String position = "manager";
-%>
+	<%
+		String position = "manager";
+	%>
 	<%@ include file="../common/navbar.jsp"%>
 	<div class="container">
 		<div class="header">
@@ -118,14 +118,15 @@
 									<input id="searchValue" type="text" class="form-control"
 										placeholder="검색어를 입력하세요" onkeyup="orderListData()">
 									<div class="input-group-append">
-										<button class="btn btn-outline-secondary" type="button" 
+										<button class="btn btn-outline-secondary" type="button"
 											onclick="orderListData()">조회</button>
 									</div>
 								</div>
 							</form>
-																								
+
 						</div>
 					</div>
+
 
 					<!-- 검색조건, 정렬기준 입력 폼 끝 -->
 					<%
@@ -153,73 +154,72 @@
 							</tr>
 						</thead>
 						<tbody id="order-body">
-					<%
-						for(OrderDto order : orders) {
-							int orderNo = order.getOrderNo();
-							String branchName = order.getBranchName();
-							int totalAmount = order.getTotalAmount();
-							int totalPrice = order.getTotalDiscountPrice();
+							<%
+								if (orders.isEmpty()) {
+							%>
+								<tr class="font-weight-bold text-center">
+									<td>주문내역이 존재하지 않습니다.</td>
+								</tr>
+							<%
 
-							String menuName = "";
-							if (order.getPizzaName() != null) {
-								menuName = order.getPizzaName();
-							} else if (order.getSideName() != null) {
-								menuName = order.getSideName();
-							} else {
-								menuName = order.getEtcName(); 
-							}
-							
-							int os = order.getOrderStatus();
-							String statusStr = "";
-							if (os == 0) {
-								statusStr = "<button class='btn btn-primary'>접수완료</button>";
-							} else if (os == 1) {
-								statusStr = "<button class='btn btn-primary'>요리중</button>";
-							} else if (os == 2) {
-								statusStr = "<button class='btn btn-sucess'>배달중</button>";
-							} else if (os == 3) {
-								statusStr = "<button class='btn btn-success'>배달완료</button>";
-							} else if (os == 4) {
-								statusStr = "<button class='btn btn-dark'>수령완료</button>";
-							} else {
-								statusStr = "<button class='btn btn-danger'>주문취소</button>";
-							}
-							
-							Date reqTime = order.getRequestTime();
-							String requestTime = reqTime.toString();
-							
-							// 주문갯수세기
-							String simpleMenu = "";
-							int orderCount = order.getTotalAmount();
-							if(!order.getPizzaName().isEmpty()){
-								simpleMenu = order.getPizzaName() + " " + (orderCount > 1 ? "외 " + (orderCount - 1) + "건" : "");
-							} else if(!order.getSideName().isEmpty()){
-								simpleMenu = order.getSideName() + (orderCount > 1 ? "외" + (orderCount - 1) + "건" : "");
-							}
-					%>
-							<tr
-								<%
-									if (os == 4 || os == 5) {
-								%>
-									class="text-muted" 
-								<%
-									} else {
-								%>
-									class="font-weight-bold"
-								<%
-									}
-								%>
-							>
-								<td><%=orderNo %></td>
-								<td><%=branchName %></td>
+								} else {
+									for (OrderDto order : orders) {
+										int orderNo = order.getOrderNo();
+										String branchName = order.getBranchName();
+										int totalAmount = order.getTotalAmount();
+										int totalPrice = order.getTotalDiscountPrice();
+
+										String menuName = "";
+										if (order.getPizzaName() != null) {
+											menuName = order.getPizzaName();
+										} else if (order.getSideName() != null) {
+											menuName = order.getSideName();
+										} else {
+											menuName = order.getEtcName();
+										}
+
+										int os = order.getOrderStatus();
+										String statusStr = "";
+										if (os == 0) {
+											statusStr = "<button class='btn btn-primary'>접수완료</button>";
+										} else if (os == 1) {
+											statusStr = "<button class='btn btn-primary'>요리중</button>";
+										} else if (os == 2) {
+											statusStr = "<button class='btn btn-sucess'>배달중</button>";
+										} else if (os == 3) {
+											statusStr = "<button class='btn btn-success'>배달완료</button>";
+										} else if (os == 4) {
+											statusStr = "<button class='btn btn-dark'>수령완료</button>";
+										} else {
+											statusStr = "<button class='btn btn-danger'>주문취소</button>";
+										}
+
+										Date reqTime = order.getRequestTime();
+										String requestTime = reqTime.toString();
+
+										// 주문갯수세기
+										String simpleMenu = "";
+										int orderCount = order.getTotalAmount();
+										if (!order.getPizzaName().isEmpty()) {
+											simpleMenu = order.getPizzaName() + " " + (orderCount > 1 ? "외 " + (orderCount - 1) + "건" : "");
+										} else if (!order.getSideName().isEmpty()) {
+											simpleMenu = order.getSideName() + (orderCount > 1 ? "외" + (orderCount - 1) + "건" : "");
+										}
+							%>
+							<tr <%if (os == 4 || os == 5) {%>
+								class="text-muted" <%} else {%>
+								class="font-weight-bold" <%}%>>
+								<td><%=orderNo%></td>
+								<td><%=branchName%></td>
 								<td><%=simpleMenu%></td>
-								<td><%=totalPrice %></td>
-								<td><%=requestTime %></td>
-								<td><%=statusStr %></td>
+								<td><%=totalPrice%></td>
+								<td><%=requestTime%></td>
+								<td><%=statusStr%></td>
 							</tr>
-					<%
-						}
-					%>
+							<%
+									}
+								}
+							%>
 						</tbody>
 					</table>
 					<!-- 페이지 처리 시작 -->
@@ -273,90 +273,93 @@
 
 	</div>
 	<%@ include file="../common/footer.jsp"%>
-	
+
 	<script type="text/javascript">
 		function orderListData() {
 			var beginNumber = "<%=beginNumber%>";
 			var endNumber = "<%=endNumber%>";
 			// 검색 옵션
-			var searchOption = document.querySelector("select[name=searchoption]").value;
+			var searchOption = document
+					.querySelector("select[name=searchoption]").value;
 			// 검색 값
 			var searchValue = document.querySelector("#searchValue").value;
-			
+
 			var xhr = new XMLHttpRequest();
-					
+
 			xhr.onreadystatechange = function() {
-				
-				if(xhr.readyState == 4 && xhr.status == 200) {
+
+				if (xhr.readyState == 4 && xhr.status == 200) {
 					var text = xhr.responseText;
 					var orders = JSON.parse(text);
-					
-					if(!orders){
+
+					if (!orders) {
 						alert('입력한 값과 일치하는 주문이 존재하지 않습니다.');
 						return;
 					}
-					
+
 					var rows = "";
-					for(var i=0; i<orders.length; i++){
+					for (var i = 0; i < orders.length; i++) {
 						var order = orders[i];
-						
+
 						var reqTime = order.requestTime;
 						var requestTime = reqTime.toString();
 						var simpleMenu = '';
 						var orderCount = order.totalAmount;
-						
-						if(4 == order.orderStatus || 5 == order.orderStatus){							
+
+						if (4 == order.orderStatus || 5 == order.orderStatus) {
 							rows += "<tr class='text-muted'>";
 						} else {
 							rows += "<tr class='font-weight-bold'>";
 						}
-						
-						rows += "<td>"+order.orderNo+"</td>";
-						rows += "<td>"+order.branchName+"</td>";
-						
-						
-						if(order.pizzaName){
-							if(orderCount > 1) {
-								rows += "<td>"+order.pizzaName+"' '외"+ (orderCount-1) +"건</td>";
-							}else {
-								rows += "<td>"+order.pizzaName+"</td>";
+
+						rows += "<td>" + order.orderNo + "</td>";
+						rows += "<td>" + order.branchName + "</td>";
+
+						if (order.pizzaName) {
+							if (orderCount > 1) {
+								rows += "<td>" + order.pizzaName + "' '외"
+										+ (orderCount - 1) + "건</td>";
+							} else {
+								rows += "<td>" + order.pizzaName + "</td>";
 							}
-						} else if(order.sideName){
-							if(orderCount > 1) {
-								rows += "<td>"+order.sideName+"' '외"+ (orderCount-1) +"건</td>";
-							}else {
-								rows += "<td>"+order.sideName+"</td>";
+						} else if (order.sideName) {
+							if (orderCount > 1) {
+								rows += "<td>" + order.sideName + "' '외"
+										+ (orderCount - 1) + "건</td>";
+							} else {
+								rows += "<td>" + order.sideName + "</td>";
 							}
 						}
-						
-						
-						rows += "<td>"+order.totalDiscountPrice+"</td>";
-						rows += "<td>"+order.requestTime+"</td>";
-						
-						
-						if(0 == order.orderStatus){
+
+						rows += "<td>" + order.totalDiscountPrice + "</td>";
+						rows += "<td>" + order.requestTime + "</td>";
+
+						if (0 == order.orderStatus) {
 							rows += "<td><button class='btn btn-primary'>접수완료</button></td>";
-						} else if(1 == order.orderStatus){
+						} else if (1 == order.orderStatus) {
 							rows += "<td><<button class='btn btn-primary'>요리중</button></td>";
-						} else if(2 == order.orderStatus){
+						} else if (2 == order.orderStatus) {
 							rows += "<td><button class='btn btn-sucess'>배달중</button></td>";
-						} else if(3 == order.orderStatus){
+						} else if (3 == order.orderStatus) {
 							rows += "<td><button class='btn btn-success'>배달완료</button></td>";
-						} else if(4 == order.orderStatus){
+						} else if (4 == order.orderStatus) {
 							rows += "<td><button class='btn btn-dark'>수령완료</button></td>";
-						} else if(5 == order.orderStatus){
+						} else if (5 == order.orderStatus) {
 							rows += "<td><button class='btn btn-danger'>주문취소</button></td>";
 						}
-						
+
 						rows += "</tr>"
 					}
-					
+
 					document.getElementById("order-body").innerHTML = rows;
 				}
 			}
-			
-			xhr.open("GET", "/domino/manager/JSON/orderlistdata.jsp?searchOpt="+searchOption+"&&searchValue="+searchValue+"&&beginNumber="+beginNumber+"&&endNumber="+endNumber);
-			
+
+			xhr.open("GET", "/domino/manager/JSON/orderlistdata.jsp?searchOpt="
+					+ searchOption + "&&searchValue=" + searchValue
+					+ "&&beginNumber=" + beginNumber + "&&endNumber="
+					+ endNumber);
+
 			xhr.send();
 		}
 	</script>

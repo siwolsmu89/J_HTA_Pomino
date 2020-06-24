@@ -1,3 +1,5 @@
+<%@page import="com.domino.vo.Order"%>
+<%@page import="com.domino.dao.OrderDao"%>
 <%@page import="com.domino.vo.User"%>
 <%@page import="com.domino.dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -28,6 +30,8 @@
 		session.setAttribute("사용자번호", user.getNo());
 		session.setAttribute("로그인여부", "Yes");
 	// orderDao 에 있는 getcart
+		OrderDao orderDao = new OrderDao();
+		orderDao.deleteCartByUserNo(loginUserNo);
 		
 		if ("admin".equals(id)) {
 			session.setAttribute("관리자여부", "Yes");

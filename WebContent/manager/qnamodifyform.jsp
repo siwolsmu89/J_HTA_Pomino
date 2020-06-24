@@ -76,6 +76,9 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="card">
+						<div class="card-header">
+							<strong>답변하기</strong>
+						</div>
 						<div class="card-body">
 							<%
 								int questionNo = NumberUtil.stringToInt(request.getParameter("questionno"));
@@ -120,7 +123,7 @@
 
 								<div class="form-group">
 									<label for="desc-1">답변작성</label>
-									<textarea class="form-control" name="answercontent" id="desc-1"></textarea>
+									<textarea class="form-control" name="answercontent" id="desc-1" cols="10" rows="20"></textarea>
 								</div>
 
 
@@ -136,6 +139,7 @@
 				</div>
 			</div>
 		</div>
+		<div class="mb-2"></div>
 	</div>
 	<%@ include file="../common/footer.jsp"%>
 </body>

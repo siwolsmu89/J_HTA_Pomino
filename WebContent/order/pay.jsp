@@ -31,6 +31,11 @@
 	}
 	int totalPrice = NumberUtil.stringToInt(request.getParameter("totalprice"));
 	int totaldiscount = NumberUtil.stringToInt(request.getParameter("totaldiscount"));
+	if (session.getAttribute("savedLocationNo") == null) {
+		response.sendRedirect("selectlocation.jsp");
+		return;
+	}
+	int locationNo = (int) session.getAttribute("savedLocationNo");
 	
 	order.setReceiverName(receiverName);
 	order.setReceiverTel(fullTel);
@@ -38,6 +43,7 @@
 	order.setTotalPrice(totalPrice);
 	order.setDiscountPrice(totaldiscount);
 	order.setOrderType("O");
+	order.setLocationNo(locationNo);
 	orderDao.updateOrder(order);
 	
 	User user = userDao.getUserByNo(userNo);

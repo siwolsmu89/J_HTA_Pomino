@@ -41,13 +41,13 @@
 			<div class="col-8">
 				<ul class="nav justify-content-end small text-muted">
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="#">홈</a>
+				    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="#">나의정보</a>
+				    <a class="nav-link text-muted active pr-1" href="/domino/user/detailform.jsp">나의정보</a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
@@ -267,44 +267,59 @@
 				</div>
 			</div>
 			<div id="orderlist-footer" class="row">
+			
 				<div class="col-12">
 					<div class="text-center" style="border-top: 1px solid lightgray;">
 		<%
 				}
 			}
-			
-			int pagesPerBlock = 5;
-			int orderCount = orderDao.getOrdersByUserNo(loginUserNo).size();
-
-			int pageCount = (int) Math.ceil((double) orderCount / rowsPerPage);
-			int currentBlock = (int) Math.ceil((double) pageNo / pagesPerBlock);
-			
-			int beginPage = (currentBlock - 1) * pagesPerBlock + 1;
-			int endPage = currentBlock * pagesPerBlock;
 		%>
-						<a href=<%=pageNo > 1 ? "orderlist.jsp?page=" + (pageNo - 1) : "#" %>>&laquo;</a>
-		<% 				
-			for (int i = beginPage; i<=endPage; i++) {
-				if (endPage>pageCount) {
-					endPage=pageCount;
-				}
-				String style = "";
-				if (i == pageNo) {
-					style = "style='color: red; font-weight:bold;'";
-				}
-		%>
-						<a <%=style %> href="orderlist.jsp?page=<%=i %>"><%=i %></a>
-		<%
-			}
-		%>
-						<a href=<%=pageNo < pageCount ? "orderlist.jsp?page=" + (pageNo + 1) : "#" %>>&raquo;</a>
+						<ul class="pagination justify-content-center" style="margin: 20px 0">
+						<%
+							// 0. 한 화면당 표시할 페이지번호 갯수
+							int pagesPerBlock = 5;
+	
+							// 2. 전체 페이지수를 계산한다.
+							int rowCount = orderDao.getOrdersByUserNo(loginUserNo).size();
+							int totalPages = (int) Math.ceil((double) rowCount / rowsPerPage);
+	
+							// 3. 전체 페이지블록 갯수 계산하기
+							int totalBlocks = (int) Math.ceil((double) totalPages / pagesPerBlock);
+	
+							// 4. 요청한 페이지가 어느 페이지 블록에 속하는지 계산하기
+							int currentBlock = (int) Math.ceil((double) pageNo / pagesPerBlock);
+	
+							// 5. 요청한 페에지가 속한 블록의 시작페이지번호와 끝페이지번호 계산하기
+							int beginPageNo = (currentBlock - 1) * pagesPerBlock + 1;
+							int endPageNo = currentBlock * pagesPerBlock;
+							
+							if(pageNo > 1) {
+						%>
+							<li class="page-item "><a class="page-link" href="orderlist.jsp?page=<%=pageNo - 1%>">이전</a></li>
+						<%
+							}
+							for(int num=beginPageNo; num <=endPageNo; num++) {
+								if (endPageNo > totalPages) {
+									endPageNo = totalPages;
+								}
+						%>
+							<li class="page-item <%=pageNo == num ? "active" : ""%> "><a class="page-link" href="orderlist.jsp?page=<%=num%>"><%=num%></a></li>
+						<%
+							}
+							if(pageNo < totalPages) {
+						%>
+							<li class="page-item"><a class="page-link" href="orderlist.jsp?page=<%=pageNo + 1%>">다음</a></li>
+						<%
+							}
+						%>
+					</ul>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div id="page-footer" class="row mt-5 mb-5">
 			<div class="col-12 text-center">
-				<a href="#" class="btn btn-info btn-lg" role="button">신제품보러가기</a>
+				<a href="#" class="btn btn-primary btn-lg" role="button">신제품보러가기</a>
 				<a href="#" class="btn btn-secondary btn-lg" role="button">다른제품 보러가기</a>
 			</div>
 		</div>

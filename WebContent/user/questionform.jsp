@@ -34,13 +34,13 @@
 			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
 				<ul class="nav justify-content-end small text-muted">
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="#">홈</a>	<!--text-muted pr-1  -->
+				    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	<!--text-muted pr-1  -->
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link text-muted active pr-1" href="#">나의정보</a><!--text-muted active pr-1  -->
+				    <a class="nav-link text-muted active pr-1" href="/domino/user/detailform.jsp">나의정보</a><!--text-muted active pr-1  -->
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
@@ -151,7 +151,7 @@
 										
 											<tr>
 												<td><%=index++ %></td>
-												<td><a href="questiondetail.jsp?questionno=<%=question.getNo() %>&page=<%=pageNo%>"><%=question.getTitle() %></a></td>
+												<td><a class="text-dark font-weight-bold" href="questiondetail.jsp?questionno=<%=question.getNo() %>&page=<%=pageNo%>"><%=question.getTitle() %></a></td>
 												<td><%=question.getRegDate() %></td>
 												<td>
 											<%
@@ -302,7 +302,7 @@
 								</div>
 								<div class="modal-footer">
 									<button type="reset" class="btn btn-secondary">다시 작성</button>
-									<button type="submit" class="btn btn-info" onclick="alertcomplete(event)">질문 등록</button>
+									<button type="submit" class="btn btn-primary" onclick="alertcomplete(event)">질문 등록</button>
 								</div>
 							</form>
 						</div>
@@ -353,6 +353,7 @@
 			</div>
 		</div>
 	</div>
+	<div class="mb-3"></div>
 </div>
 <%@ include file="../common/footer.jsp" %>
 </body>

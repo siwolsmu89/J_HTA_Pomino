@@ -51,7 +51,7 @@
 			<div class="col-8">
 				<ul class="nav justify-content-end small text-muted">
 					<li class="nav-item"><a
-						class="nav-link text-muted active pr-1" href="../common/home.jsp">홈</a>
+						class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>
 					</li>
 					<li class="nav-item"><a class="nav-link disabled pr-1"
 						href="#" tabindex="-1" aria-disabled="true">></a></li>
@@ -66,15 +66,15 @@
 		<%
 			OrderDao orderDao = new OrderDao();
 			Order order = orderDao.getCartByUserNo(loginUserNo);
+			if (session.getAttribute("savedLocationNo") == null) {
+				response.sendRedirect("selectlocation.jsp");
+				return;
+			}	
 
 			if (order != null) {
 				BranchDao branchDao = new BranchDao();
 				Branch branch = branchDao.getBranchByNo(order.getBranchNo());
 
-				if (session.getAttribute("savedLocationNo") == null) {
-					response.sendRedirect("selectlocation.jsp");
-					return;
-				}	
 				
 				LocationDao ld = new LocationDao();
 				int locationNo = (int) session.getAttribute("savedLocationNo");
@@ -89,7 +89,7 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="card-header">
-					<h5 class="mt-3 font-weight-bold">&emsp;배달주문</h5>
+					<h5 class="mt-2 ml-2 font-weight-bold">배달주문</h5>
 				</div>
 			</div>
 		</div>
@@ -111,14 +111,14 @@
 		<div class="row">
 			<div class="col-12">
 				<div style="background-color: black; height: 3px; width: 100%"
-					class="mt-3"></div>
+					class="mt-4"></div>
 				<div class="card-header">
 					<div class="row">
 						<div class="col-10">
-							<h5 class="mt-3 font-weight-bold">&emsp;주문내역</h5>
+							<h5 class="mt-2 ml-2 font-weight-bold">주문내역</h5>
 						</div>
 						<div class="text-right col-2">
-							<button class="btn btn-link" style="color: gray;" name="all"
+							<button class="btn btn-danger" name="all"
 								onclick="allRemoveCheck()">전체삭제</button>
 						</div>
 					</div>
@@ -153,9 +153,9 @@
 							<td class="text">
 								<p>
 									<img class="tm-5 rm-5 float-left" alt="<%=pizzaOrderDao.getPizzaName() %>" width="90px;"
-										src="../resource/<%=pizzaOrderDao.getImageSrc() %>">
-									<%=pizzaOrderDao.getPizzaName()%><br /> <small
-										style="color: gray; font-size: 14px;"><%=pizzaOrderDao.getPizzaSize()%></small><br />
+										src="../resource/images/<%=pizzaOrderDao.getImageSrc() %>">
+									<%=pizzaOrderDao.getPizzaName()%><br/> 
+									<small style="color: gray; font-size: 14px;"><%=pizzaOrderDao.getPizzaSize()%></small><br />
 									<%=NumberUtil.numberWithComma(pizzaOrderDao.getPizzaPrice())%>원
 								</p>
 							</td>
@@ -264,7 +264,7 @@
 			<div class="col-6 mb-5">
 				<br />
 				<p>
-					<small>&ensp;&ensp;* 할인적용은 다음 단계에서 가능합니다.><br />
+					<small>&ensp;&ensp;* 할인적용은 다음 단계에서 가능합니다.<br />
 						&ensp;&ensp;* 피클&소스는 구매하셔야합니다.<br /> &ensp;&ensp;- 메뉴>음료&기타 추가구매
 						가능
 					</small>
@@ -281,9 +281,9 @@
 		<div class="text-center mb-5 row">
 			<div class="col-12">
 				<a href="../pizza/pizzamenu.jsp"><button
-						class="btn btn-outline-secondary"
-						style="width: 200px; height: 65px; color: black;">+ 메뉴 추가하기</button></a>
-				<a href="payform.jsp"><button class="btn btn-danger"
+						class="btn btn-outline-secondary btn-lg"
+						style="width: 200px; height: 65px;"> + 메뉴 추가하기</button></a>
+				<a href="payform.jsp"><button class="btn btn-primary btn-lg"
 						style="width: 200px; height: 65px;">주문하기</button></a>
 			</div>
 		</div>
@@ -314,6 +314,7 @@
 						%>
 		<hr />
 	</div>
+	<div class="mb-3"></div>
 </div>
 <%@ include file="../common/footer.jsp"%>
 <script type="text/javascript">

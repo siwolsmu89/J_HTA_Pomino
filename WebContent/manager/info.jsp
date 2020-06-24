@@ -21,11 +21,13 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
-<%
-	String position = "manager";
-%>
+	<%
+		String position = "manager";
+	%>
 	<%@ include file="../common/navbar.jsp"%>
 	<div class="container">
 		<div class="header">
@@ -34,16 +36,24 @@
 					<!-- 페이지명 바꿔서 사용하기 -->
 					<h4>관리자</h4>
 				</div>
-
 				<div class="col-8">
-					<ul class="nav justify-content-end">
-						<li class="nav-item"><a class="nav-link active" href="#">홈</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link active" href="#">관리자</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#">메인</a></li>
+					<ul class="nav justify-content-end small text-muted">
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	<!--text-muted pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/manager/info.jsp">관리자</a><!--text-muted active pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">메인</a>
+					  	<!--text-dark font-weight-bold pr-1  -->
+					  </li>
 					</ul>
 				</div>
 			</div>
@@ -75,207 +85,138 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="body">
 			<div class="row">
 				<div class="col-12">
 					<div class="jumbotron bg-dark text-white mb-1">
 						<div class="row text-center">
-						<%
-							OrderDao orderDao = new OrderDao();
-							List<Order> todayAllOrder = orderDao.getOrdersByDate();
-							int todayAllOrderCount = 0;
-							int nowAllOrderCount = 0;
-							int todayTotalSales = 0;
-							// 오늘 전체주문 카운트
-							for(Order order : todayAllOrder){
-								todayAllOrderCount++;
-								// 오늘 전체 주문중 현재 진행중인 주문 카운트
-								if(3!=order.getOrderStatus() && 4!=order.getOrderStatus()){
-									nowAllOrderCount++;
-								} else {
-									todayTotalSales += order.getDiscountPrice();
+							<%
+								OrderDao orderDao = new OrderDao();
+								List<Order> todayAllOrder = orderDao.getOrdersByDate();
+								int todayAllOrderCount = 0;
+								int nowAllOrderCount = 0;
+								int todayTotalSales = 0;
+								// 오늘 전체주문 카운트
+								for (Order order : todayAllOrder) {
+									todayAllOrderCount++;
+									// 오늘 전체 주문중 현재 진행중인 주문 카운트
+									if (3 != order.getOrderStatus() && 4 != order.getOrderStatus()) {
+										nowAllOrderCount++;
+									} else {
+										todayTotalSales += order.getDiscountPrice();
+									}
 								}
-							}
-						%>
+							%>
 							<div class="col-4">
-								<p>
-									<a class="" href="#">오늘 주문현황</a>
+								<p class="text-primary font-weight-bold">오늘 주문현황</p>
+								<p class="display-4 text-center font-weight-bold"><%=todayAllOrderCount%>건
 								</p>
-								<p class="display-4 text-center font-weight-bold"><%=todayAllOrderCount %>건</p>
 							</div>
-							<div class="col-4"
-								style="border-left: 1px solid white; border-right: 1px solid white;">
-								<p>
-									<a class="" href="#">현재 주문현황</a>
+							<div class="col-4" style="border-left: 1px solid white; border-right: 1px solid white;">
+								<p class="text-primary font-weight-bold">현재 주문현황</p>
+								<p class="display-4 text-center font-weight-bold"><%=nowAllOrderCount%>건
 								</p>
-								<p class="display-4 text-center font-weight-bold"><%=nowAllOrderCount %>건</p>
 							</div>
 							<div class="col-4">
-								<p>
-									<a class="" href="#">오늘 총 매출</a>
-								</p>
+								<p class="text-primary font-weight-bold">오늘 총 매출</p>
 								<p class="display-4 text-center font-weight-bold">
-									<%=NumberUtil.numberWithComma(todayTotalSales) %>원
+									<%=NumberUtil.numberWithComma(todayTotalSales)%>원
 								</p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			
+			<div class="mb-3"></div>
 			<div class="row">
 				<div class="col-12">
-					<!-- 배너광고 슬라이드 시작  -->
-					<div id="demo" class="carousel slide my-2" data-ride="carousel">
-						<!-- 배너의 하단에 표시되는 바로가기 표시 시작  -->
-						<ol class="carousel-indicators">
-							<li data-target="#demo" data-slide-to="0" class="active"></li>
-							<li data-target="#demo" data-slide-to="1"></li>
-							<li data-target="#demo" data-slide-to="2"></li>
-						</ol>
-						<!-- 배너의 하단에 표시되는 바로가기 표시 끝  -->
-
-						<!-- 배너 이미지 시작 -->
-						<div class="carousel-inner">
-							<div class="carousel-item active">
-								<a href="링크주소"> <img class="d-block w-100"
-									src="/sample/resources/images/banners/banner1.jpg" alt="설명">
-								</a>
-							</div>
-							<div class="carousel-item">
-								<a href="링크주소"> <img class="d-block w-100"
-									src="/sample/resources/images/banners/banner2.jpg" alt="설명">
-								</a>
-							</div>
-							<div class="carousel-item">
-								<a href="링크주소"> <img class="d-block w-100"
-									src="/sample/resources/images/banners/banner3.jpg" alt="설명">
-								</a>
+					<div class="card">
+						<div class="card-header ">
+							<div class="row">
+								<div class="col-4 text-center font-weight-bold" id="7">
+									<a role="button" onclick="select(7)">7일 매출</a>
+								</div>
+								<div class="col-4 text-center font-weight-bold" id="30">
+									<a role="button" onclick="select(30)">30일 매출</a>
+								</div>
+								<div class="col-4 text-center font-weight-bold" id="365">
+									<a role="button" onclick="select(365)">365일 매출</a>
+								</div>
 							</div>
 						</div>
-						<!-- 배너 이미지 끝 -->
-
-						<!-- 이전/다음 표시 시작 -->
-						<a class="carousel-control-prev" href="#demo" data-slide="prev">
-							<span class="carousel-control-prev-icon"></span>
-						</a> <a class="carousel-control-next" href="#demo" data-slide="next">
-							<span class="carousel-control-next-icon"></span>
-						</a>
-						<!-- 이전/다음 표시 끝 -->
+						<div class="card-body">
+							<div class="row">
+								<div class="col-12">
+									<%
+										int date = 7;
+									%>
+									<div id="chart_div"></div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<!-- 배너광고 슬라이드 끝  -->
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-12">
-					<%
-						//<!-- 페이지네이션  -->
-						// 1. 한 화면에 표시할 행의 갯수
-						int rowsPerPage = 5;
-
-						// 2. 클라이언트가 요청한 페이지 번호 조회하기
-						int pageNo = NumberUtil.stringToInt(request.getParameter("page"), 1);
-
-						// 3. 조회할 목록의 시작번호와 끝번호를 조회한다.
-						int beginNumber = (pageNo - 1) * rowsPerPage + 1;
-						int endNumber = pageNo * rowsPerPage;
-
-						int rowCount = 0;
-						//<!-- 페이지네이션  -->
-						
-						QnaDao qnaDao = new QnaDao();
-						List<QuestionDto> questions = qnaDao.getAllQuestion(beginNumber, endNumber);
-						rowCount = qnaDao.getQnasCount();
-					%>
-					<table class="table text-center">
-						<colgroup>
-							<col width="10%">
-							<col width="20%">
-							<col width="20%">
-							<col width="*%">
-							<col width="15%">
-						</colgroup>
-						<thead class="thead thead-dark">
-							<tr>
-								<th>번호</th>
-								<th>카테고리</th>
-								<th>작성자</th>
-								<th>문의제목</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-						<%
-							for(QuestionDto questionDto : questions) {
-								if("N".equalsIgnoreCase(questionDto.getAnsweredYn())){
-						%>
-								<tr>
-									<td><%=questionDto.getNo() %></td>
-									<td>카테고리</td>
-									<td><%=questionDto.getUserName() %></td>
-									<td><%=questionDto.getTitle() %></td>
-									<td>
-										<a class="btn btn-primary" role="button" href="qnaboard.jsp?qnano=<%=questionDto.getNo() %>">답변대기</a>
-									</td>
-								</tr>
-						<%
-								}
-							}
-						%>
-						</tbody>
-					</table>
-
-					<!-- 페이지 처리 시작 -->
-					<ul class="pagination justify-content-center"
-						style="margin: 20px 0">
-						<%
-							// 0. 한 화면당 표시할 페이지번호 갯수
-							int pagesPerBlock = 5;
-
-							// 1. 전체 행의 갯수를 조회한다.
-							int rows = rowCount;
-
-							// 2. 전체 페이지수를 계산한다.
-							int totalPages = (int) Math.ceil((double) rows / rowsPerPage);
-
-							// 3. 전체 페이지블록 갯수 계산하기
-							int totalBlocks = (int) Math.ceil((double) totalPages / pagesPerBlock);
-
-							// 4. 요청한 페이지가 어느 페이지 블록에 속하는지 계산하기
-							int currentBlock = (int) Math.ceil((double) pageNo / pagesPerBlock);
-
-							// 5. 요청한 페에지가 속한 블록의 시작페이지번호와 끝페이지번호 계산하기
-							int beginPageNo = (currentBlock - 1) * pagesPerBlock + 1;
-							int endPageNo = currentBlock * pagesPerBlock;
-							if (currentBlock == totalBlocks) {
-								endPageNo = totalPages;
-							}
-						%>
-						<li class="page-item "><a class="page-link"
-							href="info.jsp?page=<%=pageNo - 1%>"> 이전 </a></li>
-						<%
-							for (int num = beginPageNo; num <= endPageNo; num++) {
-						%>
-						<li class="page-item active"><a class="page-link"
-							href="info.jsp?page=<%=num%>"
-							style="<%=pageNo == num ? "background-color: #4caf50;" : ""%>">
-								<%=num%>
-						</a></li>
-						<%
-							}
-						%>
-						<li class="page-item"><a class="page-link"
-							href="info.jsp?page=<%=pageNo + 1%>"> 다음 </a></li>
-					</ul>
-					<!-- 페이지 처리 끝 -->
-
 				</div>
 			</div>
 		</div>
-
+		<div class="mb-3"></div>
+		
 	</div>
 	<%@ include file="../common/footer.jsp"%>
+
+	<script type="text/javascript">
+		google.charts.load('current', {packages: ['corechart', 'line']});
+		google.charts.setOnLoadCallback(drawBasic);
+	
+		var options = {
+			hAxis: {title: '일'},
+		  	vAxis: {title: '매출'}
+		};
+
+		
+		function select(date) {
+			drawBasic(date);
+			
+			var noneactive = document.querySelectorAll('.card-header div div');
+			for(var i=0; i<noneactive.length; i++){
+				var none = noneactive[i];
+				none.setAttribute('style', 'font-weight: defalut');
+			}
+			var active = document.getElementById(date);
+			active.setAttribute('style', 'font-weight : bold');
+		}
+
+		function drawBasic(date) {
+			var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+	      	var data = new google.visualization.DataTable();
+	      	data.addColumn('number', '일');
+	      	data.addColumn('number', '일매출');
+			
+	      	if(!date){
+	      		date = 7;
+	      	}
+			var xhr = new XMLHttpRequest();
+
+			xhr.onreadystatechange = function() {
+
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					var text = xhr.responseText;
+					var values = JSON.parse(text);
+
+					for (var i = 0; i < values.length; i++) {
+						var value = values[i];
+						var regDate = Number(value.regDate.substring(3, 5));
+						var totalPrice = value.discountPrice;
+						var row = [ regDate, totalPrice ];
+						data.addRows([ row ]);
+						chart.draw(data, options);
+					}
+				}
+			}
+
+			xhr.open("GET", "/domino/manager/JSON/ordercountdata.jsp?date="
+					+ date);
+			xhr.send();
+		}
+	</script>
 </body>
 </html>
