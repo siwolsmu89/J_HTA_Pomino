@@ -37,6 +37,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
+<%@include file="../common/logincheck.jsp" %>
 <body>
 <%
 	String position = "order";
@@ -153,9 +154,9 @@
 							<td class="text">
 								<p>
 									<img class="tm-5 rm-5 float-left" alt="<%=pizzaOrderDao.getPizzaName() %>" width="90px;"
-										src="../resource/images/<%=pizzaOrderDao.getImageSrc() %>">
+										src="<%=pizzaOrderDao.getImageSrc() %>">
 									<%=pizzaOrderDao.getPizzaName()%><br/> 
-									<small style="color: gray; font-size: 14px;"><%=pizzaOrderDao.getPizzaSize()%></small><br />
+									<small style="color: gray; font-size: 14px;"><%=pizzaOrderDao.getPizzaSize()%></small><br/>
 									<%=NumberUtil.numberWithComma(pizzaOrderDao.getPizzaPrice())%>원
 								</p>
 							</td>
@@ -180,15 +181,15 @@
 							}
 					%>
 							</td>
-							<td><br />
+							<td><br/>
 								<div class="">
 									<input type="number" name="pizza"
 										style="width: 60px; text-align: center; height: 30px;"
 										onchange="modifyAmount(event, <%=pizzaOrderDao.getNo()%>)"
 										value="<%=pizzaOrderDao.getOrderAmount()%>" min="1">
 								</div></td>
-							<td><br /><%=NumberUtil.numberWithComma(orderPrice)%> 원</td>
-							<td><br />
+							<td><br/><%=NumberUtil.numberWithComma(orderPrice)%> 원</td>
+							<td><br/>
 								<button class="btn btn-light" name="pizza"
 									onclick="removeCheck(<%=pizzaOrderDao.getNo()%>)">X</button></td>
 						</tr>
@@ -204,21 +205,21 @@
 								<p>
 									<img class=" tm-5 rm-5 float-left" alt="<%=sod.getSideName() %>"
 										width="90px;" style=""
-										src="../resource/<%=sod.getImageSrc() %>">
-									<%=sod.getSideName()%><br />
-									<%=sod.getSidePrice()%>원
+										src="<%=sod.getImageSrc() %>">
+									<%=sod.getSideName()%><br/>
+									<%=NumberUtil.numberWithComma(sod.getSidePrice())%>원
 								</p>
 							</td>
 							<td></td>
-							<td><br />
+							<td><br/>
 								<div class="">
 									<input type="number" name="side"
 										style="width: 60px; text-align: center; height: 30px;"
 										onchange="modifyAmount(event, <%=sod.getNo()%>)"
 										value="<%=sod.getOrderAmount()%>" min="1">
 								</div></td>
-							<td><br /><%=NumberUtil.numberWithComma(sod.getOrderPrice())%>원</td>
-							<td><br /><button class="btn btn-light" name="side" onclick="removeCheck(<%=sod.getNo()%>)">X</button></td>
+							<td><br/><%=NumberUtil.numberWithComma(sod.getOrderPrice())%>원</td>
+							<td><br/><button class="btn btn-light" name="side" onclick="removeCheck(<%=sod.getNo()%>)">X</button></td>
 						</tr>
 						<%
 							totalPrice += sod.getOrderPrice();
@@ -232,22 +233,22 @@
 							<td>
 								<p>
 									<img class=" tm-5 rm-5 float-left" alt="<%=edd.getEtcName() %>"
-										width="90px;" src="../resource/<%=edd.getImageSrc() %>">
-									<%=edd.getEtcName()%><br />
-									<%=edd.getEtcPrice()%>원
+										width="90px;" src="<%=edd.getImageSrc() %>">
+									<%=edd.getEtcName()%><br/>
+									<%=NumberUtil.numberWithComma(edd.getEtcPrice())%>원
 								</p>
 							</td>
 							<td></td>
 							<td>
 								<div class="">
-									<br /> <input type="number"
+									<br/><input type="number"
 										style="width: 60px; text-align: center; height: 30px;"
 										name="etc" onchange="modifyAmount(event, <%=edd.getNo()%>)"
 										value="<%=edd.getOrderAmount()%>" min="1">
 								</div>
 							</td>
-							<td><br /><%=NumberUtil.numberWithComma(edd.getOrderPrice())%>원</td>
-							<td><br />
+							<td><br/><%=NumberUtil.numberWithComma(edd.getOrderPrice())%>원</td>
+							<td><br/>
 								<button class="btn btn-light" name="etc"
 									onclick="removeCheck(<%=edd.getNo()%>)">X</button></td>
 						</tr>
@@ -262,11 +263,11 @@
 		<div style="background-color: black; height: 2px;" class="mb-3"></div>
 		<div class="row">
 			<div class="col-6 mb-5">
-				<br />
+				<br/>
 				<p>
-					<small>&ensp;&ensp;* 할인적용은 다음 단계에서 가능합니다.<br />
-						&ensp;&ensp;* 피클&소스는 구매하셔야합니다.<br /> &ensp;&ensp;- 메뉴>음료&기타 추가구매
-						가능
+					<small>&ensp;&ensp;* 할인적용은 다음 단계에서 가능합니다.<br/>
+						&ensp;&ensp;* 피클&소스는 구매하셔야합니다.<br/>
+						&ensp;&ensp;- 메뉴>음료&기타 추가구매가능
 					</small>
 				</p>
 			</div>

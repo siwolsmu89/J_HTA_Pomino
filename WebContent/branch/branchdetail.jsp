@@ -31,15 +31,24 @@
 					<h4>가맹점</h4>
 				</div>
 				<div class="col-8">
-					<ul class="nav justify-content-end">
-						<li class="nav-item"><a class="nav-link active" href="#">홈</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link active" href="#">가맹점</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#">메인</a></li>
+					<ul class="nav justify-content-end small text-muted">
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/branch/info.jsp">가맹점</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">상세정보</a>
+					  </li>
 					</ul>
+					
 				</div>
 			</div>
 			<div style="background-color: black; height: 2px;" class="mb-2"></div>
@@ -62,11 +71,11 @@
 				</div>
 			</div>
 		</div>
-
+		
 		<div class="body">
 			<div class="row">
 				<div class="col-12">
-					<div class="card mb-5" style="border: none;">
+					<div class="card mb-5">
 						<%
 							String userValue = String.valueOf(session.getAttribute("사용자번호"));
 							int userNo = NumberUtil.stringToInt(userValue);
@@ -78,31 +87,31 @@
 							BranchDao branchDao = new BranchDao();
 							Branch branch = branchDao.getBranchByNo(branchNo);
 						%>
-						<div class="card-header" style="border: none;">
+						<div class="card-header">
 							<div class="row">
 								
-								<div class="col-10 text-left">
+								<div class="col-10 text-left mt-2">
 									<div>
-										<p style="font-size: 30px;" class="font-weight-bold">가맹점정보</p>
+										<h2 class="font-weight-bold">가맹점정보</h2>
 									</div>
 								</div>
-								<div class="col-2">
+								<div class="col-2 text-right pr-4 mt-2">
 									<form method="post" action="modifydetail.jsp" enctype="multipart/form-data">
 									<%
 										if("N".equalsIgnoreCase(branch.getQuitYn())){
 									%>
-										<input type="hidden" name="yn" value="y">
+										<input type="hidden" name="yn" value="Y">
 										<input type="hidden" name="branchno" value=<%=branch.getNo()%>>
-										<button class="btn btn-danger text-light" type="submit"
+										<button class="btn btn-danger" type="submit"
 										onclick="alertcompleteToModify(event)">
 											영업종료
 										</button>
 									<%
 										} else {
 									%>
-										<input type="hidden" name="yn" value="n">
+										<input type="hidden" name="yn" value="N">
 										<input type="hidden" name="branchno" value=<%=branch.getNo()%>>
-										<button class="btn btn-success text-light" type="submit"
+										<button class="btn btn-success" type="submit"
 										onclick="alertcompleteToModify(event)">
 											영업시작
 										</button>
@@ -193,8 +202,8 @@
 									</div>
 								</div>
 								<div class="text-center">
-									<button type="submit" class="btn btn-primary"
-										onclick="alertcompleteToModify(event)">정보수정</button>
+									<button type="submit" class="btn btn-primary btn-lg"
+										onclick="alertcompleteToModify(event)">&nbsp&nbsp수 정&nbsp&nbsp</button>
 								</div>
 							</form>
 						</div>
@@ -204,20 +213,20 @@
 			</div>
 
 		</div>
-		<div class="mb-2"></div>
+		<div class="mb-3"></div>
 	</div>
 
-	<%@ include file="../common/footer.jsp"%>
-	<script type="text/javascript">
-		function alertcompleteToModify(event) {
+<%@ include file="../common/footer.jsp"%>
+<script type="text/javascript">
+	function alertcompleteToModify(event) {
 
-			if (confirm('상태를 바꾸시겠습니까?')) {
+		if (confirm('상태를 바꾸시겠습니까?')) {
 
-			} else {
-				event.preventDefault();
-			}
+		} else {
+			event.preventDefault();
 		}
-	</script>
+	}
+</script>
 </body>
 </html>
 

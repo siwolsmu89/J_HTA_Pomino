@@ -34,14 +34,23 @@
 				</div>
 
 				<div class="col-8">
-					<ul class="nav justify-content-end">
-						<li class="nav-item"><a class="nav-link active" href="#">홈</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link active" href="#">관리자</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#">1:1문의</a></li>
+					<ul class="nav justify-content-end small text-muted">
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	<!--text-muted pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/manager/info.jsp">관리자</a><!--text-muted active pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">1:1문의</a>
+					  	<!--text-dark font-weight-bold pr-1  -->
+					  </li>
 					</ul>
 				</div>
 			</div>
@@ -128,7 +137,7 @@
 							<col width="15%">
 						</colgroup>
 						<thead class="thead thead-dark">
-							<tr style="border: 2px solid black;">
+							<tr>
 								<th>번호</th>
 								<th>작성자</th>
 								<th>제목</th>
@@ -139,43 +148,51 @@
 						<tbody id="qna-body">
 							<%
 								int fromMainNo = NumberUtil.stringToInt(request.getParameter("qnano"));
-								for (QuestionDto questionDto : questions) {
+								if(questions.isEmpty()){
 							%>
-							<tr data-toggle="modal" data-target="#a<%=questionDto.getNo()%>"
-								<%
-									if ("n".equalsIgnoreCase(questionDto.getAnsweredYn())){ 
-								%>
-								class="font-weight-bold" <%
-									} else {
-								%>
-								class="text-muted" <%
-									}
-								%>
-								<%
-									if(questionDto.getNo() == fromMainNo) {
-								%>
-								style="border: 2px solid red;" <%
-									}
-								%>>
-								<td><%=questionDto.getNo()%></td>
-								<td><%=questionDto.getUserName()%></td>
-								<td><%=questionDto.getTitle()%></td>
-								<td><%=questionDto.getRegDate()%></td>
-								<td>
-									<%
-										if ("N".equals(questionDto.getAnsweredYn())) {
-									%>
-										<a type="button" class="btn btn-primary text-light" href="qnamodifyform.jsp?questionno=<%=questionDto.getNo()%>">답변대기</a>
-								 	<%
-									 	} else {
-									%>
-										<a type="button" class="btn btn-secondary text-light">답변완료</a> 	
-									<%
-										}
-									%>
-								</td>
-							</tr>
+									<tr class="font-weight-bold text-center">
+										<td>1:1문의가 존재하지 않습니다.</td>
+									</tr>
 							<%
+								} else {
+									for (QuestionDto questionDto : questions) {
+							%>
+								<tr data-toggle="modal" data-target="#a<%=questionDto.getNo()%>"
+							<%
+										if ("n".equalsIgnoreCase(questionDto.getAnsweredYn())){ 
+							%>
+									class="font-weight-bold" <%
+										} else {
+							%>
+									class="text-muted" <%
+										}
+							%>
+							<%
+										if(questionDto.getNo() == fromMainNo) {
+							%>
+									style="border: 2px solid red;" <%
+										}
+							%>>
+									<td><%=questionDto.getNo()%></td>
+									<td><%=questionDto.getUserName()%></td>
+									<td><%=questionDto.getTitle()%></td>
+									<td><%=questionDto.getRegDate()%></td>
+									<td>
+							<%
+											if ("N".equals(questionDto.getAnsweredYn())) {
+							%>
+											<a type="button" class="btn btn-primary btn-block text-light" href="qnamodifyform.jsp?questionno=<%=questionDto.getNo()%>">답변대기</a>
+							<%
+										 	} else {
+							%>
+											<a type="button" class="btn btn-secondary btn-block text-light">답변완료</a> 	
+							<%
+											}
+							%>
+									</td>
+								</tr>
+							<%
+									}
 								}
 							%>
 						</tbody>
@@ -214,9 +231,8 @@
 						<%
 							for (int num = beginPageNo; num <= endPageNo; num++) {
 						%>
-						<li class="page-item active"><a class="page-link"
-							href="qnaboard.jsp?page=<%=num%>"
-							style="<%=pageNo == num ? "background-color: #4caf50;" : ""%>">
+						<li class="page-item <%=pageNo == num ? "active" : ""%>"><a class="page-link"
+							href="qnaboard.jsp?page=<%=num%>">
 								<%=num%>
 						</a></li>
 						<%
@@ -230,7 +246,7 @@
 				</div>
 			</div>
 		</div>
-
+		<div class="mb-3"></div>
 	</div>
 	<%@ include file="../common/footer.jsp"%>
 	<script type="text/javascript">

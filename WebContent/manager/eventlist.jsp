@@ -33,14 +33,23 @@
 				</div>
 
 				<div class="col-8">
-					<ul class="nav justify-content-end">
-						<li class="nav-item"><a class="nav-link active" href="#">홈</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link active" href="#">관리자</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#">이벤트</a></li>
+					<ul class="nav justify-content-end small text-muted">
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	<!--text-muted pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/manager/info.jsp">관리자</a><!--text-muted active pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">이벤트</a>
+					  	<!--text-dark font-weight-bold pr-1  -->
+					  </li>
 					</ul>
 				</div>
 			</div>
@@ -152,64 +161,72 @@
 								<th>종료일</th>
 								<th>단종여부</th>
 								<th>할인율</th>
-								<th colspan='2'><a class="btn btn-light" href="eventform.jsp"
+								<th colspan='2'><a class="btn-sm btn-block btn-light" href="eventform.jsp"
 									onclick="alertcompleteToInsertForm(event)">신규 이벤트 등록</a></th>
 							</tr>
 						</thead>
 						<tbody id="event-body">
 							<%
-								for (Event event : events) {
+								if(events.isEmpty()) {
 							%>
-							<tr
-								<%
-									if ("n".equalsIgnoreCase(event.getDisableYn())) {
-								%>
-										class="font-weight-bold" 
-								<%
-									} else {
-								%>
-										class="text-muted" 
-								<%
-									}
-								%>
-							>
-								<td><%=event.getNo()%></td>
-								<td><%=event.getName()%></td>
-								<td><%=event.getStartDate()%></td>
-								<td><%=event.getEndDate()%></td>
-								<td><%=("N".equals(event.getDisableYn())) ? "아니오" : "예"%></td>
-								<td><%=(0 == event.getDiscountRate() * 100) ? 0 : event.getDiscountRate() * 100 + "%"%></td>
-								<td><a class="btn btn-primary text-light"
-									href="eventmodifyform.jsp?yn=n&eventno=<%=event.getNo()%> " onclick="alertcompleteToModifyForm(event)">수정</a></td>
-								<%
-									if ("N".equalsIgnoreCase(event.getDisableYn())) {
-								%>
-								<td>
-									<form method="post" action="eventmodify.jsp"
-										enctype="multipart/form-data">
-										<input type="hidden" name="yn" value="y"> <input
-											type="hidden" name="eventno" value=<%=event.getNo()%>>
-										<button class="btn btn-secondary text-light" type="submit" onclick="alertcompleteToModify(event)">
-											비활성</button>
-									</form>
-								</td>
-								<%
-									} else {
-								%>
-								<td>
-									<form method="post" action="eventmodify.jsp"
-										enctype="multipart/form-data">
-										<input type="hidden" name="yn" value="yn"> <input
-											type="hidden" name="eventno" value=<%=event.getNo()%>>
-										<button class="btn btn-danger text-light" type="submit" onclick="alertcompleteToModify(event)">
-											활성</button>
-									</form>
-								</td>
-								<%
-									}
-								%>
-							</tr>
+									<tr class="font-weight-bold text-center">
+										<td>이벤트가 존재하지 않습니다.</td>
+									</tr>
 							<%
+								} else {
+									for (Event event : events) {
+							%>
+								<tr
+							<%
+										if ("n".equalsIgnoreCase(event.getDisableYn())) {
+							%>
+											class="font-weight-bold" 
+							<%
+										} else {
+							%>
+											class="text-muted" 
+							<%
+										}
+							%>
+								>
+									<td><%=event.getNo()%></td>
+									<td><%=event.getName()%></td>
+									<td><%=event.getStartDate()%></td>
+									<td><%=event.getEndDate()%></td>
+									<td><%=("N".equals(event.getDisableYn())) ? "아니오" : "예"%></td>
+									<td><%=(0 == event.getDiscountRate() * 100) ? 0 : event.getDiscountRate() * 100 + "%"%></td>
+									<td><a class="btn btn-primary btn-block text-light"
+										href="eventmodifyform.jsp?yn=n&eventno=<%=event.getNo()%> " onclick="alertcompleteToModifyForm(event)">수정</a></td>
+							<%
+										if ("N".equalsIgnoreCase(event.getDisableYn())) {
+							%>
+									<td>
+										<form method="post" action="eventmodify.jsp"
+											enctype="multipart/form-data">
+											<input type="hidden" name="yn" value="y"> <input
+												type="hidden" name="eventno" value=<%=event.getNo()%>>
+											<button class="btn btn-secondary btn-block text-light" type="submit" onclick="alertcompleteToModify(event)">
+												비활성</button>
+										</form>
+									</td>
+							<%
+										} else {
+							%>
+									<td>
+										<form method="post" action="eventmodify.jsp"
+											enctype="multipart/form-data">
+											<input type="hidden" name="yn" value="yn"> <input
+												type="hidden" name="eventno" value=<%=event.getNo()%>>
+											<button class="btn btn-danger btn-block text-light" type="submit" onclick="alertcompleteToModify(event)">
+												활성</button>
+										</form>
+									</td>
+							<%
+										}
+							%>
+								</tr>
+							<%
+									}
 								}
 							%>
 						</tbody>
@@ -245,9 +262,8 @@
 						<%
 							for (int num = beginPageNo; num <= endPageNo; num++) {
 						%>
-						<li class="page-item active"><a class="page-link"
-							href="eventlist.jsp?page=<%=num%>"
-							style="<%=pageNo == num ? "background-color: #4caf50;" : ""%>">
+						<li class="page-item <%=pageNo == num ? "active" : ""%>"><a class="page-link"
+							href="eventlist.jsp?page=<%=num%>">
 								<%=num%>
 						</a></li>
 						<%
@@ -262,7 +278,7 @@
 			</div>
 		</div>
 
-
+		<div class="mb-3"></div>
 	</div>
 	<%@ include file="../common/footer.jsp"%>
 
@@ -310,15 +326,15 @@
 						} else {
 							rows += "<td>"+event.discountRate*100+"</td>";
 						}
-						rows += "<td><a class='btn btn-primary text-light' href='eventmodifyform.jsp?yn=n&eventno="+event.no+"'>수정</a></td>";										
+						rows += "<td><a class='btn btn-primary btn-block text-light' href='eventmodifyform.jsp?yn=n&eventno="+event.no+"'>수정</a></td>";										
 						if('N' == event.disableYn){
 							rows += "<td><form method='post' action='eventmodify.jsp' enctype='multipart/form-data'>";
 							rows += "<input type='hidden' name='yn' value='y'> <input type='hidden' name='eventno' value="+event.no+">";
-							rows += "<button class='btn btn-secondary text-light' type='submit'>비활성</button></form></td>";
+							rows += "<button class='btn btn-secondary btn-block text-light' type='submit'>비활성</button></form></td>";
 						} else {
 							rows += "<td><form method='post' action='eventmodify.jsp' enctype='multipart/form-data'>"
 							rows += "<input type='hidden' name='yn' value='yn'> <input type='hidden' name='eventno' value="+event.no+">";
-							rows += "<button class='btn btn-danger text-light' type='submit'>활성</button></form></td>";
+							rows += "<button class='btn btn-danger btn-block text-light' type='submit'>활성</button></form></td>";
 						}					
 						rows += "</tr>";
 					}

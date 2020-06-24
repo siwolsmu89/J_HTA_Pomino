@@ -1,3 +1,4 @@
+<%@page import="com.domino.util.NumberUtil"%>
 <%@page import="com.domino.vo.Grade"%>
 <%@page import="java.util.List"%>
 <%@page import="com.domino.dao.GradeDao"%>
@@ -123,7 +124,7 @@
 							<p class="text-muted"><small>총 주문금액</small></p>
 							<p class="text-muted pb-0 mb-0"><small>등급 갱신일자 : <%=user.getGradeDate() %></small></p>
 							<p class="text-muted pt-0 mt-0"><small>(해당 일자로부터 1년 유효기간입니다.)</small></p>
-							<p class="display-4 text-center font-weight-bold"><%=userDto.getUserTotalPrice() %></p>
+							<p class="display-4 text-center font-weight-bold"><%=NumberUtil.numberWithComma(userDto.getUserTotalPrice()) %> 원</p>
 						</div>
 					</div>
 				</div>

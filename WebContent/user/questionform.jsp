@@ -99,7 +99,7 @@
 		
 		<div class="row">
 				<%
-					int rowsPerPage = 10;
+					int rowsPerPage = 5;
 					int pageNo = NumberUtil.stringToInt(request.getParameter("page"), 1);
 					int beginRowNumber = (pageNo - 1)*rowsPerPage + 1;
 					int endRowNumber = pageNo*rowsPerPage;
@@ -308,24 +308,20 @@
 						</div>
 					</div>
 				</div>
-				<%
-				int pagesPerBlock = 5;
-				int rows = qnaDao.getQnasCount();
-				int totalPages = (int) Math.ceil((double)rows/rowsPerPage);
-				int totalBlock = (int) Math.ceil((double) totalPages/pagesPerBlock);
-				int currentBlock = (int) Math.ceil((double) pageNo/pagesPerBlock);
-				int beginPageNo = (currentBlock-1)*pagesPerBlock+1;
-				int endPageNo = currentBlock*pagesPerBlock;
-				if(currentBlock == totalBlock) {
-					endPageNo = totalPages;
-				}
-				%>
+				
 				<div class="row">
 					<div class="col-12 text-center">
 						<!-- 페이지 처리 시작 -->
 						<ul class="pagination justify-content-center"
 							style="margin: 20px 0;">
 				<%
+						int pagesPerBlock = 5;
+						int rows = qnaDao.getQuestionByUserno(loginUserNo).size();
+						int totalPages = (int) Math.ceil((double)rows/rowsPerPage);
+						int totalBlock = (int) Math.ceil((double) totalPages/pagesPerBlock);
+						int currentBlock = (int) Math.ceil((double) pageNo/pagesPerBlock);
+						int beginPageNo = (currentBlock-1)*pagesPerBlock+1;
+						int endPageNo = currentBlock*pagesPerBlock;
 						if(pageNo > 1) {
 				%>
 							<li class="page-item "><a class="page-link" href="questionform.jsp?page=<%=pageNo - 1%>">이전</a></li>
@@ -334,6 +330,9 @@
 				%>
 				<%
 						for(int num=beginPageNo; num <=endPageNo; num++) {
+							if(endPageNo > totalBlock) {
+								endPageNo = totalPages;
+							}
 				%>
 							<li class="page-item <%=pageNo == num ? "active" : ""%> "><a class="page-link" href="questionform.jsp?page=<%=num%>"><%=num%></a></li>
 				<%

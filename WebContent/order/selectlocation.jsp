@@ -19,6 +19,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+<%@include file="../common/logincheck.jsp" %>
 <% String position = "order"; %>
 <%@ include file="../common/navbar.jsp"%>
 <div class="container">
@@ -33,7 +34,7 @@
 				    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+				    <a class="nav-link disabled pr-1" tabindex="-1" aria-disabled="true">></a>
 				  </li>
 				  <li class="nav-item">
 				    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">주문방법 선택</a>

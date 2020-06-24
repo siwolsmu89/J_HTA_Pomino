@@ -133,13 +133,13 @@
 					<div class="card">
 						<div class="card-header ">
 							<div class="row">
-								<div class="col-4 text-center font-weight-bold" id="7">
+								<div class="col-4 text-center " id="7">
 									<a role="button" onclick="select(7)">7일 매출</a>
 								</div>
-								<div class="col-4 text-center font-weight-bold" id="30">
+								<div class="col-4 text-center " id="30">
 									<a role="button" onclick="select(30)">30일 매출</a>
 								</div>
-								<div class="col-4 text-center font-weight-bold" id="365">
+								<div class="col-4 text-center " id="365">
 									<a role="button" onclick="select(365)">365일 매출</a>
 								</div>
 							</div>

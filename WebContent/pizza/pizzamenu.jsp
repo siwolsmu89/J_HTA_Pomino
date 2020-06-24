@@ -84,9 +84,13 @@
 				<!-- 화면의 현재위치를 나타내는 부분 끝 -->
 			</div>
 			
+			<script>/* 주석 처리
 			<div>
-				<div class="row"><!-- 메뉴바 -->
-					<div class="col-10"><!-- 상세메뉴 -->
+				<!-- 메뉴바 -->
+				<div class="row">
+					<!-- 상세메뉴 -->
+					<!--  -->
+					<div class="col-10">
 						<div class="navbar navbar-expand-sm ">
 							<!-- 링크들 (메뉴 중앙정렬) -->
 							<ul class="navbar-nav">
@@ -101,12 +105,12 @@
 					<%
 						PizzaDao pizzaDao = new PizzaDao();
 						List<Pizza> pizzas = pizzaDao.getAllPizza();
-						// EventDao eventDao = new EventDao(); 이벤트 번호와 피자 번호를 연결해주는 것이 필요할 것 같은데..
 					%>
 					
-					<div class="col-2"><!-- 더보기 -->
+					<!-- 더보기 -->
+					<div class="col-2">
 						<div class="navbar navbar-expand-sm ">
-						<!-- 1주일간 가장 많이 팔린 피자 받아와서 출력, 해당하는 링크로 이동 -->
+							<!-- 1주일간 가장 많이 팔린 피자 받아와서 출력, 해당하는 링크로 이동 -->
 							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="">피자 목록</a>	
 							<div class="dropdown-menu">
 							<%
@@ -121,6 +125,8 @@
 					</div>
 				</div>
 			</div>
+			*/</script>
+			
 		</div>	<!-- 주황1 끝-->
 		<form id="my-form" action="" method="post">
 		<div>
@@ -143,7 +149,7 @@
 										<div class="card">
 											<!-- 상품이미지 -->
 											<!-- 사진 위에 사진 올리기? -->
-											<div class="jumbotron" style="background-image: url('<%=pizza.getImageSrc() %>'); ">
+											<div class="jumbotron" style="background-image: url('<%=pizza.getImageSrc() %>');">
 												
 											<!-- 사진 클릭하면 해당 사진 주문하러 가짐 -->
 											<!-- 피자 더미데이터 소스 ../로 변경하기 -->

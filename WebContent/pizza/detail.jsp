@@ -22,7 +22,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
+	<style>
+		br {
+			padding-bottom : 10px;
+		}
+	</style>
 </head>
 <body>
 
@@ -48,6 +52,7 @@
 			<div class="row">
 				<div class="col-4">
 					<h4>메뉴</h4>
+					<br/>
 				</div>
 	
 				<%
@@ -95,7 +100,8 @@
 			</div>
 			<!-- 화면의 현재위치를 나타내는 부분 끝 -->
 		</div> <!-- 노랑1 끝 -->
-			
+		
+		<script>/*	// 안쓰는 라인, 주석 처리
 		<div> <!-- 노랑2 끝 -->
 			<div class="row"><!-- 메뉴바 -->
 				<div class="col-10"><!-- 상세메뉴 -->
@@ -103,6 +109,7 @@
 						<!-- 링크들 (메뉴 중앙정렬) -->
 						<ul class="navbar-nav">
 							<li class="nav-item d-flex justify-content-between align-items-center"><a class="nav-link" href="../pizza/pizzamenu.jsp">피자</a></li>
+							
 							<li class="nav-item d-flex justify-content-between align-items-center"><a class="nav-link" href="">사이드디시</a></li>
 							<li class="nav-item d-flex justify-content-between align-items-center"><a class="nav-link" href="">음료/기타</a></li>
 						</ul>
@@ -125,7 +132,8 @@
 					</div>
 				</div>
 			</div>
-		</div> <!-- 노랑2 끝 -->
+		</div> <!-- 노랑2 끝 --> // 주석처리 끝
+		*/</script> 
 	</div>	<!-- 주황1 끝-->
 	
 	<div> <!-- 주황2 시작 -->
@@ -133,16 +141,21 @@
 			<div class="col-6 img-responsive "> <!-- 초록1 시작 -->
 				<div class="float-left" > <!-- 파랑1 시작 -->
 					<img src="<%=pizza.getImageSrc() %>" class="img-fluid"/>
+					
+					<script>/*
 					<div class="float-right">
 						<a><strong>자세히</strong></a>
 						<a href="#"><img src="../resource/images/home/detailsee.png"></a>
 					</div>
-				</div> <!-- 파랑1 끝 -->
+					*/</script>
 					
+				</div> <!-- 파랑1 끝 -->
+				
 				<div> <!-- 파랑2 시작 -->
 					<ul>
+						<li style=" list-style:none;">&emsp;</li>
+						<!-- <li class="text-muted"><small>원산지 정보는 사진 우측하단 돋보기 메뉴를 통해 확인 가능합니다</small></li> 돋보기 삭제로 인한 주석 처리 -->
 						<li class="text-muted"><small>모든 사진은 이미지컷으로 실제 제품과 다를 수 있습니다</small></li>
-						<li class="text-muted"><small>원산지 정보는 사진 우측하단 돋보기 메뉴를 통해 확인 가능합니다</small></li>
 					</ul>
 				</div> <!-- 파랑2 끝 -->
 			</div> <!-- 초록1 끝 -->
@@ -157,7 +170,7 @@
 						</div>
 					</div> <!-- 하늘1 끝 -->
 					
-					<span>　</span>
+					<br/>
 					
 					<div> <!-- 하늘2 시작 -->
 						<div class="display-4"><p><small><%=pizza.getName() %></small></p></div>
@@ -166,40 +179,39 @@
 					<div> <!-- 하늘3 시작 -->
 						<div class="text-muted"><small>#<%=pizza.getName() %>는 진리다</small></div>
 						<div class="text-muted"><small>#도미노의 자신작</small></div>
-						<p>　</p>
+						<br/>
 						<% // 얘네도 짧은 정보로 받아오는건가? %>
 					</div> <!-- 하늘3 끝 -->
 					
 					<div> <!-- 하늘4 시작 -->
 						<div class="text-center" style="border-bottom: 3px solid black; padding-bottom : 20px">
 							<a href="#" class="btn btn-outline-secondary btn-lg" role="button">영양성분 및 알레르기 유발성분</a>
-							<br style="padding-bottom : 10px"/>
-							<br style="padding-bottom : 10px"/>
+							<br/>
+							<br/>
 						</div>
 					</div> <!-- 하늘4 끝 -->
 				</div> <!-- 파랑1 끝 -->
 				
-				<br style="padding-bottom : 10px"/>
+				<br/>
 				
 				<div> <!-- 파랑2 시작 -->
 					<form id="my-form" method="post" action="../order/cart.jsp"> <!-- 주문 정보는 pizzaOrderDto로 보내야되는거같은데 -->
 						<div class="form-group" style="border-bottom: 3px solid black; padding-bottom : 20px"> <!-- 하늘1 시작 -->
 							<h4><strong>사이즈 선택</strong></h4>
 							
-							<div class="checks">
+							<div>
 								<div class="custom-control custom-radio custom-control-inline">
 									<input type="radio" class="custom-control-input" name="size" id="L" value="<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>" onchange="changePizzaInfoValue(); changePizza();" checked >
-									<label class="custom-control-label" for="L"><strong class="text-danger">L</strong><strong>　<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>원</strong></label>
+									<label class="custom-control-label" for="L"><strong class="text-danger">L</strong><strong>&emsp;<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>원</strong></label>
 								</div>
 								
 								<div class="custom-control custom-radio custom-control-inline">
 									<input type="radio" class="custom-control-input" name="size" id="M" value="<%=(int)(pizza.getMprice() - (pizza.getMprice() * discountRate)) %>" onchange="changePizzaInfoValue(); changePizza();">
-									<label class="custom-control-label" for="M"><strong class="text-danger">M</strong><strong>　<%=(int)(pizza.getMprice() - (pizza.getMprice() * discountRate)) %>원</strong></label>
+									<label class="custom-control-label" for="M"><strong class="text-danger">M</strong><strong>&emsp;<%=(int)(pizza.getMprice() - (pizza.getMprice() * discountRate)) %>원</strong></label>
 								</div>									
 							</div>
 							
-							<br style="padding-bottom : 10px"/>
-							<br style="padding-bottom : 10px"/>
+							<br/>
 						</div> <!-- 하늘1 끝 -->
 
 						<div class="form-group" style="border-bottom: 3px solid black; padding-bottom : 20px"> <!-- 하늘2 시작 -->
@@ -209,17 +221,19 @@
 								<!-- <h5 class="float-right "><a href="#" class="text-warning"><small>ⓘ 도우의 특징</small></a></h5> -->
 							</div>
 							
-							<div class="checks">
-							<p>　</p> <!-- 생략하면 라디오버튼 배열 이상해짐 -->
+							<div>
+							<p>&emsp;</p> <!-- 생략하면 라디오버튼 배열 이상해짐 -->
 							<%
 								int i = 0;
 								for (Dough dough : doughs) {
 							%>
-								<div class="custom-control custom-radio checks">
+								<div class="custom-control custom-radio">
 									
 									<input type="radio" <%=i==0 ? "checked" : "" %> class="custom-control-input" name="dou" data-doughno="<%=dough.getNo() %>" id="<%=dough.getName() %>" value="<%=dough.getPrice() %>" onchange="changePizzaInfoValue(); changePizza();">
-									<label class="custom-control-label" for="<%=dough.getName()%>"><strong><%= dough.getName()%></strong>
-										+ <strong class="text-danger"><%=dough.getPrice()%></strong>원 
+									<label class="custom-control-label" for="<%=dough.getName()%>"> <strong><%= dough.getName()%></strong> 
+									 <span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+									  	+ <strong class="text-danger"><%=dough.getPrice()%></strong>원
+									  </span>
 									</label>
 								</div>
 							<%
@@ -228,8 +242,7 @@
 
 							%>
 							</div>
-							<br style="padding-bottom : 10px"/>
-							<br style="padding-bottom : 10px"/>
+							<br/>
 						</div> <!-- 하늘2 끝 -->
 
 						<div > <!-- 하늘3 시작 -->
@@ -239,8 +252,8 @@
 						</div> <!-- 하늘3 끝 -->
 						
 						<div> <!-- 하늘4 끝 -->
-							<br style="padding-bottom : 10px"/>
-							<br style="padding-bottom : 10px"/>
+							<br/>
+							<br/>
 							<!-- <p class="text-danger"><small> * 토핑추가는 피자 한판 당 5개까지 추가 가능</small></p> -->
 						</div> <!-- 하늘4 끝 -->
 						
@@ -272,10 +285,10 @@
 													<div>
 														<div class="text-center" style="width:150px" id="topping-no-1-<%=topping.getNo() %>"><%=topping.getName() %></div>
 														<div class="text-center" style="width:150px" ><strong id="topping-price-1-<%=topping.getNo() %>"><%=topping.getPrice() %></strong></div>
-														<div style="width:100px; float:right">
+														<div class="text-center"style="width:150px">
 															<!-- 버튼 -->
-															<input  type="number" name="topping" class="w-50 text-right" 
-																	id="topping-amount-1-<%=topping.getNo() %>" style="align:right" value="0" min="0"
+															<input  type="number" name="topping" class="w-60 text-right" 
+																	id="topping-amount-1-<%=topping.getNo() %>" style="align:right" value="0" min="0" max="99" placeholder="최대 99" maxlength="2" oninput="numberMaxLength(this);"
 																	data-tno="<%=topping.getNo() %>" 
 																	data-tn="<%=topping.getName() %>" 
 																	data-tp="<%=topping.getPrice() %>"
@@ -303,15 +316,14 @@
 													<div>
 														<div class="text-center" style="width:150px" id="topping-no-2-<%=topping.getNo() %>"><%=topping.getName() %></div>
 														<div class="text-center" style="width:150px" ><strong  id="topping-price-2-<%=topping.getNo() %>"><%=topping.getPrice() %></strong></div>
-														<div style="width:100px; float:right">
+														<div class="text-center"style="width:150px">
 															<!-- 버튼 -->
-															<input  type="number" name="topping" class="w-50 text-right" 
-																	id="topping-amount-2-<%=topping.getNo() %>" style="align:right" value="0" min="0"
+															<input  type="number" name="topping" class="w-60 text-right" 
+																	id="topping-amount-2-<%=topping.getNo() %>" style="align:right" value="0" min="0" max="99" placeholder="최대 99" maxlength="2" oninput="numberMaxLength(this);"
 																	data-tno="<%=topping.getNo() %>" 
 																	data-tn="<%=topping.getName() %>" 
 																	data-tp="<%=topping.getPrice() %>"
  																	onchange="changePizza(event)" >
-
 														</div>
 													</div>
 												</li>
@@ -335,14 +347,14 @@
 													<div>
 														<div class="text-center" style="width:150px" id="topping-no-3-<%=topping.getNo() %>"><%=topping.getName() %></div>
 														<div class="text-center" style="width:150px" ><strong  id="topping-price-2-<%=topping.getNo() %>"><%=topping.getPrice() %></strong></div>
-														<div style="width:100px; float:right">
+														<div class="text-center"style="width:150px">
 															<!-- 버튼 -->
-															<input  type="number" name="topping" class="w-50 text-right" 
-																	id="topping-amount-3-<%=topping.getNo() %>" style="align:right" value="0" min="0"
+															<input  type="number" name="topping" class="w-60 text-right" 
+																	id="topping-amount-3-<%=topping.getNo() %>" style="align:right" value="0" min="0" max="99" placeholder="최대 99" maxlength="2" oninput="numberMaxLength(this);"
 																	data-tno="<%=topping.getNo() %>" 
 																	data-tn="<%=topping.getName() %>" 
 																	data-tp="<%=topping.getPrice() %>"
-																	onchange="changePizza(event)" >
+ 																	onchange="changePizza(event)" >
 														</div>
 													</div>
 												</li>
@@ -355,22 +367,23 @@
 								</div>
 			
 							</div>
-							<br style="padding-bottom : 10px"/>
-							<br style="padding-bottom : 10px"/>
+							<br/>
+							<br/>
 						</div> <!-- 하늘5 끝 -->
 	
 						<!-- for문 -->
 						
 						<div style="border-bottom: 3px solid black; padding-bottom : 20px"> <!-- 하늘6 시작 -->
-							<br style="padding-bottom : 10px"/>
+							<br/>
 							<h4 class="float-left"><strong>수량선택</strong></h4>
-							<br style="padding-bottom : 10px"/>
+							<br/>
+							<br/>
 							<input  type="number" name="" class="w-100 text-center" 
-									style="align:right" value="1" min="1" id="pizza-order-amount"
+									style="align:right" value="1" min="1" max="999" placeholder="최대 999" maxlength="3" oninput="numberMaxLength(this);" id="pizza-order-amount"
 									onchange="changePizzaInfoValue(); changePizza();">
 						</div> <!-- 하늘6 끝 -->
 
-						<br style="padding-bottom : 10px"/>
+						<br/>
 					
 						<%
 							SideDao sideDao = new SideDao();
@@ -381,8 +394,8 @@
 							<div> <!-- 보라1 시작 -->
 								<h4 class="float-left"><strong>사이드디시</strong></h4>
 								
-								<br style="padding-bottom : 10px"/>
-								<br style="padding-bottom : 10px"/>
+								<br/>
+								<br/>
 							
 							</div> <!-- 보라2 시작 -->
 							
@@ -400,14 +413,14 @@
 														<div>
 															<div class="text-center" style="width:150px" id="side-no-<%=side.getNo() %>"><%=side.getName() %></div>
 															<div class="text-center" style="width:150px" ><strong  id="side-price-<%=side.getNo() %>"><%=side.getPrice() %></strong></div>
-															<div style="width:100px; float:right">
-																<!-- 버튼 -->
-																<input  type="number" name="side" class="w-50 text-right" 
-																		id="side-amount-<%=side.getNo() %>" style="align:right" value="0" min="0" 
-																		data-sno="<%=side.getNo() %>" 
-																		data-sn="<%=side.getName() %>" 
-																		data-sp="<%=side.getPrice() %>"
-																		onchange="changeSide(event)" >
+															<div class="text-center"style="width:150px">
+																	<!-- 버튼 -->
+																	<input  type="number" name="side" class="w-60 text-right" 
+																			id="side-amount-<%=side.getNo() %>" style="align:right" value="0" min="0" max="999" placeholder="최대 999" maxlength="3" oninput="numberMaxLength(this);"
+																			data-sno="<%=side.getNo() %>" 
+																			data-sn="<%=side.getName() %>" 
+																			data-sp="<%=side.getPrice() %>"
+																			onchange="changeSide(event)" >
 															</div>
 														</div>
 													</li>
@@ -422,8 +435,7 @@
 							</div> <!-- 하늘8 끝 -->
 						</div> <!-- 하늘7 끝 -->				
 								
-						<br style="padding-bottom : 10px"/>
-						<br style="padding-bottom : 10px"/>
+						<br/>
 						
 						<%
 							EtcDao ectDao = new EtcDao();
@@ -432,10 +444,10 @@
 
 						<div> <!-- 하늘9 시작 -->
 							<div> <!-- 보라1 시작 -->
-								<h4 class="float-left"><strong>음료&기타</strong></h4>
+								<h4 class="float-left"><strong>음료 & 기타</strong></h4>
 								
-								<br style="padding-bottom : 10px"/>
-								<br style="padding-bottom : 10px"/>
+								<br/>
+								<br/>
 
 							</div> <!-- 보라2 시작 -->
 							
@@ -453,15 +465,15 @@
 														<div>
 															<div class="text-center" style="width:150px" id="etc-no-<%=etc.getNo() %>"><%=etc.getName() %></div>
 															<div class="text-center" style="width:150px" ><strong id="etc-price-<%=etc.getNo() %>"><%=etc.getPrice() %></strong></div>
-															<div style="width:100px; float:right">
+															<div class="text-center"style="width:150px">
 																<!-- 버튼 -->
-																<input  type="number" name="etc" class="w-50 text-right" 
-																		id="etc-amount-<%=etc.getNo() %>" style="align:right" value="0" min="0"
+																<input  type="number" name="etc" class="w-60 text-right" 
+																		id="etc-amount-<%=etc.getNo() %>" style="align:right" value="0" min="0" max="999" placeholder="최대 999" maxlength="3" oninput="numberMaxLength(this);"
 																		data-eno="<%=etc.getNo() %>"
 																		data-en="<%=etc.getName() %>"
 																		data-ep="<%=etc.getPrice() %>"
 																		onchange="changeEtc(event)" >
-															</div>
+															</div>																														
 														</div>
 													</li>
 													<%
@@ -500,7 +512,7 @@
 											<tr id="pizza-receive-info %>" class="text-center">
 												<td class="text">
 													<a><small id="pizza-receive-name" data-pizzano="<%=pizza.getNo() %>"><%=pizza.getName()%></small> <small>x</small> <small id="pizza-receive-count">1</small></a>
-													<br>
+													<br/>
 													<p>
 														<small class="text-secondary" id="pizza-receive-dou" > 기본 도우 </small>
 														<small class="text-secondary"> / </small>
@@ -530,9 +542,9 @@
 												</td>
 	
 												<td class="text">
-													 피자 <input type="number" id="pizza-total-order-price" value="<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>"  min="0"><br />
-													사이드 <input type="number" id="side-order-price" value="0" min="0"><br />
-													기타 <input type="number" id="etc-order-price" value="0" min="0"><br />
+													<!-- 피자 -->		<input type="hidden" id="pizza-total-order-price" value="<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>"  min="0">
+													<!-- 사이드 -->	<input type="hidden" id="side-order-price" value="0" min="0">
+													<!-- 기타 -->		<input type="hidden" id="etc-order-price" value="0" min="0">
 													<p><strong id="order-price" ><%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %></strong>원</p>
 													<button type="submit">주문하기</button>
 												</td>
@@ -829,6 +841,13 @@
 		
 		document.getElementById("order-price").textContent = numberToCurrency(parseInt(pizzaPrice) + parseInt(sidePrice) + parseInt(etcPrice));
 	}
+	
+	function numberMaxLength(e){
+        if(e.value.length > e.maxLength){
+            e.value = e.value.slice(0, e.maxLength);
+        }
+    }
+	
 </script>
 
 </body>

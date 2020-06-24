@@ -43,14 +43,23 @@
 				</div>
 
 				<div class="col-8">
-					<ul class="nav justify-content-end">
-						<li class="nav-item"><a class="nav-link active" href="#">홈</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link active" href="#">관리자</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#">주문</a></li>
+					<ul class="nav justify-content-end small text-muted">
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	<!--text-muted pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/manager/info.jsp">관리자</a><!--text-muted active pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">주문</a>
+					  	<!--text-dark font-weight-bold pr-1  -->
+					  </li>
 					</ul>
 				</div>
 			</div>
@@ -181,17 +190,17 @@
 										int os = order.getOrderStatus();
 										String statusStr = "";
 										if (os == 0) {
-											statusStr = "<button class='btn btn-primary'>접수완료</button>";
+											statusStr = "<button class='btn btn-primary btn-block'>접수완료</button>";
 										} else if (os == 1) {
-											statusStr = "<button class='btn btn-primary'>요리중</button>";
+											statusStr = "<button class='btn btn-primary btn-block'>요리중</button>";
 										} else if (os == 2) {
-											statusStr = "<button class='btn btn-sucess'>배달중</button>";
+											statusStr = "<button class='btn btn-success btn-block'>배달중</button>";
 										} else if (os == 3) {
-											statusStr = "<button class='btn btn-success'>배달완료</button>";
+											statusStr = "<button class='btn btn-success btn-block'>배달완료</button>";
 										} else if (os == 4) {
-											statusStr = "<button class='btn btn-dark'>수령완료</button>";
+											statusStr = "<button class='btn btn-dark btn-block'>수령완료</button>";
 										} else {
-											statusStr = "<button class='btn btn-danger'>주문취소</button>";
+											statusStr = "<button class='btn btn-danger btn-block'>주문취소</button>";
 										}
 
 										Date reqTime = order.getRequestTime();
@@ -223,53 +232,56 @@
 						</tbody>
 					</table>
 					<!-- 페이지 처리 시작 -->
-					<ul class="pagination justify-content-center"
-						style="margin: 20px 0">
-						<%
-							// 0. 한 화면당 표시할 페이지번호 갯수
-							int pagesPerBlock = 5;
-
-							// 1. 전체 행의 갯수를 조회한다.
-							int rows = rowCount;
-
-							// 2. 전체 페이지수를 계산한다.
-							int totalPages = (int) Math.ceil((double) rows / rowsPerPage);
-
-							// 3. 전체 페이지블록 갯수 계산하기
-							int totalBlocks = (int) Math.ceil((double) totalPages / pagesPerBlock);
-
-							// 4. 요청한 페이지가 어느 페이지 블록에 속하는지 계산하기
-							int currentBlock = (int) Math.ceil((double) pageNo / pagesPerBlock);
-
-							// 5. 요청한 페에지가 속한 블록의 시작페이지번호와 끝페이지번호 계산하기
-							int beginPageNo = (currentBlock - 1) * pagesPerBlock + 1;
-							int endPageNo = currentBlock * pagesPerBlock;
-							if (currentBlock == totalBlocks) {
-								endPageNo = totalPages;
-							}
-						%>
-						<li class="page-item "><a class="page-link"
-							href="orderlist.jsp?page=<%=pageNo - 1%>"> 이전 </a></li>
-						<%
-							for (int num = beginPageNo; num <= endPageNo; num++) {
-						%>
-						<li class="page-item active"><a class="page-link"
-							href="orderlist.jsp?page=<%=num%>"
-							style="<%=pageNo == num ? "background-color: #4caf50;" : ""%>">
-								<%=num%>
-						</a></li>
-						<%
-							}
-						%>
-						<li class="page-item"><a class="page-link"
-							href="orderlist.jsp?page=<%=pageNo + 1%>"> 다음 </a></li>
-					</ul>
+					<div class="row">
+						<div class="col-12 text-center">
+							<ul class="pagination justify-content-center"
+								style="margin: 20px 0">
+								<%
+									// 0. 한 화면당 표시할 페이지번호 갯수
+									int pagesPerBlock = 5;
+		
+									// 1. 전체 행의 갯수를 조회한다.
+									int rows = rowCount;
+		
+									// 2. 전체 페이지수를 계산한다.
+									int totalPages = (int) Math.ceil((double) rows / rowsPerPage);
+		
+									// 3. 전체 페이지블록 갯수 계산하기
+									int totalBlocks = (int) Math.ceil((double) totalPages / pagesPerBlock);
+		
+									// 4. 요청한 페이지가 어느 페이지 블록에 속하는지 계산하기
+									int currentBlock = (int) Math.ceil((double) pageNo / pagesPerBlock);
+		
+									// 5. 요청한 페에지가 속한 블록의 시작페이지번호와 끝페이지번호 계산하기
+									int beginPageNo = (currentBlock - 1) * pagesPerBlock + 1;
+									int endPageNo = currentBlock * pagesPerBlock;
+									if (currentBlock == totalBlocks) {
+										endPageNo = totalPages;
+									}
+								%>
+								<li class="page-item "><a class="page-link"
+									href="orderlist.jsp?page=<%=pageNo - 1%>"> 이전 </a></li>
+								<%
+									for (int num = beginPageNo; num <= endPageNo; num++) {
+								%>
+								<li class="page-item  <%=pageNo == num ? "active" : ""%>">
+									<a class="page-link" href="orderlist.jsp?page=<%=num%>"><%=num%>
+									</a>
+								</li>
+								<%
+									}
+								%>
+								<li class="page-item"><a class="page-link"
+									href="orderlist.jsp?page=<%=pageNo + 1%>"> 다음 </a></li>
+							</ul>
 					<!-- 페이지 처리 끝 -->
+						</div>
+					</div>
 				</div>
 
 			</div>
 		</div>
-
+		<div class="mb-3"></div>
 
 	</div>
 	<%@ include file="../common/footer.jsp"%>
@@ -335,17 +347,17 @@
 						rows += "<td>" + order.requestTime + "</td>";
 
 						if (0 == order.orderStatus) {
-							rows += "<td><button class='btn btn-primary'>접수완료</button></td>";
+							rows += "<td><button class='btn btn-primary btn-block'>접수완료</button></td>";
 						} else if (1 == order.orderStatus) {
-							rows += "<td><<button class='btn btn-primary'>요리중</button></td>";
+							rows += "<td><button class='btn btn-primary btn-block'>요리중</button></td>";
 						} else if (2 == order.orderStatus) {
-							rows += "<td><button class='btn btn-sucess'>배달중</button></td>";
+							rows += "<td><button class='btn btn-success btn-block'>배달중</button></td>";
 						} else if (3 == order.orderStatus) {
-							rows += "<td><button class='btn btn-success'>배달완료</button></td>";
+							rows += "<td><button class='btn btn-success btn-block'>배달완료</button></td>";
 						} else if (4 == order.orderStatus) {
-							rows += "<td><button class='btn btn-dark'>수령완료</button></td>";
+							rows += "<td><button class='btn btn-dark btn-block'>수령완료</button></td>";
 						} else if (5 == order.orderStatus) {
-							rows += "<td><button class='btn btn-danger'>주문취소</button></td>";
+							rows += "<td><button class='btn btn-danger btn-block'>주문취소</button></td>";
 						}
 
 						rows += "</tr>"

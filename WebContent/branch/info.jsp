@@ -41,15 +41,24 @@
 					<h4>가맹점</h4>
 				</div>
 				<div class="col-8">
-					<ul class="nav justify-content-end">
-						<li class="nav-item"><a class="nav-link active" href="#">홈</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link active" href="#">가맹점</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#">메인</a></li>
+					<ul class="nav justify-content-end small text-muted">
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/branch/info.jsp">가맹점</a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">메인</a>
+					  </li>
 					</ul>
+					
 				</div>
 			</div>
 			<div style="background-color: black; height: 2px;" class="mb-2"></div>
@@ -101,22 +110,16 @@
 							
 						%>
 							<div class="col-4">
-								<p>
-									<a class="" href="#">오늘 주문현황</a>
-								</p>
+								<p class="text-primary font-weight-bold">오늘 주문현황</p>
 								<p class="display-4 text-center font-weight-bold"><%=todayAllOrderCount %>건</p>
 							</div>
 							<div class="col-4"
 								style="border-left: 1px solid white; border-right: 1px solid white;">
-								<p>
-									<a class="" href="#">현재 주문현황</a>
-								</p>
+								<p class="text-primary font-weight-bold">현재 주문현황</p>
 								<p class="display-4 text-center font-weight-bold"><%=nowAllOrderCount %>건</p>
 							</div>
 							<div class="col-4">
-								<p>
-									<a class="" href="#">오늘 총 매출</a>
-								</p>
+								<p class="text-primary font-weight-bold">오늘 총 매출</p>
 								<p class="display-4 text-center font-weight-bold">
 									<%=NumberUtil.numberWithComma(todayTotalSales) %>원
 								</p>
@@ -132,7 +135,12 @@
 						
 						List<OrderDto> AllOrder = orderDao.getAllOrdersByBranchNo(branchNo);
 					%>
-					<table class="jumbotron table text-center">
+					<div class="row">
+						<div class="col-12">
+							<p class="	text-center font-weight-bold" style="border: 1px solid black; border-bottom: none;">주문리스트</p>
+						</div>
+					</div>
+					<table class="table text-center">
 						<colgroup>
 							<col width="10%">
 							<col width="20%">
@@ -141,9 +149,6 @@
 							<col width="15%">
 						</colgroup>
 						<thead class="thead thead-dark">
-							<tr>
-								<th colspan='7'>주문리스트</th>
-							</tr>
 							<tr>
 								<th>주문번호</th>
 								<th>매장이름</th>
@@ -174,7 +179,7 @@
 									} else {
 										menuName = order.getEtcName(); 
 									}
-									
+									/*
 									int os = order.getOrderStatus();
 									String statusStr = "";
 									if (os == 0) {
@@ -190,7 +195,7 @@
 									} else {
 										statusStr = "<button class='btn btn-danger'>주문취소</button>";
 									}
-									
+									*/
 									Date reqTime = order.getRequestTime();
 									String requestTime = reqTime.toString();
 									
@@ -209,7 +214,50 @@
 								<td><%=simpleMenu%></td>
 								<td><%=totalPrice %></td>
 								<td><%=requestTime %></td>
-								<td><%=statusStr %></td>
+								<%
+									if (order.getOrderStatus() == 0) {
+								%>
+								<td>
+									<a class="btn btn-primary text-white" role="button"
+									href="orderStatus.jsp?orderno=<%=orderNo %>&statusno=0">접수완료</a>
+								</td>
+								
+								<%
+									} else if (order.getOrderStatus() == 1) {
+								%>
+								<td>
+									<a class="btn btn-primary text-white" role="button"
+									href="orderStatus.jsp?orderno=<%=orderNo %>&statusno=1">요리중</a>
+								</td>
+								<%
+									} else if (order.getOrderStatus() == 2) {
+								%>
+								<td>
+									<a class="btn btn-success text-white" role="button"
+									href="orderStatus.jsp?orderno=<%=orderNo %>&statusno=2">배달중</a>
+								</td>
+								<%
+									} else if (order.getOrderStatus() == 3) {
+								%>
+								<td>
+									<a class="btn btn-success text-white" role="button"
+									href="orderStatus.jsp?orderno=<%=orderNo %>&statusno=3">배달완료</a>
+								</td>
+								<%
+									} else if (order.getOrderStatus() == 4) {
+								%>
+								<td>
+									<a class="btn btn-dark text-white" role="button">수령완료</a>
+								</td>
+								<%
+									} else {
+								%>
+								<td>
+									<a class="btn btn-danger text-white" role="button">주문취소</a>
+								</td>
+								<%
+									}
+								%>
 							</tr>
 							<%
 									}
@@ -234,6 +282,7 @@
 				</div>
 			</div>
 		</div>
+		<div class="mb-3"></div>
 	</div>
 	<%@ include file="../common/footer.jsp"%>
 </body>

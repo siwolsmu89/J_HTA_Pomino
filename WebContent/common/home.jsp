@@ -105,11 +105,12 @@
 						%>
 						
 							<div class="p-4 ">
-								<p>　</p>
-								<p class=""><strong><%=loginUserName%></strong> 님의 현재 등급</p> <!-- 사용자 이름 -->
-								<p class="text-center"><strong><%=user.getGradeName() == null ? "regular" : user.getGradeName()  %></strong><!-- 등급 --></p>
-								<a href="../user/detailform.jsp"><button type="button" class="btn btn-dark">혜택보기</button></a>
-								<a href="../user/orderlist.jsp"><button type="button" class="btn btn-dark">주문내역</button></a>
+								<div>
+									<p class=""><strong><%=loginUserName%></strong> 님의 현재 등급</p> <!-- 사용자 이름 -->
+									<p class="text-center"><strong><%=user.getGradeName() == null ? "regular" : user.getGradeName()  %></strong><!-- 등급 --></p>
+									<a href="../user/detailform.jsp"><button type="button" class="btn btn-dark">혜택보기</button></a>
+									<a href="../user/orderlist.jsp"><button type="button" class="btn btn-dark">주문내역</button></a>
+								</div>
 							</div>
 							
 	<!--					
@@ -139,11 +140,11 @@
 							</div>
 	-->
 							<div class="p-1"> 
-								<a href=""><img src="../resource/images/home/main_card4-1.gif" alt="혜택1"/></a>
+								<a><img src="../resource/images/home/main_card4-1.gif" alt="혜택1"/></a>
 							</div>
 							
 							<div class="p-1"> 
-								<a href=""><img src="../resource/images/home/main_card6.png" alt="혜택2"/></a>
+								<a><img src="../resource/images/home/main_card6.png" alt="혜택2"/></a>
 							</div>
 						<%	
 							// if 닫고
@@ -153,10 +154,10 @@
 							// 아래 3 div로 교체
 						%>
 							<div class="p-4">
-							<p>　</p>
-								<div class="text-secondary">도미노 피자의</div>
-								<div class="text-primary"><strong>특별한 매니아 혜택</strong>을</div>
-								<div class="text-secondary">더 알고싶다면?</div>
+								<div></div>
+								<div>포미노 피자의</div>
+								<div class="text-primary"><strong>특별한 매니아 혜택</strong></div>
+								<div>누려보세요!</div>
 								<div>　</div>
 								<a href="../user/loginform.jsp"><button type="button" class="btn btn-dark">로그인</button></a>
 							</div>
@@ -178,11 +179,11 @@
 
 <!-- 기능상 아직 부족해서 급한대로 이거 추가, 나중에 위에꺼 되면 아래 2개 삭제 -->
 							<div class="p-1"> 
-								<a href=""><img src="../resource/images/home/main_card4-1.gif" alt="혜택1"/></a>
+								<a><img src="../resource/images/home/main_card4-1.gif" alt="혜택1"/></a>
 							</div>
 							
 							<div class="p-1"> 
-								<a href=""><img src="../resource/images/home/main_card6.png" alt="혜택2"/></a>
+								<a><img src="../resource/images/home/main_card6.png" alt="혜택2"/></a>
 							</div>
 							
 						<%
@@ -193,11 +194,11 @@
 							<!-- 이 2개는 비로그인/로그인 공통 사용 -->
 							<!-- 도미노 혜택 (추가기능) -->
 							<div class="p-1"> 
-								<a href="#"><img src="../resource/images/home/main_card3.png" alt="혜택3"/></a>
+								<a><img src="../resource/images/home/main_card3.png" alt="혜택3"/></a>
 							</div>
 							<!-- 도미노 모멘트 (추가기능) -->
 							<div class="p-1"> 
-								<a href="#"><img src="../resource/images/home/main_card5.png" alt="혜택4"/></a>
+								<a><img src="../resource/images/home/main_card5.png" alt="혜택4"/></a>
 							</div>
 						</div>
 						
@@ -209,9 +210,9 @@
 			<div class="row">
 				<div class="col-12"> <!-- 해당 이벤트 페이지들로 이동 -->
 					<div class="d-flex justify-content-center">
-    					<div class="p-3 "><a href="#"><img src="../resource/images/home/20200601_8DXR9DCA.jpg" alt="이벤트1"/></a></div>
-					    <div class="p-3 "><a href="#"><img src="../resource/images/home/20200120_KZ0ikrD9.jpg" alt="이벤트2"/></a></div>
-    					<div class="p-3 "><a href="#"><img src="../resource/images/home/20200501_m4q2s7qu.jpg" alt="이벤트3"/></a></div>
+    					<div class="p-3 "><a><img src="../resource/images/home/20200601_8DXR9DCA.jpg" alt="이벤트1"/></a></div>
+					    <div class="p-3 "><a><img src="../resource/images/home/20200120_KZ0ikrD9.jpg" alt="이벤트2"/></a></div>
+    					<div class="p-3 "><a><img src="../resource/images/home/20200501_m4q2s7qu.jpg" alt="이벤트3"/></a></div>
 					</div>
 				</div>
 			</div>

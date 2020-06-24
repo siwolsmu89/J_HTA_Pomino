@@ -33,14 +33,23 @@
 				</div>
 
 				<div class="col-8">
-					<ul class="nav justify-content-end">
-						<li class="nav-item"><a class="nav-link active" href="#">홈</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link active" href="#">관리자</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#">가맹점</a></li>
+					<ul class="nav justify-content-end small text-muted">
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	<!--text-muted pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/manager/info.jsp">관리자</a><!--text-muted active pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">가맹점</a>
+					  	<!--text-dark font-weight-bold pr-1  -->
+					  </li>
 					</ul>
 				</div>
 			</div>
@@ -139,54 +148,62 @@
 								<th>주소(first)</th>
 								<th>주소(second)</th>
 								<th>전화번호</th>
-								<th colspan='2'><a class="btn btn-light"
+								<th colspan='2'><a class="btn-sm btn-block btn-light"
 									href="branchform.jsp" onclick="alertcompleteToInsertForm(event)">가맹점 등록</a></th>
 							</tr>
 						</thead>
 						<tbody id="branch-body">
 						<%
-							for(Branch branch : branchs) {
+							if(branchs.isEmpty()) {
 						%>
-							<tr data-toggle="modal" data-target="#<%=branch.getName() %>"
-								<%
-									if ("n".equalsIgnoreCase(branch.getQuitYn())){ 
-								%>
-									class="font-weight-bold"
-								<%
-									} else {
-								%>
-									class="text-muted"
-								<%
-									}
-								%>
-							>
-								<td><%=branch.getNo() %></td>
-								<td><%=branch.getName() %></td>
-								<td><%=branch.getAddrFirst() %></td>
-								<td><%=branch.getAddrSecond() %></td>
-								<td><%=branch.getTel() %></td>
-								<td>
-							<%
-									String yn = branch.getQuitYn();
-									if("N".equals(yn)) {
-							%>					
-									<a type="button"  class="btn btn-success text-light"
-									href="branchmodifyform.jsp?branchno=<%=branch.getNo()%>">
-										영업중
-									</a>
-							<%
-									} else {
-							%>
-									<a type="button"  class="btn btn-dark text-light"
-									href="branchmodifyform.jsp?branchno=<%=branch.getNo()%>">
-										영업종료
-									</a>
-							<%
-									}
-							%>
-								</td>
-							</tr>				
+								<tr class="font-weight-bold text-center">
+									<td>가맹점이 존재하지 않습니다.</td>
+								</tr>
 						<%
+							} else {
+								for(Branch branch : branchs) {
+						%>
+								<tr data-toggle="modal" data-target="#<%=branch.getName() %>"
+						<%
+										if ("n".equalsIgnoreCase(branch.getQuitYn())){ 
+						%>
+										class="font-weight-bold"
+						<%
+										} else {
+						%>
+										class="text-muted"
+						<%
+										}
+						%>
+								>
+									<td><%=branch.getNo() %></td>
+									<td><%=branch.getName() %></td>
+									<td><%=branch.getAddrFirst() %></td>
+									<td><%=branch.getAddrSecond() %></td>
+									<td><%=branch.getTel() %></td>
+									<td>
+						<%
+										String yn = branch.getQuitYn();
+										if("N".equals(yn)) {
+						%>					
+										<a type="button"  class="btn btn-success btn-block text-light"
+										href="branchmodifyform.jsp?branchno=<%=branch.getNo()%>">
+											영업중
+										</a>
+						<%
+										} else {
+						%>
+										<a type="button"  class="btn btn-dark btn-block text-light"
+										href="branchmodifyform.jsp?branchno=<%=branch.getNo()%>">
+											영업종료
+										</a>
+						<%
+										}
+						%>
+									</td>
+								</tr>				
+						<%
+								}
 							}
 						%>
 						</tbody>
@@ -222,9 +239,8 @@
 						<%
 							for (int num = beginPageNo; num <= endPageNo; num++) {
 						%>
-						<li class="page-item active"><a class="page-link"
-							href="branchlist.jsp?page=<%=num%>"
-							style="<%=pageNo == num ? "background-color: #4caf50;" : ""%>">
+						<li class="page-item <%=pageNo == num ? "active" : ""%>"><a class="page-link"
+							href="branchlist.jsp?page=<%=num%>">
 								<%=num%>
 						</a></li>
 						<%
@@ -239,6 +255,7 @@
 				</div>
 			</div>
 		</div>
+		<div class="mb-3"></div>
 	</div>
 	<%@ include file="../common/footer.jsp"%>
 	

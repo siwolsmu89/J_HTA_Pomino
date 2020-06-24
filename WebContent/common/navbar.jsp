@@ -155,7 +155,7 @@
 						<div class="collapse" id="navbarToggleExternalContent">
 							<div class="row">
 								<div class="col-12">
-									<div class="bg-light p-4 row">
+									<div class="bg-white p-4 row" style="border-top: 2px solid black;">
 										<div class="col-6">
 										      <h5 class="text-dark h4 font-weight-bold">도미노서비스</h5>
 										      <p class="pt-2 pl-5"><a href="/domino/user/detailform.jsp" class="text-muted">▶ 매니아혜택</a></p>

@@ -28,13 +28,24 @@
 				<h4>가맹점</h4>
 			</div>			
 			<div class="col-8">
-				<ul class="nav justify-content-end">
-				  <li class="nav-item"><a class="nav-link active" href="/domino/common/home.jsp">홈</a></li>
-				    <li class="nav-item"><a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">></a></li>
-				   <li class="nav-item"><a class="nav-link active" href="/domino/branch/info.jsp">가맹점</a></li>
-				    <li class="nav-item"><a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">></a></li>
-				    <li class="nav-item"><a class="nav-link disabled" href="#">메뉴</a></li>
+				<ul class="nav justify-content-end small text-muted">
+				  <li class="nav-item">
+				    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link text-muted active pr-1" href="/domino/branch/info.jsp">가맹점</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">주문내역</a>
+				  </li>
 				</ul>
+				
 			</div>
 		</div>
 	</div>
@@ -164,7 +175,7 @@
 								} else if (os == 1) {
 									statusStr = "<button class='btn btn-primary'>요리중</button>";
 								} else if (os == 2) {
-									statusStr = "<button class='btn btn-sucess'>배달중</button>";
+									statusStr = "<button class='btn btn-success'>배달중</button>";
 								} else if (os == 3) {
 									statusStr = "<button class='btn btn-success'>배달완료</button>";
 								} else if (os == 4) {
@@ -248,8 +259,8 @@
 									endPageNo = totalPages;
 								}
 						%>
-						<li class="page-item active">
-							<a class="page-link" href="orderlist.jsp?page=<%=i %>" style="<%=pageNo == i ? "background-color: #4caf50;" : "" %>">
+						<li class="page-item <%=pageNo == i ? "active" : ""%> ">
+							<a class="page-link" href="orderlist.jsp?page=<%=i %>">
 								<%=i %>
 							</a>
 						</li>
@@ -265,6 +276,7 @@
 			</div>
 		</div>
 	</div>
+	<div class="mb-3"></div>
 </div>	
 <%@ include file="../common/footer.jsp"%>
 

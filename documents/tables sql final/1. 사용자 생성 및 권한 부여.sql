@@ -1,0 +1,7 @@
+CREATE USER domino IDENTIFIED BY zxcv1234;
+
+GRANT CONNECT, RESOURCE TO domino;
+
+GRANT CREATE VIEW TO domino;
+
+commit;

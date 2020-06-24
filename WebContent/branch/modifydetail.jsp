@@ -18,7 +18,8 @@
 	BranchDao branchDao = new BranchDao();
 	
 	int branchNo = NumberUtil.stringToInt(mr.getParameter("branchno"));
-	String yn = request.getParameter("yn");
+	String yn = mr.getParameter("yn");
+	System.out.println(yn);
 	if(!yn.isEmpty()){
 		Branch branch = branchDao.getBranchByNo(branchNo);
 		if("y".equalsIgnoreCase(yn)){
@@ -28,7 +29,7 @@
 		}
 		
 		// 영업종료/시작만 조작하는 메소드/프로펄티 필요
-		branchDao.updateBranch(branch);
+		branchDao.updateBranchQuitYn(branch);
 
 	} else {
 		String addrDetail = mr.getParameter("addrdetail");

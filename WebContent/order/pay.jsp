@@ -13,7 +13,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	// userNo는 나중에 loginUserNo로 바뀔것
-	int userNo = 100;
+	int userNo = loginUserNo;
 
 	OrderDao orderDao = new OrderDao();
 	UserDao userDao = new UserDao();

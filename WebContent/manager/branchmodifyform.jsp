@@ -159,7 +159,7 @@
 									</div>
 								</div>
 								<div class="text-right">
-									<button type="submit" class="btn btn-primary">수정하기</button>
+									<button type="submit" class="btn btn-primary btn-block">수정하기</button>
 								</div>
 							</form>
 						</div>

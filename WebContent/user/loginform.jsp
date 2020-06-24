@@ -23,6 +23,7 @@
 <body>
 <%
 	String position = "signup";
+
 %>
 <%@ include file="../common/navbar.jsp"%>
 <div class="container">
