@@ -82,9 +82,16 @@
 			<div class="row">
 				<div class="col-12">
 					<!-- 회원가입시 표시할 오류내용 시작  -->
-					<div class="alert alert-danger">
-						<strong>오류!</strong> 중복된 데이터가 존재합니다.
-					</div>
+					<%
+						String error = request.getParameter("error");
+						if("dup".equalsIgnoreCase(error)){
+					%>
+						<div class="alert alert-danger">
+							<strong>오류!</strong> 중복된 데이터가 존재합니다.
+						</div>
+					<%
+						}
+					%>
 					<!-- 도우등록시 표시할 오류내용 끝  -->
 					<!-- 도우등록폼을 포함하고 있는 card 컴포넌트 시작 -->
 					<div class="card ">

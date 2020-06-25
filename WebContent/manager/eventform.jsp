@@ -111,7 +111,7 @@
 							</div>
 							<div class="form-group">
 								<label>할인율</label>
-								<input type="number" step="0.01" class="form-control" name="discountrate" placeholder="15(default : 0)"/>
+								<input type="number" step="0.01" class="form-control" name="discountrate" placeholder="20% (입력 예 : 0.2)"/>
 							</div>
 							<%
 								PizzaDao pizzaDao = new PizzaDao();

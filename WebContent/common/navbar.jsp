@@ -7,7 +7,7 @@
 	var link = document.createElement("link");
 	link.type = "image/x-icon";
 	link.rel = "shortcut icon";
-	link.href = "/domino/resource/images/logo/nomido.png";
+	link.href = "/domino/resource/images/logo/nomido2.png";
 	document.getElementsByTagName('head')[0].appendChild(link);
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -44,14 +44,18 @@
 					<%
 						if("Yes".equals(loginYn)) {
 					%>
-						<div class="col-4"><a class="btn btn-sm <%="login".equals(position) ? "font-weight-bold" : ""%>" href="/domino/user/logout.jsp">로그아웃</a></div>
-						<div class="col-4"><a class="btn btn-sm <%="login".equals(position) ? "font-weight-bold" : ""%>" href="/domino/user/detailform.jsp">나의정보</a></div>
-						<div class="col-4"><a class="btn btn-sm <%="login".equals(position) ? "font-weight-bold" : ""%>" href="/domino/order/cart.jsp">장바구니</a></div>
+						<div class="col-12 text-right mt-2">
+							<a class="btn btn-sm <%="login".equals(position) ? "font-weight-bold" : ""%>" href="/domino/user/logout.jsp">로그아웃</a>
+							<a class="btn btn-sm <%="login".equals(position) ? "font-weight-bold" : ""%>" href="/domino/user/detailform.jsp">나의정보</a>
+							<a class="btn btn-sm <%="login".equals(position) ? "font-weight-bold" : ""%>" href="/domino/order/cart.jsp">장바구니</a>
+						</div>
 					<%
 						} else {
 					%>
-						<div class="col-6"><a class="btn btn-sm <%="signup".equals(position) ? "font-weight-bold" : ""%>" href="/domino/user/loginform.jsp">로그인</a></div>
-						<div class="col-6"><a class="btn btn-sm <%="signup".equals(position) ? "font-weight-bold" : ""%>" href="/domino/user/signupform.jsp">회원가입</a></div>
+						<div class="col-12 text-right mt-2">
+							<a class="btn btn-sm <%="signup".equals(position) ? "font-weight-bold" : ""%>" href="/domino/user/loginform.jsp">로그인</a>
+							<a class="btn btn-sm <%="signup".equals(position) ? "font-weight-bold" : ""%>" href="/domino/user/signupform.jsp">회원가입</a>
+						</div>
 						
 					<%
 						}
@@ -143,7 +147,7 @@
 						</div>
 						
 						<div class="col-2"><!-- 더보기 -->
-							  <nav class="navbar navbar-light bg-white">
+							  <nav class="navbar navbar-light bg-white text-right" style="padding-left: 100px;">
 							    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
 							      <span class="navbar-toggler-icon"></span>
 							    </button>

@@ -24,7 +24,7 @@
 	UserDao userDao = new UserDao();
 	User user = userDao.getUserByNo(userNo);
 	
-	int orderNo;
+	int orderNo=0;
 	if ("quick".equals(request.getParameter("type"))) {
 		orderNo = user.getQuickOrderNo();
 	} else {
@@ -85,17 +85,13 @@
 	orderDao.insertReorderCart(orderNo);
 	cart = orderDao.getCartByUserNo(userNo);
 
-	LocationDao locationDao = new LocationDao();
-	Location prevLocation = locationDao.getLocationByNo(cart.getLocationNo());
-	if (prevLocation == null) {
-		if (session.getAttribute("savedLocationNo") == null) {
-			response.sendRedirect("selectlocation.jsp");
-			return;
-		} else {
-			cart.setLocationNo((int) session.getAttribute("savedLocationNo"));
-		}
+	if (session.getAttribute("savedLocationNo") == null) {
+		response.sendRedirect("selectlocation.jsp");
+		return;
+	} else {
+		cart.setLocationNo((int) session.getAttribute("savedLocationNo"));
 	}
-	
+
 	int cartNo = cart.getNo();
 	
 	pizzaDetailDao.insertReorderCart(orderNo, cartNo);

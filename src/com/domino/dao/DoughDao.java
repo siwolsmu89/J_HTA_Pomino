@@ -139,4 +139,23 @@ public class DoughDao {
 		pstmt.close();
 		connection.close();
 	}
+	
+	public Dough getDoughByName(String doughName) throws SQLException {
+		Dough dough = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("dough.getDoughByName"));
+		pstmt.setString(1, doughName);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			dough = resultSetToDough(rs);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return dough;
+	}
 }

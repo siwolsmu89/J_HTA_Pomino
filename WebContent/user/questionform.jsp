@@ -300,9 +300,12 @@
 										</div>
 									</div>
 								</div>
-								<div class="modal-footer">
-									<button type="reset" class="btn btn-secondary">다시 작성</button>
-									<button type="submit" class="btn btn-primary" onclick="alertcomplete(event)">질문 등록</button>
+								
+								<div class="modal-footer row">
+									<div class="col-12">
+										<button type="reset" class="btn btn-secondary btn-block">다시 작성</button>
+										<button type="submit" class="btn btn-primary btn-block" onclick="alertcomplete(event)">질문 등록</button>
+									</div>
 								</div>
 							</form>
 						</div>

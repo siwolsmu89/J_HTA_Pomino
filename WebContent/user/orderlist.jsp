@@ -56,7 +56,6 @@
 				    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">주문내역</a>
 				  </li>
 				</ul>
-				
 			</div>
 		</div>
 		<div style="background-color: black; height: 2px;" class="mb-2"></div>

@@ -29,14 +29,23 @@
 				</div>
 
 				<div class="col-8">
-					<ul class="nav justify-content-end">
-						<li class="nav-item"><a class="nav-link active" href="#">홈</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link active" href="#">관리자</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#">가맹점</a></li>
+					<ul class="nav justify-content-end small text-muted">
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	<!--text-muted pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/manager/info.jsp">관리자</a><!--text-muted active pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">가맹점</a>
+					  	<!--text-dark font-weight-bold pr-1  -->
+					  </li>
 					</ul>
 				</div>
 			</div>
@@ -62,7 +71,8 @@
 								class="nav-link text-muted" href="qnaboard.jsp">1:1문의</a></li>
 							<li
 								class="nav-item  d-flex justify-content-between align-itens-center small"><a
-								class="nav-link text-dark font-weight-bold" href="branchlist.jsp">가맹점</a></li>
+								class="nav-link text-dark font-weight-bold"
+								href="branchlist.jsp">가맹점</a></li>
 						</ul>
 					</div>
 				</div>

@@ -139,6 +139,25 @@ public class SideDao {
 		pstmt.close();
 		connection.close();
 	}
+	
+	public Side getSideByName(String sideName) throws SQLException {
+		Side side = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("side.getSideByName"));
+		pstmt.setString(1, sideName);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			side = resultSetToSide(rs);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+				
+		return side;
+	}
 }
 
 

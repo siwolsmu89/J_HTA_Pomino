@@ -19,5 +19,7 @@
 	
 	userDao.deleteUser(user);
 	session.invalidate();
-	response.sendRedirect("/domino/common/home.jsp");
+	out.println("<script>alert('그동안 포미노를 사랑해주셔서 감사합니다 더 좋은 서비스로 보답하는 기업이 되도록 노력하겠습니다'); location.href='/domino/common/home.jsp'; </script>");
+	out.flush();
+	// response.sendRedirect("/domino/common/home.jsp");
 %> 

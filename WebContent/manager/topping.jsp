@@ -22,7 +22,13 @@
 	String imageSrc = mr.getFilesystemName("upfile");
 	int category = NumberUtil.stringToInt("category");
 	int price = NumberUtil.stringToInt(mr.getParameter("price"));
-
+	// 중복체크
+	ToppingDao toppingDao = new ToppingDao();
+	Topping toppingDup = toppingDao.getToppingByName(name);
+	if(toppingDup != null) {
+		response.sendRedirect("/domino/manager/toppingform.jsp?error=dup");
+	}
+	
 	// 토핑객체에 값 넣기
 	Topping topping = new Topping();
 	topping.setName(name);
@@ -31,7 +37,6 @@
 	topping.setPrice(price);
 
 	// 토핑 생성
-	ToppingDao toppingDao = new ToppingDao();
 	toppingDao.insertTopping(topping);
 
 	response.sendRedirect("/domino/manager/menulist.jsp");

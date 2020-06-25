@@ -125,10 +125,18 @@
     							<input type="email" class="form-control" name="useremail" value=<%=user.getEmail() %>>
 							</div>
                 
-							<div class="text-center">
-								<button type="reset" class="btn btn-secondary btn-lg">초기화</button>
-								<button type="submit" class="btn btn-primary btn-lg" onclick="alertcomplete(event)">수정하기</button>
-								<div class="small text-muted m-2">도미노피자를 더 이상 이용하지 않는다면 <a href="deleteform.jsp" class="text-dark font-weight-bold">회원탈퇴 바로가기 ></a></div>
+							<div class="text-center row">
+								<div class="col-6">
+									<button type="reset" class="btn btn-secondary btn-block">초기화</button>
+								</div>
+								<div class="col-6">
+									<button type="submit" class="btn btn-primary btn-block" onclick="alertcomplete(event)">수정하기</button>								
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12 text-center">
+									<div class="small text-muted m-2">도미노피자를 더 이상 이용하지 않는다면 <a href="deleteform.jsp" class="text-dark font-weight-bold">회원탈퇴 바로가기 ></a></div>															
+								</div>
 							</div>
 						</form>
 					</div>

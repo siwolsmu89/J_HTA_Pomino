@@ -22,6 +22,13 @@
 	String imageSrc = mr.getFilesystemName("upfile");
 	int price = NumberUtil.stringToInt(mr.getParameter("price"));
 	
+	// 중복체크	
+	DoughDao doughDao = new DoughDao();
+	Dough doughDup = doughDao.getDoughByName(name);
+	if(doughDup != null){
+		response.sendRedirect("/domino/manager/doughform.jsp?error=dup");
+	}
+	
 	// 도우객체에 값 넣기
 	Dough dough = new Dough();
 	dough.setName(name);
@@ -29,7 +36,6 @@
 	dough.setPrice(price);
 	
 	// 도우 생성
-	DoughDao doughDao = new DoughDao();
 	doughDao.insertDough(dough);
 	
 	response.sendRedirect("/domino/manager/menulist.jsp");

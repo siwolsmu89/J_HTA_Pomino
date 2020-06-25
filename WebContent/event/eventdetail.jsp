@@ -1,3 +1,5 @@
+<%@page import="com.domino.vo.Pizza"%>
+<%@page import="com.domino.dao.PizzaDao"%>
 <%@page import="com.domino.util.NumberUtil"%>
 <%@page import="com.domino.vo.Event"%>
 <%@page import="java.util.List"%>
@@ -69,6 +71,8 @@
 			int eventNo = NumberUtil.stringToInt(request.getParameter("eventno"));
 			EventDao eventDao = new EventDao();
 			Event event = eventDao.getEventByNo(eventNo);
+			PizzaDao pizzaDao = new PizzaDao();
+			Pizza pizza = pizzaDao.getPizzaByNo(event.getPizzaNo());
 		%>
 		<div class="row">
 			<div class="col-12">
@@ -77,8 +81,8 @@
 					<div class="row">
 						<div class="col-12">
 						  <div class="card-body">
-						    <h5 class="card-title font-weight-bold">시리얼 칠리크랩 피자 20% 할인 이벤트</h5>
-						    <p class="card-text"><small class="text-muted">2020-06-03 ~ 2020-07-02</small></p>
+						    <h5 class="card-title font-weight-bold"><strong style="color: red; font-size: 25px;"><%=pizza.getName() %></strong> 피자 - <strong style="color: red; font-size: 25px;"><%=event.getDiscountRate() * 100 %>%</strong> 할인 이벤트</h5>
+						    <p class="card-text"><small class="text-muted">이벤트 기간 : <%=event.getStartDate() %> ~ <%=event.getEndDate() %></small></p>
 						  </div>
 						</div>
 					</div>

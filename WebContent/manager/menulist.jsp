@@ -187,12 +187,11 @@
 												<td>이벤트 없음</td>
 									<%
 												} else {
-									%>		
+									%>	
 												<td><%=event.getName() %></td>
 									<%
 												}
 									%>
-									
 										<td><a class="btn btn-primary btn-block text-light"
 											href="pizzamodifyform.jsp?yn=n&pizzano=<%=pizza.getNo()%>"
 											onclick="alertcompleteToModifyForm(event)">수정</a></td>

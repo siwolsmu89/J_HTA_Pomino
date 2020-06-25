@@ -139,4 +139,23 @@ public class EtcDao {
 		pstmt.close();
 		connection.close();
 	}
+	
+	public Etc getEtcByName(String etcName) throws SQLException {
+		Etc etc = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("etc.getEtcByName"));
+		pstmt.setString(1, etcName);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			etc = resultSetToEtc(rs);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return etc;
+	}
 }

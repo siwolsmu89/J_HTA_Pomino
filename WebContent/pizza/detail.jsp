@@ -511,7 +511,7 @@
 							</div> <!-- 보라2 끝 -->
 						</div> <!-- 하늘8 끝 -->
 					</form>
-						
+					
 					<div class="fixed-bottom row bg-light"> <!-- 하단 가격 고정 -->
 						<div class="col-12">
 							<form method="POST" action="register.jsp">
@@ -539,7 +539,7 @@
 									
 									<!-- 피자는 보내진 거 하나만이니까 no -->
 									<tbody>
-										<tr id="pizza-receive-info %>" class="text-center">
+										<tr id="pizza-receive-info" class="text-center">
 											<td class="text">
 												<a><small id="pizza-receive-name" data-pizzano="<%=pizza.getNo() %>"><%=pizza.getName()%></small> <small>x</small> <small id="pizza-receive-count">1</small></a>
 												<br/>

@@ -21,7 +21,13 @@
 	String name = mr.getParameter("name");
 	String imageSrc = mr.getFilesystemName("upfile");
 	int price = NumberUtil.stringToInt(mr.getParameter("price"));
-
+	// 중복체크
+	EtcDao etcDao = new EtcDao();
+	Etc etcDup = etcDao.getEtcByName(name);
+	if(etcDup != null){
+		response.sendRedirect("/domino/manager/etcmenuform.jsp?error=dup");
+	}
+	
 	// 사이드객체에 값 넣기
 	Etc etc = new Etc();
 	etc.setName(name);
@@ -29,7 +35,6 @@
 	etc.setPrice(price);
 
 	// 사이드 생성
-	EtcDao etcDao = new EtcDao();
 	etcDao.insertEtc(etc);
 
 	response.sendRedirect("/domino/manager/menulist.jsp");

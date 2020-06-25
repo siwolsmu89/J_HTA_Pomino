@@ -91,7 +91,7 @@
 				<div class="row">
 					
 					<div class="col-12 ">
-						<div class="d-flex justify-content-center " style="padding: 30px 0; background: #f6f6f6;">
+						<div class="d-flex justify-content-center " style="padding: 15px 0; background: #f6f6f6;">
 						
 						<%
 							// if문으로 로그인 확인

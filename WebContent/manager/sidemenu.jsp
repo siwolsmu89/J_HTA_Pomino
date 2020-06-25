@@ -21,6 +21,13 @@
 	String imageSrc = mr.getFilesystemName("upfile");
 	int price = NumberUtil.stringToInt(mr.getParameter("price"));
 	
+	//중복체크	
+	SideDao sideDao = new SideDao();
+	Side sideDup = sideDao.getSideByName(name);
+	if(sideDup != null){
+		response.sendRedirect("/domino/manager/sidemenuform.jsp?error=dup");
+	}
+	
 	// 사이드객체에 값 넣기
 	Side side = new Side();
 	side.setName(name);
@@ -28,7 +35,6 @@
 	side.setPrice(price);
 	
 	// 사이드 생성
-	SideDao sideDao = new SideDao();
 	sideDao.insertSide(side);
 	
 	response.sendRedirect("/domino/manager/menulist.jsp");

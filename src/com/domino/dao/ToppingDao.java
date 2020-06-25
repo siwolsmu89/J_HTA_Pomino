@@ -200,4 +200,22 @@ public class ToppingDao {
 		return toppings;
 	}	
 	
+	public Topping getToppingByName(String toppingName) throws SQLException {
+		Topping topping = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("topping.getToppingByName"));
+		pstmt.setString(1, toppingName);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			topping = resultSetToTopping(rs);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return topping;
+	}
 }

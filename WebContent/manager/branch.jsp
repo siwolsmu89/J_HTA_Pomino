@@ -27,7 +27,14 @@
 	String closeTime = mr.getParameter("closetime");
 	String comment = mr.getParameter("comment");
 	String imageSrc = mr.getFilesystemName("upfile");		
-
+	
+	// 중복체크
+	BranchDao branchDao = new BranchDao();
+	Branch branchDup = branchDao.getBranchByName(name);
+	if(branchDup != null){
+		response.sendRedirect("/domino/manager/branchform.jsp?error=dup");
+	}
+	
 	// 가맹점 객체에 값 넣기
 	Branch branch = new Branch();
 	branch.setName(name);
@@ -41,7 +48,6 @@
 	branch.setImageSrc(imageSrc);	
 
 	// 가맹점 생성
-	BranchDao branchDao = new BranchDao();
 	branchDao.insertBranch(branch);
 	
 	// 가맹점 이름으로 가맹점번호 불러오기
