@@ -114,15 +114,21 @@
 									<textarea class="form-control" rows="5" name="comment"></textarea>
 								</div>
 								<!-- 사진등록 -->
-								<div class="form-group">
-									<label>매장사진</label>
-									<div>
-										<input type="file" name="upfile" />
+								<div class="form-group input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text">업로드</span>
+									</div>
+									<div class="form-group custom-file">
+										<input type="file" class="custom-file-input" name="upfile"
+											aria-describedby="inputGroupFileAddon01"> <label
+											class="custom-file-label" for="inputGroupFile01">
+											매장사진
+										</label>
 									</div>
 								</div>
 
 								<div class="text-right">
-									<button type="submit" class="btn btn-primary">등록하기</button>
+									<button type="submit" class="btn btn-primary btn-block">등록하기</button>
 								</div>
 							</form>
 							<!-- 회원가입 입력 폼 끝  -->

@@ -157,7 +157,7 @@
 							if(branchs.isEmpty()) {
 						%>
 								<tr class="font-weight-bold text-center">
-									<td>가맹점이 존재하지 않습니다.</td>
+									<td colspan='6'>가맹점이 존재하지 않습니다.</td>
 								</tr>
 						<%
 							} else {
@@ -230,24 +230,25 @@
 							// 5. 요청한 페에지가 속한 블록의 시작페이지번호와 끝페이지번호 계산하기
 							int beginPageNo = (currentBlock - 1) * pagesPerBlock + 1;
 							int endPageNo = currentBlock * pagesPerBlock;
-							if (currentBlock == totalBlocks) {
+							if(pageNo > 1) {
+					%>
+						<li class="page-item "><a class="page-link" href="orderlist.jsp?page=<%=pageNo - 1%>">이전</a></li>
+					<%
+						}
+						for(int num=beginPageNo; num <=endPageNo; num++) {
+							if (endPageNo > totalPages) {
 								endPageNo = totalPages;
 							}
-						%>
-						<li class="page-item "><a class="page-link"
-							href="branchlist.jsp?page=<%=pageNo - 1%>"> 이전 </a></li>
-						<%
-							for (int num = beginPageNo; num <= endPageNo; num++) {
-						%>
-						<li class="page-item <%=pageNo == num ? "active" : ""%>"><a class="page-link"
-							href="branchlist.jsp?page=<%=num%>">
-								<%=num%>
-						</a></li>
-						<%
-							}
-						%>
-						<li class="page-item"><a class="page-link"
-							href="branchlist.jsp?page=<%=pageNo + 1%>"> 다음 </a></li>
+					%>
+						<li class="page-item <%=pageNo == num ? "active" : ""%> "><a class="page-link" href="orderlist.jsp?page=<%=num%>"><%=num%></a></li>
+					<%
+						}
+						if(pageNo < totalPages) {
+					%>
+						<li class="page-item"><a class="page-link" href="orderlist.jsp?page=<%=pageNo + 1%>">다음</a></li>
+					<%
+						}
+					%>
 					</ul>
 					<!-- 페이지 처리 끝 -->
 
@@ -283,6 +284,7 @@
 					
 					for(var i=0; i<branchs.length; i++) {
 						var branch = branchs[i];
+						
 						
 						
 						rows += "";

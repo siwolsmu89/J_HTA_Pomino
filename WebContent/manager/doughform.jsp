@@ -29,14 +29,23 @@
 				</div>
 
 				<div class="col-8">
-					<ul class="nav justify-content-end">
-						<li class="nav-item"><a class="nav-link active" href="#">홈</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link active" href="#">관리자</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#">메뉴</a></li>
+					<ul class="nav justify-content-end small text-muted">
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	<!--text-muted pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/manager/info.jsp">관리자</a><!--text-muted active pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">메뉴</a>
+					  	<!--text-dark font-weight-bold pr-1  -->
+					  </li>
 					</ul>
 				</div>
 			</div>
@@ -94,15 +103,21 @@
 										name="price" placeholder="2000(default : 0)" />
 								</div>
 								<!-- 사진등록 -->
-								<div class="form-group">
-									<label>첨부파일</label>
-									<div>
-										<input type="file" name="upfile" />
+								<div class="form-group input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text">업로드</span>
+									</div>
+									<div class="form-group custom-file">
+										<input type="file" class="custom-file-input" name="upfile"
+											aria-describedby="inputGroupFileAddon01"> <label
+											class="custom-file-label" for="inputGroupFile01">
+											도우사진
+										</label>
 									</div>
 								</div>
 
 								<div class="text-right">
-									<button type="submit" class="btn btn-primary">등록하기</button>
+									<button type="submit" class="btn btn-primary btn-block">등록하기</button>
 								</div>
 							</form>
 							<!-- 도우등록 폼 끝  -->

@@ -1,3 +1,5 @@
+<%@page import="com.domino.vo.Event"%>
+<%@page import="com.domino.dao.EventDao"%>
 <%@page import="com.domino.util.NumberUtil"%>
 <%@page import="com.domino.vo.Etc"%>
 <%@page import="com.domino.dao.EtcDao"%>
@@ -107,12 +109,13 @@
 			%>
 			<div class="row">
 				<div class="col-12">
-					<form>
-						<div class="row">
-							<div class="col-6">
+					<div class="row">
+						<div class="col-6">
+							<form>
 								<div class="input-group mb-3">
 									<div class="input-group-prepend">
-										<select id="searchOption" class="form-control" name="searchOption" onchange="changeMenuList()">
+										<select id="searchOption" class="form-control"
+											name="searchOption" onchange="changeMenuList()">
 											<option value="pizza-menu">피자메뉴</option>
 											<option value="side-menu">사이드메뉴</option>
 											<option value="dough-menu">도우메뉴</option>
@@ -121,445 +124,459 @@
 										</select>
 									</div>
 								</div>
-							</div>
+							</form>
 						</div>
-					</form>
-					
-<!-- 피자 메뉴 -->
-					<table id="pizza-menu" class="table text-center">
-						<colgroup>
-							<col width="10%">
-							<col width="10%">
-							<col width="20%">
-							<col width="10%">
-							<col width="10%">
-							<col width="20%">
-							<col width="10%">
-							<col width="10%">
-						</colgroup>
-						<thead class="thead-dark">
-							<tr>
-								<th>번호</th>
-								<th>이름</th>
-								<th>L가격</th>
-								<th>M가격</th>
-								<th>단종여부</th>
-								<th>이벤트</th>
-								<th colspan='2'><a class="btn-sm btn-block btn-light"
-									href="pizzaform.jsp" onclick="alertcompleteToInsertForm(event)">신규 피자 등록</a></th>
+					</div>
 
-							</tr>
-						</thead>
-						<tbody>
-						<%
-							PizzaDao pizzaDao = new PizzaDao();
-							List<Pizza> pizzas = pizzaDao.getAllPizza(beginNumber, endNumber);
-						
-							if(pizzas.isEmpty()){
-						%>
-								<tr class="font-weight-bold text-center">
-									<td>피자메뉴가 존재하지 않습니다.</td>
-								</tr>
-						<%	 
-							} else {
-							
-								for (Pizza pizza : pizzas) {
-									if ("n".equalsIgnoreCase(pizza.getDisableYn())) {
-						%>						
-								<tr class="font-weight-bold">
-									<td><%=pizza.getNo() %></td>
-									<td><%=pizza.getName() %></td>
-									<td><%=pizza.getLprice() %>원</td>
-									<td><%=pizza.getMprice() %>원</td>
-									<td><%=("n".equalsIgnoreCase(pizza.getDisableYn())) ? "아니오":"예" %></td>
-									<td>여름방학시즌(피자테이블 + 이벤트테이블 조인)</td>
-									<td><a class="btn btn-primary btn-block text-light"
-										href="pizzamodifyform.jsp?yn=n&pizzano=<%=pizza.getNo() %>" 
-										onclick="alertcompleteToModifyForm(event)">수정</a></td>
-									<td>
-										<form method="post" action="pizzamodify.jsp" enctype="multipart/form-data">
-											<input type="hidden" name="yn" value="y">
-											<input type="hidden" name="pizzano" value=<%=pizza.getNo() %>>
-											<button class="btn btn-secondary btn-block text-light" type="submit"
-															onclick="alertcompleteToModify(event)">
-												비활성
-											</button>
-										</form>
-									</td>
-								</tr>
-						<%
-									} else {
-						%>	
-								<tr class="text-muted">
-									<td ><%=pizza.getNo() %></td>
-									<td ><%=pizza.getName() %></td>
-									<td ><%=pizza.getLprice() %>원</td>
-									<td ><%=pizza.getMprice() %>원</td>
-									<td ><%=("n".equalsIgnoreCase(pizza.getDisableYn())) ? "아니오":"예" %></td>
-									<td>-</td>
-									<td><a class="btn btn-primary btn-block text-light"
-										href="pizzamodifyform.jsp?yn=n&pizzano=<%=pizza.getNo() %>"
-										onclick="alertcompleteToModifyForm(event)">수정</a></td>
-									<td>
-										<form method="post" action="pizzamodify.jsp" enctype="multipart/form-data">
-											<input type="hidden" name="yn" value="yn">
-											<input type="hidden" name="pizzano" value=<%=pizza.getNo() %>>
-											<button class="btn btn-danger btn-block text-light" type="submit"
-															onclick="alertcompleteToModify(event)">
-												활성
-											</button>
-										</form>
-									</td>
-								</tr>		
-						<% 		
-									}
-								}
-							}
-						%>
-						</tbody>
-					</table>										
-<!-- 사이드 메뉴 -->
-					<table id="side-menu" class=" table text-center">
-						<colgroup>
-							<col width="20%">
-							<col width="20%">
-							<col width="20%">
-							<col width="20%">
-							<col width="10%">
-							<col width="10%">
-						</colgroup>
-						<thead class="thead-dark">
-							<tr>
-								<th>번호</th>
-								<th>이름</th>
-								<th>가격</th>
-								<th>단종여부</th>
-								<th colspan='2'><a class="btn-sm btn-block btn-light"
-									href="sidemenuform.jsp">신규 사이드 등록</a></th>
-							</tr>
-						</thead>
-						<tbody>
-						<%
-							SideDao sideDao = new SideDao();
-							List<Side> sides = sideDao.getAllSide(beginNumber, endNumber);
-							
-							if(sides.isEmpty()) {
-						%>
-								<tr class="font-weight-bold text-center">
-									<td>사이드메뉴가 존재하지 않습니다.</td>
-								</tr>
-						<%
-							} else {
-								for (Side side : sides) {
-									if ("n".equalsIgnoreCase(side.getDisableYn())) {
-						%>
-								<tr class="font-weight-bold">
-									<td><%=side.getNo() %></td>
-									<td><%=side.getName() %></td>
-									<td><%=side.getPrice() %></td>
-									<td><%=("n".equalsIgnoreCase(side.getDisableYn())) ? "아니오":"예" %></td>
-									<td><a class="btn btn-primary btn-block text-light"
-										href="sidemenumodifyform.jsp?yn=n&sideno=<%=side.getNo() %>"
-										onclick="alertcompleteToModifyForm(event)">수정</a>
-									</td>
-									<td>
-										<form method="post" action="sidemenumodify.jsp" enctype="multipart/form-data">
-											<input type="hidden" name="yn" value="y">
-											<input type="hidden" name="sideno" value=<%=side.getNo() %>>
-											<button class="btn btn-secondary btn-block text-light" type="submit"
-											onclick="alertcompleteToModify(event)">
-												비활성
-											</button>
-										</form>
-									</td>
-								</tr>							
-						<%
-									} else {
-						%>
-								<tr class="text-muted">
-									<td><%=side.getNo() %></td>
-									<td><%=side.getName() %></td>
-									<td><%=side.getPrice() %></td>
-									<td><%=("n".equalsIgnoreCase(side.getDisableYn())) ? "아니오":"예" %></td>
-									<td><a class="btn btn-primary btn-block text-light"
-										href="sidemenumodifyform.jsp?yn=n&sideno=<%=side.getNo() %>"
-										onclick="alertcompleteToModifyForm(event)">수정</a></td>
-									<td>
-										<form method="post" action="sidemenumodify.jsp" enctype="multipart/form-data">
-											<input type="hidden" name="yn" value="yn">
-											<input type="hidden" name="sideno" value=<%=side.getNo() %>>
-											<button class="btn btn-danger btn-block text-light" type="submit"
-											onclick="alertcompleteToModify(event)">
-												활성
-											</button>
-										</form>
-									</td>
-								</tr>
-						<%
-									}
-								}
-							}
-						%>	
-							
-						</tbody>
-					</table>
-<!-- 도우 메뉴 -->
-					<table id="dough-menu" class=" table text-center">
-						<colgroup>
-							<col width="20%">
-							<col width="20%">
-							<col width="20%">
-							<col width="20%">
-							<col width="10%">
-							<col width="10%">
-						</colgroup>
-						<thead class="thead-dark">
-							<tr>
-								<th>번호</th>
-								<th>이름</th>
-								<th>가격</th>
-								<th>단종여부</th>
-								<th colspan='2'><a class="btn-sm btn-block btn-light"
-									href="doughform.jsp">신규 도우 등록</a></th>
-							</tr>
-						</thead>
-						<tbody>
-						<%
-							DoughDao doughDao = new DoughDao();
-							List<Dough> doughs = doughDao.getAllDough(beginNumber, endNumber);
-							
-							if(doughs.isEmpty()) {
-						%>
-								<tr class="font-weight-bold text-center">
-									<td>도우메뉴가 존재하지 않습니다.</td>
-								</tr>
-						<%
-							} else {
-								for (Dough dough : doughs) {
-									if ("N".equalsIgnoreCase(dough.getDisableYn())) {
-						%>
-								<tr class="font-weight-bold">
-									<td><%=dough.getNo() %></td>
-									<td><%=dough.getName() %></td>
-									<td><%=dough.getPrice() %></td>
-									<td><%=("N".equalsIgnoreCase(dough.getDisableYn())) ? "아니오":"예" %></td>								
-									<td><a class="btn btn-primary btn-block text-light"
-										href="doughmodifyform.jsp?yn=n&doughno=<%=dough.getNo() %>"
-										onclick="alertcompleteToModifyForm(event)">수정</a></td>
-									<td>
-										<form method="post" action="doughmodify.jsp" enctype="multipart/form-data">
-											<input type="hidden" name="yn" value="y">
-											<input type="hidden" name="doughno" value=<%=dough.getNo() %>>
-											<button class="btn btn-secondary btn-block text-light" type="submit"
-											onclick="alertcompleteToModify(event)">
-												비활성
-											</button>
-										</form>
-									</td>
-								</tr>						
-						<%
-									} else {
-						%>
-								<tr class="text-muted">
-									<td><%=dough.getNo() %></td>
-									<td><%=dough.getName() %></td>
-									<td><%=dough.getPrice() %></td>
-									<td><%=("N".equalsIgnoreCase(dough.getDisableYn())) ? "아니오":"예" %></td>								
-									<td><a class="btn btn-primary btn-block text-light"
-										href="doughmodifyform.jsp?yn=n&doughno=<%=dough.getNo() %>"
-										onclick="alertcompleteToModifyForm(event)">수정</a></td>
-									<td>
-										<form method="post" action="doughmodify.jsp" enctype="multipart/form-data">
-											<input type="hidden" name="yn" value="yn">
-											<input type="hidden" name="doughno" value=<%=dough.getNo() %>>
-											<button class="btn btn-danger btn-block text-light" type="submit"
-											onclick="alertcompleteToModify(event)">
-												활성
-											</button>
-										</form>
-									</td>
-								</tr>
-						<%
-									}
-								}
-							}
-						%>
-						</tbody>
-					</table>
-<!-- 토핑 메뉴 -->
-					<table id="topping-menu" class=" table text-center">
-						<colgroup>
-							<col width="10%">
-							<col width="20%">
-							<col width="20%">
-							<col width="20%">
-							<col width="10%">
-							<col width="10%">
-							<col width="10%">
-						</colgroup>
-						<thead class="thead-dark">
-							<tr>
-								<th>번호</th>
-								<th>이름</th>
-								<th>카테고리</th>
-								<th>가격</th>
-								<th>단종여부</th>
-								<th colspan='2'><a class="btn-sm btn-block btn-light"
-									href="toppingform.jsp">신규 토핑 등록</a></th>
-							</tr>
-						</thead>
-						<tbody>
-						<%
-							ToppingDao toppingDao = new ToppingDao();
-							List<Topping> toppings = toppingDao.getAllTopping(beginNumber, endNumber);
-							
-							if(toppings.isEmpty()) {
-						%>
-							<tr class="font-weight-bold text-center">
-								<td>토핑메뉴가 존재하지 않습니다.</td>
-							</tr>
-						<%
-							} else {
-								for (Topping topping : toppings) {
-									if ("N".equalsIgnoreCase(topping.getDisableYn())) {
-						%>
-								<tr class="font-weight-bold">
-									<td><%=topping.getNo() %></td>
-									<td><%=topping.getName() %></td>
-									<td><%=topping.getCategory() %></td>
-									<td><%=topping.getPrice() %></td>
-									<td><%=("N".equalsIgnoreCase(topping.getDisableYn())) ? "아니오":"예" %></td>								
-									<td><a class="btn btn-primary btn-block text-light"
-										href="toppingmodifyform.jsp?yn=n&toppingno=<%=topping.getNo() %>"
-										onclick="alertcompleteToModifyForm(event)">수정</a></td>
-									<td>
-										<form method="post" action="toppingmodify.jsp" enctype="multipart/form-data">
-											<input type="hidden" name="yn" value="y">
-											<input type="hidden" name="toppingno" value=<%=topping.getNo() %>>
-											<button class="btn btn-secondary btn-block text-light" type="submit"
-											onclick="alertcompleteToModify(event)">
-												비활성
-											</button>
-										</form>
-									</td>
-								</tr>
-						<%
-									} else {
-						%>
-								<tr class="text-muted">
-									<td><%=topping.getNo() %></td>
-									<td><%=topping.getName() %></td>
-									<td><%=topping.getCategory() %></td>
-									<td><%=topping.getPrice() %></td>
-									<td><%=("N".equalsIgnoreCase(topping.getDisableYn())) ? "아니오":"예" %></td>								
-									<td><a class="btn btn-primary btn-block text-light"
-										href="toppingmodifyform.jsp?yn=n&toppingno=<%=topping.getNo() %>"
-										onclick="alertcompleteToModifyForm(event)">수정</a></td>
-									<td>
-										<form method="post" action="toppingmodify.jsp" enctype="multipart/form-data">
-											<input type="hidden" name="yn" value="yn">
-											<input type="hidden" name="toppingno" value=<%=topping.getNo() %>>
-											<button class="btn btn-danger btn-block text-light" type="submit"
-											onclick="alertcompleteToModify(event)">
-												활성
-											</button>
-										</form>
-									</td>
-								</tr>
-						<%
-									}
-								}
-							}
-						%>
-						</tbody>
-					</table>
-<!-- 기타 메뉴 -->
-					<table id="etc-menu" class=" table text-center">
-						<colgroup>
-							<col width="20%">
-							<col width="20%">
-							<col width="20%">
-							<col width="20%">
-							<col width="10%">
-							<col width="10%">
-						</colgroup>
-						<thead class="thead-dark">
-							<tr>
-								<th>번호</th>
-								<th>이름</th>
-								<th>가격</th>
-								<th>단종여부</th>
-								<th colspan='2'><a class="btn-sm btn-block btn-light"
-									href="etcmenuform.jsp">신규 기타 메뉴 등록</a></th>
-							</tr>
-						</thead>
-						<tbody>
-						<%
-							EtcDao etcDao = new EtcDao();
-							List<Etc> etcs = etcDao.getAllEtc(beginNumber, endNumber);
-							
-							if(etcs.isEmpty()){
-						%>
-							<tr class="font-weight-bold text-center">
-								<td>기타메뉴가 존재하지 않습니다.</td>
-							</tr>
-						<%
-							} else {
-								for (Etc etc : etcs) {
-									if ("N".equalsIgnoreCase(etc.getDisableYn())) {
-						%>
-								<tr class="font-weight-bold">
-									<td><%=etc.getNo() %></td>
-									<td><%=etc.getName() %></td>
-									<td><%=etc.getPrice() %></td>
-									<td><%=("N".equalsIgnoreCase(etc.getDisableYn())) ? "아니오":"예" %></td>
-									<td><a class="btn btn-primary btn-block text-light"
-										href="etcmenumodifyform.jsp?yn=n&etcno=<%=etc.getNo() %>"
-										onclick="alertcompleteToModifyForm(event)">수정</a></td>
-									<td>
-										<form method="post" action="etcmenumodify.jsp" enctype="multipart/form-data">
-											<input type="hidden" name="yn" value="y">
-											<input type="hidden" name="etcno" value=<%=etc.getNo() %>>
-											<button class="btn btn-secondary btn-block text-light" type="submit"
-											onclick="alertcompleteToModify(event)">
-												비활성
-											</button>
-										</form>
-									</td>
-								</tr>
-						<%
-									} else {
-						%>
-								<tr class="text-muted">
-									<td><%=etc.getNo() %></td>
-									<td><%=etc.getName() %></td>
-									<td><%=etc.getPrice() %></td>
-									<td><%=("N".equalsIgnoreCase(etc.getDisableYn())) ? "아니오":"예" %></td>
-									<td><a class="btn btn-primary btn-block text-light"
-										href="etcmenumodifyform.jsp?yn=n&etcno=<%=etc.getNo() %>"
-										onclick="alertcompleteToModifyForm(event)">수정</a></td>
-									<td>
-										<form method="post" action="etcmenumodify.jsp" enctype="multipart/form-data">
-											<input type="hidden" name="yn" value="yn">
-											<input type="hidden" name="etcno" value=<%=etc.getNo() %>>
-											<button class="btn btn-danger btn-block text-light" type="submit"
-											onclick="alertcompleteToModify(event)">
-												활성
-											</button>
-										</form>
-									</td>
-								</tr>
-						<%
-									}
-								}
-							}
-						%>
-						</tbody>
-					</table>
-					
-					
-					
+					<div class="row">
+						<div class="col-12">
+							<!-- 피자 메뉴 -->
+							<table id="pizza-menu" class="table text-center">
+								<colgroup>
+									<col width="10%">
+									<col width="10%">
+									<col width="20%">
+									<col width="10%">
+									<col width="10%">
+									<col width="20%">
+									<col width="10%">
+									<col width="10%">
+								</colgroup>
+								<thead class="thead-dark">
+									<tr>
+										<th>번호</th>
+										<th>이름</th>
+										<th>L가격</th>
+										<th>M가격</th>
+										<th>단종여부</th>
+										<th>이벤트</th>
+										<th colspan='2'><a class="btn-sm btn-block btn-light"
+											href="pizzaform.jsp"
+											onclick="alertcompleteToInsertForm(event)">신규 피자 등록</a></th>
 
+									</tr>
+								</thead>
+								<tbody>
+									<%
+										PizzaDao pizzaDao = new PizzaDao();
+										List<Pizza> pizzas = pizzaDao.getAllPizza(beginNumber, endNumber);
+
+										if (pizzas.isEmpty()) {
+									%>
+									<tr class="font-weight-bold text-center">
+										<td colspan='8'>피자메뉴가 존재하지 않습니다.</td>
+									</tr>
+									<%
+										} else {
+
+											for (Pizza pizza : pizzas) {
+												EventDao eventDao = new EventDao();
+												Event event = eventDao.getEventByPizzaNo(pizza.getNo());
+												if ("n".equalsIgnoreCase(pizza.getDisableYn())) {
+													
+									%>
+									<tr class="font-weight-bold">
+										<td><%=pizza.getNo()%></td>
+										<td><%=pizza.getName()%></td>
+										<td><%=pizza.getLprice()%>원</td>
+										<td><%=pizza.getMprice()%>원</td>
+										<td><%=("n".equalsIgnoreCase(pizza.getDisableYn())) ? "아니오" : "예"%></td>
+									<%
+												if(event == null) {
+									%>
+												<td>이벤트 없음</td>
+									<%
+												} else {
+									%>		
+												<td><%=event.getName() %></td>
+									<%
+												}
+									%>
+									
+										<td><a class="btn btn-primary btn-block text-light"
+											href="pizzamodifyform.jsp?yn=n&pizzano=<%=pizza.getNo()%>"
+											onclick="alertcompleteToModifyForm(event)">수정</a></td>
+										<td>
+											<form method="post" action="pizzamodify.jsp"
+												enctype="multipart/form-data">
+												<input type="hidden" name="yn" value="y"> <input
+													type="hidden" name="pizzano" value=<%=pizza.getNo()%>>
+												<button class="btn btn-secondary btn-block text-light"
+													type="submit" onclick="alertcompleteToModify(event)">
+													비활성</button>
+											</form>
+										</td>
+									</tr>
+									<%
+												} else {
+									%>
+									<tr class="text-muted">
+										<td><%=pizza.getNo()%></td>
+										<td><%=pizza.getName()%></td>
+										<td><%=pizza.getLprice()%>원</td>
+										<td><%=pizza.getMprice()%>원</td>
+										<td><%=("n".equalsIgnoreCase(pizza.getDisableYn())) ? "아니오" : "예"%></td>
+										<td>-</td>
+										<td><a class="btn btn-primary btn-block text-light"
+											href="pizzamodifyform.jsp?yn=n&pizzano=<%=pizza.getNo()%>"
+											onclick="alertcompleteToModifyForm(event)">수정</a></td>
+										<td>
+											<form method="post" action="pizzamodify.jsp"
+												enctype="multipart/form-data">
+												<input type="hidden" name="yn" value="yn"> <input
+													type="hidden" name="pizzano" value=<%=pizza.getNo()%>>
+												<button class="btn btn-danger btn-block text-light"
+													type="submit" onclick="alertcompleteToModify(event)">
+													활성</button>
+											</form>
+										</td>
+									</tr>
+									<%
+												}
+											}
+										}
+									%>
+								</tbody>
+							</table>
+							<!-- 사이드 메뉴 -->
+							<table id="side-menu" class="table text-center">
+								<colgroup>
+									<col width="20%">
+									<col width="20%">
+									<col width="20%">
+									<col width="20%">
+									<col width="10%">
+									<col width="10%">
+								</colgroup>
+								<thead class="thead-dark">
+									<tr>
+										<th>번호</th>
+										<th>이름</th>
+										<th>가격</th>
+										<th>단종여부</th>
+										<th colspan='2'><a class="btn-sm btn-block btn-light"
+											href="sidemenuform.jsp">신규 사이드 등록</a></th>
+									</tr>
+								</thead>
+								<tbody>
+									<%
+										SideDao sideDao = new SideDao();
+										List<Side> sides = sideDao.getAllSide(beginNumber, endNumber);
+
+										if (sides.isEmpty()) {
+									%>
+									<tr class="font-weight-bold text-center">
+										<td colspan='6'>사이드메뉴가 존재하지 않습니다.</td>
+									</tr>
+									<%
+										} else {
+											for (Side side : sides) {
+												if ("n".equalsIgnoreCase(side.getDisableYn())) {
+									%>
+									<tr class="font-weight-bold">
+										<td><%=side.getNo()%></td>
+										<td><%=side.getName()%></td>
+										<td><%=side.getPrice()%></td>
+										<td><%=("n".equalsIgnoreCase(side.getDisableYn())) ? "아니오" : "예"%></td>
+										<td><a class="btn btn-primary btn-block text-light"
+											href="sidemenumodifyform.jsp?yn=n&sideno=<%=side.getNo()%>"
+											onclick="alertcompleteToModifyForm(event)">수정</a></td>
+										<td>
+											<form method="post" action="sidemenumodify.jsp"
+												enctype="multipart/form-data">
+												<input type="hidden" name="yn" value="y"> <input
+													type="hidden" name="sideno" value=<%=side.getNo()%>>
+												<button class="btn btn-secondary btn-block text-light"
+													type="submit" onclick="alertcompleteToModify(event)">
+													비활성</button>
+											</form>
+										</td>
+									</tr>
+									<%
+										} else {
+									%>
+									<tr class="text-muted">
+										<td><%=side.getNo()%></td>
+										<td><%=side.getName()%></td>
+										<td><%=side.getPrice()%></td>
+										<td><%=("n".equalsIgnoreCase(side.getDisableYn())) ? "아니오" : "예"%></td>
+										<td><a class="btn btn-primary btn-block text-light"
+											href="sidemenumodifyform.jsp?yn=n&sideno=<%=side.getNo()%>"
+											onclick="alertcompleteToModifyForm(event)">수정</a></td>
+										<td>
+											<form method="post" action="sidemenumodify.jsp"
+												enctype="multipart/form-data">
+												<input type="hidden" name="yn" value="yn"> <input
+													type="hidden" name="sideno" value=<%=side.getNo()%>>
+												<button class="btn btn-danger btn-block text-light"
+													type="submit" onclick="alertcompleteToModify(event)">
+													활성</button>
+											</form>
+										</td>
+									</tr>
+									<%
+										}
+											}
+										}
+									%>
+
+								</tbody>
+							</table>
+							<!-- 도우 메뉴 -->
+							<table id="dough-menu" class="table text-center">
+								<colgroup>
+									<col width="20%">
+									<col width="20%">
+									<col width="20%">
+									<col width="20%">
+									<col width="10%">
+									<col width="10%">
+								</colgroup>
+								<thead class="thead-dark">
+									<tr>
+										<th>번호</th>
+										<th>이름</th>
+										<th>가격</th>
+										<th>단종여부</th>
+										<th colspan='2'><a class="btn-sm btn-block btn-light"
+											href="doughform.jsp">신규 도우 등록</a></th>
+									</tr>
+								</thead>
+								<tbody>
+									<%
+										DoughDao doughDao = new DoughDao();
+										List<Dough> doughs = doughDao.getAllDough(beginNumber, endNumber);
+
+										if (doughs.isEmpty()) {
+									%>
+									<tr class="font-weight-bold text-center">
+										<td colspan='6'>도우메뉴가 존재하지 않습니다.</td>
+									</tr>
+									<%
+										} else {
+											for (Dough dough : doughs) {
+												if ("N".equalsIgnoreCase(dough.getDisableYn())) {
+									%>
+									<tr class="font-weight-bold">
+										<td><%=dough.getNo()%></td>
+										<td><%=dough.getName()%></td>
+										<td><%=dough.getPrice()%></td>
+										<td><%=("N".equalsIgnoreCase(dough.getDisableYn())) ? "아니오" : "예"%></td>
+										<td><a class="btn btn-primary btn-block text-light"
+											href="doughmodifyform.jsp?yn=n&doughno=<%=dough.getNo()%>"
+											onclick="alertcompleteToModifyForm(event)">수정</a></td>
+										<td>
+											<form method="post" action="doughmodify.jsp"
+												enctype="multipart/form-data">
+												<input type="hidden" name="yn" value="y"> <input
+													type="hidden" name="doughno" value=<%=dough.getNo()%>>
+												<button class="btn btn-secondary btn-block text-light"
+													type="submit" onclick="alertcompleteToModify(event)">
+													비활성</button>
+											</form>
+										</td>
+									</tr>
+									<%
+										} else {
+									%>
+									<tr class="text-muted">
+										<td><%=dough.getNo()%></td>
+										<td><%=dough.getName()%></td>
+										<td><%=dough.getPrice()%></td>
+										<td><%=("N".equalsIgnoreCase(dough.getDisableYn())) ? "아니오" : "예"%></td>
+										<td><a class="btn btn-primary btn-block text-light"
+											href="doughmodifyform.jsp?yn=n&doughno=<%=dough.getNo()%>"
+											onclick="alertcompleteToModifyForm(event)">수정</a></td>
+										<td>
+											<form method="post" action="doughmodify.jsp"
+												enctype="multipart/form-data">
+												<input type="hidden" name="yn" value="yn"> <input
+													type="hidden" name="doughno" value=<%=dough.getNo()%>>
+												<button class="btn btn-danger btn-block text-light"
+													type="submit" onclick="alertcompleteToModify(event)">
+													활성</button>
+											</form>
+										</td>
+									</tr>
+									<%
+										}
+											}
+										}
+									%>
+								</tbody>
+							</table>
+							<!-- 토핑 메뉴 -->
+							<table id="topping-menu" class="table text-center">
+								<colgroup>
+									<col width="10%">
+									<col width="20%">
+									<col width="20%">
+									<col width="20%">
+									<col width="10%">
+									<col width="10%">
+									<col width="10%">
+								</colgroup>
+								<thead class="thead-dark">
+									<tr>
+										<th>번호</th>
+										<th>이름</th>
+										<th>카테고리</th>
+										<th>가격</th>
+										<th>단종여부</th>
+										<th colspan='2'><a class="btn-sm btn-block btn-light"
+											href="toppingform.jsp">신규 토핑 등록</a></th>
+									</tr>
+								</thead>
+								<tbody>
+									<%
+										ToppingDao toppingDao = new ToppingDao();
+										List<Topping> toppings = toppingDao.getAllTopping(beginNumber, endNumber);
+
+										if (toppings.isEmpty()) {
+									%>
+									<tr class="font-weight-bold text-center">
+										<td colspan='7'>토핑메뉴가 존재하지 않습니다.</td>
+									</tr>
+									<%
+										} else {
+											for (Topping topping : toppings) {
+												if ("N".equalsIgnoreCase(topping.getDisableYn())) {
+									%>
+									<tr class="font-weight-bold">
+										<td><%=topping.getNo()%></td>
+										<td><%=topping.getName()%></td>
+										<td><%=topping.getCategory()%></td>
+										<td><%=topping.getPrice()%></td>
+										<td><%=("N".equalsIgnoreCase(topping.getDisableYn())) ? "아니오" : "예"%></td>
+										<td><a class="btn btn-primary btn-block text-light"
+											href="toppingmodifyform.jsp?yn=n&toppingno=<%=topping.getNo()%>"
+											onclick="alertcompleteToModifyForm(event)">수정</a></td>
+										<td>
+											<form method="post" action="toppingmodify.jsp"
+												enctype="multipart/form-data">
+												<input type="hidden" name="yn" value="y"> <input
+													type="hidden" name="toppingno" value=<%=topping.getNo()%>>
+												<button class="btn btn-secondary btn-block text-light"
+													type="submit" onclick="alertcompleteToModify(event)">
+													비활성</button>
+											</form>
+										</td>
+									</tr>
+									<%
+										} else {
+									%>
+									<tr class="text-muted">
+										<td><%=topping.getNo()%></td>
+										<td><%=topping.getName()%></td>
+										<td><%=topping.getCategory()%></td>
+										<td><%=topping.getPrice()%></td>
+										<td><%=("N".equalsIgnoreCase(topping.getDisableYn())) ? "아니오" : "예"%></td>
+										<td><a class="btn btn-primary btn-block text-light"
+											href="toppingmodifyform.jsp?yn=n&toppingno=<%=topping.getNo()%>"
+											onclick="alertcompleteToModifyForm(event)">수정</a></td>
+										<td>
+											<form method="post" action="toppingmodify.jsp"
+												enctype="multipart/form-data">
+												<input type="hidden" name="yn" value="yn"> <input
+													type="hidden" name="toppingno" value=<%=topping.getNo()%>>
+												<button class="btn btn-danger btn-block text-light"
+													type="submit" onclick="alertcompleteToModify(event)">
+													활성</button>
+											</form>
+										</td>
+									</tr>
+									<%
+										}
+											}
+										}
+									%>
+								</tbody>
+							</table>
+							<!-- 기타 메뉴 -->
+							<table id="etc-menu" class="table text-center">
+								<colgroup>
+									<col width="20%">
+									<col width="20%">
+									<col width="20%">
+									<col width="20%">
+									<col width="10%">
+									<col width="10%">
+								</colgroup>
+								<thead class="thead-dark">
+									<tr>
+										<th>번호</th>
+										<th>이름</th>
+										<th>가격</th>
+										<th>단종여부</th>
+										<th colspan='2'><a class="btn-sm btn-block btn-light"
+											href="etcmenuform.jsp">신규 기타 메뉴 등록</a></th>
+									</tr>
+								</thead>
+								<tbody>
+									<%
+										EtcDao etcDao = new EtcDao();
+										List<Etc> etcs = etcDao.getAllEtc(beginNumber, endNumber);
+
+										if (etcs.isEmpty()) {
+									%>
+									<tr class="font-weight-bold text-center">
+										<td colspan='6'>기타메뉴가 존재하지 않습니다.</td>
+									</tr>
+									<%
+										} else {
+											for (Etc etc : etcs) {
+												if ("N".equalsIgnoreCase(etc.getDisableYn())) {
+									%>
+									<tr class="font-weight-bold">
+										<td><%=etc.getNo()%></td>
+										<td><%=etc.getName()%></td>
+										<td><%=etc.getPrice()%></td>
+										<td><%=("N".equalsIgnoreCase(etc.getDisableYn())) ? "아니오" : "예"%></td>
+										<td><a class="btn btn-primary btn-block text-light"
+											href="etcmenumodifyform.jsp?yn=n&etcno=<%=etc.getNo()%>"
+											onclick="alertcompleteToModifyForm(event)">수정</a></td>
+										<td>
+											<form method="post" action="etcmenumodify.jsp"
+												enctype="multipart/form-data">
+												<input type="hidden" name="yn" value="y"> <input
+													type="hidden" name="etcno" value=<%=etc.getNo()%>>
+												<button class="btn btn-secondary btn-block text-light"
+													type="submit" onclick="alertcompleteToModify(event)">
+													비활성</button>
+											</form>
+										</td>
+									</tr>
+									<%
+										} else {
+									%>
+									<tr class="text-muted">
+										<td><%=etc.getNo()%></td>
+										<td><%=etc.getName()%></td>
+										<td><%=etc.getPrice()%></td>
+										<td><%=("N".equalsIgnoreCase(etc.getDisableYn())) ? "아니오" : "예"%></td>
+										<td><a class="btn btn-primary btn-block text-light"
+											href="etcmenumodifyform.jsp?yn=n&etcno=<%=etc.getNo()%>"
+											onclick="alertcompleteToModifyForm(event)">수정</a></td>
+										<td>
+											<form method="post" action="etcmenumodify.jsp"
+												enctype="multipart/form-data">
+												<input type="hidden" name="yn" value="yn"> <input
+													type="hidden" name="etcno" value=<%=etc.getNo()%>>
+												<button class="btn btn-danger btn-block text-light"
+													type="submit" onclick="alertcompleteToModify(event)">
+													활성</button>
+											</form>
+										</td>
+									</tr>
+									<%
+										}
+											}
+										}
+									%>
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

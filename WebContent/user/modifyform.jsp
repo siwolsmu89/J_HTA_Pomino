@@ -114,7 +114,7 @@
 							<div class="form-group">
 								<label>비밀번호</label>
 								<input type="password" class="form-control" name="userpwd" placeholder="영문(대소문자),숫자,특수기호를 조합해주세요."/>
-								<p class="small px-1 text-danger">(변경을 안하면 원래 비밀번호로 입력해주세요)</p>
+								<p class="small px-1 text-danger font-weight-bold">(변경을 원하지 않으시면 기존의 비밀번호를 입력해 주세요)</p>
 							</div>
 							<div class="form-group">
                         		<label>휴대폰 번호</label>

@@ -97,11 +97,11 @@
 			Grade grade = gradeDao.getGradeByName(user.getGradeName());
 			if (grade == null) {
 				grade = new Grade();
-				grade.setName("regular");
+				grade.setName("Regular");
 				grade.setDiscountRate(0.0);
 			}
 			String counterDisplay = "";
-			if ("royal".equals(user.getGradeName())) {
+			if ("Royal".equalsIgnoreCase(user.getGradeName())) {
 				counterDisplay = "none";
 			}
 			
@@ -111,8 +111,8 @@
 				<div class="jumbotron bg-dark text-white">
 					<div class="row">
 						<div class="col-5">
-						  <h4><%=loginUserName %>님</h4>
-						  <p class="display-4 font-weight-bold"><%=user.getGradeName() == null ? "regular" : user.getGradeName()%></p><!-- 등급불러오기 -->
+						  <h4><%=loginUserName %> 회원님</h4>
+						  <p class="display-4 font-weight-bold"><%=user.getGradeName() == null ? "Regular" : user.getGradeName()%></p><!-- 등급불러오기 -->
 						</div>
 						<div class="col-3" style="border-left: 1px solid white; border-right: 1px solid white;">
 							<p class="text-muted"><small>주문</small></p>
@@ -134,7 +134,7 @@
 			<div class="col-12">
 				<div class="row">
 					<div class="col-5">
-						<h5 class="text-left">다음 등급<strong style="font-size: 14px; color: red;"><%="royal".equals(user.getGradeName()) ? "(현재 최고 등급)" : "(" + nextGrade +")" %></strong>으로 업그레이드 하려면?</h5>
+						<h5 class="text-left">다음 등급<strong style="font-size: 14px; color: red;"><%="Royal".equals(user.getGradeName()) ? "(현재 최고 등급)" : "(" + nextGrade +")" %></strong>으로 업그레이드 하려면?</h5>
 					</div>
 					<div class="col-7">
 						<div class="text-right text-muted small">*1년간 완료된 주문에 대해서 주문건 수를 기준으로 1년된 1일에 매니아 등급에 반영됩니다.</div>
@@ -157,17 +157,17 @@
 				<div class="row justify-content-center " >
 					<div class="col-10 mt-2" >
 						<div class="progress ml-3" style="height: 2rem;" >
-							<div class="progress-bar" role="progressbar" aria-valuenow="<%=user.getOrderCount()%5 %>" aria-valuemin="0" aria-valuemax="100" style="width: <%="royal".equals(user.getGradeName()) ? 100 : user.getOrderCount()%5 * 20 %>%"></div>
+							<div class="progress-bar" role="progressbar" aria-valuenow="<%=user.getOrderCount()%5 %>" aria-valuemin="0" aria-valuemax="100" style="width: <%="Royal".equals(user.getGradeName()) ? 100 : user.getOrderCount()%5 * 20 %>%"></div>
 						</div>
 						<div>
-							<div class="text-right" style="width: <%="royal".equals(user.getGradeName()) ? 100 : user.getOrderCount()%5 * 20 %>%">
+							<div class="text-right" style="width: <%="Royal".equals(user.getGradeName()) ? 100 : user.getOrderCount()%5 * 20 %>%">
 								<span id="order-counter" class="mt-2 badge badge-dark badge-pill" style="display: <%=counterDisplay %>"><%=5 - user.getOrderCount()%5 %>건 더 구매</span>
 							</div>
 						</div>
 					</div>
 					<div class="col-2">
 						<div>
-							<p class="font-weight-bold text-center" style="font-size: 30px; color: blue;"><%="royal".equals(user.getGradeName()) ? "" : nextGrade %></p>
+							<p class="font-weight-bold text-center" style="font-size: 30px; color: blue;"><%="Royal".equals(user.getGradeName()) ? "" : nextGrade %></p>
 						</div>
 					</div>
 				</div>

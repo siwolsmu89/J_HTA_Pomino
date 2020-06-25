@@ -21,6 +21,13 @@
 	int lPrice = NumberUtil.stringToInt(mr.getParameter("lprice"));
 	int mPrice = NumberUtil.stringToInt(mr.getParameter("mprice"));
 	
+	// 중복체크
+	PizzaDao pizzaDao = new PizzaDao();
+	Pizza pizzaDup = pizzaDao.getPizzaByName(name);
+	if(pizzaDup != null){
+		response.sendRedirect("/domino/manager/pizzaform.jsp?error=dup");
+	}
+	
 	// 피자객체에 값 넣기
 	Pizza pizza = new Pizza();
 	pizza.setName(name);
@@ -29,7 +36,6 @@
 	pizza.setMprice(mPrice);
 	
 	// 피자 생성
-	PizzaDao pizzaDao = new PizzaDao();
 	pizzaDao.insertPizza(pizza);
 	
 	response.sendRedirect("/domino/manager/menulist.jsp");

@@ -133,23 +133,18 @@
 					<div class="card">
 						<div class="card-header ">
 							<div class="row">
-								<div class="col-4 text-center " id="7">
+								<div class="col-6 text-center " id="7">
 									<a role="button" onclick="select(7)">7일 매출</a>
 								</div>
-								<div class="col-4 text-center " id="30">
+								<div class="col-6 text-center " id="30">
 									<a role="button" onclick="select(30)">30일 매출</a>
 								</div>
-								<div class="col-4 text-center " id="365">
-									<a role="button" onclick="select(365)">365일 매출</a>
-								</div>
+
 							</div>
 						</div>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-12">
-									<%
-										int date = 7;
-									%>
 									<div id="chart_div"></div>
 								</div>
 							</div>
@@ -164,33 +159,50 @@
 	<%@ include file="../common/footer.jsp"%>
 
 	<script type="text/javascript">
+		// 구글차트 이미지 로드
 		google.charts.load('current', {packages: ['corechart', 'line']});
+		// 구글차트 그리는 메소드 실행
 		google.charts.setOnLoadCallback(drawBasic);
-	
+		
+		// 구글차트 옵션설정
 		var options = {
-			hAxis: {title: '일'},
-		  	vAxis: {title: '매출'}
+
+			hAxis: {
+				title: '일',
+				format:'0'
+			},
+		  	vAxis: {
+		  		title: '매출'
+		  	}
 		};
 
-		
+		// 그래프 리스트의 메뉴 선택시 그래프 function에 date값 전달해주는 메소드
 		function select(date) {
+			// 그래프 function 호출
 			drawBasic(date);
 			
+			// 그래프 리스트 모든 메뉴 선택해서 폰트스타일 디폴트값으로 변경
 			var noneactive = document.querySelectorAll('.card-header div div');
 			for(var i=0; i<noneactive.length; i++){
 				var none = noneactive[i];
 				none.setAttribute('style', 'font-weight: defalut');
 			}
+			
+			// 그래프 리스트에서 선택된 메뉴의 폰트스타일 볼드로 변경
 			var active = document.getElementById(date);
 			active.setAttribute('style', 'font-weight : bold');
 		}
-
+		
+		// 구글차트 그리는 메소드
 		function drawBasic(date) {
+			// 차트가 들어갈 태그 선택
 			var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-	      	var data = new google.visualization.DataTable();
-	      	data.addColumn('number', '일');
+			var data = new google.visualization.DataTable();
+	      	// 차트 X,Y축 데이터타입 및 설명 세팅
+			data.addColumn('number', '일');
 	      	data.addColumn('number', '일매출');
 			
+	      	// 파라미터값이 null이면 dafaul값 7로 설정 (최초 페이지 로드시 사용됨)
 	      	if(!date){
 	      		date = 7;
 	      	}
@@ -201,20 +213,22 @@
 				if (xhr.readyState == 4 && xhr.status == 200) {
 					var text = xhr.responseText;
 					var values = JSON.parse(text);
-
+					
+					// 차트에 들어갈 값 세팅
 					for (var i = 0; i < values.length; i++) {
 						var value = values[i];
 						var regDate = Number(value.regDate.substring(3, 5));
 						var totalPrice = value.discountPrice;
 						var row = [ regDate, totalPrice ];
 						data.addRows([ row ]);
-						chart.draw(data, options);
 					}
+					
+					// 세팅된 값과 옵션을 사용해서 차트 그리기
+					chart.draw(data, options);
 				}
 			}
 
-			xhr.open("GET", "/domino/manager/JSON/ordercountdata.jsp?date="
-					+ date);
+			xhr.open("GET", "/domino/manager/JSON/ordercountdata.jsp?date="+ date);
 			xhr.send();
 		}
 	</script>

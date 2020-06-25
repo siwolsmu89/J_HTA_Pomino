@@ -31,8 +31,18 @@
 		orderNo = NumberUtil.stringToInt(request.getParameter("orderno"));
 	}
 	
+	/*
 	if (orderNo==0) {
 		response.sendRedirect("/domino/common/home.jsp?error=quicknull");
+		out.println("<script>alert('등록된 퀵오더가 없습니다. 나의 주문 내역에서 퀵오더를 확인하세요'); location.href='/domino/common/home.jsp'; </script>");
+		out.flush();
+		return;
+	}
+	*/
+	
+	if (orderNo==0) {
+		out.println("<script>alert('등록된 퀵오더가 없습니다. 나의 주문 내역에서 퀵오더를 확인하세요'); location.href='/domino/common/home.jsp'; </script>");
+		out.flush();
 		return;
 	}
 	

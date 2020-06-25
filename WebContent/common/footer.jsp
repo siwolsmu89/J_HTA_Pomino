@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<style type="text/css">
+	html {
+		overflow-x:hidden;
+		overflow-y:auto;
+	}
+</style>
+
 <div class="container"> <!-- 푸터 컨테이너 -->
 	<div class="row">
 		<div class="col-12">
@@ -16,11 +23,11 @@
 					</div>
 					<div class="row">
 						<div class="btn-group">
-  							<button type="button" class="btn">이용약관</button>
-  							<button type="button" class="btn"><strong>개인정보처리방침</strong></button>
+  							<button type="button" class="btn" disabled="disabled">이용약관</button>
+  							<button type="button" class="btn" disabled="disabled"><strong>개인정보처리방침</strong></button>
   							<a href="/domino/user/questionform.jsp" class="btn" >1:1문의</a>
-  							<button type="button" class="btn">가맹점모집</button>
-  							<button type="button" class="btn">단체주문</button>
+  							<button type="button" class="btn" disabled="disabled">가맹점모집</button>
+  							<button type="button" class="btn" disabled="disabled">단체주문</button>
 						</div>
 					</div>
 				</div>
@@ -43,7 +50,7 @@
 	</div>
 </div>
 <div class="row"><!-- 이미지 -->
-	<div class="col-12" style="width: 100%">
+	<div class="col-12" style="width: 100%;">
 		<img src="../resource/images/footer/footer.png" alt="푸터이미지"/>
 	</div>
 </div>

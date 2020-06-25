@@ -1,3 +1,4 @@
+<%@page import="com.domino.util.StringUtil"%>
 <%@page import="com.domino.util.NumberUtil"%>
 <%@page import="com.domino.vo.Branch"%>
 <%@page import="java.util.List"%>
@@ -171,26 +172,26 @@
 											</div>
 											<div class="form-group">
 												<label>오픈시간</label> <input type="text" class="form-control"
-													value="<%=branch.getOpenTime()%>" name="opentime" />
+													value="<%=StringUtil.nullToBlank(branch.getOpenTime()) %>" name="opentime" />
 											</div>
 											<div class="form-group">
 												<label>마감시간</label> <input type="text" class="form-control"
-													value="<%=branch.getCloseTime()%>" name="closetime" />
+													value="<%=StringUtil.nullToBlank(branch.getCloseTime()) %>" name="closetime" />
 											</div>
 											<div class="form-group">
 												<label>코멘트</label> <input type="text" class="form-control"
-													value="<%=branch.getComment()%>" name="comment" />
+													value="<%=StringUtil.nullToBlank(branch.getComment()) %>" name="comment" />
 											</div>
 											<div class="form-group">
 												<label>할인율</label> <input type="text" class="form-control"
-													value="<%=branch.getDiscountRate() * 100%>" name="discount" />
+													value="<%=branch.getDiscountRate() * 100 %>" name="discount" />
 											</div>
 										</div>
 									</div>
 								</div>
 								<div class="col-12 text-center">
 									<div class="form-group">
-										<img src="../resource/images/branch/<%=branch.getImageSrc()%>">
+										<img src="<%=branch.getImageSrc()%>">
 									</div>
 									<div class="form-group">
 										<label> 첨부파일(<%=branch.getImageSrc()%>)

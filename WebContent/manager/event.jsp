@@ -25,7 +25,14 @@
 	Double discountRate = NumberUtil.stringToDouble(mr.getParameter("discountrate"));
 	int pizzaNo = NumberUtil.stringToInt(mr.getParameter("pizzano"));
 	String imageSrc = mr.getFilesystemName("upfile");
-
+	
+	// 중복체크
+	EventDao eventDao = new EventDao();
+	Event eventDup = eventDao.getEventByPizzaNo(pizzaNo);
+	if(eventDup != null) {
+		response.sendRedirect("/domino/manager/eventform.jsp?error=dup");
+	}
+	
 	// 이벤트객체에 값 넣기
 	Event event = new Event();
 	event.setName(name);
@@ -36,7 +43,6 @@
 	event.setImageSrc(imageSrc);
 
 	// 이벤트 생성
-	EventDao eventDao = new EventDao();
 	eventDao.insertEvent(event);
 
 	response.sendRedirect("/domino/manager/eventlist.jsp");

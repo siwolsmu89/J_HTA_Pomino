@@ -1,3 +1,4 @@
+<%@page import="com.domino.util.StringUtil"%>
 <%@page import="com.domino.util.NumberUtil"%>
 <%@page import="com.domino.vo.Branch"%>
 <%@page import="java.util.List"%>
@@ -92,16 +93,20 @@
 								enctype="multipart/form-data">							
 								<div class="row">
 									<div class="col-12">
-										<div class="form-group">
+										<div class="form-group text-center">
 											<img
-												src="../resource/images/branch/<%=branch.getImageSrc()%>">
+												src="<%=branch.getImageSrc()%>">
 										</div>
-										<div class="form-group">
-											<label> 첨부파일(<%=branch.getImageSrc()%>)
-											</label>
-											<p class="text-danger">이미지 이름 동일하게 해서 업데이트</p>
-											<div>
-												<input type="file" name="upfile" />
+										<div class="form-group input-group mb-3">
+											<div class="input-group-prepend">
+												<span class="input-group-text">업로드</span>
+											</div>
+											<div class="form-group custom-file">
+												<input type="file" class="custom-file-input" name="upfile"
+													aria-describedby="inputGroupFileAddon01"> 
+													<label class="custom-file-label" for="inputGroupFile01">
+														매장사진 ( <%=branch.getImageSrc() %> )
+													</label>
 											</div>
 										</div>
 									</div>
@@ -142,15 +147,15 @@
 										</div>
 										<div class="form-group">
 											<label>오픈시간</label> <input type="text" class="form-control"
-												value="<%=branch.getOpenTime()%>" name="opentime" />
+												value="<%=StringUtil.nullToBlank(branch.getOpenTime())%>" name="opentime" />
 										</div>
 										<div class="form-group">
 											<label>마감시간</label> <input type="text" class="form-control"
-												value="<%=branch.getCloseTime()%>" name="closetime" />
+												value="<%=StringUtil.nullToBlank(branch.getCloseTime())%>" name="closetime" />
 										</div>
 										<div class="form-group">
 											<label>코멘트</label> <input type="text" class="form-control"
-												value="<%=branch.getComment()%>" name="comment" />
+												value="<%=StringUtil.nullToBlank(branch.getComment())%>" name="comment" />
 										</div>
 										<div class="form-group">
 											<label>할인율</label> <input type="text" class="form-control"

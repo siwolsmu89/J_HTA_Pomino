@@ -1,3 +1,4 @@
+<%@page import="com.domino.util.NumberUtil"%>
 <%@page import="com.domino.vo.Event"%>
 <%@page import="com.domino.dao.EventDao"%>
 <%@page import="java.util.Calendar"%>
@@ -82,6 +83,8 @@
 					</div>
 				</div>
 				<!-- 화면의 현재위치를 나타내는 부분 끝 -->
+				<div style="background-color: black; height: 2px;" class="mb-2"></div>
+				
 			</div>
 			
 			<script>/* 주석 처리
@@ -128,7 +131,7 @@
 			*/</script>
 			
 		</div>	<!-- 주황1 끝-->
-		<form id="my-form" action="" method="post">
+		<form id="my-form" method="post">
 		<div>
 			<div class="row mt-3">
 					<div class="col-12">
@@ -281,7 +284,7 @@
 																																	<p>피자 공통: 오리지널,나폴리, 슈퍼시드함유, 샌드 도우(우유, 밀, 대두), 씬, 더블 도우(밀), 더블치즈엣지(스트링 치즈(우유, 대두, 밀), 카망베르 크림치즈(우유))</p>
 																																</div>
 																																<div>
-																																	<table class="table">
+																																	<table class="table small">
 																																	<caption>피자 재료중 알레르기 유발 가능 식품</caption>
 																																		<colgroup>
 																																			<col width="7%">
@@ -396,7 +399,7 @@
 																																			</tr>
 																																		</tbody>
 																																	</table>
-																																	<table class="table">
+																																	<table class="table small">
 																																		<thead>
 																																			<tr>
 																																				<th>제품명</th>
@@ -754,7 +757,7 @@
 																																<dd>
 																																	난류(가금류에 한한다), 우유, 메밀, 땅콩, 대두, 밀, 고등어, 게, 새우, 돼지고기, 복숭아, 토마토, 아황산류, 호두, 닭고기, 쇠고기, 오징어, 조개류(굴, 전복, 홍합포함), 잣
 																																</dd>
-																																<table class="table">
+																																<table class="table small">
 																																	<caption>사이드디시 재료중 알레르기 유발 가능 식품</caption>
 																																		<colgroup>
 																																			<col width="7%">
@@ -831,7 +834,7 @@
 																																		</tr>
 																																	</tbody>
 																																</table>
-																																<table class="table">
+																																<table class="table small">
 																																	<colgroup>
 																																		<col width="7%">
 																																		<col width="24%">
@@ -857,7 +860,7 @@
 																																		</tr>
 																																	</tbody>
 																																</table>
-																																<table class="table">
+																																<table class="table small">
 																																	<thead>
 																																		<tr>
 																																			<th>제품명</th>
@@ -1019,30 +1022,30 @@
 												<div class="mb-2">
 													<div class="row">
 													<!-- 피자 L, M 가격 받기 -->
-														<div class="col-6" style="padding:5px"><strong class="text-danger float-left">L</strong><strong>　<%=pizza.getLprice() %>원~</strong></div>
-														<div class="col-6" style="padding:5px"><strong class="text-danger float-left">M</strong><strong>　<%=pizza.getMprice() %>원~</strong></div>
+														<div class="col-6" style="padding:5px"><strong class="text-danger float-left">L</strong><strong>　<%=NumberUtil.numberWithComma(pizza.getLprice()) %>원~</strong></div>
+														<div class="col-6" style="padding:5px"><strong class="text-danger float-left">M</strong><strong>　<%=NumberUtil.numberWithComma(pizza.getMprice()) %>원~</strong></div>
 													</div>
 												</div>
 												<!-- 가격정보 끝 -->
 												<div class="mt-3 mb-n3">
 												
-													<%
-														// Reg+30 (등록 날짜에서 30일 지났으면) 신상 아님
-													%>
-													
 													<span class="badge badge-success"><%=pizza.getRegDate() %> 출시!</span>
-													<span class="badge badge-info">Best!<% // 태그도 디비로 받는건가? 아니면 그냥 하는건가? %></span>
-													<a class="badge badge-danger" href="#">해당 링크를 클릭하시면 이벤트 가격에!</a>
-								
+													<span class="badge badge-info">Best!</span>
 													<%
+														EventDao eventDao = new EventDao();
+														Event event = eventDao.getEventByPizzaNo(pizza.getNo());
 														
+														if (event != null) {
+													%>
+													<a class="badge badge-danger" href="/domino/event/eventdetail.jsp?eventno=<%=event.getNo() %>"><%=event.getName() %></a>
+													<%
+														} else {
+													%>
+													<a class="badge badge-secondary" >이벤트 없음</a>
+													<%
+														}
 													%>
 												</div>
-												<div class="">
-													<p><%// 짧은 설명인데 받아오는건가? %></p>
-													<p><%// 짧은 설명인데 받아오는건가? %></p>
-												</div>
-
 											</div>
 											<!-- 상품 컨텐츠정보 끝 -->
 										</div>
@@ -1061,11 +1064,9 @@
 
 		</div>	<!-- 주황2 끝-->
 	</form>
-
-
 		<div class="row">
 			<div class="col-6">
-				<div>　</div>
+				<br/>
 				<div>유의사항</div><!-- 초록1 끝 -->
 				<div>
 					<ul>
@@ -1076,38 +1077,33 @@
 							</small>
 						<li>
 							<small> 
-								일부 리조트 및 특수매장은 상기 가격과 차이가 있으며	모든 사진은 이미지 컷이므로 실제 제품과 다를 수 있습니다.
+								일부 리조트 및 특수매장은 상기 가격과 차이가 있으며 모든 사진은 이미지 컷이므로 실제 제품과 다를 수 있습니다.
 							</small>
 						</li>
 					</ul>
-					<div> 　</div>
+					<br/>
 				</div><!-- 초록2 끝 -->
 			</div> <!-- 노랑1 끝 -->
 			
 			<div class="col-6 d-flex justify-content-center">
 				<div>
-					<div>　</div>
-					<div>　</div>
+					<br/>
+					<br/>
 					<div>
 						<small>
-								제품의 영양성분 및 알레르기 유발성분을 먼저 확인하세요.
+							제품의 영양성분 및 알레르기 유발성분을 먼저 확인하세요.
 						</small>
 					</div>
-					<div> 　</div>
-					
+					<br/>
 					
 					<div>
-						<a type="button" 
-													   data-toggle="modal"
-													   data-target="#modal-allergy">
-													   <img src="../resource/images/home/ingredient_plus.png">
+						<a type="button" data-toggle="modal" data-target="#modal-allergy"> 
+							<img src="../resource/images/home/ingredient_plus.png">
 						</a>
 						<%@include file="../common/allergy.jsp" %>
 					</div>
 				</div>
-
 			</div> <!-- 노랑2 끝 -->
-			
 		</div>	<!-- 주황4끝 -->
 		
 	</div> <!-- 빨강 끝 -->
@@ -1118,29 +1114,17 @@
 	function pizzaDetail(event) {
 		
 		event.preventDefault();
-		
-		//var type = event.target.name;
-		//var amount = event.target.value;
-			
-		//location.href="detail.jsp?no=" + no
-				
+
 		var url = 'detail.jsp?no=';
-		// var url2 = '&discountrate=';
 		
 		var no = event.target.id;
-		// var dis = event.target.value;
 		var form = document.querySelector("#my-form");
 		
 		form.setAttribute("action", url + no);
-//		form.setAttribute("action", url + no + url2 + dis);
 		form.submit();
 
 	}
-
-	function push() {
-		
-		alert("dsksk");
-	}
+	
 </script>
 </body>
 </html>

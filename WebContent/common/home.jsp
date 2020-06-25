@@ -103,11 +103,40 @@
 							UserDao userDao = new UserDao();
 							User user = userDao.getUserByNo(loginUserNo);
 						%>
-						
+						<!-- 
+						<%
+							//if ("quicknull".equals(error)) {
+						%>
+							<p style="color:red; font-style: italic;">등록된 퀵오더가 없습니다. 나의 주문 내역에서 퀵오더를 확인하세요</p>
+						<%
+							//}
+						%>
+						 -->
 							<div class="p-4 ">
 								<div>
-									<p class=""><strong><%=loginUserName%></strong> 님의 현재 등급</p> <!-- 사용자 이름 -->
-									<p class="text-center"><strong><%=user.getGradeName() == null ? "regular" : user.getGradeName()  %></strong><!-- 등급 --></p>
+									<p class="text-center"><strong><%=loginUserName%></strong> 님의 현재 등급</p> <!-- 사용자 이름 -->
+									<h2 class="text-center">
+						<%
+							if (user.getGradeName() == null || "regular".equalsIgnoreCase(user.getGradeName())) {
+						%>
+									<span class="text-center badge badge-pill badge-warning"><strong>regular</strong></span>
+						<%
+							} else if ("premium".equalsIgnoreCase(user.getGradeName())) {
+						%>
+									<span class="text-center badge badge-pill badge-primary"><strong><%=user.getGradeName() %></strong></span>
+						<%
+							} else if ("vip".equalsIgnoreCase(user.getGradeName())) {
+						%>
+									<span class="text-center badge badge-pill badge-danger"><strong><%=user.getGradeName() %></strong></span>
+						<%
+							} else if ("royal".equalsIgnoreCase(user.getGradeName())) {
+						%>
+									<span class="text-center badge badge-pill badge-dark"><strong><%=user.getGradeName() %></strong></span>
+						<%
+							}
+						%>
+									</h2>
+									<br/>
 									<a href="../user/detailform.jsp"><button type="button" class="btn btn-dark">혜택보기</button></a>
 									<a href="../user/orderlist.jsp"><button type="button" class="btn btn-dark">주문내역</button></a>
 								</div>
@@ -140,11 +169,11 @@
 							</div>
 	-->
 							<div class="p-1"> 
-								<a><img src="../resource/images/home/main_card4-1.gif" alt="혜택1"/></a>
+								<a><img src="/domino/resource/images/home/main_card1.gif" alt="혜택1"/></a>
 							</div>
 							
 							<div class="p-1"> 
-								<a><img src="../resource/images/home/main_card6.png" alt="혜택2"/></a>
+								<a href="/domino/user/detailform.jsp"><img src="/domino/resource/images/home/main_card2.gif" alt="혜택2"/></a>
 							</div>
 						<%	
 							// if 닫고
@@ -197,7 +226,7 @@
 								<a><img src="../resource/images/home/main_card3.png" alt="혜택3"/></a>
 							</div>
 							<!-- 도미노 모멘트 (추가기능) -->
-							<div class="p-1"> 
+							<div class="pt-1 pr-3 pb-1 pl-1"> 
 								<a><img src="../resource/images/home/main_card5.png" alt="혜택4"/></a>
 							</div>
 						</div>

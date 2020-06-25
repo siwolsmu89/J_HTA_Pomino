@@ -46,7 +46,7 @@
 																<p>피자 공통: 오리지널,나폴리, 슈퍼시드함유, 샌드 도우(우유, 밀, 대두), 씬, 더블 도우(밀), 더블치즈엣지(스트링 치즈(우유, 대두, 밀), 카망베르 크림치즈(우유))</p>
 															</div>
 															<div>
-																<table class="table">
+																<table class="table small">
 																<caption>피자 재료중 알레르기 유발 가능 식품</caption>
 																	<colgroup>
 																		<col width="7%">
@@ -161,7 +161,7 @@
 																		</tr>
 																	</tbody>
 																</table>
-																<table class="table">
+																<table class="table small">
 																	<thead>
 																		<tr>
 																			<th>제품명</th>
@@ -515,7 +515,7 @@
 															</p>
 															<dt>* 알레르기 유발 가능 식품 :</dt>
 															<dd>난류(가금류에 한한다), 우유, 메밀, 땅콩, 대두, 밀, 고등어, 게, 새우, 돼지고기, 복숭아, 토마토, 아황산류, 호두, 닭고기, 쇠고기, 오징어, 조개류(굴, 전복, 홍합포함), 잣</dd>
-															<table class="table">
+															<table class="table small">
 																<caption>사이드디시 재료중 알레르기 유발 가능 식품</caption>
 																	<colgroup>
 																		<col width="7%">
@@ -592,7 +592,7 @@
 																	</tr>
 																</tbody>
 															</table>
-															<table class="table">
+															<table class="table small">
 																<colgroup>
 																	<col width="7%">
 																	<col width="24%">
@@ -618,7 +618,7 @@
 																	</tr>
 																</tbody>
 															</table>
-															<table class="table">
+															<table class="table small">
 																<thead>
 																	<tr>
 																		<th>제품명</th>

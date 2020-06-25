@@ -196,6 +196,25 @@ public class EventDao {
 		pstmt.close();
 		connection.close();
 	}
+	
+	public Event getEventByPizzaNo(int pizzaNo) throws SQLException {
+		Event event = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("event.getEventByPizzaNo"));
+		pstmt.setInt(1, pizzaNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			event = resultSetToEvent(rs);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return event;
+	}
 }
 
 

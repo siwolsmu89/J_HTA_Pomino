@@ -112,7 +112,7 @@
 							</div>
 						</div>
 						<div class="col-3 text-right">
-							<button class="btn btn-light btn-sm" onclick="removeCheck(<%=ll.get(i).getNo()%>)">x</button>
+							<button class="btn btn-light btn-sm" disabled>x</button>
 						</div>
 					</div>
 	<% 
@@ -194,7 +194,7 @@
 												<div class="form-group row">
 													<div class="col-12 mb-3">
 														<label>지역선택</label> 
-														<input type="text" class="form-control" name="addr1" placeholder="예)서울시 종로구 /경기도 안양시 만안구"/>
+														<input type="text" class="form-control" name="addr1" placeholder="예)서울특별시 종로구 /경상남도 창원시"/>
 													</div>
 													<div class="col-12 mb-3">
 														<label>동/도로명 번지 및 건물명</label> 

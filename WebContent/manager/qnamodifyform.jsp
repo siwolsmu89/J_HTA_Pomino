@@ -32,14 +32,23 @@
 				</div>
 
 				<div class="col-8">
-					<ul class="nav justify-content-end">
-						<li class="nav-item"><a class="nav-link active" href="#">홈</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link active" href="#">관리자</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#">1:1문의</a></li>
+					<ul class="nav justify-content-end small text-muted">
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	<!--text-muted pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/manager/info.jsp">관리자</a><!--text-muted active pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">1:1문의</a>
+					  	<!--text-dark font-weight-bold pr-1  -->
+					  </li>
 					</ul>
 				</div>
 			</div>
@@ -127,10 +136,17 @@
 								</div>
 
 
-
-								<div class="text-right">
-									<button type="button" class="btn btn-secondary">다시 작성</button>
-									<button type="submit" class="btn btn-primary">답변등록</button>
+								<div class="row">
+									<div class="col-6 text-right">
+										<button type="button" class="btn btn-secondary btn-block" onclick="location.reload()">다시 작성</button>
+									</div>
+									<div class="col-6 text-right">
+										<button type="submit" class="btn btn-primary btn-block">답변등록</button>
+									</div>
+								</div>
+								<div class="">
+									
+									
 								</div>
 
 							</form>

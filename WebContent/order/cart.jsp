@@ -130,10 +130,10 @@
 			<div class="col-12">
 				<table class="table">
 					<colgroup>
-						<col width="40%">
+						<col width="37%">
 						<col width="40%">
 						<col width="4%">
-						<col width="9%">
+						<col width="12%">
 						<col width="7%">
 					</colgroup>
 					<thead>

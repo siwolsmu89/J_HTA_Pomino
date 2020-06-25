@@ -135,9 +135,14 @@ public class OrderDao {
 		
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrdersByUserNoAndRange"));
-		pstmt.setInt(1, begin);
-		pstmt.setInt(2, end);
-		pstmt.setInt(3, userNo);
+		
+		if (begin > end) {
+			end = begin;
+		}
+		pstmt.setInt(1, userNo);
+		pstmt.setInt(2, begin);
+		pstmt.setInt(3, end);
+		pstmt.setInt(4, userNo);
 		ResultSet rs = pstmt.executeQuery();
 		
 		while (rs.next()) {

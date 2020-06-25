@@ -26,7 +26,8 @@
 						<img src="../resource/images/logo/domino.png" alt="도미노 로고"/>
 					</a> 
 				</div>
-				<div class="col-5">	<!-- 검색창 -->
+				<div class="col-5">	
+					<!-- 검색창의 흔적
 					<div class="row row-vh align-items-center">
 						<div class="col-12">
 							<form class="form-inline d-flex justify-content-center md-form form-sm">
@@ -35,6 +36,7 @@
 							</form>
 						</div>
 					</div>
+					-->
 				</div>
 				<div class="col-4"><!-- 작은 버튼 로그인 로그아웃 등.. -->
 					

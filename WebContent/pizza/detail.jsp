@@ -50,8 +50,10 @@
 		<div class="header"> <!-- 노랑1 시작 -->
 			<!-- 화면의 현재위치를 나타내는 부분 시작 -->
 			<div class="row">
-				<div class="col-4">
+				<div class="col-4" style="padding: 0 0 0 0">
 					<h4>메뉴</h4>
+					<div style="background-color: black; height: 2px;" class="mb-2"></div>
+					
 					<br/>
 				</div>
 	
@@ -68,7 +70,7 @@
 					List<Dough> doughs = doughDao.getAllDough();
 				%>
 		
-				<div class="col-8">
+				<div class="col-8" style="padding: 0 0 0 0">
 					<ul class="nav justify-content-end small text-muted">
 						<li class="nav-item">
 							<a class="nav-link text-muted active pr-1"
@@ -96,12 +98,16 @@
 							</a>
 						</li>
 					</ul>
+					<div style="background-color: black; height: 2px;" class="mb-2"></div>
+					
 				</div>
 			</div>
 			<!-- 화면의 현재위치를 나타내는 부분 끝 -->
+			
 		</div> <!-- 노랑1 끝 -->
 		
-		<script>/*	// 안쓰는 라인, 주석 처리
+		<!-- 안쓰는 라인 주석 처리 -->
+<%--
 		<div> <!-- 노랑2 끝 -->
 			<div class="row"><!-- 메뉴바 -->
 				<div class="col-10"><!-- 상세메뉴 -->
@@ -109,7 +115,6 @@
 						<!-- 링크들 (메뉴 중앙정렬) -->
 						<ul class="navbar-nav">
 							<li class="nav-item d-flex justify-content-between align-items-center"><a class="nav-link" href="../pizza/pizzamenu.jsp">피자</a></li>
-							
 							<li class="nav-item d-flex justify-content-between align-items-center"><a class="nav-link" href="">사이드디시</a></li>
 							<li class="nav-item d-flex justify-content-between align-items-center"><a class="nav-link" href="">음료/기타</a></li>
 						</ul>
@@ -132,8 +137,10 @@
 					</div>
 				</div>
 			</div>
-		</div> <!-- 노랑2 끝 --> // 주석처리 끝
-		*/</script> 
+		</div> <!-- 노랑2 끝 -->
+--%>
+		<!-- 주석처리 끝 -->
+
 	</div>	<!-- 주황1 끝-->
 	
 	<div> <!-- 주황2 시작 -->
@@ -166,7 +173,7 @@
 						<div class="mt-3 mb-n3">
 							<span class="badge badge-primary"><%=pizza.getRegDate() %> 출시!</span>
 							<span class="badge badge-success">Best!</span>
-							<a class="badge badge-danger" href="#">해당 링크를 클릭하시면 이벤트 가격에!</a>
+							<!-- <a class="badge badge-danger" href="#">해당 링크를 클릭하시면 이벤트 가격에!</a> -->
 						</div>
 					</div> <!-- 하늘1 끝 -->
 					
@@ -184,37 +191,47 @@
 					</div> <!-- 하늘3 끝 -->
 					
 					<div> <!-- 하늘4 시작 -->
-						<div class="text-center" style="border-bottom: 3px solid black; padding-bottom : 20px">
-							<a href="#" class="btn btn-outline-secondary btn-lg" role="button">영양성분 및 알레르기 유발성분</a>
+						<div class="text-center">
+							<a class="btn btn-outline-secondary btn-lg text-secondary" type="button" data-toggle="modal" data-target="#modal-allergy">영양성분 및 알레르기 유발성분</a>
+							<%@include file="../common/allergy.jsp" %>
+							<br/>
 							<br/>
 							<br/>
 						</div>
+						<div style="background-color: black; height: 2px;" class="mb-2"></div>
 					</div> <!-- 하늘4 끝 -->
 				</div> <!-- 파랑1 끝 -->
 				
 				<br/>
 				
 				<div> <!-- 파랑2 시작 -->
-					<form id="my-form" method="post" action="../order/cart.jsp"> <!-- 주문 정보는 pizzaOrderDto로 보내야되는거같은데 -->
-						<div class="form-group" style="border-bottom: 3px solid black; padding-bottom : 20px"> <!-- 하늘1 시작 -->
+					<form id="my-form" method="post" action=""> <!-- 주문 정보는 pizzaOrderDto로 보내야되는거같은데 -->
+						<div class="form-group"> <!-- 하늘1 시작 -->
 							<h4><strong>사이즈 선택</strong></h4>
-							
 							<div>
-								<div class="custom-control custom-radio custom-control-inline">
-									<input type="radio" class="custom-control-input" name="size" id="L" value="<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>" onchange="changePizzaInfoValue(); changePizza();" checked >
-									<label class="custom-control-label" for="L"><strong class="text-danger">L</strong><strong>&emsp;<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>원</strong></label>
+								<div class="row">
+									<div class="col-6">
+										<div class="custom-control custom-radio custom-control-inline float-left">
+											<input type="radio" class="custom-control-input" name="size" id="L" value="<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>" onchange="changePizzaInfoValue(); changePizza();" checked >
+											<label class="custom-control-label" for="L"><strong class="text-danger">L</strong><strong>&emsp;<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>원&emsp;&emsp;&emsp;&emsp;&emsp;</strong></label>
+										</div>
+									</div>
+									<div class="col-6">
+										<div class="custom-control custom-radio custom-control-inline float-left">
+											<input type="radio" class="custom-control-input" name="size" id="M" value="<%=(int)(pizza.getMprice() - (pizza.getMprice() * discountRate)) %>" onchange="changePizzaInfoValue(); changePizza();">
+											<label class="custom-control-label" for="M"><strong class="text-danger">M</strong><strong>&emsp;<%=(int)(pizza.getMprice() - (pizza.getMprice() * discountRate)) %>원&emsp;&emsp;&emsp;&emsp;</strong></label>
+										</div>									
+									</div>
 								</div>
-								
-								<div class="custom-control custom-radio custom-control-inline">
-									<input type="radio" class="custom-control-input" name="size" id="M" value="<%=(int)(pizza.getMprice() - (pizza.getMprice() * discountRate)) %>" onchange="changePizzaInfoValue(); changePizza();">
-									<label class="custom-control-label" for="M"><strong class="text-danger">M</strong><strong>&emsp;<%=(int)(pizza.getMprice() - (pizza.getMprice() * discountRate)) %>원</strong></label>
-								</div>									
 							</div>
 							
-							<br/>
 						</div> <!-- 하늘1 끝 -->
-
-						<div class="form-group" style="border-bottom: 3px solid black; padding-bottom : 20px"> <!-- 하늘2 시작 -->
+						
+						<br/>
+						<div style="background-color: black; height: 2px;" class="mb-2"></div>
+						<br/>
+						
+						<div class="form-group"> <!-- 하늘2 시작 -->
 							<div><!-- float-left : 좌측정렬 , right는 우측정렬 -->
 								<h4 class="float-left"><strong>도우 선택</strong></h4>
 								<!-- 그냥 뺄까 -->
@@ -222,38 +239,44 @@
 							</div>
 							
 							<div>
-							<p>&emsp;</p> <!-- 생략하면 라디오버튼 배열 이상해짐 -->
-							<%
-								int i = 0;
-								for (Dough dough : doughs) {
-							%>
-								<div class="custom-control custom-radio">
-									
-									<input type="radio" <%=i==0 ? "checked" : "" %> class="custom-control-input" name="dou" data-doughno="<%=dough.getNo() %>" id="<%=dough.getName() %>" value="<%=dough.getPrice() %>" onchange="changePizzaInfoValue(); changePizza();">
-									<label class="custom-control-label" for="<%=dough.getName()%>"> <strong><%= dough.getName()%></strong> 
-									 <span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-									  	+ <strong class="text-danger"><%=dough.getPrice()%></strong>원
-									  </span>
-									</label>
-								</div>
-							<%
-									i++;
-								}
-
-							%>
+								<p>&emsp;</p> <!-- 생략하면 라디오버튼 배열 이상해짐 -->
+								<%
+									int i = 0;
+									for (Dough dough : doughs) {
+								%>
+									<div class="custom-control custom-radio">
+										<div class=row>
+											<div class="col-6">
+												<input type="radio" <%=i==0 ? "checked" : "" %> class="custom-control-input" name="dou" data-doughno="<%=dough.getNo() %>" id="<%=dough.getName() %>" value="<%=dough.getPrice() %>" onchange="changePizzaInfoValue(); changePizza();">
+												<label class="custom-control-label" for="<%=dough.getName()%>"> <strong><%= dough.getName()%></strong></label>
+											</div>
+											<div class="col-6">
+												<a class="float-right"> + <strong class="text-danger"><%=dough.getPrice()%></strong>원</a>
+											</div>
+										</div>
+									</div>
+								<%
+										i++;
+									}
+								%>
 							</div>
+							
 							<br/>
 						</div> <!-- 하늘2 끝 -->
-
-						<div > <!-- 하늘3 시작 -->
+						
+						<div style="background-color: black; height: 2px;" class="mb-2"></div>
+						
+						<div> <!-- 하늘3 시작 -->
+							<br/>
 							<h4 class="float-left"><strong>토핑추가</strong></h4>
 							
 							<!-- <h5 class="float-right"><a href="#" class="text-warning"><small>ⓘ 토핑 알레르기 유발성분</small></a></h5> -->
 						</div> <!-- 하늘3 끝 -->
 						
+						<br/>
+						<br/>
+						
 						<div> <!-- 하늘4 끝 -->
-							<br/>
-							<br/>
 							<!-- <p class="text-danger"><small> * 토핑추가는 피자 한판 당 5개까지 추가 가능</small></p> -->
 						</div> <!-- 하늘4 끝 -->
 						
@@ -264,15 +287,14 @@
 							List<Topping> afterToppings = toppingDao.getAfterToppingList();
 						%>
 
-						<div style="border-bottom: 3px solid black; padding-bottom : 20px"> <!-- 하늘5 시작 -->
-							<ul class="nav nav-tabs ">
-								<li class="nav-item"><a class="nav-link active" data-toggle="tab"  href="#topping1">메인</a></li>
-								<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#topping2">치즈</a></li>
-								<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#topping3">애프터</a></li>
+						<div> <!-- 하늘5 시작 -->
+							<ul class="nav nav-tabs nav-justified">
+								<li class="nav-item"><a class="nav-link text-danger active" data-toggle="tab"  href="#topping1">메인</a></li>
+								<li class="nav-item"><a class="nav-link text-danger" data-toggle="tab" href="#topping2">치즈</a></li>
+								<li class="nav-item"><a class="nav-link text-danger" data-toggle="tab" href="#topping3">애프터</a></li>
 							</ul>
 							
 							<div class="tab-content">
-							
 								<div class="tab-pane container active" id="topping1">
 									<div class="row">
 										<div class="col-sm-12">
@@ -283,9 +305,9 @@
 												<li class="" style="list-style-type:none; float:left; padding:3px">
 													<img src="<%=topping.getImageSrc()%>"/>
 													<div>
-														<div class="text-center" style="width:150px" id="topping-no-1-<%=topping.getNo() %>"><%=topping.getName() %></div>
-														<div class="text-center" style="width:150px" ><strong id="topping-price-1-<%=topping.getNo() %>"><%=topping.getPrice() %></strong></div>
-														<div class="text-center"style="width:150px">
+														<div class="text-center" style="width:150px; height:25px" id="topping-no-1-<%=topping.getNo() %>"><%=topping.getName() %></div>
+														<div class="text-center" style="width:150px; height:35px" ><strong class="text-danger" id="topping-price-1-<%=topping.getNo() %>"><%=topping.getPrice() %></strong>원</div>
+														<div class="text-center"style="width:150px;">
 															<!-- 버튼 -->
 															<input  type="number" name="topping" class="w-60 text-right" 
 																	id="topping-amount-1-<%=topping.getNo() %>" style="align:right" value="0" min="0" max="99" placeholder="최대 99" maxlength="2" oninput="numberMaxLength(this);"
@@ -302,7 +324,7 @@
 											</ul>
 										</div>
 									</div>
-								</div>
+								</div> <!-- topping1 끝 -->
 
 								<div class="tab-pane container fade" id="topping2">
 									<div class="row">
@@ -314,9 +336,9 @@
 												<li class="" style="list-style-type:none; float:left; padding:3px">
 													<img src="<%=topping.getImageSrc()%>"/>
 													<div>
-														<div class="text-center" style="width:150px" id="topping-no-2-<%=topping.getNo() %>"><%=topping.getName() %></div>
-														<div class="text-center" style="width:150px" ><strong  id="topping-price-2-<%=topping.getNo() %>"><%=topping.getPrice() %></strong></div>
-														<div class="text-center"style="width:150px">
+														<div class="text-center" style="width:150px; height:25px" id="topping-no-2-<%=topping.getNo() %>"><%=topping.getName() %></div>
+														<div class="text-center" style="width:150px; height:35px" ><strong class="text-danger" id="topping-price-2-<%=topping.getNo() %>"><%=topping.getPrice() %></strong>원</div>
+														<div class="text-center" style="width:150px;">
 															<!-- 버튼 -->
 															<input  type="number" name="topping" class="w-60 text-right" 
 																	id="topping-amount-2-<%=topping.getNo() %>" style="align:right" value="0" min="0" max="99" placeholder="최대 99" maxlength="2" oninput="numberMaxLength(this);"
@@ -333,7 +355,7 @@
 											</ul>
 										</div>
 									</div>
-								</div>
+								</div> <!-- topping2 끝 -->
 
 								<div class="tab-pane container fade" id="topping3">
 									<div class="row">
@@ -345,9 +367,9 @@
 												<li class="" style="list-style-type:none; float:left; padding:3px">
 													<img src="<%=topping.getImageSrc()%>"/>
 													<div>
-														<div class="text-center" style="width:150px" id="topping-no-3-<%=topping.getNo() %>"><%=topping.getName() %></div>
-														<div class="text-center" style="width:150px" ><strong  id="topping-price-2-<%=topping.getNo() %>"><%=topping.getPrice() %></strong></div>
-														<div class="text-center"style="width:150px">
+														<div class="text-center" style="width:150px; height:25px" id="topping-no-3-<%=topping.getNo() %>"><%=topping.getName() %></div>
+														<div class="text-center" style="width:150px; height:35px" ><strong class="text-danger" id="topping-price-2-<%=topping.getNo() %>"><%=topping.getPrice() %></strong>원</div>
+														<div class="text-center"style="width:150px;">
 															<!-- 버튼 -->
 															<input  type="number" name="topping" class="w-60 text-right" 
 																	id="topping-amount-3-<%=topping.getNo() %>" style="align:right" value="0" min="0" max="99" placeholder="최대 99" maxlength="2" oninput="numberMaxLength(this);"
@@ -364,16 +386,16 @@
 											</ul>
 										</div>
 									</div>
-								</div>
-			
-							</div>
+								</div> <!-- topping3 끝 -->
+							</div> <!-- tap content 끝? -->
+							
 							<br/>
 							<br/>
-						</div> <!-- 하늘5 끝 -->
-	
-						<!-- for문 -->
+							<div style="background-color: black; height: 2px;" class="mb-2"></div>
+							
+						</div> <!-- 하늘5 끝 (topping 끝)-->
 						
-						<div style="border-bottom: 3px solid black; padding-bottom : 20px"> <!-- 하늘6 시작 -->
+						<div> <!-- 하늘6 시작 -->
 							<br/>
 							<h4 class="float-left"><strong>수량선택</strong></h4>
 							<br/>
@@ -381,9 +403,12 @@
 							<input  type="number" name="" class="w-100 text-center" 
 									style="align:right" value="1" min="1" max="999" placeholder="최대 999" maxlength="3" oninput="numberMaxLength(this);" id="pizza-order-amount"
 									onchange="changePizzaInfoValue(); changePizza();">
+							<br/>
+							<br/>
+							<br/>
 						</div> <!-- 하늘6 끝 -->
-
-						<br/>
+						
+						<div style="background-color: black; height: 2px;" class="mb-2"></div>
 					
 						<%
 							SideDao sideDao = new SideDao();
@@ -392,16 +417,15 @@
 					
 						<div> <!-- 하늘7 시작 -->
 							<div> <!-- 보라1 시작 -->
+								<br/>
 								<h4 class="float-left"><strong>사이드디시</strong></h4>
-								
 								<br/>
 								<br/>
-							
 							</div> <!-- 보라2 시작 -->
 							
-							<div style="border-bottom: 3px solid black; padding-bottom : 20px"> <!-- 하늘8 시작 -->
+							<div> <!-- 하늘8 시작 -->
 								<div> <!-- 보라1 시작 -->
-									<div class="" >
+									<div>
 										<div class="row">
 											<div class="col-sm-12">
 												<ul class="" >
@@ -411,9 +435,9 @@
 													<li class="" style="list-style-type:none; float:left; padding:3px">
 														<img src="<%=side.getImageSrc()%>" style="width:150px"/>
 														<div>
-															<div class="text-center" style="width:150px" id="side-no-<%=side.getNo() %>"><%=side.getName() %></div>
-															<div class="text-center" style="width:150px" ><strong  id="side-price-<%=side.getNo() %>"><%=side.getPrice() %></strong></div>
-															<div class="text-center"style="width:150px">
+															<div class="text-center" style="width:150px; height:25px" id="side-no-<%=side.getNo() %>"><%=side.getName() %></div>
+															<div class="text-center" style="width:150px; height:35px" ><strong class="text-danger" id="side-price-<%=side.getNo() %>"><%=side.getPrice() %></strong>원</div>
+															<div class="text-center" style="width:150px;">
 																	<!-- 버튼 -->
 																	<input  type="number" name="side" class="w-60 text-right" 
 																			id="side-amount-<%=side.getNo() %>" style="align:right" value="0" min="0" max="999" placeholder="최대 999" maxlength="3" oninput="numberMaxLength(this);"
@@ -433,127 +457,134 @@
 									</div>
 								</div> <!-- 보라1 끝 -->
 							</div> <!-- 하늘8 끝 -->
+							<br/>
+							<br/>
+							<div style="background-color: black; height: 2px;" class="mb-2"></div>
+							<br/>
+							
 						</div> <!-- 하늘7 끝 -->				
-								
-						<br/>
 						
 						<%
 							EtcDao ectDao = new EtcDao();
 							List<Etc> etcs = ectDao.getAllEtc();
 						%>
 
-						<div> <!-- 하늘9 시작 -->
+						<div> <!-- 하늘8 시작 -->
 							<div> <!-- 보라1 시작 -->
 								<h4 class="float-left"><strong>음료 & 기타</strong></h4>
-								
-								<br/>
-								<br/>
-
 							</div> <!-- 보라2 시작 -->
 							
-							<div> <!-- 하늘8 시작 -->
-								<div> <!-- 보라1 시작 -->
-									<div class="" >										
-										<div class="row">
-											<div class="col-sm-12">
-												<ul class="" >
-													<%
-														for (Etc etc : etcs) {
-													%>
-													<li class="" style="list-style-type:none; float:left; padding:3px">
-														<img src="<%=etc.getImageSrc()%>" style="width:150px"/>
-														<div>
-															<div class="text-center" style="width:150px" id="etc-no-<%=etc.getNo() %>"><%=etc.getName() %></div>
-															<div class="text-center" style="width:150px" ><strong id="etc-price-<%=etc.getNo() %>"><%=etc.getPrice() %></strong></div>
-															<div class="text-center"style="width:150px">
-																<!-- 버튼 -->
-																<input  type="number" name="etc" class="w-60 text-right" 
-																		id="etc-amount-<%=etc.getNo() %>" style="align:right" value="0" min="0" max="999" placeholder="최대 999" maxlength="3" oninput="numberMaxLength(this);"
-																		data-eno="<%=etc.getNo() %>"
-																		data-en="<%=etc.getName() %>"
-																		data-ep="<%=etc.getPrice() %>"
-																		onchange="changeEtc(event)" >
-															</div>																														
-														</div>
-													</li>
-													<%
-														}
-													%>
-												</ul>													
-											</div>
+							<br/>
+							<br/>
+
+							<div> <!-- 보라2 시작 -->
+								<div> <!-- 분홍1 시작 -->							
+									<div class="row">
+										<div class="col-sm-12">
+											<ul>
+												<%
+													for (Etc etc : etcs) {
+												%>
+												<li class="" style="list-style-type:none; float:left; padding:3px">
+													<img src="<%=etc.getImageSrc()%>" style="width:150px"/>
+													<div>
+														<div class="text-center" style="width:150px; height:25px" id="etc-no-<%=etc.getNo() %>"><%=etc.getName() %></div>
+														<div class="text-center" style="width:150px; height:35px" ><strong class="text-danger" id="etc-price-<%=etc.getNo() %>"><%=etc.getPrice() %></strong>원</div>
+														<div class="text-center" style="width:150px;" >
+															<!-- 버튼 -->
+															<input  type="number" name="etc" class="w-60 text-right" 
+																	id="etc-amount-<%=etc.getNo() %>" style="align:right" value="0" min="0" max="999" placeholder="최대 999" maxlength="3" oninput="numberMaxLength(this);"
+																	data-eno="<%=etc.getNo() %>"
+																	data-en="<%=etc.getName() %>"
+																	data-ep="<%=etc.getPrice() %>"
+																	onchange="changeEtc(event)" >
+														</div>																														
+													</div>
+												</li>
+												<%
+													}
+												%>
+											</ul>													
 										</div>
 									</div>
-								</div> <!-- 보라1 끝 -->
-							</div> <!-- 하늘8 끝 -->
-						</div> <!-- 하늘9 끝 -->
+								</div> <!-- 분홍1 끝 -->
+							</div> <!-- 보라2 끝 -->
+						</div> <!-- 하늘8 끝 -->
 					</form>
 						
-						<div class="fixed-bottom row bg-light"> <!-- 하단 가격 고정 -->
-							<div class="col-12">
-								<form method="POST" action="register.jsp">
-									<table class="table">
-										<thead>
-											<tr class="text-center">
-												<th>피자</th>
-												<th>사이드디시</th>
-												<th>음료 & 기타</th>
-												<th>총 금액</th>
-											</tr>
-										</thead>
-										<%
-											String defaultPizzaInfo = "" + pizza.getNo()
-																	+ "+" + "L" + "+" + "100" + "+" + "0" + "+" + "1"
-																	+ "+" + pizza.getLprice() + "+"
-																	+ (int) (pizza.getLprice() * (1-discountRate));
-										%>
-										
-										<!-- 피자는 보내진 거 하나만이니까 no -->
-										<tbody>
-											<tr id="pizza-receive-info %>" class="text-center">
-												<td class="text">
-													<a><small id="pizza-receive-name" data-pizzano="<%=pizza.getNo() %>"><%=pizza.getName()%></small> <small>x</small> <small id="pizza-receive-count">1</small></a>
-													<br/>
-													<p>
-														<small class="text-secondary" id="pizza-receive-dou" > 기본 도우 </small>
-														<small class="text-secondary"> / </small>
-														<small class="text-secondary" id="pizza-receive-size" >L</small>
-														<input name="pizzainfo" type="hidden" value="<%=defaultPizzaInfo %>" >
-													</p>
-													
-													<p id="topping-receive-kinds">
-														<small></small>
-													</p>
-												</td>
-	
-	
+					<div class="fixed-bottom row bg-light"> <!-- 하단 가격 고정 -->
+						<div class="col-12">
+							<form method="POST" action="register.jsp">
+								<table class="table" >
+									<colgroup>
+										<col width="27%">
+										<col width="27%">
+										<col width="27%">
+										<col width="19%">
+									</colgroup>
+									<thead>
+										<tr class="text-center">
+											<th>피자</th>
+											<th>사이드디시</th>
+											<th>음료 & 기타</th>
+											<th>총 금액</th>
+										</tr>
+									</thead>
+									<%
+										String defaultPizzaInfo = "" + pizza.getNo()
+																+ "+" + "L" + "+" + "100" + "+" + "0" + "+" + "1"
+																+ "+" + pizza.getLprice() + "+"
+																+ (int) (pizza.getLprice() * (1-discountRate));
+									%>
+									
+									<!-- 피자는 보내진 거 하나만이니까 no -->
+									<tbody>
+										<tr id="pizza-receive-info %>" class="text-center">
+											<td class="text">
+												<a><small id="pizza-receive-name" data-pizzano="<%=pizza.getNo() %>"><%=pizza.getName()%></small> <small>x</small> <small id="pizza-receive-count">1</small></a>
+												<br/>
+												<p>
+													<small class="text-secondary" id="pizza-receive-dou" > 기본 </small>
+													<small class="text-secondary"> / </small>
+													<small class="text-secondary" id="pizza-receive-size" >L</small>
+													<input name="pizzainfo" type="hidden" value="<%=defaultPizzaInfo %>" >
+												</p>
+												
+												<p id="topping-receive-kinds">
+													<small></small>
+												</p>
+											</td>
+
+
 											<!-- 사이드 제한 없음 -->
 											<!-- 사이드 메뉴 클릭 시 추가됨 -->
-												<td class="text" id="ordered-side">
-													<p id="side-receive-kinds">
-														<small></small> 
-													</p>
-												</td>
+											<td class="text" id="ordered-side">
+												<p id="side-receive-kinds">
+													<small></small> 
+												</p>
+											</td>
 			
 											<!-- 기타 메뉴 클릭 시 추가됨 -->
-												<td class="text" id="ordered-etc">
-													<p id="etc-receive-kinds">
-														<small></small>
-													</p>
-												</td>
-	
-												<td class="text">
-													<!-- 피자 -->		<input type="hidden" id="pizza-total-order-price" value="<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>"  min="0">
-													<!-- 사이드 -->	<input type="hidden" id="side-order-price" value="0" min="0">
-													<!-- 기타 -->		<input type="hidden" id="etc-order-price" value="0" min="0">
-													<p><strong id="order-price" ><%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %></strong>원</p>
-													<button type="submit">주문하기</button>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</form>
-							</div>
+											<td class="text" id="ordered-etc">
+												<p id="etc-receive-kinds">
+													<small></small>
+												</p>
+											</td>
+
+											<td class="text">
+												<!-- 피자 -->	<input type="hidden" id="pizza-total-order-price" value="<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>"  min="0">
+												<!-- 사이드 -->	<input type="hidden" id="side-order-price" value="0" min="0">
+												<!-- 기타 -->	<input type="hidden" id="etc-order-price" value="0" min="0">
+												<p><strong id="order-price" ><%=NumberUtil.numberWithComma((int)(pizza.getLprice() - (pizza.getLprice() * discountRate)))%></strong>원</p>
+												<button class="btn btn-primary btn-lg" type="submit">주문하기</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
 						</div>
+					</div> <!-- 하단 가격 고정 끝 -->
+					
 				</div> <!-- 파랑2 끝 -->
 
 					
@@ -630,6 +661,12 @@
 		var pizzaAmount = document.getElementById("pizza-order-amount").value;
 		var pizzaPrice = document.querySelector("input[name=size]:checked").value;
 		var pizzaDcPrice = pizzaPrice * <%=(1 - discountRate) %>;
+		
+		if(pizzaAmount == 0 ) {
+			alert("피자는 한 판 이상 주문하셔야 합니다.");
+			document.querySelector("#pizza-order-amount").value = 1;
+			return;
+		}
 		
 		var pizzaInfoValue = pizzaNo + "+" + pizzaSize + "+" + doughNo + "+" + doughPrice + "+" + pizzaAmount + "+" + pizzaPrice + "+" + pizzaDcPrice;
 		document.querySelector("input[name=pizzainfo]").value = pizzaInfoValue;

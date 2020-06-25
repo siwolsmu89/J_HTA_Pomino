@@ -319,8 +319,8 @@
 		</div>
 		<div id="page-footer" class="row mt-5 mb-5">
 			<div class="col-12 text-center">
-				<a href="#" class="btn btn-primary btn-lg" role="button">신제품보러가기</a>
-				<a href="#" class="btn btn-secondary btn-lg" role="button">다른제품 보러가기</a>
+				<a href="/domino/event/eventlist.jsp" class="btn btn-primary btn-lg" role="button">이벤트 보기</a>
+				<a href="/domino/pizza/pizzamenu.jsp" class="btn btn-secondary btn-lg" role="button">다른 제품 보기</a>
 			</div>
 		</div>
 	</div>

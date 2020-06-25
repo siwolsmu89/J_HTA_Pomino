@@ -122,6 +122,25 @@ public class PizzaDao {
 		return pizza;
 	}
 	
+	public Pizza getPizzaByName(String pizzaName) throws SQLException {
+		Pizza pizza = null;
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("pizza.getPizzaByName"));
+		pstmt.setString(1, pizzaName);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			pizza = resultSetToPizza(rs);
+		}
+		
+		rs.close();
+		pstmt.close();
+		connection.close();
+		
+		return pizza;
+	}
+	
 	public void insertPizza(Pizza pizza) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("pizza.insertPizza"));

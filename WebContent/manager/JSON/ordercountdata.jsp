@@ -7,7 +7,7 @@
     pageEncoding="UTF-8"%>
 <%
 	int date = NumberUtil.stringToInt(request.getParameter("date"));
-
+	System.out.println(date);
 	OrderDao orderDao = new OrderDao();
 	List<Order> orders = orderDao.getOrderCountByDateRange(date);
 	

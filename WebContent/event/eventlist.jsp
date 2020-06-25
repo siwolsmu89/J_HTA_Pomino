@@ -73,14 +73,10 @@
 			<%
 				for(Event event : events) {
 			%>		
-				
-					<a href="/domino/event/eventdetail.jsp?eventno=<%=event.getNo()%>"><img class="pr-3" src="../resource/images/event/<%=event.getImageSrc()%>" alt="이벤트" width="48%"/></a>
+					<a href="/domino/event/eventdetail.jsp?eventno=<%=event.getNo()%>"><img class="pr-3" src="<%=event.getImageSrc()%>" alt="이벤트" width="48%"/></a>
 			<%
 				}
-			
 			%>
-				
-				
 			</div>
 		</div>
 	</div>

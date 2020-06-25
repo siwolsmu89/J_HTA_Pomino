@@ -36,20 +36,29 @@
 				</div>
 
 				<div class="col-8">
-					<ul class="nav justify-content-end">
-						<li class="nav-item"><a class="nav-link active" href="#">홈</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link active" href="#">관리자</a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">></a></li>
-						<li class="nav-item"><a class="nav-link disabled" href="#">이벤트</a></li>
+					<ul class="nav justify-content-end small text-muted">
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/common/home.jsp">홈</a>	<!--text-muted pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a><!-- pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link text-muted active pr-1" href="/domino/manager/info.jsp">관리자</a><!--text-muted active pr-1  -->
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled pr-1" href="#" tabindex="-1" aria-disabled="true">></a>
+					  </li>
+					  <li class="nav-item">
+					    <a class="nav-link disabled text-dark font-weight-bold pr-1" href="#" tabindex="-1" aria-disabled="true">이벤트</a>
+					  	<!--text-dark font-weight-bold pr-1  -->
+					  </li>
 					</ul>
 				</div>
 			</div>
 			<div style="background-color: black; height: 2px;" class="mb-2"></div>
 			<div class="row ">
-				<div class="col-12">			
+				<div class="col-12">
 					<div class="navbar navbar-expand-sm ">
 						<ul class="navbar-nav">
 							<li
@@ -134,18 +143,21 @@
 									</select>
 								</div>
 								<!-- 사진등록 -->
-								<div class="form-group">
-									<label>
-										첨부파일(<%=event.getImageSrc() %>)
-									</label>
-									<p class="text-danger">이미지 이름 동일하게 해서 업데이트</p>
-									<div>
-										<input type="file" name="upfile" />
+								<div class="form-group input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text">업로드</span>
+									</div>
+									<div class="form-group custom-file">
+										<input type="file" class="custom-file-input" name="upfile"
+											aria-describedby="inputGroupFileAddon01"> <label
+											class="custom-file-label" for="inputGroupFile01">
+											이벤트사진 ( <%=event.getImageSrc() %> )
+										</label>
 									</div>
 								</div>
 
 								<div class="text-right">
-									<button type="submit" class="btn btn-primary">수정하기</button>
+									<button type="submit" class="btn btn-primary btn-block">수정하기</button>
 								</div>
 							</form>
 
