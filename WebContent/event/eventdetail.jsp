@@ -99,9 +99,7 @@
 					</div>
 					<div class="row"><!-- 버튼 -->
 						<div class="col-12 text-center py-2 my-2">
-							
-						  <a href="/domino/pizza/detail.jsp?no=<%=event.getPizzaNo() %>&discountrate=<%=event.getDiscountRate() %>" class="btn btn-warning btn-lg" style="width: 50%; height: 100px; font-size: 40px;">주문하러 가기</a>
-						
+						  <a href="/domino/pizza/detail.jsp?no=<%=event.getPizzaNo() %>&discountrate=<%=event.getDiscountRate() %>"><button class="btn btn-primary btn-lg"style="width: 300px; height: 90px; font-size: xx-large;">주문하러 가기</button></a>
 						</div>
 					</div>
 				  

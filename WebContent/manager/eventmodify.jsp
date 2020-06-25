@@ -34,7 +34,7 @@
 		// 이벤트 객체에 값 넣기
 		oldEvent.setName(name);
 		if (imageSrc != null) {
-			oldEvent.setImageSrc(imageSrc);
+			oldEvent.setImageSrc("/domino/resource/images/event/"+imageSrc);
 		}
 		oldEvent.setName(name);
 		oldEvent.setStartDate(startDate);

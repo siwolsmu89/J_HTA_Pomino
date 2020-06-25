@@ -32,7 +32,7 @@
 		// 사이드 객체에 값 넣기
 		oldSide.setName(name);
 		if (imageSrc != null) {
-			oldSide.setImageSrc(imageSrc);			
+			oldSide.setImageSrc("/domino/resource/images/sides/"+imageSrc);			
 		}
 		oldSide.setPrice(price);
 		

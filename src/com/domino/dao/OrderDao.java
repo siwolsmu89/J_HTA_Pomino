@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -690,7 +692,7 @@ public class OrderDao {
 		return orderInfos;
 	}
 
-	public List<Order> getOrderCountByDateRange(int date) throws SQLException {
+	public List<Order> getOrderCountByDateRange(int date) throws SQLException, ParseException {
 		List<Order> orders = new ArrayList<Order>();
 		
 		Connection connection = ConnectionUtil.getConnection();
@@ -700,8 +702,9 @@ public class OrderDao {
 		
 		while(rs.next()) {
 			Order order = new Order();
-			order.setRegDate(rs.getDate("order_reg_date"));
-			order.setDiscountPrice(rs.getInt("price"));
+			SimpleDateFormat fm = new SimpleDateFormat("yyMMdd");
+			order.setRegDate(fm.parse(rs.getString("day")));
+			order.setDiscountPrice(rs.getInt("total"));
 			
 			orders.add(order);
 		}

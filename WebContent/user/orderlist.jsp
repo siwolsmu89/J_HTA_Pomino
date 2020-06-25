@@ -36,7 +36,7 @@
 	<div class="header">
 		<div class="row">	
 			<div class="col-4">
-				<h4>나의정보</h4>
+				<h4>나의 정보</h4>
 			</div>
 			<div class="col-8">
 				<ul class="nav justify-content-end small text-muted">
@@ -318,8 +318,8 @@
 		</div>
 		<div id="page-footer" class="row mt-5 mb-5">
 			<div class="col-12 text-center">
-				<a href="/domino/event/eventlist.jsp" class="btn btn-primary btn-lg" role="button">이벤트 보기</a>
-				<a href="/domino/pizza/pizzamenu.jsp" class="btn btn-secondary btn-lg" role="button">다른 제품 보기</a>
+				<a href="/domino/event/eventlist.jsp"><button class="btn btn-outline-secondary btn-lg" style="width: 200px; height: 65px;" role="button">이벤트 보기</button></a>&ensp;
+				<a href="/domino/pizza/pizzamenu.jsp"><button class="btn btn-primary btn-lg" style="width: 200px; height: 65px;" role="button">다른 제품 보기</button></a>
 			</div>
 		</div>
 	</div>

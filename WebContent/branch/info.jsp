@@ -67,13 +67,13 @@
 					<div class="navbar navbar-expand-sm ">
 						<ul class="navbar-nav">
 							<li
-								class="nav-item  d-flex justify-content-between align-itens-center small"><a
+								class="nav-item  d-flex justify-content-between align-items-center small"><a
 								class="nav-link text-dark font-weight-bold" href="info.jsp">메인</a></li>
 							<li
-								class="nav-item  d-flex justify-content-between align-itens-center small"><a
+								class="nav-item  d-flex justify-content-between align-items-center small"><a
 								class="nav-link text-muted" href="orderlist.jsp">주문내역</a></li>
 							<li
-								class="nav-item  d-flex justify-content-between align-itens-center small"><a
+								class="nav-item  d-flex justify-content-between align-items-center small"><a
 								class="nav-link text-muted" href="branchdetail.jsp">상세정보</a></li>
 						</ul>
 					</div>

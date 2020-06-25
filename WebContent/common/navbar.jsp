@@ -23,7 +23,7 @@
 			<div class="row">
 				<div class="col-3"> <!-- 로고 -->
 					<a class="navbar-brand" href="/domino/common/home.jsp">
-						<img src="../resource/images/logo/domino.png" alt="도미노 로고"/>
+						<img src="../resource/images/logo/pominoLogo.png" alt="도미노 로고"/>
 					</a> 
 				</div>
 				<div class="col-5">	

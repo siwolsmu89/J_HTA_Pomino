@@ -31,7 +31,7 @@
 	// 피자객체에 값 넣기
 	Pizza pizza = new Pizza();
 	pizza.setName(name);
-	pizza.setImageSrc(imageSrc);
+	pizza.setImageSrc("/domino/resource/images/pizzas/"+imageSrc);
 	pizza.setLprice(lPrice);
 	pizza.setMprice(mPrice);
 	

@@ -40,7 +40,7 @@
 	event.setEndDate(endDate);
 	event.setDiscountRate(discountRate);
 	event.setPizzaNo(pizzaNo);
-	event.setImageSrc(imageSrc);
+	event.setImageSrc("/domino/resource/images/event/"+imageSrc);
 
 	// 이벤트 생성
 	eventDao.insertEvent(event);

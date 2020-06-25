@@ -32,7 +32,7 @@
 		// 사이드 객체에 값 넣기
 		oldDough.setName(name);
 		if (imageSrc != null) {
-			oldDough.setImageSrc(imageSrc);
+			oldDough.setImageSrc("/domino/resource/images/doughs/"+imageSrc);
 		}
 		oldDough.setPrice(price);
 

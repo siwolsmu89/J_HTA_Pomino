@@ -31,7 +31,7 @@
 	// 사이드객체에 값 넣기
 	Etc etc = new Etc();
 	etc.setName(name);
-	etc.setImageSrc(imageSrc);
+	etc.setImageSrc("/domino/resource/images/etcs/"+imageSrc);
 	etc.setPrice(price);
 
 	// 사이드 생성

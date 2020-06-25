@@ -215,16 +215,25 @@
 											simpleMenu = order.getSideName() + (orderCount > 1 ? "외" + (orderCount - 1) + "건" : "");
 										}
 							%>
-							<tr <%if (os == 4 || os == 5) {%>
-								class="text-muted" <%} else {%>
-								class="font-weight-bold" <%}%>>
-								<td><%=orderNo%></td>
-								<td><%=branchName%></td>
-								<td><%=simpleMenu%></td>
-								<td><%=totalPrice%></td>
-								<td><%=requestTime%></td>
-								<td><%=statusStr%></td>
-							</tr>
+								<tr 
+							<%
+								if (os == 4 || os == 5) {
+							%>
+								class="text-muted" 
+							<%	
+								} else {
+							%>
+								class="font-weight-bold" 
+							<%
+								}
+							%>	>
+									<td><%=orderNo%></td>
+									<td><%=branchName%></td>
+									<td><%=simpleMenu%></td>
+									<td><%=totalPrice%></td>
+									<td><%=requestTime%></td>
+									<td><%=statusStr%></td>
+								</tr>
 							<%
 									}
 								}

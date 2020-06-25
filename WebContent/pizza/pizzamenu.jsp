@@ -166,7 +166,7 @@
 												<button type="button" 
 													   data-toggle="modal"
 													   data-target=".pizza-<%=pizza.getNo() %>"
-													   style="position:absolute; left:210px; bottom:198px; border:0; padding:0">
+													   style="position:absolute; left:210px; bottom:182px; border:0; padding:0">
 													   <img src="../resource/images/home/detailsee.png">
 												</button>
 												
@@ -222,7 +222,7 @@
 													        			<div style="border-bottom: 1px solid black; padding-bottom:10px">
 													        				<span><strong>메인 토핑</strong></span>
 													        			</div>
-												        				<p class="text-muted" style="">모짜렐라, 페터크림 치즈, 갈릭크림 소스, 로스트 포테이토, 파인애플, 양파, 뭐 등등</p>
+												        				<p class="text-muted" style="">모짜렐라, 페터크림 치즈, 갈릭크림 소스, 로스트 포테이토, 파인애플, 양파 등</p>
 												        				
 												        				<div style="border-bottom: 1px solid black; padding-bottom:10px">
 													        				<span><strong>원산지</strong></span>

@@ -30,7 +30,7 @@
 	<div class="header">
 		<div class="row">	
 			<div class="col-4"><!-- 페이지명 바꿔서 사용하기 -->
-				<h4>나의정보</h4>
+				<h4>나의 정보</h4>
 			</div>
 			<div class="col-8"><!-- 홈>회원가입 같은 형태 바꿔서 사용하기(나중에 javascript로...) -->
 				<ul class="nav justify-content-end small text-muted">

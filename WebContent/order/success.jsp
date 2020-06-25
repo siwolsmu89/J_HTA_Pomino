@@ -1,3 +1,5 @@
+<%@page import="com.domino.dao.LocationDao"%>
+<%@page import="com.domino.vo.Location"%>
 <%@page import="com.domino.vo.Branch"%>
 <%@page import="com.domino.dao.BranchDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -52,9 +54,11 @@
 				    <h1 class="py-2" >주문이 완료되었습니다.</h1>
 					<%
 						// 세션에 매장번호가 저장되어 있을 것, 원래는 그거 불러와서 쓰기
-						int branchNo = 100;
+						int locationNo = (int) session.getAttribute("savedLocationNo");
+						LocationDao locationDao = new LocationDao();
+						Location location = locationDao.getLocationByNo(locationNo);
 						BranchDao branchDao = new BranchDao();
-						Branch branch = branchDao.getBranchByNo(branchNo);
+						Branch branch = branchDao.getBranchByAddr(location.getAddrFirst());
 					%>
 					
 					<h4 class="text-primary font-weight-bold py-2"><%=branch.getName() %> <%=branch.getTel() %></h4>

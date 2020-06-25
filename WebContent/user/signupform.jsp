@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.domino.vo.Branch"%>
 <%@page import="com.domino.dao.BranchDao"%>
 <%@page import="com.domino.util.NumberUtil"%>
@@ -17,6 +19,9 @@
 <body>
 <%
 		String position="signup";
+		Date nowTime = new Date();
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
+		
 %>
 <%@ include file="../common/navbar.jsp"%>
 <div class="container">
@@ -142,10 +147,10 @@
 									<div class="form-group">
 										<label>이메일 수신여부</label>
 		                    			<label>
-		                            		<input type="radio" id="emailReceiveYn" name="emailReceiveYn" value="Y" checked> 동의합니다.
+		                            		<input type="radio" id="emailReceiveY" name="emailReceiveYn" value="Y" checked> 동의합니다.
 		                       			</label>
 		                        		<label>
-		                            		<input type="radio" id="emailReceiveYn" name="emailReceiveYn" value="N"> 동의하지 않습니다.
+		                            		<input type="radio" id="emailReceiveN" name="emailReceiveYn" value="N" onclick="ReceiveEmailNot()"> 동의하지 않습니다.
 		                        		</label>
 									</div>
 									
@@ -155,7 +160,7 @@
 				                            <input type="radio" id="smsReceiveYn" name="smsReceiveYn" value="Y" checked> 동의합니다.
 				                        </label>
 				                        <label class="radio-inline">
-				                            <input type="radio" id="smsReceiveYn" name="smsReceiveYn" value="N"> 동의하지 않습니다.
+				                            <input type="radio" id="smsReceiveYn" name="smsReceiveYn" value="N" onclick="ReceiveSmsNot()"> 동의하지 않습니다.
 				                        </label>
 		                    		</div>
 		                
@@ -366,7 +371,7 @@
 		                            		<input type="radio" id="emailReceiveYn" name="emailReceiveYn" value="Y" checked> 동의합니다.
 		                       			</label>
 		                        		<label>
-		                            		<input type="radio" id="emailReceiveYn" name="emailReceiveYn" value="N"> 동의하지 않습니다.
+		                            		<input type="radio" id="emailReceiveYn" name="emailReceiveYn" value="N" onclick="ReceiveEmailNot()"> 동의하지 않습니다.
 		                        		</label>
 									</div>
 									
@@ -376,7 +381,7 @@
 				                            <input type="radio" id="smsReceiveYn" name="smsReceiveYn" value="Y" checked> 동의합니다.
 				                        </label>
 				                        <label class="radio-inline">
-				                            <input type="radio" id="smsReceiveYn" name="smsReceiveYn" value="N"> 동의하지 않습니다.
+				                            <input type="radio" id="smsReceiveYn" name="smsReceiveYn" value="N" onclick="ReceiveSmsNot()"> 동의하지 않습니다.
 				                        </label>
 		                    		</div>
 		                
@@ -405,7 +410,7 @@
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">
 	function alertNot(event) {
-		if(confirm('동의합니다를 눌러주세요.')){
+		if(alert('약관에 동의해주세요.')){
 			
 		} else {
 			event.preventDefault();
@@ -454,6 +459,16 @@
 			event.preventDefault();
 		}
 	}
+	
+	function ReceiveEmailNot() {
+		alert("<%=sf.format(nowTime)%>일 부로 이메일을 수신거부 하셨습니다.");
+		return;
+	}
+	
+	function ReceiveSmsNot() {
+		alert("<%=sf.format(nowTime)%>일 부로 Sms를 수신거부 하셨습니다.");
+		return;
+	}	
 </script>
 </body>
 </html>

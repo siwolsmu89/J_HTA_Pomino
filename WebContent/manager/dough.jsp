@@ -32,7 +32,7 @@
 	// 도우객체에 값 넣기
 	Dough dough = new Dough();
 	dough.setName(name);
-	dough.setImageSrc(imageSrc);
+	dough.setImageSrc("/domino/resource/images/doughs/"+imageSrc);
 	dough.setPrice(price);
 	
 	// 도우 생성

@@ -45,7 +45,7 @@
 	branch.setOpenTime(openTime);
 	branch.setCloseTime(closeTime);
 	branch.setComment(comment);
-	branch.setImageSrc(imageSrc);	
+	branch.setImageSrc("/domino/resource/images/branches/"+imageSrc);	
 
 	// 가맹점 생성
 	branchDao.insertBranch(branch);

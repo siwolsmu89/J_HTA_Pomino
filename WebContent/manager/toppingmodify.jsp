@@ -33,7 +33,7 @@
 		oldTopping.setName(name);
 		oldTopping.setCategory(category);
 		if (imageSrc != null) {
-			oldTopping.setImageSrc(imageSrc);
+			oldTopping.setImageSrc("/domino/resource/images/toppings/"+imageSrc);
 		}
 		oldTopping.setPrice(price);
 

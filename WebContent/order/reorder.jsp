@@ -40,6 +40,11 @@
 	}
 	*/
 	
+	if (session.getAttribute("savedLocationNo") == null) {
+		response.sendRedirect("selectlocation.jsp");
+		return;
+	}
+	
 	if (orderNo==0) {
 		out.println("<script>alert('등록된 퀵오더가 없습니다. 나의 주문 내역에서 퀵오더를 확인하세요'); location.href='/domino/common/home.jsp'; </script>");
 		out.flush();
@@ -85,12 +90,7 @@
 	orderDao.insertReorderCart(orderNo);
 	cart = orderDao.getCartByUserNo(userNo);
 
-	if (session.getAttribute("savedLocationNo") == null) {
-		response.sendRedirect("selectlocation.jsp");
-		return;
-	} else {
-		cart.setLocationNo((int) session.getAttribute("savedLocationNo"));
-	}
+	cart.setLocationNo((int) session.getAttribute("savedLocationNo"));
 
 	int cartNo = cart.getNo();
 	

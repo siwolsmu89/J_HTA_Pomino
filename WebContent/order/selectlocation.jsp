@@ -238,7 +238,11 @@
 				locationNo = radios[i].value;
 				branchNo = radios[i].getAttribute("data-branch-no")
 			}
-			
+		}
+		
+		if (locationNo == null) {
+			alert("배송이 가능한 주소를 선택해주세요");
+			return;
 		}
 		
 		location.href="savelocation.jsp?locationno=" + locationNo + "&branchno=" + branchNo;

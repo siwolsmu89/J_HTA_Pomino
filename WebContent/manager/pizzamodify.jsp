@@ -34,7 +34,7 @@
 		// 피자객체에 값 넣기
 		oldPizza.setName(name);
 		if (imageSrc != null) {
-			oldPizza.setImageSrc(imageSrc);			
+			oldPizza.setImageSrc("/domino/resource/images/pizzas/"+imageSrc);			
 		}
 		oldPizza.setLprice(lPrice);
 		oldPizza.setMprice(mPrice);

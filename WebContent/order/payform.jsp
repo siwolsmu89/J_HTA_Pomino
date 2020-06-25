@@ -235,7 +235,6 @@
 									for (PizzaOrderDto po : pol) {
 										String pizzaName = po.getPizzaName() + " (" + po.getDoughName() + ")";
 										String size = po.getPizzaSize();
-										int price = po.getOrderPrice();
 										int discountPrice = po.getDiscountPrice();
 										ToppingDetailDao toppingDetailDao = new ToppingDetailDao();
 										List<ToppingOrderDto> tol = toppingDetailDao.getToppingOrdersByPizzaNo(po.getNo());
@@ -244,10 +243,10 @@
 											toppingPrice += to.getOrderPrice();
 										}
 										toppingPrice *= po.getOrderAmount();
-										allTotalPrice += price + toppingPrice;
+										allTotalPrice += discountPrice + toppingPrice;
 										allTotalDiscountPrice += discountPrice + toppingPrice;
 							%>
-										<p class="small font-weight-bold"><%=pizzaName %> <%=size %> x <%=po.getOrderAmount() %> / <%=NumberUtil.numberWithComma(price) %>원 </p>
+										<p class="small font-weight-bold"><%=pizzaName %> <%=size %> x <%=po.getOrderAmount() %> / <%=NumberUtil.numberWithComma(discountPrice) %>원 </p>
 							<%
 										for (ToppingOrderDto to : tol) {
 							%>			

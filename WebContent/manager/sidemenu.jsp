@@ -31,7 +31,7 @@
 	// 사이드객체에 값 넣기
 	Side side = new Side();
 	side.setName(name);
-	side.setImageSrc(imageSrc);
+	side.setImageSrc("/domino/resource/images/sides/"+imageSrc);
 	side.setPrice(price);
 	
 	// 사이드 생성

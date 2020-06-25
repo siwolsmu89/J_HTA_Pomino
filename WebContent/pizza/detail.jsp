@@ -212,13 +212,13 @@
 								<div class="row">
 									<div class="col-6">
 										<div class="custom-control custom-radio custom-control-inline float-left">
-											<input type="radio" class="custom-control-input" name="size" id="L" value="<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>" onchange="changePizzaInfoValue(); changePizza();" checked >
+											<input type="radio" class="custom-control-input" name="size" id="L" value="<%=(pizza.getLprice() - (int)(pizza.getLprice() * discountRate)) %>" onchange="changePizzaInfoValue(); changePizza();" checked >
 											<label class="custom-control-label" for="L"><strong class="text-danger">L</strong><strong>&emsp;<%=(int)(pizza.getLprice() - (pizza.getLprice() * discountRate)) %>원&emsp;&emsp;&emsp;&emsp;&emsp;</strong></label>
 										</div>
 									</div>
 									<div class="col-6">
 										<div class="custom-control custom-radio custom-control-inline float-left">
-											<input type="radio" class="custom-control-input" name="size" id="M" value="<%=(int)(pizza.getMprice() - (pizza.getMprice() * discountRate)) %>" onchange="changePizzaInfoValue(); changePizza();">
+											<input type="radio" class="custom-control-input" name="size" id="M" value="<%=(pizza.getMprice() - (int)(pizza.getMprice() * discountRate)) %>" onchange="changePizzaInfoValue(); changePizza();">
 											<label class="custom-control-label" for="M"><strong class="text-danger">M</strong><strong>&emsp;<%=(int)(pizza.getMprice() - (pizza.getMprice() * discountRate)) %>원&emsp;&emsp;&emsp;&emsp;</strong></label>
 										</div>									
 									</div>
@@ -310,7 +310,7 @@
 														<div class="text-center"style="width:150px;">
 															<!-- 버튼 -->
 															<input  type="number" name="topping" class="w-60 text-right" 
-																	id="topping-amount-1-<%=topping.getNo() %>" style="align:right" value="0" min="0" max="99" placeholder="최대 99" maxlength="2" oninput="numberMaxLength(this);"
+																	id="topping-amount-1-<%=topping.getNo() %>" style="align:right" value="0" min="0" max="9" placeholder="최대 9" maxlength="1" oninput="numberMaxLength(this);"
 																	data-tno="<%=topping.getNo() %>" 
 																	data-tn="<%=topping.getName() %>" 
 																	data-tp="<%=topping.getPrice() %>"
@@ -341,7 +341,7 @@
 														<div class="text-center" style="width:150px;">
 															<!-- 버튼 -->
 															<input  type="number" name="topping" class="w-60 text-right" 
-																	id="topping-amount-2-<%=topping.getNo() %>" style="align:right" value="0" min="0" max="99" placeholder="최대 99" maxlength="2" oninput="numberMaxLength(this);"
+																	id="topping-amount-2-<%=topping.getNo() %>" style="align:right" value="0" min="0" max="9" placeholder="최대 9" maxlength="1" oninput="numberMaxLength(this);"
 																	data-tno="<%=topping.getNo() %>" 
 																	data-tn="<%=topping.getName() %>" 
 																	data-tp="<%=topping.getPrice() %>"
@@ -372,7 +372,7 @@
 														<div class="text-center"style="width:150px;">
 															<!-- 버튼 -->
 															<input  type="number" name="topping" class="w-60 text-right" 
-																	id="topping-amount-3-<%=topping.getNo() %>" style="align:right" value="0" min="0" max="99" placeholder="최대 99" maxlength="2" oninput="numberMaxLength(this);"
+																	id="topping-amount-3-<%=topping.getNo() %>" style="align:right" value="0" min="0" max="9" placeholder="최대 9" maxlength="1" oninput="numberMaxLength(this);"
 																	data-tno="<%=topping.getNo() %>" 
 																	data-tn="<%=topping.getName() %>" 
 																	data-tp="<%=topping.getPrice() %>"
@@ -659,8 +659,13 @@
 		var doughNo = document.querySelector("input[name=dou]:checked").dataset.doughno
 		var doughPrice = document.querySelector("input[name=dou]:checked").value;
 		var pizzaAmount = document.getElementById("pizza-order-amount").value;
-		var pizzaPrice = document.querySelector("input[name=size]:checked").value;
-		var pizzaDcPrice = pizzaPrice * <%=(1 - discountRate) %>;
+		var pizzaDcPrice = document.querySelector("input[name=size]:checked").value;
+		var pizzaPrice;
+		if ("M"==pizzaSize) {
+			pizzaPrice = <%=pizza.getMprice() %>;
+		} else {
+			pizzaPrice = <%=pizza.getLprice() %>;
+		}
 		
 		if(pizzaAmount == 0 ) {
 			alert("피자는 한 판 이상 주문하셔야 합니다.");

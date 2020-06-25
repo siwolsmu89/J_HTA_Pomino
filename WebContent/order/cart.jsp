@@ -157,12 +157,12 @@
 										src="<%=pizzaOrderDao.getImageSrc() %>">
 									<%=pizzaOrderDao.getPizzaName()%><br/> 
 									<small style="color: gray; font-size: 14px;"><%=pizzaOrderDao.getPizzaSize()%></small><br/>
-									<%=NumberUtil.numberWithComma(pizzaOrderDao.getPizzaPrice())%>원
+									<%=NumberUtil.numberWithComma(pizzaOrderDao.getDiscountPrice())%>원
 								</p>
 							</td>
 							<td>
 					<%
-							int orderPrice = pizzaOrderDao.getOrderPrice();
+							int orderPrice = pizzaOrderDao.getDiscountPrice();
 							ToppingDetailDao dao = new ToppingDetailDao();
 							List<ToppingOrderDto> toppingOrderDtos = dao.getToppingOrdersByPizzaNo(pizzaOrderDao.getNo());
 							for (ToppingOrderDto tol : toppingOrderDtos) {
@@ -283,7 +283,7 @@
 			<div class="col-12">
 				<a href="../pizza/pizzamenu.jsp"><button
 						class="btn btn-outline-secondary btn-lg"
-						style="width: 200px; height: 65px;"> + 메뉴 추가하기</button></a>
+						style="width: 200px; height: 65px;"> + 메뉴 추가하기</button></a>&ensp;
 				<a href="payform.jsp"><button class="btn btn-primary btn-lg"
 						style="width: 200px; height: 65px;">주문하기</button></a>
 			</div>
@@ -306,7 +306,12 @@
 					<h6>도미노피자의 맛있는 메뉴를 마음껏 골라 담으세요</h6>
 				</div>
 				<div class="text-center mt-3">
-					<a href="../pizza/pizzamenu.jsp" class="btn btn-outline-secondary active"><small>+ 메뉴 추가하기</small></a>
+					<a href="../pizza/pizzamenu.jsp">
+						<button
+						   class="btn btn-outline-secondary btn-lg"
+						   style="width: 200px; height: 65px;"> + 메뉴 추가하기
+					   </button>
+					</a>
 				</div>
 			</div>
 		</div>

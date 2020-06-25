@@ -25,15 +25,6 @@
 	double discountRate = NumberUtil.stringToDouble(mr.getParameter("discount"));
 	String imageSrc = mr.getFilesystemName("upfile"); 
 	
-	System.out.println("addrDetail:"+addrDetail);
-	System.out.println("tel:"+tel);
-	System.out.println("parkingYn:"+parkingYn);
-	System.out.println("openTime:"+openTime);
-	System.out.println("closeTime:"+closeTime);
-	System.out.println("comment:"+comment);
-	System.out.println("discountRate:"+discountRate);
-	System.out.println("imageSrc:"+imageSrc);
-	
 	BranchDao branchDao = new BranchDao();
 	Branch oldBranch = branchDao.getBranchByNo(branchNo);
 	oldBranch.setAddrDetail(addrDetail);
@@ -44,7 +35,7 @@
 	oldBranch.setComment(comment);
 	oldBranch.setDiscountRate(discountRate);
 	if(imageSrc != null){
-		oldBranch.setImageSrc(imageSrc);
+		oldBranch.setImageSrc("/domino/resource/images/branches/"+imageSrc);
 	}
 	
 	branchDao.updateBranch(oldBranch);

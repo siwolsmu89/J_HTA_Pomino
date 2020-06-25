@@ -46,7 +46,7 @@
 	<div class="header">
 		<div class="row">	
 			<div class="col-4">
-				<h4>나의정보</h4>
+				<h4>나의 정보</h4>
 			</div>
 			<div class="col-8">
 				<ul class="nav justify-content-end small text-muted">

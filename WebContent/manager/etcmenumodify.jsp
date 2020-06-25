@@ -31,7 +31,7 @@
 		// 기타메뉴 객체에 값 넣기
 		oldEtc.setName(name);
 		if (imageSrc != null) {
-			oldEtc.setImageSrc(imageSrc);
+			oldEtc.setImageSrc("/domino/resource/images/etcs/"+imageSrc);
 		}
 		oldEtc.setPrice(price);
 

@@ -32,7 +32,7 @@
 	// 토핑객체에 값 넣기
 	Topping topping = new Topping();
 	topping.setName(name);
-	topping.setImageSrc(imageSrc);
+	topping.setImageSrc("/domino/resource/images/toppings/"+imageSrc);
 	topping.setCategory(category);
 	topping.setPrice(price);
 

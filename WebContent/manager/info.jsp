@@ -217,7 +217,8 @@
 					// 차트에 들어갈 값 세팅
 					for (var i = 0; i < values.length; i++) {
 						var value = values[i];
-						var regDate = Number(value.regDate.substring(3, 5));
+						var regDate = Number(value.regDate.substring(3, 6));
+						
 						var totalPrice = value.discountPrice;
 						var row = [ regDate, totalPrice ];
 						data.addRows([ row ]);

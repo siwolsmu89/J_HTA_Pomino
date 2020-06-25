@@ -56,13 +56,13 @@
 				<div class="navbar navbar-expand-sm ">
 					<ul class="navbar-nav">
 							<li
-								class="nav-item  d-flex justify-content-between align-itens-center small"><a
+								class="nav-item  d-flex justify-content-between align-items-center small"><a
 								class="nav-link text-muted" href="info.jsp">메인</a></li>
 							<li
-								class="nav-item  d-flex justify-content-between align-itens-center small"><a
+								class="nav-item  d-flex justify-content-between align-items-center small"><a
 								class="nav-link text-dark font-weight-bold" href="orderlist.jsp">주문내역</a></li>
 							<li
-								class="nav-item  d-flex justify-content-between align-itens-center small"><a
+								class="nav-item  d-flex justify-content-between align-items-center small"><a
 								class="nav-link text-muted" href="branchdetail.jsp">상세정보</a></li>
 						</ul>
 				</div>
@@ -112,7 +112,7 @@
 		<%
 			// 가맹점주 아이디로 로그인할 경우, session에 loginBranchNo 넣어주기
 			int loginBranchNo = NumberUtil.stringToInt((String) session.getAttribute("매장번호"));
-		
+			
 			OrderDao orderDao = new OrderDao();
 			int rowsPerPage = 10;
 			int pageNo = NumberUtil.stringToInt(request.getParameter("page"), 1);
