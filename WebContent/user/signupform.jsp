@@ -21,7 +21,7 @@
 		String position="signup";
 		Date nowTime = new Date();
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
-		
+
 %>
 <%@ include file="../common/navbar.jsp"%>
 <div class="container">
@@ -118,7 +118,7 @@
 									<div class="form-group">
 										<label>생년월일</label>
 										<div>
-											<input type="date"  class="form-control" name="userbirth" />
+											<input type="date" class="form-control" name="userbirth"/>
 										</div>
 									</div>
 									<!-- 라디오버튼 예시 시작 -->
@@ -339,7 +339,7 @@
 									<div class="form-group">
 										<label>생년월일</label>
 										<div>
-											<input type="date"  class="form-control" name="userbirth" />
+											<input type="date" class="form-control" name="userbirth" id="dayId" value="dayValue" onchange="checkDate(event)" />
 										</div>
 									</div>
 									<!-- 라디오버튼 예시 시작 -->
@@ -469,6 +469,20 @@
 		alert("<%=sf.format(nowTime)%>일 부로 Sms를 수신거부 하셨습니다.");
 		return;
 	}	
+
+	var today = new Date();
+	var currentDate = today.getFullYear() + "-" + ( ("0" + (today.getMonth() + 1)).slice(-2) ) + "-" + ("0" + today.getDate()).slice(-2);
+	
+	function checkDate(event) {
+		var clickedDate = event.target.value;
+
+		if (currentDate < clickedDate) {
+			alert("미래 시간은 입력할 수 없습니다. \n현재 날짜로 입력됩니다.");
+			event.target.value = currentDate;
+		}
+		
+	}
+
 </script>
 </body>
 </html>

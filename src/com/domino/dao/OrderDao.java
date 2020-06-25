@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.domino.dto.OrderDto;
+import com.domino.dto.OrderGraphDataDto;
 import com.domino.util.ConnectionUtil;
 import com.domino.util.QueryUtil;
 import com.domino.vo.Order;
@@ -692,8 +693,8 @@ public class OrderDao {
 		return orderInfos;
 	}
 
-	public List<Order> getOrderCountByDateRange(int date) throws SQLException, ParseException {
-		List<Order> orders = new ArrayList<Order>();
+	public List<OrderGraphDataDto> getOrderCountByDateRange(int date) throws SQLException, ParseException {
+		List<OrderGraphDataDto> orders = new ArrayList<OrderGraphDataDto>();
 		
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getOrderCountByDateRange"));
@@ -701,12 +702,11 @@ public class OrderDao {
 		ResultSet rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			Order order = new Order();
-			SimpleDateFormat fm = new SimpleDateFormat("yyMMdd");
-			order.setRegDate(fm.parse(rs.getString("day")));
-			order.setDiscountPrice(rs.getInt("total"));
-			
-			orders.add(order);
+			OrderGraphDataDto orderGraphDataDto = new OrderGraphDataDto();
+			orderGraphDataDto.setRegDate(rs.getString("day"));
+			orderGraphDataDto.setDiscountPrice(rs.getInt("total"));
+						
+			orders.add(orderGraphDataDto);
 		}
 		
 		rs.close();

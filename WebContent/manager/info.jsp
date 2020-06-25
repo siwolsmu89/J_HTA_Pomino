@@ -199,7 +199,7 @@
 			var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 			var data = new google.visualization.DataTable();
 	      	// 차트 X,Y축 데이터타입 및 설명 세팅
-			data.addColumn('number', '일');
+			data.addColumn('string', '일');
 	      	data.addColumn('number', '일매출');
 			
 	      	// 파라미터값이 null이면 dafaul값 7로 설정 (최초 페이지 로드시 사용됨)
@@ -217,7 +217,7 @@
 					// 차트에 들어갈 값 세팅
 					for (var i = 0; i < values.length; i++) {
 						var value = values[i];
-						var regDate = Number(value.regDate.substring(3, 6));
+						var regDate = value.regDate;
 						
 						var totalPrice = value.discountPrice;
 						var row = [ regDate, totalPrice ];
@@ -232,6 +232,7 @@
 			xhr.open("GET", "/domino/manager/JSON/ordercountdata.jsp?date="+ date);
 			xhr.send();
 		}
+		
 	</script>
 </body>
 </html>
