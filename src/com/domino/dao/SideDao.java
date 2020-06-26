@@ -13,6 +13,13 @@ import com.domino.vo.Side;
 
 public class SideDao {
 	
+	/**
+	 * ResultSet에서 가져온 정보들을 side 객체에 담는 메소드. 다른 메소드 안에서만 사용할 것이므로 private 제한자를 지정
+	 * @param rs
+	 * @return 정보가 채워진 side 객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	private Side resultSetToSide(ResultSet rs) throws SQLException {
 		Side side = new Side();
 		
@@ -77,6 +84,12 @@ public class SideDao {
 		return sides;
 	}
 	
+	/**
+	 * 사이드테이블에 등록된 사이드메뉴의 갯수를 반환하는 메소드
+	 * @return 사이드메뉴 갯수
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public int getSidesCount() throws SQLException {
 		int count = 0;
 		
@@ -95,6 +108,13 @@ public class SideDao {
 		return count;
 	}
 	
+	/**
+	 * 사이드번호에 해당하는 사이드객체를 반환하는 메소드
+	 * @param sideNo 사이드번호
+	 * @return 조건에 부합하는 사이드객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public Side getSideByNo(int sideNo) throws SQLException {
 		Side side = null;
 		
@@ -114,6 +134,12 @@ public class SideDao {
 		return side;
 	}
 	
+	/**
+	 * 사이드객체를 받아 사이드테이블에 등록하는 메소드
+	 * @param side 사이드객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public void insertSide(Side side) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("side.insertSide"));
@@ -126,6 +152,12 @@ public class SideDao {
 		connection.close();
 	}
 	
+	/**
+	 * 사이드객체를 받아 해당 사이드객체의 정보를 수정하는 메소드
+	 * @param side 사이드 객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public void updateSide(Side side) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("side.updateSide"));
@@ -140,6 +172,13 @@ public class SideDao {
 		connection.close();
 	}
 	
+	/**
+	 * 사이드이름을 받아 해당하는 사이드객체를 반환하는 메소드
+	 * @param sideName 사이드이름
+	 * @return 조건에 부합하는 사이드 객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public Side getSideByName(String sideName) throws SQLException {
 		Side side = null;
 		

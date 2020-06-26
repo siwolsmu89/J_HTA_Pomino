@@ -34,37 +34,58 @@
 
 	<context-param>
 		<param-name>pizzaImgSaveDirectory</param-name>
+		<!-- 
 		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\pizzas</param-value>
+		 -->
+		<param-value>C:\Projects\web\web_workspace\domino\WebContent\resource\images\pizzas</param-value>
 	</context-param>
 	
 	<context-param>
 		<param-name>sidemenuImgSaveDirectory</param-name>
+		<!-- 
 		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\sides</param-value>
+		 -->
+		<param-value>C:\Projects\web\web_workspace\domino\WebContent\resource\images\sides</param-value>
 	</context-param>
 	
 	<context-param>
 		<param-name>doughImgSaveDirectory</param-name>
+		<!-- 
 		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\doughs</param-value>
+		 -->
+		<param-value>C:\Projects\web\web_workspace\domino\WebContent\resource\images\doughs</param-value>
 	</context-param>
 	
 	<context-param>
 		<param-name>toppingImgSaveDirectory</param-name>
+		<!-- 
 		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\toppings</param-value>
+		 -->
+		<param-value>C:\Projects\web\web_workspace\domino\WebContent\resource\images\toppings</param-value>
 	</context-param>
 	
 	<context-param>
 		<param-name>etcmenuImgSaveDirectory</param-name>
+		<!-- 
 		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\etcs</param-value>
+		 -->
+		<param-value>C:\Projects\web\web_workspace\domino\WebContent\resource\images\etcs</param-value>
 	</context-param>
 	
 	<context-param>
 		<param-name>branchImgSaveDirectory</param-name>
+		<!-- 
 		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\branches</param-value>
+		 -->
+		<param-value>C:\Projects\web\web_workspace\domino\WebContent\resource\images\branches</param-value>
 	</context-param>
 	
 	<context-param>
 		<param-name>eventImgSaveDirectory</param-name>
+		<!-- 
 		<param-value>C:\Projects\web_workspace\domino\WebContent\resource\images\event</param-value>
+		 -->
+		<param-value>C:\Projects\web\web_workspace\domino\WebContent\resource\images\event</param-value>
 	</context-param>
 	
 	

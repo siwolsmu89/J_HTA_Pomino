@@ -136,7 +136,7 @@
 			<div class="row mt-3">
 					<div class="col-12">
 						<div class="card">
-							<div class="card-header d-flex justify-content-center">당신의 완벽한 한끼를 위해 도미노 피자는 언제나 노력하겠습니다 :)</div>
+							<div class="card-header d-flex justify-content-center">당신의 완벽한 한끼를 위해 포미노 피자는 언제나 노력하겠습니다 :)</div>
 							<div class="card-body">
 								<div class="row">
 									<!-- for문 시작 -->
@@ -222,12 +222,12 @@
 													        			<div style="border-bottom: 1px solid black; padding-bottom:10px">
 													        				<span><strong>메인 토핑</strong></span>
 													        			</div>
-												        				<p class="text-muted" style="">모짜렐라, 페터크림 치즈, 갈릭크림 소스, 로스트 포테이토, 파인애플, 양파 등</p>
+												        				<p class="text-muted" style="">모짜렐라, 페터크림 치즈, 갈릭크림 소스, 로스트 포테이토, 파인애플, 양파 청피망, 옥수수, 베이컨 칩, 파슬리, 호스래디시 스퀴드(오징어), 스위트 칠리크랩, 스위트 칠리크랩 소스, 오리엔탈 통새우</p>
 												        				
 												        				<div style="border-bottom: 1px solid black; padding-bottom:10px">
 													        				<span><strong>원산지</strong></span>
 													        			</div>
-												        				<p class="text-muted">오리지널, 나폴리 도우(밀):미국산+캐나다산</p>
+												        				<p class="text-muted">오리지널, 나폴리 도우(밀) : 미국산+캐나다산 / 씬 도우(밀) : 미국산 / 슈퍼시드 함유 도우(밀) : 미국산+캐나다산, (흑미) : 국내산 / 모차렐라 치즈 : 미국산 / 호스래디시 스퀴드(오징어) : 중국산 / 스위트 칠리크랩(붉은 대게) : 국내산 / 베이컨칩(돼지고기) : 미국산</p>
 												        				
 												        				<p class="text-center">
 												        					<button type="button" data-toggle="modal" data-target="#modal-<%=pizza.getNo()%>" class="btn btn-outline-secondary btn-sm" role="button">영양성분 및 알레르기 유발성분</button>
@@ -236,6 +236,8 @@
 												        					<button class="btn btn-outline-secondary btn-sm" role="button">피자스토리</button>
 												        					 -->
 												        				</p>
+												        				
+
 												        				
 											        					<div class="modal fade pizza-nut-allergy" id="modal-<%=pizza.getNo()%>" style="padding:0 33px 0 0" tabindex="-1" role="dialog" aria-labelledby="myAllergyModal" aria-hidden="true">
 											        						<div class="modal-dialog modal-lg">
@@ -1004,6 +1006,10 @@
 												        			</div>
 												        		</div>
 												        	</div> <!-- (모달1 몸통)노랑1 끝 -->
+												        
+									        				<div class="d-flex justify-content-center">
+									        					<button class="btn btn-danger btn-lg" onclick="pizzaDetail(event)" id="<%=pizza.getNo()%>">주문하러 가기</button>
+									        				</div>												        
 												        
 												        </div> <!-- (모달1 머리)주황 몸통 끝 -->
 												      </div>

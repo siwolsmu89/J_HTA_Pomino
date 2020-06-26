@@ -312,13 +312,13 @@
 		                        			</textarea>
 			                        		<div class="radio">
 			                            		<label>
-			                                		<input type="radio" id="memberInfoYn" name="memberInfoYn" value="Y" checked>
+			                                		<input type="radio" id="memberInfoY" name="memberInfoYn" value="Y" checked>
 			                                		동의합니다.
 			                            		</label>
 			                        		</div>
 			                       			 <div class="radio">
 			                            		<label>
-			                                		<input type="radio" id="memberInfoYn" name="memberInfoYn" value="N" onclick="alertNot(event)">
+			                                		<input type="radio" id="memberInfoN" name="memberInfoYn" value="N" onclick="alertNot(event)">
 			                                		동의하지 않습니다.
 			                            		</label>
 			                        		</div>
@@ -368,20 +368,20 @@
 									<div class="form-group">
 										<label>이메일 수신여부</label>
 		                    			<label>
-		                            		<input type="radio" id="emailReceiveYn" name="emailReceiveYn" value="Y" checked> 동의합니다.
+		                            		<input type="radio" id="emailReceiveY" name="emailReceiveYn" value="Y" checked> 동의합니다. &emsp;
 		                       			</label>
 		                        		<label>
-		                            		<input type="radio" id="emailReceiveYn" name="emailReceiveYn" value="N" onclick="ReceiveEmailNot()"> 동의하지 않습니다.
+		                            		<input type="radio" id="emailReceiveN" name="emailReceiveYn" value="N" onclick="ReceiveEmailNot()"> 동의하지 않습니다.
 		                        		</label>
 									</div>
 									
 									 <div class="form-group">
 		                    			<label>SMS 수신여부</label>
 				                        <label>
-				                            <input type="radio" id="smsReceiveYn" name="smsReceiveYn" value="Y" checked> 동의합니다.
+				                            <input type="radio" id="smsReceiveY" name="smsReceiveYn" value="Y" checked> 동의합니다. &emsp;
 				                        </label>
 				                        <label class="radio-inline">
-				                            <input type="radio" id="smsReceiveYn" name="smsReceiveYn" value="N" onclick="ReceiveSmsNot()"> 동의하지 않습니다.
+				                            <input type="radio" id="smsReceiveN" name="smsReceiveYn" value="N" onclick="ReceiveSmsNot()"> 동의하지 않습니다.
 				                        </label>
 		                    		</div>
 		                
@@ -409,7 +409,11 @@
 </div>
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">
-	function alertNot(event) {
+
+	var today = new Date();
+	var currentDate = today.getFullYear() + "-" + ( ("0" + (today.getMonth() + 1)).slice(-2) ) + "-" + ("0" + today.getDate()).slice(-2);
+
+function alertNot(event) {
 		if(alert('약관에 동의해주세요.')){
 			
 		} else {
@@ -425,53 +429,66 @@
 		var genderField = document.querySelector("input[name=usergender]");
 		var telField = document.querySelector("input[name=usertel]");
 		var emailField = document.querySelector("input[name=useremail]");
-		
-		var isPassed = true;
+
 		if(!nameField.value) {
 			alert('이름을 입력하세요.');
-			isPassed = false;
+			event.preventDefault();
+			return;
 		}
 		if(!idField.value) {
 			alert('아이디를 입력하세요.');
-			isPassed = false;
+			event.preventDefault();
+			return;
 		}
+
+		var pattern_kor = '/[^ㄱ-ㅎ가-힣]/g';
+		
+		if(pattern_kor.test(idField)) {
+			alert("아이디에 한글은 포함할 수 없습니다.")
+			event.preventDefault();
+			return;			
+		}
+		
 		if(!pwdField.value) {
 			alert('비밀번호를 입력하세요.');
-			isPassed = false;
+			event.preventDefault();
+			return;
 		}
 		if(!birthField.value) {
 			alert('생일을 선택하세요.');
-			isPassed = false;
+			event.preventDefault();
+			return;
 		}
 		if(!genderField.value) {
 			alert('성별을 선택하세요.');
-			isPassed = false;
+			event.preventDefault();
+			return;
 		}
 		if(!telField.value) {
 			alert('전화번호를 입력하세요.("-"를 입력하여 적으세요.)');
-			isPassed = false;
+			event.preventDefault();
+			return;
 		}
 		if(!emailField.value) {
 			alert('이메일을 입력하세요.');
-			isPassed = false;
-		}
-		if(!isPassed){
 			event.preventDefault();
+			return;
 		}
+
+
 	}
 	
 	function ReceiveEmailNot() {
-		alert("<%=sf.format(nowTime)%>일 부로 이메일을 수신거부 하셨습니다.");
+		alert("<%=sf.format(nowTime)%>일 부로 이메일 수신을 거부 하셨습니다.");
 		return;
 	}
 	
 	function ReceiveSmsNot() {
-		alert("<%=sf.format(nowTime)%>일 부로 Sms를 수신거부 하셨습니다.");
+		alert("<%=sf.format(nowTime)%>일 부로 SMS 수신을 거부 하셨습니다.");
 		return;
 	}	
 
-	var today = new Date();
-	var currentDate = today.getFullYear() + "-" + ( ("0" + (today.getMonth() + 1)).slice(-2) ) + "-" + ("0" + today.getDate()).slice(-2);
+
 	
 	function checkDate(event) {
 		var clickedDate = event.target.value;

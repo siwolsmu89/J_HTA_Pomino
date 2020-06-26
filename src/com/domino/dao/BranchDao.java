@@ -41,6 +41,12 @@ public class BranchDao {
 		return branch;
 	}
 	
+	/**
+	 * 가맹점테이블의 모든 가맹점객체를 반환하는 메소드
+	 * @return 모든 가맹점 객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public List<Branch> getAllBranch() throws SQLException {
 		List<Branch> branchs = new ArrayList<Branch>();
 		
@@ -61,6 +67,14 @@ public class BranchDao {
 		return branchs;
 	}
 	
+	/**
+	 * 페이지네이션 범위에 해당하는 모든 가맹점 객체를 반환하는 메소드
+	 * @param beginNumber 시작순번
+	 * @param endNumber 끝순번
+	 * @return 조건에 부합하는 모든 가맹점 객체 
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public List<Branch> getAllBranch(int beginNumber, int endNumber) throws SQLException {
 		List<Branch> branchs = new ArrayList<Branch>();
 		
@@ -83,6 +97,12 @@ public class BranchDao {
 		return branchs;
 	}
 	
+	/**
+	 * 가맹점테이블의 가맹점갯수를 반환하는 메소드
+	 * @return 가맹점갯수
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public int getBranchsCount() throws SQLException {
 		int count = 0;
 		

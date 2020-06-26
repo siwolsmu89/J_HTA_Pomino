@@ -13,6 +13,13 @@ import com.domino.vo.Dough;
 
 public class DoughDao {
 	
+	/**
+	 * ResultSet에서 가져온 정보들을 dough 객체에 담는 메소드. 다른 메소드 안에서만 사용할 것이므로 private 제한자를 지정
+	 * @param rs
+	 * @return 정보가 채워진 dough객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	private Dough resultSetToDough(ResultSet rs) throws SQLException {
 		Dough dough = new Dough();
 		
@@ -26,9 +33,10 @@ public class DoughDao {
 	}
 	
 	/**
-	 * 모든 도우를 조회하는 메소드
+	 * 모든 도우를 반환하는 메소드
 	 * @return 모든 도우
 	 * @throws SQLException
+	 * @author 연성
 	 */
 	public List<Dough> getAllDough() throws SQLException {
 		List<Dough> doughs = new ArrayList<Dough>();
@@ -50,9 +58,9 @@ public class DoughDao {
 	}
 	
 	/**
-	 * 특정범위 사이의 도우를 조회하는 메소드
-	 * @param beginNumber
-	 * @param endNumber
+	 * 페이지네이션 범위에 해당하는 도우객체를  반환하는 메소드
+	 * @param beginNumber 시작순번
+	 * @param endNumber 끝순번
 	 * @return 특정범위 사이의 도우
 	 * @throws SQLException
 	 */
@@ -77,6 +85,12 @@ public class DoughDao {
 		return doughs;
 	}
 	
+	/**
+	 * 도우테이블의 도우갯수를 반환하는 메소드
+	 * @return 도우갯수
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public int getDoughsCount() throws SQLException {
 		int count = 0;
 		
@@ -95,6 +109,13 @@ public class DoughDao {
 		return count;
 	}
 	
+	/**
+	 * 도우번호에 해당하는 도우객체를 반환하는 메소드
+	 * @param doughNo 도우번호
+	 * @return 조건에 부합하는 도우객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public Dough getDoughByNo(int doughNo) throws SQLException {
 		Dough dough = null;
 		
@@ -114,6 +135,12 @@ public class DoughDao {
 		return dough;
 	}
 	
+	/**
+	 * 도우객체를 받아 도우테이블에 등록하는 메소드
+	 * @param dough 도우객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public void insertDough(Dough dough) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("dough.insertDough"));
@@ -126,6 +153,12 @@ public class DoughDao {
 		connection.close();
 	}
 	
+	/**
+	 * 도우객체를 받아 해당 객체의 정보를 수정하는 메소드
+	 * @param dough 도우객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public void updateDough(Dough dough) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("dough.updateDough"));
@@ -140,6 +173,13 @@ public class DoughDao {
 		connection.close();
 	}
 	
+	/**
+	 * 도우이름에 해당하는 도우객체를 반환하는 메소드
+	 * @param doughName 도우이름
+	 * @return 조건에 부합하는 도우객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public Dough getDoughByName(String doughName) throws SQLException {
 		Dough dough = null;
 		

@@ -13,6 +13,13 @@ import com.domino.vo.Topping;
 
 public class ToppingDao {
 	
+	/**
+	 * ResultSet에서 가져온 정보들을 Topping 객체에 담는 메소드. 다른 메소드 안에서만 사용할 것이므로 private 제한자를 지정
+	 * @param rs
+	 * @return 정보가 채워진 Topping 객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	private Topping resultSetToTopping(ResultSet rs) throws SQLException {
 		Topping topping = new Topping();
 		
@@ -78,6 +85,12 @@ public class ToppingDao {
 		return toppings;
 	}
 	
+	/**
+	 * 토핑테이블에 등록된 모든 토핑의 갯수를 반환하는 메소드
+	 * @return 모든 토핑갯수
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public int getToppingsCount() throws SQLException {
 		int count = 0;
 		
@@ -96,6 +109,13 @@ public class ToppingDao {
 		return count;
 	}
 	
+	/**
+	 * 토핑번호에 해당하는 토핑객체를 반환하는 메소드
+	 * @param toppingNo 토핑번호
+	 * @return 토핑번호에 해당하는 토핑객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public Topping getToppingByNo(int toppingNo) throws SQLException {
 		Topping topping = null;
 		
@@ -115,6 +135,12 @@ public class ToppingDao {
 		return topping;
 	}
 	
+	/**
+	 * 토핑객체를 토핑테이블에 등록하는 메소드
+	 * @param topping 토핑객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public void insertTopping(Topping topping) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("topping.insertTopping"));
@@ -128,6 +154,12 @@ public class ToppingDao {
 		connection.close();
 	}
 	
+	/**
+	 * 토핑객체를 받아서 해당 토핑객체의 정보를 수정하는 메소드
+	 * @param topping 토핑객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public void updateTopping(Topping topping) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("topping.updateTopping"));
@@ -143,6 +175,12 @@ public class ToppingDao {
 		connection.close();
 	}
 	
+	/**
+	 * 주문정보창 메인에 보여줄 토핑 객체를 반환하는 메소드
+	 * @return 주문정보창 메인에 보여줄 토핑객체
+	 * @throws SQLException
+	 * @author 예범
+	 */
 	public List<Topping> getMainToppingList() throws SQLException {
 		List<Topping> toppings = new ArrayList<Topping>();
 		
@@ -162,6 +200,12 @@ public class ToppingDao {
 		return toppings;
 	}
 	
+	/**
+	 * 치즈 카테고리에 해당하는 토핑만 반환하는 메소드
+	 * @return 치즈 카테고리에 해당하는 토핑객체
+	 * @throws SQLException
+	 * @author 예범
+	 */
 	public List<Topping> getCheezeToppingList() throws SQLException {
 		List<Topping> toppings = new ArrayList<Topping>();
 		
@@ -181,6 +225,12 @@ public class ToppingDao {
 		return toppings;
 	}
 	
+	/**
+	 * 에프터 카테고리에 해당하는 토핑만 반환하는 메소드
+	 * @return 에프터 카테고리에 해당하는 토핑객체
+	 * @throws SQLException
+	 * @author 예범
+	 */
 	public List<Topping> getAfterToppingList() throws SQLException {
 		List<Topping> toppings = new ArrayList<Topping>();
 		
@@ -200,6 +250,13 @@ public class ToppingDao {
 		return toppings;
 	}	
 	
+	/**
+	 * 전달받은 토핑이름과 일치하는 토핑객체를 반환하는 메소드
+	 * @param toppingName 토핑이름
+	 * @return 조건에 부합하는 토핑객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public Topping getToppingByName(String toppingName) throws SQLException {
 		Topping topping = null;
 		

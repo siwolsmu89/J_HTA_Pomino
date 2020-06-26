@@ -321,6 +321,14 @@ public class OrderDao {
 		return orders;
 	}
 	
+	/**
+	 * 페이지네이션 범위의 모든 오더객체를 반환하는 메소드
+	 * @param beginNumber 시작순번
+	 * @param endNumber 끝순번
+	 * @return 조건에 부합하는 모든 오더객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public List<Order> getAllOrders(int beginNumber, int endNumber) throws SQLException {
 		List<Order> orders = new ArrayList<Order>();
 		
@@ -343,6 +351,12 @@ public class OrderDao {
 		return orders;
 	}
 	
+	/**
+	 * 오더테이블의 오더갯수를 반환하는 메소드
+	 * @return 오더갯수
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public int getOrdersCount() throws SQLException {
 		int count = 0;
 		
@@ -563,6 +577,37 @@ public class OrderDao {
 		return orders;
 	}
 	
+	/**
+	 * 가맹점 메인 페이지에 표시하기 위해 오늘의 주문을 가져오는 메소드
+	 * @param branchNo 가맹점번호
+	 * @return 가맹점 메인 페이지에 표시될 오늘의 주문 목록
+	 * @throws SQLException
+	 * @author 민석
+	 */
+	public List<OrderDto> getTodayOrdersByBranchNo(int branchNo) throws SQLException{
+		List<OrderDto> orders = new ArrayList<OrderDto>();
+		
+		Connection connection = ConnectionUtil.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("order.getTodayOrdersByBranchNo"));
+		pstmt.setInt(1, branchNo);
+		ResultSet rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			OrderDto order = resultSetToOrderDto(rs);
+			orders.add(order);
+		}
+		
+		return orders;
+	}
+	
+	/**
+	 * 범위에 맞는 모든 주문을 가져오는 메소드
+	 * @param beginNumber 시작번호
+	 * @param endNumber 끝번호
+	 * @return 주문정보 객체가 담긴 리스트
+	 * @throws SQLException
+	 * @author 민석
+	 */
 	public List<OrderDto> getAllOrdersWithRange(int beginNumber, int endNumber) throws SQLException{
 		List<OrderDto> orders = new ArrayList<OrderDto>();
 		
@@ -580,6 +625,13 @@ public class OrderDao {
 		return orders;
 	}
 	
+	/**
+	 * 가맹점이름에 해당하는 오더객체를 반환하는 메소드
+	 * @param branchName 가맹점 이름
+	 * @return 조건에 부합하는 오더객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public List<Order> getAllOrdersByBranchname(String branchName) throws SQLException{
 		List<Order> orders = new ArrayList<Order>();
 		
@@ -597,6 +649,13 @@ public class OrderDao {
 		return orders;
 	}
 	
+	/**
+	 * 오더상태에 해당하는 오더객체를 반환하는 메소드
+	 * @param status 오더상태
+	 * @return 조건에 부합하는 오더객체 리스트
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public List<Order> getAllOrdersByStatus(int status) throws SQLException{
 		List<Order> orders = new ArrayList<Order>();
 		
@@ -671,6 +730,15 @@ public class OrderDao {
 		return orderInfos;
 	}
 	
+	/**
+	 * 페이지네이션 범위에 해당하고, 오더상태에 해당하는 오더객체를 반환하는 메소드
+	 * @param beginNumber 시작순번
+	 * @param endNumber 끝순번
+	 * @param orderStatus 오더상태
+	 * @return 조건에 부합하는 오더객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public List<OrderDto> getOrdersByStatusWithRange(int beginNumber, int endNumber, int orderStatus) throws SQLException {
 		List<OrderDto> orderInfos = new ArrayList<OrderDto>();
 		
@@ -692,7 +760,15 @@ public class OrderDao {
 		
 		return orderInfos;
 	}
-
+	
+	/**
+	 * 오늘날짜부터 오늘날짜-입력받은데이터 일 사이의 일매출을 반환하는 메소드
+	 * @param date 데이트
+	 * @return 날짜와 매출
+	 * @throws SQLException
+	 * @throws ParseException
+	 * @author 연성
+	 */
 	public List<OrderGraphDataDto> getOrderCountByDateRange(int date) throws SQLException, ParseException {
 		List<OrderGraphDataDto> orders = new ArrayList<OrderGraphDataDto>();
 		

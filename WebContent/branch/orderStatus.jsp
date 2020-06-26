@@ -7,6 +7,7 @@
 	response.setCharacterEncoding("utf-8");
 	int orderNo = NumberUtil.stringToInt(request.getParameter("orderno"));
 	int orderStatus = NumberUtil.stringToInt(request.getParameter("statusno"));
+	String position = request.getParameter("position");
 	
 	OrderDao orderDao = new OrderDao();
 	Order order = orderDao.getOrderByNo(orderNo);
@@ -15,5 +16,9 @@
 	
 	orderDao.updateOrder(order);
 	
+	if("detail".equalsIgnoreCase(position)){
+		response.sendRedirect("/domino/branch/orderlist.jsp");
+		return;
+	}
 	response.sendRedirect("/domino/branch/info.jsp");
 %>

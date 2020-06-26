@@ -12,6 +12,13 @@
 <%@page import="com.domino.dao.PizzaDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<style>
+	div.sticky {
+  		position: -webkit-sticky; /* Safari */
+  		position: sticky;
+  		top: 0;
+	}
+</style>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -50,13 +57,9 @@
 		<div class="header"> <!-- 노랑1 시작 -->
 			<!-- 화면의 현재위치를 나타내는 부분 시작 -->
 			<div class="row">
-				<div class="col-4" style="padding: 0 0 0 0">
+				<div class="col-4">
 					<h4>메뉴</h4>
-					<div style="background-color: black; height: 2px;" class="mb-2"></div>
-					
-					<br/>
 				</div>
-	
 				<%
 					double discountRate = 0;
 				    if (request.getParameter("discountrate") != null) {
@@ -69,7 +72,6 @@
 					DoughDao doughDao = new DoughDao();
 					List<Dough> doughs = doughDao.getAllDough();
 				%>
-		
 				<div class="col-8" style="padding: 0 0 0 0">
 					<ul class="nav justify-content-end small text-muted">
 						<li class="nav-item">
@@ -98,10 +100,10 @@
 							</a>
 						</li>
 					</ul>
-					<div style="background-color: black; height: 2px;" class="mb-2"></div>
 					
 				</div>
 			</div>
+		<div style="background-color: black; height: 2px;" class="mb-2"></div>
 			<!-- 화면의 현재위치를 나타내는 부분 끝 -->
 			
 		</div> <!-- 노랑1 끝 -->
@@ -146,8 +148,8 @@
 	<div> <!-- 주황2 시작 -->
 		<div class="row"> <!-- 노랑1 시작 -->
 			<div class="col-6 img-responsive "> <!-- 초록1 시작 -->
-				<div class="float-left" > <!-- 파랑1 시작 -->
-					<img src="<%=pizza.getImageSrc() %>" class="img-fluid"/>
+				<div class="sticky"> <!-- 파랑1 시작 -->
+					<img src="<%=pizza.getImageSrc() %>" class="sticky mt-5" width="540px;"/>
 					
 					<script>/*
 					<div class="float-right">
@@ -667,7 +669,7 @@
 			pizzaPrice = <%=pizza.getLprice() %>;
 		}
 		
-		if(pizzaAmount == 0 ) {
+		if(pizzaAmount <= 0) {
 			alert("피자는 한 판 이상 주문하셔야 합니다.");
 			document.querySelector("#pizza-order-amount").value = 1;
 			return;

@@ -189,21 +189,25 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-12 text-center">
-									<div class="form-group">
-										<img src="<%=branch.getImageSrc()%>">
+								
+								<div class="form-group text-center">
+									<img src="<%=branch.getImageSrc()%>">
+								</div>
+								<div class="form-group input-group mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text">업로드</span>
 									</div>
-									<div class="form-group">
-										<label> 첨부파일(<%=branch.getImageSrc()%>)
+									<div class="form-group custom-file">
+										<input type="file" class="custom-file-input" name="upfile"
+											aria-describedby="inputGroupFileAddon01"> <label
+											class="custom-file-label" for="inputGroupFile01">
+											매장사진 ( <%=branch.getImageSrc()%> )
 										</label>
-										<p class="text-danger">이미지 이름 동일하게 해서 업데이트</p>
-										<div>
-											<input type="file" name="upfile" />
-										</div>
 									</div>
 								</div>
+
 								<div class="text-center">
-									<button type="submit" class="btn btn-primary btn-lg"
+									<button type="submit" class="btn btn-primary btn-block"
 										onclick="alertcompleteToModify(event)">&nbsp&nbsp수 정&nbsp&nbsp</button>
 								</div>
 							</form>

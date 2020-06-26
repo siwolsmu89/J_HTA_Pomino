@@ -136,7 +136,7 @@
 				<div class="col-12">
 					<%
 						
-						List<OrderDto> AllOrder = orderDao.getAllOrdersByBranchNo(branchNo);
+						List<OrderDto> AllOrder = orderDao.getTodayOrdersByBranchNo(branchNo);
 					%>
 					<div class="row">
 						<div class="col-12">
@@ -268,50 +268,6 @@
 							%>
 						</tbody>
 					</table>
-
-					<!-- 페이지 처리 시작 -->
-					<ul class="pagination justify-content-center"
-						style="margin: 20px 0">
-						<%
-							// 0. 한 화면당 표시할 페이지번호 갯수
-							int pagesPerBlock = 5;
-	
-							// 2. 전체 페이지수를 계산한다.
-							int rowCount = orderDao.getOrdersByBranchnoWithDate(branchNo).size();
-							int totalPages = (int) Math.ceil((double) rowCount / rowsPerPage);
-	
-							// 3. 전체 페이지블록 갯수 계산하기
-							int totalBlocks = (int) Math.ceil((double) totalPages / pagesPerBlock);
-	
-							// 4. 요청한 페이지가 어느 페이지 블록에 속하는지 계산하기
-							int currentBlock = (int) Math.ceil((double) pageNo / pagesPerBlock);
-	
-							// 5. 요청한 페에지가 속한 블록의 시작페이지번호와 끝페이지번호 계산하기
-							int beginPageNo = (currentBlock - 1) * pagesPerBlock + 1;
-							int endPageNo = currentBlock * pagesPerBlock;
-							
-							if(pageNo > 1) {
-					%>
-						<li class="page-item "><a class="page-link" href="orderlist.jsp?page=<%=pageNo - 1%>">이전</a></li>
-					<%
-						}
-						for(int num=beginPageNo; num <=endPageNo; num++) {
-							if (endPageNo > totalPages) {
-								endPageNo = totalPages;
-							}
-					%>
-						<li class="page-item <%=pageNo == num ? "active" : ""%> "><a class="page-link" href="orderlist.jsp?page=<%=num%>"><%=num%></a></li>
-					<%
-						}
-						if(pageNo < totalPages) {
-					%>
-						<li class="page-item"><a class="page-link" href="orderlist.jsp?page=<%=pageNo + 1%>">다음</a></li>
-					<%
-						}
-					%>
-					</ul>
-					<!-- 페이지 처리 끝 -->
-
 				</div>
 			</div>
 		</div>

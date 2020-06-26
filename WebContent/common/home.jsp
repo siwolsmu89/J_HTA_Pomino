@@ -169,7 +169,7 @@
 							</div>
 	-->
 							<div class="p-1"> 
-								<a><img src="/domino/resource/images/home/main_card1.gif" alt="혜택1"/></a>
+								<a><img src="/domino/resource/images/home/main_card4-1.gif" alt="혜택1"/></a>
 							</div>
 							
 							<div class="p-1"> 

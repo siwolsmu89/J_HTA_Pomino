@@ -169,6 +169,7 @@
 								}
 								
 								int os = order.getOrderStatus();
+								/*
 								String statusStr = "";
 								if (os == 0) {
 									statusStr = "<button class='btn btn-primary'>접수완료</button>";
@@ -183,7 +184,7 @@
 								} else {
 									statusStr = "<button class='btn btn-danger'>주문취소</button>";
 								}
-								
+								*/
 								Date reqTime = order.getRequestTime();
 								String requestTime = reqTime.toString();
 								
@@ -214,7 +215,50 @@
 								<td><%=menuName %></td>
 								<td><%=totalPrice %></td>
 								<td><%=requestTime %></td>
-								<td><%=statusStr %></td>
+								<%
+									if (order.getOrderStatus() == 0) {
+								%>
+								<td>
+									<a class="btn btn-primary text-white" role="button"
+									href="orderStatus.jsp?orderno=<%=orderNo %>&statusno=0&position=detail">접수완료</a>
+								</td>
+								
+								<%
+									} else if (order.getOrderStatus() == 1) {
+								%>
+								<td>
+									<a class="btn btn-primary text-white" role="button"
+									href="orderStatus.jsp?orderno=<%=orderNo %>&statusno=1&position=detail">요리중</a>
+								</td>
+								<%
+									} else if (order.getOrderStatus() == 2) {
+								%>
+								<td>
+									<a class="btn btn-success text-white" role="button"
+									href="orderStatus.jsp?orderno=<%=orderNo %>&statusno=2&position=detail">배달중</a>
+								</td>
+								<%
+									} else if (order.getOrderStatus() == 3) {
+								%>
+								<td>
+									<a class="btn btn-success text-white" role="button"
+									href="orderStatus.jsp?orderno=<%=orderNo %>&statusno=3&position=detail">배달완료</a>
+								</td>
+								<%
+									} else if (order.getOrderStatus() == 4) {
+								%>
+								<td>
+									<a class="btn btn-dark text-white" role="button&position=detail">수령완료</a>
+								</td>
+								<%
+									} else {
+								%>
+								<td>
+									<a class="btn btn-danger text-white" role="button&position=detail">주문취소</a>
+								</td>
+								<%
+									}
+								%>
 							</tr>
 					<%
 							}
@@ -268,7 +312,7 @@
 							}
 						%>
 						<li class="page-item">
-							<a class="page-link" href="orderlist.jsp?page=<%=pageNo + 1 %>" style="<%=pageNo >= endPageNo ? "display: none;" : ""  %> href="orderlist.jsp?page=<%=pageNo - 1 %>"> 다음 </a>
+							<a class="page-link" href="orderlist.jsp?page=<%=pageNo + 1 %>" style="<%=pageNo >= totalPages ? "display: none;" : ""  %> href="orderlist.jsp?page=<%=pageNo - 1 %>"> 다음 </a>
 						</li>
 					</ul>
 					<!-- 페이지 처리 끝 -->

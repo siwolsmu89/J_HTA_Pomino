@@ -85,6 +85,12 @@ public class PizzaDao {
 		return pizzas;
 	}
 	
+	/**
+	 * 피자테이블의 피자갯수를 반환하는 메소드
+	 * @return 피자갯수
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public int getPizzasCount() throws SQLException {
 		int count = 0;
 		
@@ -103,6 +109,13 @@ public class PizzaDao {
 		return count;
 	}
 	
+	/**
+	 * 피자번호에 해당하는 피자객체를 반환하는 메소드
+	 * @param pizzaNo 피자번호
+	 * @return 조건에 부합하는 피자객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public Pizza getPizzaByNo(int pizzaNo) throws SQLException {
 		Pizza pizza = null;
 		
@@ -122,6 +135,13 @@ public class PizzaDao {
 		return pizza;
 	}
 	
+	/**
+	 * 피자이름에 해당하는 피자객체를 반환하는 메소드
+	 * @param pizzaName 피자이름
+	 * @return 조건에 부합하는 피자객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public Pizza getPizzaByName(String pizzaName) throws SQLException {
 		Pizza pizza = null;
 		
@@ -141,6 +161,12 @@ public class PizzaDao {
 		return pizza;
 	}
 	
+	/**
+	 * 피자객체를 받아 피자테이블에 등록하는 메소드
+	 * @param pizza 피자객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public void insertPizza(Pizza pizza) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("pizza.insertPizza"));
@@ -154,6 +180,12 @@ public class PizzaDao {
 		connection.close();		
 	}
 	
+	/**
+	 * 피자객체를 받아 해당 피자객체의 정보를 수정하는 메소드
+	 * @param pizza 피자객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public void updatePizza(Pizza pizza) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("pizza.updatePizza"));

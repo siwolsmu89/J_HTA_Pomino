@@ -27,8 +27,6 @@
 						<p>웹 사이트는 유지 관리 중입니다.</p>
 						<p>웹 사이트에 프로그래밍 오류가 있습니다.</p>
 					
-					
-					<p class="">접수완료 후에는 취소가 되지 않으니 양해 부탁드립니다.</p>
 					<div id="link-button" class="py-4">
 						<a href="/domino/common/home.jsp"><button
 								class="btn btn-primary btn-lg">pomino 홈 화면으로 가기</button></a>

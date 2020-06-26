@@ -13,6 +13,13 @@ import com.domino.vo.Etc;
 
 public class EtcDao {
 	
+	/**
+	 * ResultSet에서 가져온 정보들을 etc 객체에 담는 메소드. 다른 메소드 안에서만 사용할 것이므로 private 제한자를 지정
+	 * @param rs
+	 * @return 정보가 채워진 etc 객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	private Etc resultSetToEtc(ResultSet rs) throws SQLException {
 		Etc etc = new Etc();
 		
@@ -26,9 +33,10 @@ public class EtcDao {
 	}
 	
 	/**
-	 * 모든 기타메뉴를 조회하는 메소드
+	 * 모든 기타메뉴를 반환하는 메소드
 	 * @return 모든 기타메뉴
 	 * @throws SQLException
+	 * @author 연성
 	 */
 	public List<Etc> getAllEtc() throws SQLException {
 		List<Etc> etcs = new ArrayList<Etc>();
@@ -50,11 +58,12 @@ public class EtcDao {
 	}
 	
 	/**
-	 * 특정범위 사이의 기타메뉴를 조회하는 메소드
+	 * 페이지네이션 범위에 해당하는 기타메뉴를 반환하는 메소드
 	 * @param beginNumber
 	 * @param endNumber
-	 * @return 특정범위 사이의 기타메뉴
+	 * @return 조건에 부합하는 기타메뉴 객체 리스트
 	 * @throws SQLException
+	 * @author 연성
 	 */
 	public List<Etc> getAllEtc(int beginNumber, int endNumber) throws SQLException {
 		List<Etc> etcs = new ArrayList<Etc>();
@@ -77,6 +86,12 @@ public class EtcDao {
 		return etcs;
 	}
 	
+	/**
+	 * 기타메뉴테이블의 메뉴갯수를 반환하는 메소드
+	 * @return 기타메뉴 갯수
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public int getEtcsCount() throws SQLException {
 		int count = 0;
 		
@@ -95,6 +110,13 @@ public class EtcDao {
 		return count;
 	}
 	
+	/**
+	 * 기타메뉴번호에 해당하는 기타메뉴객체를 반환하는 메소드
+	 * @param etcNo 기타메뉴번호
+	 * @return 조건에 부합하는 기타메뉴객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public Etc getEtcByNo(int etcNo) throws SQLException {
 		Etc etc = null;
 		
@@ -114,6 +136,12 @@ public class EtcDao {
 		return etc;
 	}
 	
+	/**
+	 * 기타메뉴객체를 받아 기타메뉴테이블에 등록하는 메소드
+	 * @param etc 기타메뉴
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public void insertEtc(Etc etc) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("etc.insertEtc"));
@@ -126,6 +154,12 @@ public class EtcDao {
 		connection.close();
 	}
 	
+	/**
+	 * 기타메뉴객체를 받아 해당 객체의 정보를 수정하는 메소드
+	 * @param etc 기타메뉴객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public void updateEtc(Etc etc) throws SQLException {
 		Connection connection = ConnectionUtil.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(QueryUtil.getSQL("etc.updateEtc"));
@@ -140,6 +174,13 @@ public class EtcDao {
 		connection.close();
 	}
 	
+	/**
+	 * 기타메뉴이름에 해당하는 기타메뉴객체를 반환하는 메소드
+	 * @param etcName 기타메뉴이름
+	 * @return 조건에 부합하는 기타메뉴객체
+	 * @throws SQLException
+	 * @author 연성
+	 */
 	public Etc getEtcByName(String etcName) throws SQLException {
 		Etc etc = null;
 		
