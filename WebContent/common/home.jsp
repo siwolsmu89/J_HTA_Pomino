@@ -23,7 +23,7 @@
 <div>
 	
 	<!-- 배너 광고 시작 --> <!-- 배너는 컨테이너 포함x -->
-	<div class="row">
+	<div class="row text-center">
 		<div class="col-12">
 			<!-- 배너광고 슬라이드 시작  -->
 			<div id="demo" class="carousel slide" data-ride="carousel">

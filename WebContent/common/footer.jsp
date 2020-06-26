@@ -49,7 +49,7 @@
 		</div>
 	</div>
 </div>
-<div class="row"><!-- 이미지 -->
+<div class="row text-center"><!-- 이미지 -->
 	<div class="col-12" style="width: 100%;">
 		<img src="../resource/images/footer/footer.png" alt="푸터이미지"/>
 	</div>
